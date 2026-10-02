@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FORTRAN punched card interpreter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="titles">
+  <div class="split-a">
+    <p class="back"><a href="../">Back to the gallery</a></p>
+    <h1><span class="h1-big">FORTRAN</span> <span class="h1-small">punched card interpreter</span></h1>
+  </div>
+  <div class="split-b" aria-hidden="true"><span class="disc"></span><span class="rings"></span></div>
+  <div class="lede"><p>This page is a working model of a 1960s computing center. You punch a FORTRAN program onto a deck of cards, hand the deck to the card reader, and collect your results from the line printer and the card punch. One of the sample decks is a program that generates the number sieves that the composer Iannis Xenakis used to write music.</p></div>
+</header>
+<div class="stage">
+<nav class="band" aria-label="Sections">
+
+<div class="tabs" role="tablist" aria-label="Simulator" aria-orientation="vertical">
+  <button type="button" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="true"><span class="tn" aria-hidden="true">01</span><span class="tl">About</span></button>
+  <button type="button" role="tab" id="tab-editor" aria-controls="panel-editor" aria-selected="false" tabindex="-1"><span class="tn" aria-hidden="true">02</span><span class="tl">Editor</span></button>
+  <button type="button" role="tab" id="tab-viewer" aria-controls="panel-viewer" aria-selected="false" tabindex="-1"><span class="tn" aria-hidden="true">03</span><span class="tl">Card viewer</span></button>
+  <button type="button" role="tab" id="tab-output" aria-controls="panel-output" aria-selected="false" tabindex="-1"><span class="tn" aria-hidden="true">04</span><span class="tl">Output</span></button>
+</div>
+<div class="band-art" aria-hidden="true"></div>
+</nav>
+<main class="screen">
+
+<section role="tabpanel" id="panel-about" aria-labelledby="tab-about" tabindex="0">
+  <h2>About</h2>
+  <nav class="seq-nav" aria-label="About sections" data-js-only hidden>
+    <ol>
+      <li><button type="button" class="scene-link" aria-controls="scene-1"><span class="dot" aria-hidden="true">1</span><span class="t">FORTRAN and the punched card</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-2"><span class="dot" aria-hidden="true">2</span><span class="t">The deck</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-3"><span class="dot" aria-hidden="true">3</span><span class="t">Using the simulator</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-4"><span class="dot" aria-hidden="true">4</span><span class="t">The language</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-5"><span class="dot" aria-hidden="true">5</span><span class="t">The line printer</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-6"><span class="dot" aria-hidden="true">6</span><span class="t">Iannis Xenakis and the sieve</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-7"><span class="dot" aria-hidden="true">7</span><span class="t">The sieve generator deck</span></button></li>
+    </ol>
+  </nav>
+  <div class="scenes">
+  <section class="scene" id="scene-1" aria-labelledby="scene-1-h">
+    <h3 id="scene-1-h" tabindex="-1">FORTRAN and the punched card</h3>
+    <p>FORTRAN, short for <em>formula translation</em>, was created at IBM by a team led by John Backus. Its first compiler shipped in 1957 for the IBM 704, and it let scientists and engineers write their calculations as formulas instead of as machine instructions. The language spread quickly. FORTRAN IV followed in 1962, and its 1966 standard, FORTRAN 66, made FORTRAN one of the first programming languages with an official standard. This simulator runs a subset of that language.</p>
+    <p>Programs of that era were not typed onto a screen. Each line of a program was punched onto its own 80-column card on a keypunch such as the IBM 029, which IBM introduced in 1964, and a program was a stack of cards held together with a rubber band. Dropping a deck was a real hazard. That is why programmers punched sequence numbers into the last eight columns: a card sorter could put a scrambled deck back in order.</p>
+    <p>FORTRAN gives each group of columns on a card its own job, and the editor shades the groups so that you can see them.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Columns</th><th>What they hold</th></tr>
+      <tr><td>1</td><td>A <code>C</code> or an asterisk in column 1 turns the whole card into a comment.</td></tr>
+      <tr><td>1&ndash;5</td><td>These columns hold an optional statement label, which is an unsigned number that other statements can refer to.</td></tr>
+      <tr><td>6</td><td>Any character other than a blank or a zero marks the card as a continuation of the previous statement.</td></tr>
+      <tr><td>7&ndash;72</td><td>The statement itself goes here.</td></tr>
+      <tr><td>73&ndash;80</td><td>The compiler ignores these columns, which traditionally held sequence numbers. The simulator warns you if anything is punched in them.</td></tr>
+    </table></div>
+    <p>FORTRAN ignores blanks outside of text, so <code>G O T O 20</code> means the same thing as <code>GOTO 20</code>. The editor accepts only the characters that the 029 keypunch could punch, and it turns lowercase letters into capitals, because the keypunch had no lowercase.</p>
+  </section>
+  <section class="scene" id="scene-2" aria-labelledby="scene-2-h">
+    <h3 id="scene-2-h" tabindex="-1">The deck</h3>
+    <p>A job is a single deck of cards. The program comes first and finishes with an <code>END</code> card, and every card after the <code>END</code> card is data for the program to read. If the program tries to read past the last data card, the job stops with the message <code>END OF FILE ON UNIT 5</code>, just as it would have on an IBM machine. Blank cards at the end of the deck are not sent to the reader.</p>
+  </section>
+  <section class="scene" id="scene-3" aria-labelledby="scene-3-h">
+    <h3 id="scene-3-h" tabindex="-1">Using the simulator</h3>
+    <p>The tabs switch between this <em>About</em> tab, the <em>Editor</em>, the <em>Card viewer</em>, and the <em>Output</em>. When a tab has keyboard focus, the left and right arrow keys move to the neighboring tabs, and <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and last.</p>
+    <p>In the <em>Editor</em>, you can load a sample deck or type your own cards. Pressing <kbd>Enter</kbd> adds a new card below the current one, pressing <kbd>Backspace</kbd> on an empty card removes it, and the up and down arrow keys move between cards. If you paste several lines at once, each line becomes a card of its own. When the deck is ready, press <em>Run deck</em>.</p>
+    <p>The <em>Card viewer</em> shows the holes punched in the card that is selected in the editor. The <em>Previous card</em> and <em>Next card</em> buttons step through the deck, and the editor&rsquo;s selection follows along.</p>
+    <p>The <em>Output</em> tab opens after each run. It shows the printer output, the job log with any errors and warnings, and a listing of the program. Any cards that the program punched land in the output stacker at the bottom of the tab. From there you can load them into the editor as data for another run, copy them, or download them as a text file.</p>
+    <p>The deck is kept only while the page is open, so reloading the page brings back the first sample.</p>
+  </section>
+  <section class="scene" id="scene-4" aria-labelledby="scene-4-h">
+    <h3 id="scene-4-h" tabindex="-1">The language</h3>
+    <p>The simulator understands a single main program; subroutines and functions are not supported. A name has up to six letters and digits and must start with a letter. Unless you declare otherwise, names that begin with the letters I through N hold integers, and all other names hold real numbers. Integers are 32 bits wide, and integer division throws away the remainder, so <code>7/2</code> is 3. Real numbers have single precision.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Statement</th><th>What it does</th></tr>
+      <tr><td><code>V = expr</code></td><td>This evaluates the expression and stores the result in <code>V</code>, which can be a variable or an array element. Expressions use <code>+ - * /</code> and <code>**</code> for powers, with parentheses for grouping.</td></tr>
+      <tr><td><code>INTEGER</code>, <code>REAL</code></td><td>These declare names as integers or reals, overriding the first-letter rule.</td></tr>
+      <tr><td><code>DIMENSION A(n), B(m,n)</code></td><td>This declares arrays of one or two dimensions, numbered from 1.</td></tr>
+      <tr><td><code>GO TO n</code></td><td>This jumps to the statement labeled <code>n</code>. The computed form <code>GO TO (n1,n2,...), I</code> jumps to the <code>I</code>th label in the list.</td></tr>
+      <tr><td><code>IF (e) n1, n2, n3</code></td><td>This jumps to <code>n1</code>, <code>n2</code>, or <code>n3</code> when <code>e</code> is negative, zero, or positive.</td></tr>
+      <tr><td><code>IF (cond) stmt</code></td><td>This runs <code>stmt</code> only when the condition is true. Conditions compare values with <code>.LT. .LE. .EQ. .NE. .GT. .GE.</code> and combine them with <code>.AND. .OR. .NOT.</code></td></tr>
+      <tr><td><code>DO n I = m1, m2, m3</code></td><td>This repeats the statements through label <code>n</code> while <code>I</code> counts from <code>m1</code> to <code>m2</code> in steps of <code>m3</code>, or in steps of 1 if <code>m3</code> is left out. As in FORTRAN 66, the loop always runs at least once.</td></tr>
+      <tr><td><code>CONTINUE</code></td><td>This does nothing. It usually marks the end of a <code>DO</code> loop.</td></tr>
+      <tr><td><code>READ (5,f) list</code> or <code>READ f, list</code></td><td>This reads the next data card, laid out as <code>FORMAT</code> statement <code>f</code> describes.</td></tr>
+      <tr><td><code>WRITE (6,f) list</code> or <code>PRINT f, list</code></td><td>This prints a line on the line printer.</td></tr>
+      <tr><td><code>PUNCH f, list</code> or <code>WRITE (7,f) list</code></td><td>This punches a new card into the output stacker.</td></tr>
+      <tr><td><code>FORMAT (...)</code></td><td>This describes the layout of a card or a printed line. <code>Iw</code> is an integer <code>w</code> columns wide, <code>Fw.d</code> and <code>Ew.d</code> are real numbers with <code>d</code> digits after the point, <code>nX</code> skips <code>n</code> columns, <code>nHtext</code> and <code>'text'</code> are literal text, and a slash starts a new line or card. Descriptors can be repeated, as in <code>3I5</code>, or grouped, as in <code>2(I3,F6.2)</code>.</td></tr>
+      <tr><td><code>STOP</code>, <code>PAUSE</code>, <code>END</code></td><td><code>STOP</code> ends the job, <code>PAUSE</code> writes a note in the job log and carries on, and <code>END</code> marks the last card of the program.</td></tr>
+    </table></div>
+    <p>The built-in functions are <code>SQRT</code>, <code>ABS</code>, <code>IABS</code>, <code>FLOAT</code>, <code>INT</code>, <code>IFIX</code>, <code>MOD</code>, <code>AMOD</code>, <code>SIN</code>, <code>COS</code>, <code>ATAN</code>, <code>EXP</code>, <code>ALOG</code>, <code>ALOG10</code>, <code>MAX0</code>, <code>MIN0</code>, <code>AMAX1</code>, <code>AMIN1</code>, and <code>SIGN</code>.</p>
+  </section>
+  <section class="scene" id="scene-5" aria-labelledby="scene-5-h">
+    <h3 id="scene-5-h" tabindex="-1">The line printer</h3>
+    <p>Results came back on a line printer such as the IBM 1403, which printed a whole line at a time onto continuous fan-fold paper. A chain of type spun past a row of hammers, and each hammer fired the moment its character went by. The first character of each printed line is never printed. Instead, it tells the printer how far to move the paper. A blank moves it one line, a <code>0</code> leaves a blank line first, a minus sign leaves two blank lines, a <code>1</code> jumps to the top of a new page, and a plus sign prints over the line before. This rule caused famous mistakes. If a <code>FORMAT</code> happens to put a <code>1</code> in the first position, the printer throws a new page, so printing 123 with <code>I3</code> starts a new page and prints only 23.</p>
+  </section>
+  <section class="scene" id="scene-6" aria-labelledby="scene-6-h">
+    <h3 id="scene-6-h" tabindex="-1">Iannis Xenakis and the sieve</h3>
+    <p>Iannis Xenakis (1922&ndash;2001) was a Greek-French composer, architect, and engineer, born in Romania to a Greek family. He came to Paris as a political refugee in 1947. He then spent twelve years in Le Corbusier&rsquo;s studio, where he took charge of designing the Philips Pavilion for the 1958 Brussels World&rsquo;s Fair, and he brought an engineer&rsquo;s habits of mind to music. He composed with probability and set theory, and he was one of the first composers to write music with a computer. In 1962 he ran his Free Stochastic Music program on an IBM 7090 at IBM France in Paris. Xenakis designed the program, and M. F. G&eacute;nuys and M. J. Barraud coded it in FORTRAN IV. Its output became the <em>ST</em> pieces, among them <em>ST/10</em> and <em>ST/4</em>, whose titles record the date the data was generated: 8 February 1962. He published the program several times, most completely in his book <em>Formalized Music</em> (1971).</p>
+    <p>During a residency in Berlin in 1963&ndash;64, Xenakis conceived his theory of sieves, a way of building scales and rhythms out of simple arithmetic. A sieve is made from residual classes. The class written here as <code>m@s</code> (Xenakis wrote <var>m</var> with a subscript <var>s</var>) contains every integer <var>x</var> for which <var>x</var>&nbsp;&minus;&nbsp;<var>s</var> is divisible by <var>m</var>, so <code>3@0</code> is the sequence &hellip;, 0, 3, 6, 9, &hellip;. Combining classes by union, intersection, and complement produces patterns that repeat exactly but sound irregular. He first used sieves in <em>Akrata</em> (1964&ndash;65), and in <em>Nomos Alpha</em> (1965&ndash;66) for solo cello they select the pitches from a microtonal scale.</p>
+  </section>
+  <section class="scene" id="scene-7" aria-labelledby="scene-7-h">
+    <h3 id="scene-7-h" tabindex="-1">The sieve generator deck</h3>
+    <p>The fifth sample deck is a sieve generator written in the same FORTRAN that the simulator runs, in the spirit of Xenakis&rsquo;s own programs. The first data card after <code>END</code> holds three numbers in 5-column fields. <code>MODE</code> is 1 for the union of the classes, 2 for their intersection, or 3 for the complement of their union. <code>N</code> is the number of classes, from 1 to 10, and <code>LIMIT</code> sets the range, because the program tests every integer from 0 to <code>LIMIT</code>&nbsp;&minus;&nbsp;1. Each of the next <var>N</var> cards describes one class with a modulus <code>M</code> and a shift <code>S</code>, again in 5-column fields.</p>
+    <p>The program prints each member of the sieve along with its distance from the member before it, and it punches each member onto a card of its own, so that you can feed the members to another program as data. The sample data describes the sieve <code>5@2 | 5@3</code> over the integers 0 to 19, which contains 2, 3, 7, 8, 12, 13, 17, and 18. To hear the idea in numbers rather than notes, change the three data cards at the bottom of the deck and run it again.</p>
+  </section>
+  </div>
+  <div class="scene-step" data-js-only hidden>
+    <button type="button" id="scene-prev">Previous</button>
+    <p class="scene-pos" id="scene-pos" aria-live="polite"></p>
+    <button type="button" id="scene-next">Next</button>
+  </div>
+</section>
+
+<section role="tabpanel" id="panel-editor" aria-labelledby="tab-editor" tabindex="0" hidden>
+  <h2>Editor</h2>
+  <div class="toolbar">
+    <label for="sample-select">Sample deck:</label>
+    <select id="sample-select"></select>
+    <button type="button" id="load-sample">Load sample</button>
+  </div>
+  <div class="toolbar">
+    <button type="button" id="add-card">Add card</button>
+    <button type="button" id="delete-card">Delete card</button>
+    <button type="button" id="clear-deck">Clear deck</button>
+    <span class="legend" aria-hidden="true">
+      <span class="f1"></span>label (1&ndash;5)
+      <span class="f2"></span>continuation (6)
+      <span class="f3"></span>statement (7&ndash;72)
+      <span class="f1"></span>sequence (73&ndash;80)
+    </span>
+  </div>
+  <div class="editor">
+    <div class="editor-inner">
+      <pre class="ruler" id="ruler" aria-hidden="true"></pre>
+      <div id="cards"></div>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button type="button" id="run-deck">Run deck</button>
+    <span class="status" id="editor-status" role="status"></span>
+  </div>
+</section>
+
+<section role="tabpanel" id="panel-viewer" aria-labelledby="tab-viewer" tabindex="0" hidden>
+  <h2>Card viewer</h2>
+  <div class="toolbar">
+    <button type="button" id="prev-card">Previous card</button>
+    <button type="button" id="next-card">Next card</button>
+    <span class="status" id="card-caption" aria-live="polite"></span>
+  </div>
+  <div class="cardview" id="card-svg"></div>
+</section>
+
+<section role="tabpanel" id="panel-output" aria-labelledby="tab-output" tabindex="0" hidden>
+  <h2>Output</h2>
+  <p id="run-status" role="status">The deck has not been run yet.</p>
+  <h3>Printer output</h3>
+  <div class="printer" id="printer"><p class="placeholder">Run the deck to see output.</p></div>
+  <h3>Job log</h3>
+  <div class="log" id="log"><p class="placeholder">Errors, warnings, and the STOP code appear here.</p></div>
+  <details class="listing" id="listing-wrap">
+    <summary>Source listing</summary>
+    <pre id="listing"></pre>
+  </details>
+
+  <h3>Output stacker</h3>
+  <p>Cards that the program punches appear here. The stacker is emptied at the start of each run.</p>
+  <div class="toolbar">
+    <button type="button" id="stack-replace" disabled>Load into editor (replace deck)</button>
+    <button type="button" id="stack-append" disabled>Load into editor (append to deck)</button>
+    <button type="button" id="stack-copy" disabled>Copy as text</button>
+    <button type="button" id="stack-download" disabled>Download as text</button>
+    <span class="status" id="stack-status" role="status"></span>
+  </div>
+  <div class="stacker" id="stacker"><p class="placeholder">No cards have been punched yet.</p></div>
+</section>
+</main>
+</div>
+<script src="../scripts/hollerith.js"></script>
+<script src="../scripts/fortran.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var ROWS = [12, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var STACKER_SHOWN = 500;
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function $(id) { return document.getElementById(id); }
+
+  var cardsEl = $('cards');
+  var selected = 0;
+  var stack = [];
+
+  /* ---------------- tabs ---------------- */
+  // Panels swap in place; the URL is never touched.
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+
+  function showTab(name, focus) {
+    var active = $('tab-' + name);
+    tabs.forEach(function (tab) {
+      var on = tab === active;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      $(tab.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) {
+      active.focus();
+      active.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  tabs.forEach(function (tab, i) {
+    var name = tab.id.slice(4);
+    tab.addEventListener('click', function () { showTab(name); });
+    tab.addEventListener('keydown', function (e) {
+      var j = { ArrowLeft: i - 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowDown: i + 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (j === undefined) return;
+      e.preventDefault();
+      showTab(tabs[(j + tabs.length) % tabs.length].id.slice(4), true);
+    });
+  });
+
+  /* ---------------- ruler ---------------- */
+  (function buildRuler() {
+    var tens = '', ones = '', fields = 'LABEL+' + 'STATEMENT'.padEnd(66) + 'SEQUENCE';
+    for (var c = 1; c <= 80; c++) {
+      tens += c % 10 === 0 ? String(c / 10) : ' ';
+      ones += String(c % 10);
+    }
+    $('ruler').textContent = fields + '\n' + tens + '\n' + ones;
+  })();
+
+  /* ---------------- card drawing ---------------- */
+
+  function svgEl(name, attrs, text) {
+    var el = document.createElementNS(SVG_NS, name);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+
+  // Draw one card as 12 rows x 80 columns. opts.grid adds the faint row digits.
+  function drawCard(text, opts) {
+    opts = opts || {};
+    var text80 = text.padEnd(80).slice(0, 80);
+    var masks = Fortran.encodeCard(text80);
+    var left = 24, colW = 10, top = 22, rowH = 13;
+    var width = left + 80 * colW + 8, height = top + 12 * rowH + 6;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + width + ' ' + height, role: 'img', 'aria-label': 'Punched card: ' + text80.trim() });
+    svg.appendChild(svgEl('rect', { x: 0.5, y: 0.5, width: width - 1, height: height - 1, fill: '#fff', stroke: '#000' }));
+    svg.appendChild(svgEl('polygon', { points: '0.5,0.5 14.5,0.5 0.5,14.5', fill: '#fff', stroke: '#000' }));
+    if (opts.labels !== false) {
+      ROWS.forEach(function (row, r) {
+        svg.appendChild(svgEl('text', { x: left - 4, y: top + r * rowH + 9, 'text-anchor': 'end', 'font-size': 9, 'font-family': 'monospace', fill: '#000' }, String(row)));
+      });
+    }
+    for (var c = 0; c < 80; c++) {
+      var x = left + c * colW;
+      var ch = text80.charAt(c);
+      if (ch !== ' ') {
+        svg.appendChild(svgEl('text', { x: x + colW / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11, 'font-family': 'monospace', fill: '#000' }, ch));
+      }
+      ROWS.forEach(function (row, r) {
+        var y = top + r * rowH;
+        if (masks[c].has(row)) {
+          svg.appendChild(svgEl('rect', { x: x + 2, y: y + 1, width: 6, height: 10, fill: '#000' }));
+        } else if (opts.grid && row <= 9) {
+          svg.appendChild(svgEl('text', { x: x + colW / 2, y: y + 9, 'text-anchor': 'middle', 'font-size': 8, 'font-family': 'monospace', fill: '#aaa' }, String(row)));
+        }
+      });
+    }
+    return svg;
+  }
+
+  function showSelectedCard() {
+    var rows = cardsEl.children;
+    if (!rows.length) return;
+    if (selected >= rows.length) selected = rows.length - 1;
+    var text = rows[selected].querySelector('input').value;
+    $('card-caption').textContent = 'Card ' + (selected + 1) + ' of ' + rows.length + '.';
+    $('prev-card').disabled = selected === 0;
+    $('next-card').disabled = selected === rows.length - 1;
+    var holder = $('card-svg');
+    holder.innerHTML = '';
+    holder.appendChild(drawCard(text, { grid: true }));
+  }
+
+  /* ---------------- deck editor ---------------- */
+
+  function sanitize(value) {
+    var out = '';
+    var upper = value.toUpperCase();
+    for (var i = 0; i < upper.length && out.length < 80; i++) {
+      var ch = upper.charAt(i);
+      if (ch === ' ' || Fortran.punches(ch).length > 0) out += ch;
+    }
+    return out;
+  }
+
+  function rowsList() { return Array.prototype.slice.call(cardsEl.children); }
+  function rowIndex(row) { return rowsList().indexOf(row); }
+
+  function renumber() {
+    rowsList().forEach(function (row, i) {
+      row.querySelector('.num').textContent = String(i + 1);
+      row.querySelector('input').setAttribute('aria-label', 'Card ' + (i + 1));
+      row.classList.toggle('selected', i === selected);
+    });
+  }
+
+  function select(i) {
+    selected = i;
+    renumber();
+    showSelectedCard();
+  }
+
+  function focusRow(i, caret) {
+    var rows = rowsList();
+    if (i < 0 || i >= rows.length) return;
+    var input = rows[i].querySelector('input');
+    input.focus();
+    var pos = caret === undefined ? input.value.length : Math.min(caret, input.value.length);
+    input.setSelectionRange(pos, pos);
+  }
+
+  function makeRow(text) {
+    var row = document.createElement('div');
+    row.className = 'row';
+    var num = document.createElement('span');
+    num.className = 'num';
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'card';
+    input.maxLength = 80;
+    input.spellcheck = false;
+    input.autocomplete = 'off';
+    input.setAttribute('autocapitalize', 'characters');
+    input.value = sanitize(text);
+    row.appendChild(num);
+    row.appendChild(input);
+
+    input.addEventListener('focus', function () { select(rowIndex(row)); });
+
+    input.addEventListener('input', function () {
+      var before = input.value.slice(0, input.selectionStart);
+      var clean = sanitize(input.value);
+      if (clean !== input.value) {
+        var pos = sanitize(before).length;
+        input.value = clean;
+        input.setSelectionRange(pos, pos);
+      }
+      if (rowIndex(row) === selected) showSelectedCard();
+    });
+
+    input.addEventListener('keydown', function (e) {
+      var i = rowIndex(row);
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        insertRow(i + 1, '');
+        focusRow(i + 1, 0);
+      } else if (e.key === 'Backspace' && input.value === '' && cardsEl.children.length > 1) {
+        e.preventDefault();
+        removeRow(i);
+        focusRow(Math.max(0, i - 1));
+      } else if (e.key === 'ArrowUp' && i > 0) {
+        e.preventDefault();
+        focusRow(i - 1, input.selectionStart);
+      } else if (e.key === 'ArrowDown' && i < cardsEl.children.length - 1) {
+        e.preventDefault();
+        focusRow(i + 1, input.selectionStart);
+      }
+    });
+
+    input.addEventListener('paste', function (e) {
+      var data = e.clipboardData && e.clipboardData.getData('text');
+      if (!data || !/[\r\n]/.test(data)) return;
+      e.preventDefault();
+      var lines = data.replace(/\r\n?/g, '\n').replace(/\n$/, '').split('\n');
+      var i = rowIndex(row);
+      var start = input.selectionStart, end = input.selectionEnd;
+      input.value = sanitize(input.value.slice(0, start) + lines[0] + input.value.slice(end));
+      for (var k = 1; k < lines.length; k++) insertRow(i + k, lines[k]);
+      focusRow(i + lines.length - 1);
+    });
+
+    return row;
+  }
+
+  function insertRow(i, text) {
+    var row = makeRow(text);
+    var rows = cardsEl.children;
+    if (i >= rows.length) cardsEl.appendChild(row);
+    else cardsEl.insertBefore(row, rows[i]);
+    if (i <= selected && rows.length > 1) selected++;
+    renumber();
+    showSelectedCard();
+    return row;
+  }
+
+  function removeRow(i) {
+    cardsEl.removeChild(cardsEl.children[i]);
+    if (selected > i || selected >= cardsEl.children.length) selected = Math.max(0, selected - 1);
+    renumber();
+    showSelectedCard();
+  }
+
+  // The deck as sent to the reader: trailing blank cards are dropped.
+  function getDeck() {
+    var deck = rowsList().map(function (row) { return row.querySelector('input').value; });
+    while (deck.length && deck[deck.length - 1].trim() === '') deck.pop();
+    return deck;
+  }
+
+  function setDeck(deck) {
+    cardsEl.innerHTML = '';
+    (deck.length ? deck : ['']).forEach(function (t) { cardsEl.appendChild(makeRow(t)); });
+    selected = 0;
+    renumber();
+    showSelectedCard();
+  }
+
+  /* ---------------- samples ---------------- */
+
+  var sampleSelect = $('sample-select');
+  Fortran.samples.forEach(function (s, i) {
+    var opt = document.createElement('option');
+    opt.value = String(i);
+    opt.textContent = (i + 1) + '. ' + s.name;
+    sampleSelect.appendChild(opt);
+  });
+
+  $('load-sample').addEventListener('click', function () {
+    setDeck(Fortran.samples[+sampleSelect.value].cards);
+    $('editor-status').textContent = 'The sample deck is loaded.';
+  });
+
+  $('add-card').addEventListener('click', function () {
+    insertRow(selected + 1, '');
+    focusRow(selected + 1, 0);
+  });
+
+  $('delete-card').addEventListener('click', function () {
+    if (cardsEl.children.length > 1) removeRow(selected);
+    else { rowsList()[0].querySelector('input').value = ''; showSelectedCard(); }
+  });
+
+  $('clear-deck').addEventListener('click', function () { setDeck([]); });
+
+  /* ---------------- card viewer ---------------- */
+
+  $('prev-card').addEventListener('click', function () { if (selected > 0) select(selected - 1); });
+  $('next-card').addEventListener('click', function () { if (selected < cardsEl.children.length - 1) select(selected + 1); });
+
+  /* ---------------- running ---------------- */
+
+  function renderPrinter(lines) {
+    var box = $('printer');
+    box.innerHTML = '';
+    if (!lines.length) {
+      var p = document.createElement('p');
+      p.className = 'placeholder';
+      p.textContent = 'The program did not print anything.';
+      box.appendChild(p);
+      return;
+    }
+    var pre = null;
+    lines.forEach(function (line) {
+      if (line === '\f') {
+        pre = null;
+        var div = document.createElement('div');
+        div.className = 'pagebreak';
+        div.textContent = '--- page break ---';
+        box.appendChild(div);
+        return;
+      }
+      if (!pre) { pre = document.createElement('pre'); box.appendChild(pre); pre.textContent = line; }
+      else pre.textContent += '\n' + line;
+    });
+  }
+
+  function renderLog(result) {
+    var box = $('log');
+    box.innerHTML = '';
+    var pre = document.createElement('pre');
+    var lines = result.log.slice();
+    lines.push(result.ok ? 'Job ended normally.' : 'Job ended with errors.');
+    pre.textContent = lines.join('\n');
+    box.appendChild(pre);
+  }
+
+  function renderStacker(punched) {
+    stack = punched;
+    var box = $('stacker');
+    box.innerHTML = '';
+    ['stack-replace', 'stack-append', 'stack-copy', 'stack-download'].forEach(function (id) {
+      $(id).disabled = !punched.length;
+    });
+    $('stack-status').textContent = '';
+    if (!punched.length) {
+      var p = document.createElement('p');
+      p.className = 'placeholder';
+      p.textContent = 'The program did not punch any cards.';
+      box.appendChild(p);
+      return;
+    }
+    var count = document.createElement('p');
+    count.textContent = 'The program punched ' + punched.length + ' card' + (punched.length === 1 ? '' : 's') + '.' +
+      (punched.length > STACKER_SHOWN ? ' Only the first ' + STACKER_SHOWN + ' are drawn here.' : '');
+    box.appendChild(count);
+    punched.slice(0, STACKER_SHOWN).forEach(function (text) {
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.appendChild(drawCard(text, { labels: false }));
+      box.appendChild(item);
+    });
+  }
+
+  $('run-deck').addEventListener('click', function () {
+    var deck = getDeck();
+    var result = Fortran.run(deck);
+    renderStacker(result.punched);
+    renderPrinter(result.printer);
+    renderLog(result);
+    $('listing').textContent = result.listing.join('\n');
+    $('run-status').textContent = 'The reader took ' + deck.length + ' card' + (deck.length === 1 ? '' : 's') +
+      (result.ok ? ', and the job ran without errors.' : ', and the job stopped with errors. See the job log for details.');
+    $('editor-status').textContent = '';
+    showTab('output', true);
+  });
+
+  /* ---------------- stacker actions ---------------- */
+
+  function stackText() { return stack.join('\n') + '\n'; }
+  function stackCards() { return stack.map(function (c) { return c.replace(/ +$/, ''); }); }
+
+  $('stack-replace').addEventListener('click', function () {
+    setDeck(stackCards());
+    $('editor-status').textContent = 'The punched cards replaced the deck.';
+    showTab('editor', true);
+  });
+
+  $('stack-append').addEventListener('click', function () {
+    setDeck(getDeck().concat(stackCards()));
+    $('editor-status').textContent = 'The punched cards were added to the end of the deck.';
+    showTab('editor', true);
+  });
+
+  $('stack-copy').addEventListener('click', function () {
+    var status = $('stack-status');
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = stackText();
+      document.body.appendChild(ta);
+      ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch (e) { done = false; }
+      document.body.removeChild(ta);
+      status.textContent = done ? 'The cards were copied to the clipboard.' : 'Copying failed, so please use Download instead.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(stackText()).then(function () { status.textContent = 'The cards were copied to the clipboard.'; }, fallback);
+    } else fallback();
+  });
+
+  $('stack-download').addEventListener('click', function () {
+    var url = URL.createObjectURL(new Blob([stackText()], { type: 'text/plain' }));
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'punched-cards.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    $('stack-status').textContent = 'The cards were downloaded as a text file.';
+  });
+
+  /* ---------------- start ---------------- */
+  setDeck(Fortran.samples[0].cards);
+})();
+</script>
+<script>
+/* Presentation only. About plays as a title sequence, one section per shot,
+   each with its own giant numeral and colour clash. */
+(function () {
+  'use strict';
+
+  var panel = document.getElementById('panel-about');
+  var scenes = Array.prototype.slice.call(panel.querySelectorAll('.scene'));
+  var links = Array.prototype.slice.call(panel.querySelectorAll('.scene-link'));
+  var prevBtn = document.getElementById('scene-prev');
+  var nextBtn = document.getElementById('scene-next');
+  var posEl = document.getElementById('scene-pos');
+  var current = -1;
+  panel.classList.add('scenes-on');
+  Array.prototype.forEach.call(panel.querySelectorAll('[data-js-only]'), function (el) { el.hidden = false; });
+  links.forEach(function (link, k) {
+    link.addEventListener('click', function () { show(k, true); });
+  });
+
+  var root = document.documentElement;
+
+  scenes.forEach(function (scene, k) {
+    var mark = document.createElement('div');
+    mark.className = 'shot-mark';
+    mark.setAttribute('aria-hidden', 'true');
+    mark.innerHTML = '<span class="num">0' + (k + 1) + '</span><span class="op"></span>';
+    scene.insertBefore(mark, scene.firstChild);
+  });
+
+  function show(i, focus) {
+    if (i < 0 || i >= scenes.length) return;
+    current = i;
+    scenes.forEach(function (s, k) { s.hidden = k !== i; });
+    links.forEach(function (l, k) {
+      if (k === i) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+    });
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === scenes.length - 1;
+    posEl.textContent = (i + 1) + ' / ' + scenes.length;
+    root.setAttribute('data-shot', String(i % 4));
+    if (focus) scenes[i].querySelector('h3').focus({ preventScroll: true });
+  }
+
+  prevBtn.addEventListener('click', function () { show(current - 1, true); });
+  nextBtn.addEventListener('click', function () { show(current + 1, true); });
+  show(0, false);
+
+  // The band changes colour with the selected tab.
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function paint() {
+    tabs.forEach(function (t) {
+      if (t.getAttribute('aria-selected') === 'true') root.setAttribute('data-tab', t.id.slice(4));
+    });
+  }
+  var mo = new MutationObserver(paint);
+  tabs.forEach(function (t) { mo.observe(t, { attributes: true, attributeFilter: ['aria-selected'] }); });
+  paint();
+})();
+</script>
+</body>
+</html>

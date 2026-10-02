@@ -1,0 +1,413 @@
+/*
+  Industrial design of the Cray-2, translated rather than drawn.
+  - Smoked transparent enclosure over dense stacked modules: every panel sits inside
+    a dark glass frame through which a fine, layered texture glows; text sits on solid glass.
+  - Fourteen columns around a 300-degree arc: a 14-part rhythm of seams, stadium-ended
+    rails and large radii; one corner of each enclosure is left square, the opening of the C.
+  - Palette from the object: smoked acrylic, Fluorinert-lit cobalt, copper busbars and
+    twisted pair, brushed aluminium trim.
+  - Proportion: the machine is wider than it is tall (53 : 43); the masthead block keeps it.
+*/
+
+:root {
+  --void: #05070a;
+  --smoke: #0b1016;
+  --glass: #10171f;
+  --glass-2: #16202b;
+  --edge: #2a3947;
+  --ink: #e7edf3;          /* 15.6:1 on --glass */
+  --ink-2: #b4c2d0;        /* 9.6:1 on --glass */
+  --cobalt: #2456e6;       /* white on cobalt 5.9:1 */
+  --cobalt-hi: #74b4ff;
+  --copper: #d4813a;
+  --alu: #aab6c2;
+  --mono: Menlo, "SF Mono", Consolas, "Liberation Mono", monospace;
+  --sans: "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --r: 28px;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { background: var(--void); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+/* faint cobalt light leaking from the enclosure into the room */
+.glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(36, 86, 230, 0.22), transparent 70%),
+    radial-gradient(40rem 30rem at 0% 110%, rgba(212, 129, 58, 0.08), transparent 70%);
+}
+
+a { color: var(--cobalt-hi); }
+a:hover { color: #fff; }
+
+h1, h2, h3 { line-height: 1.15; }
+
+code, kbd, pre, input.card, .ruler, .row .num { font-family: var(--mono); }
+code { font-size: 0.92em; color: #a9d1ff; }
+kbd {
+  font-size: 0.85em;
+  padding: 0.05em 0.45em;
+  border: 1px solid #3a4b5d;
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--glass-2);
+}
+
+/* ---------------- masthead ---------------- */
+
+.mast { max-width: 78rem; margin: 0 auto; padding: 1.25rem 2rem 0; }
+.back { margin: 0 0 1.25rem; font-size: 16px; }
+
+/*
+  Elevation rhythm. Seen from the front, columns set every 20 degrees round a cylinder
+  project to widths proportional to cos(angle): 0.17, 0.50, 0.77 at the flanks. The middle
+  60 degrees is the opening of the C, a dark band of crossing wire. These widths are the
+  masthead grid; the heading and lede start at the opening.
+*/
+.elev, .mast-row {
+  display: grid;
+  grid-template-columns: 0.174fr 0.5fr 0.766fr 2.88fr 0.766fr 0.5fr 0.174fr;
+}
+.elev {
+  height: clamp(7.5rem, 22vw, 15rem);
+  gap: 2px;
+  border-radius: var(--r) var(--r) 0 0;
+  overflow: hidden;
+  background: #000;
+}
+.elev i {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 4px, rgba(0, 0, 0, 0.18) 4px 5px, transparent 5px 6px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 35%, rgba(0, 0, 0, 0.35)),
+    var(--c);
+}
+/* light falls from the front left, so luminance follows the curve */
+.elev i:nth-child(1) { --c: #0c2468; }
+.elev i:nth-child(2) { --c: #1b47c7; }
+.elev i:nth-child(3) { --c: #3068f5; }
+.elev i:nth-child(5) { --c: #2554dc; }
+.elev i:nth-child(6) { --c: #163ba6; }
+.elev i:nth-child(7) { --c: #091b52; }
+.elev i.gap {
+  background:
+    repeating-linear-gradient(90deg, rgba(212, 129, 58, 0.28) 0 1px, transparent 1px 3px, rgba(116, 180, 255, 0.16) 3px 4px, transparent 4px 7px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.55) 0 2px, transparent 2px 24px),
+    repeating-linear-gradient(74deg, rgba(212, 129, 58, 0.22) 0 1px, transparent 1px 11px),
+    radial-gradient(70% 90% at 50% 100%, #10203a, #05070a);
+}
+/* power base under the columns: aluminium skirt with a copper busbar */
+.mast-row {
+  background: linear-gradient(180deg, #c9d2db 0 2px, #56626e 2px 4px, var(--copper) 4px 9px, #5a3418 9px 11px, transparent 11px) no-repeat top / 100% 11px;
+  padding-top: 2.4rem;
+  align-items: start;
+}
+.mast-row > * { grid-column: 4 / 8; }
+
+h1 { margin: 0 0 1rem; }
+.h1-a {
+  display: block;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.h1-b {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cobalt-hi);
+}
+
+.lede { margin: 0; max-width: 60ch; color: var(--ink-2); font-size: 1.1rem; }
+
+/* ---------------- console: tab rail + enclosure ---------------- */
+
+.console { max-width: 78rem; margin: 0 auto; padding: 2.25rem 2rem 3rem; }
+
+/* Tabs: a stadium-ended rail split into segments by thin seams. */
+.tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 3px;
+  margin: 0 0 1rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #3b4855, #1a232d);
+}
+.tabs [role="tab"] {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  min-height: 48px;
+  padding: 0.6rem 1.5rem;
+  border: 0;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #18222d, #0f161e);
+  cursor: pointer;
+}
+.tabs [role="tab"]:first-child { border-radius: 999px 6px 6px 999px; padding-left: 1.8rem; }
+.tabs [role="tab"]:last-child { border-radius: 6px 999px 999px 6px; padding-right: 1.8rem; }
+.tabs [role="tab"]:hover { background: linear-gradient(180deg, #223042, #141d27); }
+.tabs [role="tab"][aria-selected="true"] {
+  color: #fff;
+  background: linear-gradient(180deg, #2f66f5, var(--cobalt) 60%, #1d48c6);
+}
+.tab-n { font-family: var(--mono); font-size: 14px; font-weight: 400; color: var(--copper); }
+[aria-selected="true"] .tab-n { color: #ffd3a8; }
+
+/* The enclosure: a smoked-glass frame showing dense layered modules, around a solid face. */
+.enclosure {
+  position: relative;
+  padding: 26px 14px 22px;
+  border: 1px solid var(--edge);
+  border-radius: 0 var(--r) var(--r) var(--r);
+  background:
+    linear-gradient(90deg, rgba(5, 7, 10, 0.75), rgba(5, 7, 10, 0.15) 30%, rgba(5, 7, 10, 0.1) 55%, rgba(5, 7, 10, 0.8)),
+    repeating-linear-gradient(90deg, transparent 0 calc(100% / 14 - 2px), rgba(0, 0, 0, 0.85) calc(100% / 14 - 2px) calc(100% / 14)),
+    repeating-linear-gradient(0deg, rgba(116, 180, 255, 0.16) 0 1px, transparent 1px 3px, rgba(212, 129, 58, 0.12) 3px 4px, transparent 4px 6px),
+    linear-gradient(180deg, #0d1a33, #0a1220);
+  background-size: auto, auto, 100% 48px, auto;
+  animation: flow 40s linear infinite;
+}
+/* power base: an aluminium-and-copper strip along the foot of the frame */
+.enclosure::after {
+  content: "";
+  position: absolute;
+  left: 14px; right: 14px; bottom: 7px;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #6b5240, var(--copper) 20%, #8a5a33 50%, var(--copper) 80%, #6b5240);
+  pointer-events: none;
+}
+@keyframes flow { to { background-position: 0 0, 0 0, 0 -480px, 0 0; } }
+
+[role="tabpanel"] {
+  position: relative;
+  padding: 1.75rem 2rem 2.25rem;
+  border-radius: 0 18px 18px 18px;
+  background: var(--glass);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+[role="tabpanel"] > h2 {
+  margin: 0 0 1.25rem;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--alu);
+}
+[role="tabpanel"] h3 { font-size: 1.15rem; margin: 1.75rem 0 0.6rem; }
+
+p, li, td { max-width: 70ch; }
+
+/* ---------------- About: a stack of boards ---------------- */
+
+.stackview {
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+  gap: 2.25rem;
+  align-items: start;
+}
+.stack ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+.board {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  align-items: baseline;
+  text-align: left;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--ink-2);
+  padding: 0.7rem 0.9rem 0.7rem 0.75rem;
+  border: 0;
+  border-left: 4px solid #26333f;
+  border-radius: 3px 10px 10px 3px;
+  background: linear-gradient(90deg, #1a2430, #131b24);
+  cursor: pointer;
+}
+.stack li:first-child .board { border-top-right-radius: 18px; }
+.stack li:last-child .board { border-bottom-right-radius: 18px; }
+.board:hover { color: var(--ink); background: linear-gradient(90deg, #202d3c, #17212c); }
+.board[aria-current="true"] {
+  color: #fff;
+  border-left-color: var(--cobalt-hi);
+  background: linear-gradient(90deg, #1d3566, #172440 70%, #141f30);
+  transform: translateX(10px);
+}
+.board-n { font-family: var(--mono); font-size: 14px; color: var(--copper); }
+@media (prefers-reduced-motion: no-preference) {
+  .board { transition: transform 0.2s ease, background 0.2s ease; }
+}
+
+.sub { outline-offset: 6px; }
+.sub > h3 { margin-top: 0; font-size: 1.75rem; font-weight: 700; }
+.sub-n { margin: 0 0 0.35rem; font-family: var(--mono); font-size: 14px; letter-spacing: 0.1em; color: var(--copper); }
+.next { margin-top: 2rem; }
+.next button::after { content: "  \2192"; }
+
+/* ---------------- tables ---------------- */
+
+table { border-collapse: collapse; margin: 1rem 0 1.25rem; width: 100%; max-width: 70rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.9rem 0.55rem 0; border-bottom: 1px solid #26333f; }
+th {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobalt-hi);
+  border-bottom: 2px solid var(--cobalt);
+}
+td code { white-space: nowrap; }
+
+/* ---------------- controls ---------------- */
+
+button, select {
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  min-height: 42px;
+  padding: 0.45rem 1.15rem;
+  border: 1px solid #3a4b5d;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1e2a37, #151e28);
+  cursor: pointer;
+}
+select { padding-right: 0.8rem; }
+button:hover:not(:disabled), select:hover { border-color: var(--cobalt-hi); }
+button:disabled { color: #8794a1; border-color: #2a3947; cursor: default; }
+#run-deck, #load-sample {
+  color: #fff;
+  border-color: #5c8cff;
+  background: linear-gradient(180deg, #2f66f5, var(--cobalt) 60%, #1d48c6);
+  font-weight: 600;
+}
+button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible,
+a:focus-visible, .sub:focus-visible, [role="tabpanel"]:focus-visible {
+  outline: 2px solid var(--cobalt-hi);
+  outline-offset: 2px;
+}
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.6rem; margin: 0.9rem 0; }
+.toolbar label { font-weight: 600; }
+.status { color: var(--ink-2); }
+
+/* ---------------- editor ---------------- */
+
+.editor {
+  overflow-x: auto;
+  padding: 0.9rem 1rem 1rem;
+  border-radius: 14px;
+  background: var(--smoke);
+  border: 1px solid var(--edge);
+}
+.editor-inner { display: inline-block; min-width: min-content; }
+.ruler, .row .num, input.card { font-size: 16px; }
+.ruler { margin: 0 0 4px calc(5ch + 1px); white-space: pre; line-height: 1.2; color: #7fa6d6; }
+.row { display: flex; align-items: center; white-space: nowrap; }
+.row .num { display: inline-block; width: 4ch; margin-right: 1ch; text-align: right; color: #7b8a99; }
+.row.selected .num { color: var(--copper); font-weight: 700; }
+
+input.card {
+  box-sizing: content-box;
+  width: 80ch;
+  margin: 0;
+  padding: 0.12em 0;
+  line-height: 1.4;
+  color: var(--ink);
+  border: 1px solid #253342;
+  border-top-width: 0;
+  background-color: var(--glass);
+  /* field groups: label 1-5, continuation 6, statement 7-72, sequence 73-80 */
+  background-image: linear-gradient(to right,
+    #1a283a 0, #1a283a 5ch,
+    #2a3e57 5ch, #2a3e57 6ch,
+    #10171f 6ch, #10171f 72ch,
+    #1a283a 72ch, #1a283a 80ch);
+}
+.row:first-child input.card { border-top-width: 1px; }
+.row.selected input.card { border-color: #3b5f99; }
+input.card:focus-visible { outline-offset: 0; }
+
+.legend { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.4rem; color: var(--ink-2); font-size: 16px; }
+.legend span { display: inline-block; width: 1.4em; height: 1em; border: 1px solid #3a4b5d; border-radius: 3px; margin-left: 0.6rem; }
+.legend span.f1 { background: #1a283a; }
+.legend span.f2 { background: #2a3e57; }
+.legend span.f3 { background: #10171f; }
+
+/* ---------------- card viewer & stacker ---------------- */
+
+.cardview { max-width: 100%; overflow-x: auto; padding: 1.25rem; border-radius: 14px; background: var(--smoke); border: 1px solid var(--edge); }
+.cardview svg, .stacker svg { display: block; width: 100%; max-width: 60em; height: auto; }
+.stacker { display: grid; gap: 0.6rem; }
+.stacker .item svg { max-width: 40em; }
+
+/* ---------------- output ---------------- */
+
+#run-status { font-weight: 600; }
+.printer {
+  max-height: 32em;
+  overflow: auto;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  background: var(--smoke);
+  border: 1px solid var(--edge);
+  border-left: 4px solid var(--copper);
+}
+.printer pre, .log pre, .listing pre { margin: 0; font-size: 16px; line-height: 1.4; color: #dbe5ee; }
+.pagebreak { margin: 0.6rem 0; border-top: 1px dashed #3a4b5d; text-align: center; font-family: var(--mono); font-size: 14px; color: var(--ink-2); }
+.placeholder { margin: 0; color: var(--ink-2); }
+.log pre { padding: 1rem 1.25rem; white-space: pre-wrap; border-radius: 14px; background: var(--smoke); border: 1px solid var(--edge); }
+.listing { margin-top: 1.25rem; }
+.listing summary { cursor: pointer; font-weight: 600; }
+.listing pre { overflow-x: auto; margin-top: 0.6rem; padding: 1rem 1.25rem; border-radius: 14px; background: var(--smoke); border: 1px solid var(--edge); }
+
+/* ---------------- narrow screens ---------------- */
+
+@media (max-width: 860px) {
+  .mast-row > * { grid-column: 2 / 8; }
+  .stackview { grid-template-columns: 1fr; gap: 1.5rem; }
+  .board[aria-current="true"] { transform: none; }
+}
+@media (max-width: 600px) {
+  .mast { padding: 1rem 1rem 0; }
+  .mast-row > * { grid-column: 1 / 8; }
+  .elev { border-radius: 16px 16px 0 0; }
+  .console { padding: 1.5rem 0.75rem 2rem; }
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; border-radius: 26px; }
+  .tabs [role="tab"], .tabs [role="tab"]:first-child, .tabs [role="tab"]:last-child { padding: 0.6rem 0.9rem; border-radius: 6px; }
+  .tabs [role="tab"]:nth-child(1) { border-top-left-radius: 22px; }
+  .tabs [role="tab"]:nth-child(2) { border-top-right-radius: 22px; }
+  .tabs [role="tab"]:nth-child(3) { border-bottom-left-radius: 22px; }
+  .tabs [role="tab"]:nth-child(4) { border-bottom-right-radius: 22px; }
+  .enclosure { padding: 16px 8px 18px; border-radius: 0 20px 20px 20px; }
+  .enclosure::after { left: 8px; right: 8px; bottom: 5px; height: 5px; }
+  [role="tabpanel"] { padding: 1.25rem 1rem 1.75rem; border-radius: 0 14px 14px 14px; }
+  .sub > h3 { font-size: 1.45rem; }
+  td code { white-space: normal; }
+  th, td { padding-right: 0.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enclosure { animation: none; }
+}

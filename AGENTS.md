@@ -30,6 +30,50 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 *Version 1* demonstrates the principle of the idea, but it is difficult to use. The page is one long scroll of information and interactive components. *Version 3* attempts to solve this by using tabs to swap between the instructions, editor, card viewer, and output. This version should use black text on a white background and minimal styling.
 
+#### Version 4
+
+*Version 4* keeps the core and layout of *Version 3* but is styled to look like thermal paper printouts and typewritten documents. It should be mostly monochromatic, with serif fonts, with slight yellowing and scanner dust. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 5
+
+*Version 5* keeps the core and layout of *Version 3* but is styled to look like microfiche. The design is high contrast, monochromatic, grainy, ragged. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 6
+
+*Version 6* keeps the core and layout of *Version 3* but is styled to look like a scrapbook. The design is eclectic, a collection of collected paper artifacts. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 7
+
+*Version 7* keeps the core and layout of *Version 3* but the page design takes inspiration from the Cray-2 supercomputer. The page uses similarly bold colors and geometric shapes. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 8
+
+*Version 8* keeps the core and layout of *Version 3* but the page design takes inspiration from vintage computer graphics. In particular, the design uses ordered dithering with at most eight steps per channel. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 9
+
+*Version 9* keeps the core and layout of *Version 3* but the page design takes inspiration from Swiss and International styles. However, instead of colors, the design uses hatching. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 10
+
+*Version 10* keeps the core and layout of *Version 3* but the page design takes inspiration from half-toning. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 11
+
+*Version 11* keeps the core and layout of *Version 3* but the page design takes inspiration from Dada. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 12
+
+*Version 12* keeps the core and layout of *Version 3* but the page design takes inspiration from look and feel of the *Backrooms* movie. This is a particularly interesting fit as the page can be conceived of a liminal space, an echo of the past. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 13
+
+*Version 13* keeps the core and layout of *Version 3* but the page design takes inspiration from the look and cinematography of German expressionism films. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
+#### Version 14
+
+*Version 13* keeps the core and layout of *Version 3* but the page design takes inspiration from the cinematography and set design of the film, *Reflections in a Dead Diamond*. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+
 ### Gallery
 
 ### Genealogy
