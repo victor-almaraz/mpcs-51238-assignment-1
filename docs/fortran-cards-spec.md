@@ -32,6 +32,8 @@ Build and verify in this order. Each step has acceptance checks in "Acceptance c
 5. **Output stacker:** cards punched by the program (`PUNCH`) shown as real cards and reusable. See "Punched output".
 6. **Sample menu:** loads the five decks in "Sample decks" (read from `Fortran.samples`), including the sieve generator.
 
+   Later versions keep these five decks. A version may append page-only decks after them without changing `scripts/`: v11 adds three (8 in all), v12 adds four (9 in all), and v15 adds five music decks (10 in all), shown as decks in a card tray rather than a menu. In v08 the sample menu sits in the Editor window, and the File menu's Load Sample Deck command does the same.
+
 ## Repo placement
 
 The engine lives in `scripts/` as classic scripts (no ES modules, so pages work from `file://` too). Each version is a folder at the repo root (`v01/`, `v02/`, ...) whose `index.html` loads the engine with relative paths, e.g. `<script src="../scripts/hollerith.js"></script>` then `<script src="../scripts/fortran.js"></script>`. The root gallery `index.html` uses `scripts/...`. Load `hollerith.js` before `fortran.js`.

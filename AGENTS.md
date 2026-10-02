@@ -32,47 +32,51 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 #### Version 4
 
-*Version 4* keeps the core and layout of *Version 3* but is styled to look like thermal paper printouts and typewritten documents. It should be mostly monochromatic, with serif fonts, with slight yellowing and scanner dust. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 4* keeps the core and layout of *Version 3* but is styled to look like thermal paper printouts and typewritten documents. It should be mostly monochromatic, with serif fonts, with slight yellowing and scanner dust. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 5
 
-*Version 5* keeps the core and layout of *Version 3* but is styled to look like microfiche. The design is high contrast, monochromatic, grainy, ragged. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 5* keeps the core and layout of *Version 3* but is styled to look like microfiche. The design is high contrast, monochromatic, grainy, ragged. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 6
 
-*Version 6* keeps the core and layout of *Version 3* but is styled to look like a scrapbook. The design is eclectic, a collection of collected paper artifacts. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 6* keeps the core and layout of *Version 3* but is styled to look like a scrapbook. The design is eclectic, a collection of collected paper artifacts. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 7
 
-*Version 7* keeps the core and layout of *Version 3* but the page design takes inspiration from the Cray-2 supercomputer. The page uses similarly bold colors and geometric shapes. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 7* keeps the core and layout of *Version 3* but the page design takes inspiration from the Cray-2 supercomputer. The page uses similarly bold colors and geometric shapes. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 8
 
-*Version 8* keeps the core and layout of *Version 3* but the page design takes inspiration from vintage computer graphics. In particular, the design uses ordered dithering with at most eight steps per channel. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 8* keeps the core and layout of *Version 3* but the page design takes inspiration from vintage computer graphics. In particular, the design uses ordered dithering with at most eight steps per channel. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 9
 
-*Version 9* keeps the core and layout of *Version 3* but the page design takes inspiration from Swiss and International styles. However, instead of colors, the design uses hatching. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 9* keeps the core and layout of *Version 3* but the page design takes inspiration from Swiss and International styles. However, instead of colors, the design uses hatching. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 10
 
-*Version 10* keeps the core and layout of *Version 3* but the page design takes inspiration from half-toning. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 10* keeps the core and layout of *Version 3* but the page design takes inspiration from half-toning. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 11
 
-*Version 11* keeps the core and layout of *Version 3* but the page design takes inspiration from Dada. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 11* keeps the core and layout of *Version 3* but the page design takes inspiration from Dada. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 12
 
-*Version 12* keeps the core and layout of *Version 3* but the page design takes inspiration from look and feel of the *Backrooms* movie. This is a particularly interesting fit as the page can be conceived of a liminal space, an echo of the past. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 12* keeps the core and layout of *Version 3* but the page design takes inspiration from look and feel of the *Backrooms* movie. This is a particularly interesting fit as the page can be conceived of a liminal space, an echo of the past. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 13
 
-*Version 13* keeps the core and layout of *Version 3* but the page design takes inspiration from the look and cinematography of German expressionism films. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 13* keeps the core and layout of *Version 3* but the page design takes inspiration from the look and cinematography of German expressionism films. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
 
 #### Version 14
 
-*Version 13* keeps the core and layout of *Version 3* but the page design takes inspiration from the cinematography and set design of the film, *Reflections in a Dead Diamond*. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched.
+*Version 14* keeps the core and layout of *Version 3* but the page design takes inspiration from the cinematography and set design of the film, *Reflections in a Dead Diamond*. The agent may alter the layout and flow of the page if it improves the thematic fit. However, the interpreter and sieve programs should remain untouched. The finalized design will likely differ from this open specification and will be documented in `docs/version-designs.md`.
+
+#### Version 15
+
+*Version 15* is a skeuomorph of a physical working space. It draws from the warm, tactile feeling of *Version 4* and *Version 6*. It breaks with the layout of *Version 3* and instead the design organizes materials in books, notebooks, decks, etc. This version keeps and expands on the miscellanea from *Version 6*. It also adds more music decks and a reel-to-reel player to play generated sieves. Note that the audio code should be `scripts/` as it may be reused by other versions.
 
 ### Gallery
 
