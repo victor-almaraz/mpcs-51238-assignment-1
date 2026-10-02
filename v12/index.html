@@ -12,9 +12,9 @@
   <p class="back"><a href="../">Back to the gallery</a></p>
   <h1>FORTRAN punched card interpreter</h1>
   <div class="title-echo" aria-hidden="true">
-    <span>FORTRAN punched card interpreter</span>
-    <span>FORTRAN punched card interpreter</span>
-    <span>FORTRAN punched card</span>
+    <span class="f-caslon">FORTRAN <i class="f-grot">punched</i> card interpreter</span>
+    <span class="f-type">FORTRAN punched <i class="f-instr">card</i> interpreter</span>
+    <span class="f-sign">FORTRAN <i class="f-old">punched</i> card</span>
   </div>
   <p>This page is a working model of a 1960s computing center. You punch a FORTRAN program onto a deck of cards, hand the deck to the card reader, and collect your results from the line printer and the card punch. One of the sample decks is a program that generates the number sieves that the composer Iannis Xenakis used to write music.</p>
 </header>
@@ -175,8 +175,8 @@
 </section>
 
 <footer class="afterimage" aria-hidden="true">
-  <p class="echo-h">FORTRAN punched card interpreter</p>
-  <p>This page is a <span class="gone">working</span> model of a <span class="gone">1960s</span> computing center. You punch a <span class="gone">FORTRAN</span> program onto a deck of cards, <span class="gone">hand</span> the deck to the <span class="gone">card</span> reader, and <span class="gone">collect</span> your results from the line printer and the <span class="gone">card</span> punch. <span class="gone">One</span> of the sample decks is a program that generates the <span class="gone">number</span> sieves that the <span class="gone">composer</span> Iannis Xenakis used to write <span class="gone">music.</span></p>
+  <p class="echo-h">FORTRAN <i class="f-type">punched</i> card <i class="f-sign">interpreter</i></p>
+  <p>This page is a <span class="gone">working</span> model of a <span class="gone">1960s</span> computing center. You punch a <span class="gone">FORTRAN</span> program onto a <i class="f-caslon">deck</i> of cards, <span class="gone">hand</span> the deck to the <span class="gone">card</span> reader, and <span class="gone">collect</span> your results from the <i class="f-sign">line printer</i> and the <span class="gone">card</span> punch. <span class="gone">One</span> of the sample decks is a program that generates the <span class="gone">number</span> sieves that the <span class="gone">composer</span> <i class="f-instr">Iannis Xenakis</i> used to write <span class="gone">music.</span></p>
 </footer>
 <script src="../scripts/hollerith.js"></script>
 <script src="../scripts/fortran.js"></script>
@@ -605,7 +605,11 @@
   var looped = false;
 
   // Each room heading leaves a fainter, shorter copy of itself in the margin.
-  scenes.forEach(function (scene) {
+  // Memory rebuilds the words in whatever face it can find: the heading and its echoes
+  // drift through these, and come back in a different one on every visit.
+  var FACES = ['f-grot', 'f-instr', 'f-type', 'f-sign', 'f-caslon', 'f-din', 'f-courier', 'f-old'];
+  var HEAD_FACES = ['f-grot', 'f-instr', 'f-sign', 'f-caslon', 'f-din', 'f-courier', 'f-old'];
+  var echoes = scenes.map(function (scene) {
     var h = scene.querySelector('h3');
     var words = h.textContent.split(' ');
     var echo = document.createElement('div');
@@ -613,11 +617,36 @@
     echo.setAttribute('aria-hidden', 'true');
     [words.length, Math.max(1, words.length - 1), Math.max(1, words.length - 2)].forEach(function (n) {
       var s = document.createElement('span');
-      s.textContent = words.slice(0, n).join(' ');
+      words.slice(0, n).forEach(function (w, k) {
+        if (k) s.appendChild(document.createTextNode(' '));
+        var t = document.createElement('i');
+        t.textContent = w;
+        s.appendChild(t);
+      });
       echo.appendChild(s);
     });
     h.insertAdjacentElement('afterend', echo);
+    return echo;
   });
+
+  function swapFace(el, face) {
+    FACES.forEach(function (f) { el.classList.remove(f); });
+    if (face) el.classList.add(face);
+  }
+
+  // Presentational only: re-letter scene i for its v-th visit.
+  function reletter(i, v) {
+    var h = scenes[i].querySelector('h3');
+    swapFace(h, HEAD_FACES[(i + v) % HEAD_FACES.length]);
+    Array.prototype.forEach.call(echoes[i].children, function (span, k) {
+      swapFace(span, FACES[(i * 3 + v * 2 + k * 3 + 1) % FACES.length]);
+      // one word per fainter echo comes back in yet another face
+      var ws = span.children, wrong = (i + v + k) % ws.length;
+      Array.prototype.forEach.call(ws, function (w, j) {
+        swapFace(w, j === wrong && k > 0 ? FACES[(i + v * 5 + k * 2 + 4) % FACES.length] : null);
+      });
+    });
+  }
 
   function times(n) { return n === 1 ? 'once' : n === 2 ? 'twice' : n + ' times'; }
 
@@ -632,6 +661,7 @@
       l.classList.toggle('visited', seen[k] > 0 && k !== i);
     });
     var before = seen[i] - 1;
+    reletter(i, before);
     posEl.textContent = before === 0 ? '' :
       (looped && i === 0 ? 'You have been here before. ' : '') + 'You have read this ' + times(before) + ' already.';
     if (focus) scenes[i].querySelector('h3').focus({ preventScroll: true });

@@ -1,7 +1,9 @@
 /*
   International Typographic Style in black and white. Hatching is the only colour:
-  each section is coded by a hatch angle, printed on its thumb-index tab, along the
-  top of its sheet and in its figures. Hatching never sits behind text.
+  each section is coded by a hatch angle, printed on its thumb-index tab and along the
+  top of its sheet. Value comes from a seven-step scale of single, cross, triple and
+  quadruple hatching (--s1 to --s5, plus paper and solid), used like an engraver's
+  burin to model the figures. Hatching never sits behind text.
   Grid: 12 columns, flush left, ragged right, Helvetica throughout.
 */
 
@@ -11,11 +13,30 @@
   --sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --mono: "IBM Plex Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --rule: 2px;
+  /* single hatches: the section codes */
   --h45: repeating-linear-gradient(45deg, #000 0 1.5px, transparent 1.5px 7px);
   --h135: repeating-linear-gradient(-45deg, #000 0 1.5px, transparent 1.5px 7px);
   --h0: repeating-linear-gradient(0deg, #000 0 1.5px, transparent 1.5px 6px);
   --h90: repeating-linear-gradient(90deg, #000 0 1.5px, transparent 1.5px 6px);
+  /* cross-hatches: a code crossed by its perpendicular */
+  --x45: var(--h45), var(--h135);
+  --x0: var(--h0), var(--h90);
   --hx: repeating-linear-gradient(45deg, #000 0 1px, transparent 1px 8px), repeating-linear-gradient(-45deg, #000 0 1px, transparent 1px 8px);
+  /* The tonal scale, as an engraver builds it: each step lays one more direction
+     of line over the last, and the last steps tighten the pitch. 0 is paper. */
+  --s1: repeating-linear-gradient(45deg, #000 0 1px, transparent 1px 9px);
+  --s2: repeating-linear-gradient(45deg, #000 0 1.5px, transparent 1.5px 6px);
+  --s3: var(--s2), repeating-linear-gradient(-45deg, #000 0 1.5px, transparent 1.5px 6px);
+  --s4: var(--s3), repeating-linear-gradient(0deg, #000 0 1.5px, transparent 1.5px 6px);
+  --s5: repeating-linear-gradient(45deg, #000 0 2px, transparent 2px 5px), repeating-linear-gradient(-45deg, #000 0 2px, transparent 2px 5px),
+        repeating-linear-gradient(0deg, #000 0 1.5px, transparent 1.5px 5px), repeating-linear-gradient(90deg, #000 0 1.5px, transparent 1.5px 5px);
+  /* single strokes for building ramps, layer by layer */
+  --l45: repeating-linear-gradient(45deg, #000 0 1.5px, transparent 1.5px 6px);
+  --l135: repeating-linear-gradient(-45deg, #000 0 1.5px, transparent 1.5px 6px);
+  --l0: repeating-linear-gradient(0deg, #000 0 1.5px, transparent 1.5px 6px);
+  --l90: repeating-linear-gradient(90deg, #000 0 1.5px, transparent 1.5px 6px);
+  /* a true hatch gradient: one line every step, the pitch closing from 6% to ~1% */
+  --ramp: linear-gradient(90deg, transparent 0.00%, #000 0.00% calc(0.00% + 1.5px), transparent calc(0.00% + 1.5px), transparent 6.00%, #000 6.00% calc(6.00% + 1.5px), transparent calc(6.00% + 1.5px), transparent 11.40%, #000 11.40% calc(11.40% + 1.5px), transparent calc(11.40% + 1.5px), transparent 16.26%, #000 16.26% calc(16.26% + 1.5px), transparent calc(16.26% + 1.5px), transparent 20.63%, #000 20.63% calc(20.63% + 1.5px), transparent calc(20.63% + 1.5px), transparent 24.57%, #000 24.57% calc(24.57% + 1.5px), transparent calc(24.57% + 1.5px), transparent 28.11%, #000 28.11% calc(28.11% + 1.5px), transparent calc(28.11% + 1.5px), transparent 31.30%, #000 31.30% calc(31.30% + 1.5px), transparent calc(31.30% + 1.5px), transparent 34.17%, #000 34.17% calc(34.17% + 1.5px), transparent calc(34.17% + 1.5px), transparent 36.75%, #000 36.75% calc(36.75% + 1.5px), transparent calc(36.75% + 1.5px), transparent 39.08%, #000 39.08% calc(39.08% + 1.5px), transparent calc(39.08% + 1.5px), transparent 41.17%, #000 41.17% calc(41.17% + 1.5px), transparent calc(41.17% + 1.5px), transparent 43.05%, #000 43.05% calc(43.05% + 1.5px), transparent calc(43.05% + 1.5px), transparent 44.75%, #000 44.75% calc(44.75% + 1.5px), transparent calc(44.75% + 1.5px), transparent 46.27%, #000 46.27% calc(46.27% + 1.5px), transparent calc(46.27% + 1.5px), transparent 47.65%, #000 47.65% calc(47.65% + 1.5px), transparent calc(47.65% + 1.5px), transparent 48.88%, #000 48.88% calc(48.88% + 1.5px), transparent calc(48.88% + 1.5px), transparent 50.03%, #000 50.03% calc(50.03% + 1.5px), transparent calc(50.03% + 1.5px), transparent 51.18%, #000 51.18% calc(51.18% + 1.5px), transparent calc(51.18% + 1.5px), transparent 52.33%, #000 52.33% calc(52.33% + 1.5px), transparent calc(52.33% + 1.5px), transparent 53.48%, #000 53.48% calc(53.48% + 1.5px), transparent calc(53.48% + 1.5px), transparent 54.63%, #000 54.63% calc(54.63% + 1.5px), transparent calc(54.63% + 1.5px), transparent 55.78%, #000 55.78% calc(55.78% + 1.5px), transparent calc(55.78% + 1.5px), transparent 56.93%, #000 56.93% calc(56.93% + 1.5px), transparent calc(56.93% + 1.5px), transparent 58.08%, #000 58.08% calc(58.08% + 1.5px), transparent calc(58.08% + 1.5px), transparent 59.23%, #000 59.23% calc(59.23% + 1.5px), transparent calc(59.23% + 1.5px), transparent 60.38%, #000 60.38% calc(60.38% + 1.5px), transparent calc(60.38% + 1.5px), transparent 61.53%, #000 61.53% calc(61.53% + 1.5px), transparent calc(61.53% + 1.5px), transparent 62.68%, #000 62.68% calc(62.68% + 1.5px), transparent calc(62.68% + 1.5px), transparent 63.83%, #000 63.83% calc(63.83% + 1.5px), transparent calc(63.83% + 1.5px), transparent 64.98%, #000 64.98% calc(64.98% + 1.5px), transparent calc(64.98% + 1.5px), transparent 66.13%, #000 66.13% calc(66.13% + 1.5px), transparent calc(66.13% + 1.5px), transparent 67.28%, #000 67.28% calc(67.28% + 1.5px), transparent calc(67.28% + 1.5px), transparent 68.43%, #000 68.43% calc(68.43% + 1.5px), transparent calc(68.43% + 1.5px), transparent 69.58%, #000 69.58% calc(69.58% + 1.5px), transparent calc(69.58% + 1.5px), transparent 70.73%, #000 70.73% calc(70.73% + 1.5px), transparent calc(70.73% + 1.5px), transparent 71.88%, #000 71.88% calc(71.88% + 1.5px), transparent calc(71.88% + 1.5px), transparent 73.03%, #000 73.03% calc(73.03% + 1.5px), transparent calc(73.03% + 1.5px), transparent 74.18%, #000 74.18% calc(74.18% + 1.5px), transparent calc(74.18% + 1.5px), transparent 75.33%, #000 75.33% calc(75.33% + 1.5px), transparent calc(75.33% + 1.5px), transparent 76.48%, #000 76.48% calc(76.48% + 1.5px), transparent calc(76.48% + 1.5px), transparent 77.63%, #000 77.63% calc(77.63% + 1.5px), transparent calc(77.63% + 1.5px), transparent 78.78%, #000 78.78% calc(78.78% + 1.5px), transparent calc(78.78% + 1.5px), transparent 79.93%, #000 79.93% calc(79.93% + 1.5px), transparent calc(79.93% + 1.5px), transparent 81.08%, #000 81.08% calc(81.08% + 1.5px), transparent calc(81.08% + 1.5px), transparent 82.23%, #000 82.23% calc(82.23% + 1.5px), transparent calc(82.23% + 1.5px), transparent 83.38%, #000 83.38% calc(83.38% + 1.5px), transparent calc(83.38% + 1.5px), transparent 84.53%, #000 84.53% calc(84.53% + 1.5px), transparent calc(84.53% + 1.5px), transparent 85.68%, #000 85.68% calc(85.68% + 1.5px), transparent calc(85.68% + 1.5px), transparent 86.83%, #000 86.83% calc(86.83% + 1.5px), transparent calc(86.83% + 1.5px), transparent 87.98%, #000 87.98% calc(87.98% + 1.5px), transparent calc(87.98% + 1.5px), transparent 89.13%, #000 89.13% calc(89.13% + 1.5px), transparent calc(89.13% + 1.5px), transparent 90.28%, #000 90.28% calc(90.28% + 1.5px), transparent calc(90.28% + 1.5px), transparent 91.43%, #000 91.43% calc(91.43% + 1.5px), transparent calc(91.43% + 1.5px), transparent 92.58%, #000 92.58% calc(92.58% + 1.5px), transparent calc(92.58% + 1.5px), transparent 93.73%, #000 93.73% calc(93.73% + 1.5px), transparent calc(93.73% + 1.5px), transparent 94.88%, #000 94.88% calc(94.88% + 1.5px), transparent calc(94.88% + 1.5px), transparent 96.03%, #000 96.03% calc(96.03% + 1.5px), transparent calc(96.03% + 1.5px), transparent 97.18%, #000 97.18% calc(97.18% + 1.5px), transparent calc(97.18% + 1.5px), transparent 98.33%, #000 98.33% calc(98.33% + 1.5px), transparent calc(98.33% + 1.5px), transparent 99.48%, #000 99.48% calc(99.48% + 1.5px), transparent calc(99.48% + 1.5px));
 }
 
 * { box-sizing: border-box; }
@@ -33,7 +54,7 @@ body {
 a { color: var(--ink); text-underline-offset: 0.18em; }
 h1, h2, h3 { line-height: 1.05; letter-spacing: -0.01em; }
 code, kbd, pre, input.card, .ruler, .row .num { font-family: var(--mono); }
-code { font-size: 0.9em; }
+code { font-size: 0.95em; }
 kbd { font-size: 0.85em; padding: 0 0.3em; border: 1px solid #000; }
 p, li { max-width: 66ch; }
 
@@ -55,12 +76,59 @@ p, li { max-width: 66ch; }
 .h1-b { display: block; margin-top: 0.6rem; font-size: clamp(1.4rem, 2.8vw, 2.4rem); font-weight: 400; letter-spacing: -0.015em; }
 .lede { grid-column: 4 / 9; grid-row: 3; margin: 2rem 0 0; font-size: 1.15rem; }
 
-/* three hatched figures on the grid: a disc, a bar, a block */
-.mast-fig { grid-column: 9 / 13; grid-row: 2 / 4; position: relative; min-height: 15rem; }
-.mast-fig i { position: absolute; display: block; }
-.mast-fig i:nth-child(1) { right: 0; top: 0; width: 72%; aspect-ratio: 1; border-radius: 50%; background: var(--h45); }
-.mast-fig i:nth-child(2) { left: 0; top: 34%; width: 58%; height: 2.25rem; background: #000; }
-.mast-fig i:nth-child(3) { left: 0; bottom: 0; width: 30%; height: 42%; background: var(--h0); }
+/* An engraved still life on the grid: sphere, column and cube, each modelled
+   with the tonal scale, light from the upper left. */
+.mast-fig { grid-column: 9 / 13; grid-row: 2 / 5; position: relative; min-height: 17rem; }
+.mast-fig > * { position: absolute; display: block; }
+.mast-fig .ground { left: 0; right: 0; bottom: 0; height: 4px; background: #000; }
+.mast-fig .sph { position: absolute; left: 0; bottom: 4px; width: 46%; z-index: 2; }
+.mast-fig .cast { left: 22%; bottom: 4px; width: 46%; height: 8%; z-index: 1; }
+.mast-fig .cyl { left: 38%; bottom: 4px; width: 20%; height: 82%; }
+.mast-fig .cube { right: 0; bottom: 4px; width: 42%; z-index: 2; }
+
+/* sphere: darkest at the core shadow, each lighter disc shifted toward the light */
+.sph { display: block; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 1.5px solid #000; background: var(--s5); background-color: #fff; }
+.sph b { position: absolute; display: block; aspect-ratio: 1; border-radius: 50%; background-color: #fff; }
+.sph b:nth-child(1) { width: 104%; left: -12%; top: -12%; background-image: var(--s4); }
+.sph b:nth-child(2) { width: 86%; left: -7%; top: -7%; background-image: var(--s3); }
+.sph b:nth-child(3) { width: 64%; left: 3%; top: 3%; background-image: var(--s2); }
+.sph b:nth-child(4) { width: 36%; left: 15%; top: 15%; background-image: var(--s1); }
+.sph b:nth-child(4)::after { content: ""; position: absolute; inset: 30%; border-radius: 50%; background: #fff; }
+.cast { border-radius: 50%; background: var(--s4); }
+
+/* column: vertical strokes, crossed more densely toward the shadowed side */
+.cyl {
+  border: 2px solid #000; border-top: 0;
+  border-radius: 0 0 50% 50% / 0 0 10% 10%;
+  background:
+    var(--l0) 100% 0 / 16% 100% no-repeat,
+    var(--l45) 100% 0 / 34% 100% no-repeat,
+    var(--l135) 100% 0 / 58% 100% no-repeat,
+    var(--l135) 0 0 / 10% 100% no-repeat,
+    var(--l90);
+  background-color: #fff;
+}
+.cyl b { position: absolute; left: -2px; right: -2px; top: 0; aspect-ratio: 3 / 1; transform: translateY(-50%); border: 2px solid #000; border-radius: 50%; background: var(--s1); background-color: #fff; }
+
+/* cube: three faces, three values; the black body shows through as edges */
+.cube { aspect-ratio: 1 / 1.15; background: #000; clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.cube b { position: absolute; inset: 0; background-color: #fff; }
+.cube .c-top { clip-path: polygon(50% 3%, 95% 25%, 50% 47%, 5% 25%); background-image: var(--s1); }
+.cube .c-left { clip-path: polygon(2.5% 28%, 48.5% 50.5%, 48.5% 96%, 2.5% 73.5%); background-image: var(--s3); }
+.cube .c-right { clip-path: polygon(51.5% 50.5%, 97.5% 28%, 97.5% 73.5%, 51.5% 96%); background-image: var(--s5); }
+
+/* the scale itself, printed like a calibration strip, with its continuous ramp below */
+.scale { grid-column: 4 / 9; grid-row: 4; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); margin: 2rem 0 0; font-size: 16px; font-variant-numeric: tabular-nums; }
+.scale span { display: block; }
+.scale i { display: block; height: 2.25rem; margin: 0 0 0.35rem -1.5px; border: 1.5px solid #000; }
+.scale span:first-child i { margin-left: 0; }
+.scale .v1 { background: var(--s1); }
+.scale .v2 { background: var(--s2); }
+.scale .v3 { background: var(--s3); }
+.scale .v4 { background: var(--s4); }
+.scale .v5 { background: var(--s5); }
+.scale .v6 { background: #000; }
+.scale::after { content: ""; grid-column: 1 / -1; height: 1rem; margin-top: 0.4rem; border: 1.5px solid #000; background: var(--ramp); }
 
 /* ---------------- work area: sheet + thumb index ---------------- */
 
@@ -101,6 +169,7 @@ p, li { max-width: 66ch; }
 #tab-editor .tab-h { background: var(--h0); }
 #tab-viewer .tab-h { background: var(--h90); }
 #tab-output .tab-h { background: var(--h135); }
+.tabs [role="tab"][aria-selected="true"] .tab-h { background: var(--s5); }
 .tabs [role="tab"]:hover .tab-l { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
 .tabs [role="tab"][aria-selected="true"] { border-left-color: #fff; z-index: 2; }
 .tabs [role="tab"][aria-selected="true"] .tab-l { font-weight: 700; }
@@ -122,10 +191,16 @@ p, li { max-width: 66ch; }
   border-bottom: var(--rule) solid #000;
   pointer-events: none;
 }
-#panel-about::before { background: var(--h45); }
-#panel-editor::before { background: var(--h0); }
-#panel-viewer::before { background: var(--h90); }
-#panel-output::before { background: var(--h135); }
+#panel-about::before { --code: var(--h45); --c1: var(--l135); --c2: var(--l0); }
+#panel-editor::before { --code: var(--h0); --c1: var(--l90); --c2: var(--l45); }
+#panel-viewer::before { --code: var(--h90); --c1: var(--l0); --c2: var(--l135); }
+#panel-output::before { --code: var(--h135); --c1: var(--l45); --c2: var(--l90); }
+[role="tabpanel"]::before {
+  background:
+    var(--c2) 100% 0 / 22% 100% no-repeat,
+    var(--c1) 100% 0 / 48% 100% no-repeat,
+    var(--code);
+}
 
 [role="tabpanel"] > h2 {
   display: flex;
@@ -166,7 +241,7 @@ p, li { max-width: 66ch; }
   position: absolute;
   right: 0.25rem; top: 0.85rem;
   width: 1rem; height: 1rem;
-  background: var(--h45);
+  background: var(--s4);
   outline: 1.5px solid #000;
 }
 
@@ -182,22 +257,56 @@ p, li { max-width: 66ch; }
 .sub-n { margin: 0; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 700; letter-spacing: -0.05em; line-height: 0.9; }
 .sub-main > h3:first-child { margin: 0 0 1.25rem; font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.08; }
 
-/* figures: one geometric composition per sheet, hatch only */
+/* figures: one engraved composition per sheet, toned only with the hatch scale */
 .fig { position: relative; margin-top: 2rem; width: 100%; max-width: 13rem; aspect-ratio: 3 / 4; }
-.fig::before, .fig::after { content: ""; position: absolute; }
-.fig-circle .fig::before { inset: 0 0 25% 0; border-radius: 50%; background: var(--h45); }
-.fig-circle .fig::after { left: 0; right: 0; bottom: 0; height: 12%; background: #000; }
-.fig-bars .fig::before { left: 0; top: 0; width: 100%; height: 45%; background: var(--h0); }
-.fig-bars .fig::after { left: 0; top: 55%; width: 35%; height: 45%; background: var(--h90); }
-.fig-quarter .fig::before { left: 0; top: 0; width: 100%; aspect-ratio: 1; border-radius: 100% 0 0 0; background: var(--h135); }
-.fig-quarter .fig::after { right: 0; bottom: 0; width: 30%; height: 18%; background: #000; }
-.fig-grid .fig::before { inset: 0 0 25% 0; background: var(--hx); outline: var(--rule) solid #000; outline-offset: -2px; }
-.fig-grid .fig::after { left: 0; bottom: 0; width: 100%; height: 8%; background: #000; }
-.fig-stair .fig::before { inset: 0; background: var(--h0); clip-path: polygon(0 100%, 0 75%, 25% 75%, 25% 50%, 50% 50%, 50% 25%, 75% 25%, 75% 0, 100% 0, 100% 100%); }
-.fig-disc .fig::before { left: 0; right: 0; top: 10%; aspect-ratio: 2 / 1; border-radius: 999px 999px 0 0; background: var(--h90); }
-.fig-disc .fig::after { left: 0; right: 0; top: calc(10% + 50% * 0.75 + 0.5rem); height: 0.75rem; background: #000; }
-.fig-band .fig::before { inset: 0; background: var(--h45); clip-path: polygon(0 0, 40% 0, 100% 60%, 100% 100%, 60% 100%, 0 40%); }
-.fig-band .fig::after { right: 0; top: 0; width: 22%; aspect-ratio: 1; border-radius: 50%; background: #000; }
+.fig > * { position: absolute; display: block; }
+
+.fig-circle .sph { position: absolute; left: 0; top: 10%; width: 100%; z-index: 1; }
+.fig-circle .cast { left: 34%; top: 80%; width: 66%; height: 8%; }
+.fig-circle .plinth { left: 0; right: 0; bottom: 0; height: 10%; background: #000; }
+
+/* the deck, side on: slabs out of line, darkening down the stack */
+.fig-bars i { left: 0; width: 90%; height: 12%; border: 1.5px solid #000; }
+.fig-bars i:nth-child(1) { top: 0; left: 2%; background: var(--s1); }
+.fig-bars i:nth-child(2) { top: 16%; left: 8%; background: var(--s2); }
+.fig-bars i:nth-child(3) { top: 32%; left: 0; background: var(--s3); }
+.fig-bars i:nth-child(4) { top: 48%; left: 10%; background: var(--s4); }
+.fig-bars i:nth-child(5) { top: 64%; left: 4%; background: var(--s5); }
+.fig-bars i:nth-child(6) { top: 80%; left: 0; background: #000; }
+
+/* quarter disc: four concentric quarters, one more direction of line in each */
+.fig-quarter i { right: 0; bottom: 25%; aspect-ratio: 1; border-radius: 100% 0 0 0; }
+.fig-quarter i:nth-child(1) { width: 100%; background: var(--l45); border: 2px solid #000; border-width: 2px 0 0 2px; }
+.fig-quarter i:nth-child(2) { width: 75%; background: var(--l135); }
+.fig-quarter i:nth-child(3) { width: 50%; background: var(--l0); }
+.fig-quarter i:nth-child(4) { width: 25%; background: var(--l90); }
+.fig-quarter .fig::after { content: ""; position: absolute; right: 0; bottom: 0; width: 30%; height: 14%; background: #000; }
+
+/* a specimen grid: value rises one step on each diagonal */
+.fig-grid .fig { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 5px; height: auto; aspect-ratio: 1; }
+.fig-grid i { position: static; border: 1.5px solid #000; }
+.fig-grid i:nth-child(1) { background: var(--s1); }
+.fig-grid i:nth-child(2), .fig-grid i:nth-child(4) { background: var(--s2); }
+.fig-grid i:nth-child(3), .fig-grid i:nth-child(5), .fig-grid i:nth-child(7) { background: var(--s3); }
+.fig-grid i:nth-child(6), .fig-grid i:nth-child(8) { background: var(--s4); }
+.fig-grid i:nth-child(9) { background: var(--s5); }
+
+/* a stair: each step one value darker than the last */
+.fig-stair i { bottom: 0; width: 20%; border: 1.5px solid #000; }
+.fig-stair i:nth-child(1) { left: 0; height: 20%; background: var(--s1); }
+.fig-stair i:nth-child(2) { left: 20%; height: 40%; background: var(--s2); }
+.fig-stair i:nth-child(3) { left: 40%; height: 60%; background: var(--s3); }
+.fig-stair i:nth-child(4) { left: 60%; height: 80%; background: var(--s4); }
+.fig-stair i:nth-child(5) { left: 80%; height: 100%; background: var(--s5); }
+
+/* Xenakis: a hyperbolic paraboloid drawn only with its two families of ruling lines,
+   which cross-hatch themselves densest where the surface turns away */
+.hypar { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* the sieve 5@2 | 5@3 over 0..19: members at full value and full height */
+.fig-band .fig { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; align-items: end; }
+.fig-band i { position: static; height: 55%; border: 1px solid #000; background: var(--s1); }
+.fig-band i:nth-child(5n + 3), .fig-band i:nth-child(5n + 4) { height: 100%; background: var(--s5); }
 
 .next { margin-top: 2.5rem; }
 .next button { font-weight: 700; }
@@ -292,7 +401,7 @@ input.card:focus-visible { outline-offset: 0; }
 #run-status { font-size: 1.25rem; font-weight: 700; }
 .printer { max-height: 32em; overflow: auto; padding: 1rem 0; border-top: 6px solid #000; border-bottom: var(--rule) solid #000; }
 .printer pre, .log pre, .listing pre { margin: 0; font-size: 16px; line-height: 1.4; }
-.pagebreak { margin: 0.6rem 0; border-top: 1px dashed #000; text-align: center; font-size: 14px; font-family: var(--mono); }
+.pagebreak { margin: 0.6rem 0; border-top: 1px dashed #000; text-align: center; font-size: 16px; font-family: var(--mono); }
 .placeholder { margin: 0; }
 .log pre { padding: 0.75rem 0; white-space: pre-wrap; border-top: var(--rule) solid #000; border-bottom: 1px solid #000; }
 .listing { margin-top: 1.5rem; }
@@ -305,7 +414,8 @@ input.card:focus-visible { outline-offset: 0; }
   .page { padding: 1.25rem 1.25rem 3rem; }
   .mast h1 { grid-column: 1 / -1; }
   .lede { grid-column: 1 / 9; }
-  .mast-fig { grid-column: 9 / 13; grid-row: 3; min-height: 8rem; margin-top: 2rem; }
+  .mast-fig { grid-column: 9 / 13; grid-row: 3 / 5; min-height: 10rem; margin-top: 2rem; }
+  .scale { grid-column: 1 / 9; }
   .work { grid-template-columns: 1fr; }
   .tabs { grid-column: 1; grid-row: 1; padding: 0; flex-direction: column; margin-bottom: 1.5rem; }
   .tabs [role="tab"] { min-height: 3.25rem; margin: 0 0 -2px; padding: 0.6rem 2.4rem 0.6rem 0.9rem; }
@@ -320,6 +430,7 @@ input.card:focus-visible { outline-offset: 0; }
 @media (max-width: 600px) {
   .lede { grid-column: 1 / -1; }
   .mast-fig { display: none; }
+  .scale { grid-column: 1 / -1; }
   .contents ol { grid-template-columns: 1fr; }
   td code { white-space: normal; }
   th, td { padding-right: 0.6rem; }

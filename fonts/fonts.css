@@ -66,3 +66,11 @@
 @font-face { font-family: "Work Sans"; font-style: normal; font-weight: 300; font-display: swap; src: url("work-sans/work-sans-latin-300-normal.woff2") format("woff2"); }
 @font-face { font-family: "Work Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("work-sans/work-sans-latin-400-normal.woff2") format("woff2"); }
 @font-face { font-family: "Work Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("work-sans/work-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Overpass"; font-style: normal; font-weight: 300; font-display: swap; src: url("overpass/overpass-latin-300-normal.woff2") format("woff2"); }
+@font-face { font-family: "Overpass"; font-style: normal; font-weight: 400; font-display: swap; src: url("overpass/overpass-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Overpass"; font-style: normal; font-weight: 600; font-display: swap; src: url("overpass/overpass-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Cutive Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("cutive-mono/cutive-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Instrument Serif"; font-style: normal; font-weight: 400; font-display: swap; src: url("instrument-serif/instrument-serif-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-display: swap; src: url("instrument-serif/instrument-serif-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Pixelify Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("pixelify-sans/pixelify-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Pixelify Sans"; font-style: normal; font-weight: 700; font-display: swap; src: url("pixelify-sans/pixelify-sans-latin-700-normal.woff2") format("woff2"); }

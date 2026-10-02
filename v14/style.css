@@ -56,7 +56,7 @@ h1 { margin: 0; font-weight: 400; }
 /* a black disc, too big for its box, and an op-art target sliding off it */
 .split-b .disc { position: absolute; width: 150%; aspect-ratio: 1; left: 28%; top: -30%; border-radius: 50%; background: var(--black); }
 .split-b .rings {
-  position: absolute; width: 70%; aspect-ratio: 1; left: 6%; bottom: 8%; border-radius: 50%;
+  position: absolute; width: 70%; aspect-ratio: 1; left: 10%; bottom: 8%; border-radius: 50%;
   background: repeating-radial-gradient(circle, var(--cream) 0 6px, var(--magenta) 6px 12px);
 }
 .lede { grid-column: 1 / -1; padding: 2.4rem clamp(1.2rem, 4vw, 3.5rem); background: var(--cream); border-bottom: 6px solid var(--black); }
@@ -111,17 +111,21 @@ h1 { margin: 0; font-weight: 400; }
 
 .screen { min-width: 0; padding: clamp(1.2rem, 4vw, 3.5rem); }
 
-[role="tabpanel"]:not([hidden]) { animation: wipe 0.55s cubic-bezier(.7, 0, .2, 1) both; }
+[role="tabpanel"]:not([hidden]) { animation: wipe 0.55s cubic-bezier(.7, 0, .2, 1) backwards; }
 [role="tabpanel"]:focus-visible { outline: 3px solid var(--magenta); outline-offset: 8px; }
-@keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+/* the wipe ends past the box and is not held, so italic overhangs are never cut */
+@keyframes wipe { from { clip-path: inset(-0.5em 100% -0.5em -0.5em); } to { clip-path: inset(-0.5em -0.5em -0.5em -0.5em); } }
 
 /* headings: Didot, oversize, split in two colours across the middle */
+/* background-clip:text only paints inside the box, so the padding gives the italic
+   overhangs and descenders room; the margins cancel it out. The split stays at 58% of the line. */
 [role="tabpanel"] > h2 {
-  margin: 0 0 2rem -0.05em;
+  margin: 0 0 calc(2rem - 0.2em) -0.17em;
+  padding: 0 0.14em 0.2em 0.12em;
   font: italic 400 clamp(3.2rem, 9vw, 7rem)/0.95 var(--display);
   letter-spacing: -0.035em;
   color: var(--black);
-  background: linear-gradient(180deg, var(--black) 58%, var(--magenta) 58%);
+  background: linear-gradient(180deg, var(--black) 0.551em, var(--magenta) 0.551em);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   width: fit-content;
@@ -155,12 +159,11 @@ h1 { margin: 0; font-weight: 400; }
 .scenes-on .scene[hidden] { display: none; }
 .scenes-on .scene > :not(.shot-mark) { grid-column: 2; }
 .scenes-on .scene h3 { margin-top: 0; box-shadow: inset 0 -0.28em 0 color-mix(in srgb, var(--shot) 45%, transparent); width: fit-content; }
-.scenes-on .scene:not([hidden]) { animation: wipe 0.6s cubic-bezier(.7, 0, .2, 1) both; }
+.scenes-on .scene:not([hidden]) { animation: wipe 0.6s cubic-bezier(.7, 0, .2, 1) backwards; }
 .scenes-on .shot-mark {
   display: block;
   grid-column: 1; grid-row: 1 / span 30;
   position: sticky; top: 1.5rem;
-  overflow: hidden;
 }
 .shot-mark .num {
   display: block;
@@ -300,8 +303,8 @@ svg text[fill="#aaa"] { fill: #8f8463; }
   .band-art { display: none; }
   .scenes-on .scene { grid-template-columns: 1fr; }
   .scenes-on .scene > :not(.shot-mark) { grid-column: 1; }
-  .scenes-on .shot-mark { position: relative; top: 0; grid-row: auto; display: flex; align-items: flex-end; justify-content: space-between; height: 6.5rem; margin-bottom: 1.4rem; }
-  .shot-mark .num { font-size: 7.5rem; }
+  .scenes-on .shot-mark { position: relative; top: 0; grid-row: auto; display: flex; align-items: flex-end; justify-content: space-between; min-height: 6.5rem; margin-bottom: 1.4rem; }
+  .shot-mark .num { font-size: 7.5rem; padding-bottom: 0.2em; }  /* room for the old-style 3, 4, 5, 7 */
   .shot-mark .op { width: 6.5rem; margin: 0; }
   .scene-step { flex-wrap: wrap; }
 }

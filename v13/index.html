@@ -8,10 +8,62 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="light" aria-hidden="true"><div class="beam"></div></div>
+<div class="light" aria-hidden="true"><div class="pool"></div><div class="beam"></div><div class="stock"></div><div class="grain"></div><div class="wear"></div></div>
+<div class="grain-top" aria-hidden="true"></div>
+<div class="set" aria-hidden="true">
+<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMin slice" focusable="false">
+  <defs>
+    <linearGradient id="street-g" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="currentColor" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <!-- far plane: a painted sky, whorled like the backdrops of Holstenwall -->
+  <g class="plane far">
+    <path class="whorl" d="M1267 192 L1268 194 L1268 195 L1268 196 L1268 198 L1267 199 L1266 201 L1265 202 L1264 203 L1262 204 L1259 205 L1257 206 L1254 206 L1252 207 L1249 206 L1246 206 L1243 205 L1240 204 L1237 202 L1234 200 L1232 198 L1230 195 L1228 193 L1227 190 L1226 186 L1226 183 L1226 179 L1227 176 L1228 172 L1230 169 L1233 165 L1236 162 L1240 159 L1245 157 L1249 155 L1255 153 L1260 152 L1266 151 L1272 151 L1278 152 L1284 153 L1290 155 L1296 158 L1301 161 L1306 164 L1311 169 L1315 173 L1318 178 L1320 184 L1322 190 L1323 196 L1322 202 L1321 208 L1319 214 L1316 220 L1312 226 L1307 231 L1301 236 L1294 240 L1287 244 L1279 247 L1270 250 L1261 251 L1252 252 L1243 251 L1233 250 L1224 248 L1215 245 L1206 241 L1199 236 L1191 230 L1185 224 L1179 216 L1175 209 L1172 201 L1170 192 L1169 183 L1169 174 L1171 166 L1175 157 L1179 148 L1185 140 L1192 133 L1201 126 L1210 120 L1221 115 L1232 111 L1244 108 L1256 106 L1268 106 L1281 106 L1294 108 L1307 111 L1319 115 L1330 121 L1341 127 L1350 135 L1359 144 L1366 153 L1372 163 L1376 174 L1379 185 L1380 197 L1379 208 L1377 220 L1372 231 L1366 242 L1359 252 L1349 262 L1339 271 L1327 278 L1313 285 L1299 290 L1284 294 L1268 297 L1252 297 L1236 297 L1220 295 L1204 291 L1189 285 L1174 279 L1161 270 L1149 261 L1138 250 L1129 239 L1122 226 L1116 213 L1113 199 L1111 185 L1112 170 L1115 156 L1120 142 L1127 129 L1137 116 L1148 104 L1161 93 L1176 84 L1192 75 L1209 69 L1227 64 L1246 61 L1266 60 L1285 60 L1305 63 L1324 67 L1342 73 L1360 81 L1376 91 L1391 102 L1404 115 L1415 129 L1424 144 L1431 160 L1435 176 L1437 193 L1437 210 L1433 227 L1428 244 L1419 260 L1409 275 L1396 290 L1380 302 L1363 314 L1345 324 L1324 332 L1303 338 L1281 342 L1258 343 L1235 343 L1212 340 L1189 335 L1167 328 L1147 319 L1128 308 L1110 295 L1094 281 L1081 264 L1070 247 L1062 229 L1057 210 L1054 190 L1054 170 L1058 150 L1064 131 L1073 112 L1085 94 L1100 78 L1117 63 L1137 49 L1158 38 L1181 28 L1206 21 L1231 16 L1258 14 L1284 14 L1310 17 L1336 22 L1361 30 L1385 40 L1408 52 L1428 67 L1446 83 L1462 101 L1475 121 L1484 142 L1491 163 L1495 186 L1495 208 L1491 231 L1485 253 L1474 274 L1461 295 L1445 314 L1426 331 L1404 347 L1380 360 L1354 371 L1327 380 L1298 386 L1268 389 L1239 389"/>
+    <path class="whorl thin" d="M1249 205 L1246 205 L1243 204 L1240 203 L1237 202 L1234 200 L1232 197 L1230 195 L1228 192 L1227 189 L1226 186 L1225 182 L1226 178 L1227 175 L1228 171 L1230 167 L1233 164 L1236 161 L1240 158 L1245 155 L1250 153 L1255 151 L1261 150 L1267 150 L1274 150 L1280 150 L1287 152 L1293 154 L1299 156 L1305 160 L1310 164 L1315 168 L1319 173 L1322 179 L1325 185 L1326 191 L1327 197 L1327 204 L1325 211 L1323 217 L1319 223 L1315 230 L1309 235 L1303 241 L1296 245 L1287 249 L1279 252 L1269 255 L1260 256 L1250 257 L1239 256 L1229 255 L1219 252 L1210 249 L1200 244 L1192 239 L1184 232 L1177 225 L1171 217 L1166 209 L1163 200 L1161 191 L1160 181 L1161 171 L1163 162 L1167 152 L1173 143 L1179 134 L1187 126 L1197 119 L1207 112 L1219 107 L1231 103 L1244 99 L1258 98 L1272 97 L1286 98 L1300 100 L1314 104 L1327 109 L1339 115 L1351 122 L1361 131 L1371 140 L1379 151 L1385 162 L1389 174 L1392 187 L1393 200 L1392 212 L1388 225 L1383 238 L1376 250 L1368 261 L1357 272 L1345 281 L1331 289 L1317 296 L1301 302 L1284 306 L1266 309 L1248 309 L1230 308 L1212 306 L1195 301 L1178 295 L1162 287 L1147 278 L1134 267 L1122 255 L1113 242 L1105 228 L1099 213 L1095 197 L1094 181 L1096 165 L1099 149 L1105 134 L1114 119 L1124 105 L1137 92 L1152 80 L1169 69 L1187 61 L1206 54 L1227 48 L1248 45 L1270 44 L1292 45 L1314 48 L1335 54 L1356 61 L1375 70 L1393 81 L1409 94 L1424 109 L1436 124 L1445 141 L1453 159 L1457 178 L1459 197 L1457 216 L1453 235 L1446 254 L1437 272 L1424 289 L1409 304 L1392 318 L1372 331 L1351 342 L1328 350 L1304 357 L1279 361 L1253 362 L1227 361 L1201 358 L1176 352 L1152 344 L1129 333 L1108 320 L1088 305 L1071 289 L1057 270 L1045 251 L1036 230 L1031 208 L1028 186 L1029 164 L1034 142 L1041 120 L1052 99 L1066 79 L1083 61 L1103 44 L1125 29 L1150 17 L1176 6 L1204 -1 L1233 -6 L1262 -9 L1292 -8 L1322 -4 L1351 2 L1379 11 L1406 23 L1430 37 L1453 54 L1473 73 L1490 94 L1504 116 L1514 140 L1521 164 L1525 190 L1524 215 L1520 240 L1511 265 L1499 289 L1484 312 L1465 333 L1443 353 L1418 370 L1391 384 L1361 397 L1330 406 L1297 412 L1264 415 L1230 415 L1196 411 L1163 404 L1131 394 L1101 381 L1073 366 L1047 347 L1024 326 L1004 303 L988 278 L975 252 L967 224 L963 196 L963 167 L967 139"/>
+  </g>
+  <!-- middle plane: a street that winds away under spired houses, straight below and bent above -->
+  <g class="plane mid">
+    <path class="street" d="M240 1000 C 520 900 700 800 770 720 S 900 630 935 600 L 950 600 C 980 640 1030 690 1060 760 S 1180 920 1330 1000 Z"/>
+    <path class="band" d="M330 960 Q 800 860 1260 965"/>
+    <path class="band" d="M680 790 Q 890 740 1075 790"/>
+    <path class="band" d="M800 715 Q 920 685 1030 718"/>
+    <path class="house" d="M520 1000 L 552 700 Q 536 610 588 540 L 606 420 L 636 530 Q 700 600 686 700 L 724 1000 Z"/>
+    <path class="house" d="M1180 1000 L 1168 720 Q 1150 640 1196 590 L 1262 400 L 1286 560 Q 1370 600 1372 690 L 1388 1000 Z"/>
+    <path class="house" d="M842 700 L 852 610 Q 840 580 866 556 L 892 486 L 904 566 Q 934 590 928 626 L 934 700 Z"/>
+    <path class="house" d="M1000 720 L 1010 640 Q 1000 606 1026 590 L 1046 540 L 1052 600 Q 1074 618 1066 650 L 1070 720 Z"/>
+    <path class="window" d="M600 640 L 642 606 L 636 690 L 598 712 Z"/>
+    <path class="window" d="M630 800 L 676 784 L 664 856 L 634 864 Z"/>
+    <path class="window" d="M1226 640 L 1282 600 L 1272 690 L 1232 704 Z"/>
+    <path class="window" d="M1250 800 L 1298 790 L 1290 858 L 1246 870 Z"/>
+    <path class="window" d="M870 604 L 892 590 L 888 628 L 872 634 Z"/>
+  </g>
+  <!-- near plane: a stair that zigzags yet curves, and the shadow of a long hand climbing it -->
+  <g class="plane near">
+    <path class="rail" d="M-40 940 C 120 900 160 760 300 720 S 500 640 560 520 S 700 380 860 380"/>
+    <path class="steps" d="M-40 980 L-40 965 L13 965 L13 941 L60 941 L60 909 L106 909 L106 872 L152 872 L152 831 L198 831 L198 787 L248 787 L248 741 L301 741 L301 695 L359 695 L359 650 L421 650 L421 606 L487 606 L487 565 L557 565 L557 526 L630 526 L630 491 L703 491 L703 461 L773 461 L773 436 L837 436 L837 420 L880 420"/>
+    <g class="hand" filter="url(#soft)" transform="translate(470 -250) rotate(-8 260 600)"><path d="M272 565 Q286 479 319 420 Q273 472 252 555 Z"/><path d="M291 582 Q342 498 403 451 Q333 487 277 566 Z"/><path d="M299 608 Q373 550 443 531 Q369 538 293 588 Z"/><path d="M299 636 Q372 615 431 621 Q373 602 301 616 Z"/><path d="M254 597 Q260 548 232 520 Q249 552 238 603 Z"/><path d="M-40 980 C 60 860 150 760 214 662 C 236 610 262 570 300 584 C 330 600 320 650 290 672 C 220 740 140 860 80 1000 Z"/></g>
+  </g>
+</svg>
+</div>
 <header class="titlecard">
   <p class="back"><a href="../">Back to the gallery</a></p>
-  <h1><span class="h1-a">FORTRAN</span> <span class="h1-b">punched card interpreter</span></h1>
+  <h1><span class="sr">FORTRAN</span><svg class="h1-a" viewBox="0 0 900 300" aria-hidden="true" focusable="false">
+    <defs>
+      <path id="h1-arc" d="M 84 290 C 240 128 540 88 892 196" fill="none"/>
+      <text id="h1-t" font-family="'Big Shoulders Display', 'Arial Narrow', sans-serif" font-weight="800" font-size="180" letter-spacing="6"><textPath href="#h1-arc">FORTRAN</textPath></text>
+    </defs>
+    <use href="#h1-t" class="cast" transform="translate(40 46)"/>
+    <use href="#h1-t" class="depth" transform="translate(18 18)"/>
+    <use href="#h1-t" class="depth" transform="translate(15 15)"/>
+    <use href="#h1-t" class="depth" transform="translate(12 12)"/>
+    <use href="#h1-t" class="depth" transform="translate(9 9)"/>
+    <use href="#h1-t" class="depth" transform="translate(6 6)"/>
+    <use href="#h1-t" class="depth" transform="translate(3 3)"/>
+    <use href="#h1-t" class="face"/>
+  </svg> <span class="h1-b">punched card interpreter</span></h1>
   <p>This page is a working model of a 1960s computing center. You punch a FORTRAN program onto a deck of cards, hand the deck to the card reader, and collect your results from the line printer and the card punch. One of the sample decks is a program that generates the number sieves that the composer Iannis Xenakis used to write music.</p>
 </header>
 
@@ -23,7 +75,7 @@
 </div>
 
 <section role="tabpanel" id="panel-about" aria-labelledby="tab-about" tabindex="0">
-  <h2>About</h2>
+  <h2><span class="sr">About</span><svg class="arc-title" viewBox="0 0 640 160" aria-hidden="true" focusable="false"><path id="arc-about" d="M 10 140 C 150 46 400 14 632 92" fill="none"/><text class="depth" transform="translate(6 6)"><textPath href="#arc-about">About</textPath></text><text class="face"><textPath href="#arc-about">About</textPath></text></svg></h2>
   <nav class="reels" aria-label="About sections" data-js-only hidden>
     <ol>
       <li><button type="button" class="scene-link" aria-controls="scene-1"><span class="num" aria-hidden="true">I</span><span class="t">FORTRAN and the punched card</span></button></li>
@@ -107,7 +159,7 @@
 </section>
 
 <section role="tabpanel" id="panel-editor" aria-labelledby="tab-editor" tabindex="0" hidden>
-  <h2>Editor</h2>
+  <h2><span class="sr">Editor</span><svg class="arc-title" viewBox="0 0 640 160" aria-hidden="true" focusable="false"><path id="arc-editor" d="M 10 140 C 150 46 400 14 632 92" fill="none"/><text class="depth" transform="translate(6 6)"><textPath href="#arc-editor">Editor</textPath></text><text class="face"><textPath href="#arc-editor">Editor</textPath></text></svg></h2>
   <div class="toolbar">
     <label for="sample-select">Sample deck:</label>
     <select id="sample-select"></select>
@@ -137,7 +189,7 @@
 </section>
 
 <section role="tabpanel" id="panel-viewer" aria-labelledby="tab-viewer" tabindex="0" hidden>
-  <h2>Card viewer</h2>
+  <h2><span class="sr">Card viewer</span><svg class="arc-title" viewBox="0 0 640 160" aria-hidden="true" focusable="false"><path id="arc-viewer" d="M 10 140 C 150 46 400 14 632 92" fill="none"/><text class="depth" transform="translate(6 6)"><textPath href="#arc-viewer">Card viewer</textPath></text><text class="face"><textPath href="#arc-viewer">Card viewer</textPath></text></svg></h2>
   <div class="toolbar">
     <button type="button" id="prev-card">Previous card</button>
     <button type="button" id="next-card">Next card</button>
@@ -147,7 +199,7 @@
 </section>
 
 <section role="tabpanel" id="panel-output" aria-labelledby="tab-output" tabindex="0" hidden>
-  <h2>Output</h2>
+  <h2><span class="sr">Output</span><svg class="arc-title" viewBox="0 0 640 160" aria-hidden="true" focusable="false"><path id="arc-output" d="M 10 140 C 150 46 400 14 632 92" fill="none"/><text class="depth" transform="translate(6 6)"><textPath href="#arc-output">Output</textPath></text><text class="face"><textPath href="#arc-output">Output</textPath></text></svg></h2>
   <p id="run-status" role="status">The deck has not been run yet.</p>
   <h3>Printer output</h3>
   <div class="printer" id="printer"><p class="placeholder">Run the deck to see output.</p></div>
@@ -602,6 +654,9 @@
     root.style.setProperty('--beam', LIGHT[k][0] + 'deg');
     root.style.setProperty('--sx', LIGHT[k][1] + 'px');
     root.style.setProperty('--sy', LIGHT[k][2] + 'px');
+    // the pool of light sits opposite the shadows it casts
+    root.style.setProperty('--lx', (50 - LIGHT[k][1] * 1.4) + '%');
+    root.style.setProperty('--ly', (34 - LIGHT[k][2]) + '%');
   }
 
   function show(i, focus) {

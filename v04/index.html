@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<div class="copier-edge" aria-hidden="true"></div>
 <div class="scan">
 
 <header class="folder">
@@ -34,11 +35,11 @@
 
   <article class="leaf" data-leaf aria-labelledby="m1">
     <div class="memo-head" aria-hidden="true">
-      <p class="memo-title">Memorandum</p>
+      <p class="memo-title"><span class="xo" data-x="xxxx">Memo</span> Memorandum</p>
       <dl>
         <dt>To</dt><dd>All users of the card reader</dd>
         <dt>From</dt><dd>The computing center</dd>
-        <dt>Subject</dt><dd>The FORTRAN simulator and the sieve deck</dd>
+        <dt>Subject</dt><dd>The FORTRAN simulator and the <span class="xo" data-x="xxxxx">seive</span> sieve deck</dd>
       </dl>
     </div>
     <h3 id="m1">FORTRAN and the punched card</h3>
@@ -221,7 +222,7 @@
   var STACKER_SHOWN = 500;
   var SVG_NS = 'http://www.w3.org/2000/svg';
   // card colours for this theme (presentational)
-  var CARD_STOCK = "#e8d9b0", CARD_EDGE = "#8a7650", CARD_INK = "#2a251d", CARD_HOLE = "#2f2b25", CARD_PRINT = "#9a8760";
+  var CARD_STOCK = "#e9e9e6", CARD_EDGE = "#5e5e5c", CARD_INK = "#1c1c1c", CARD_HOLE = "#1c1c1c", CARD_PRINT = "#8c8c8a";
 
   function $(id) { return document.getElementById(id); }
 

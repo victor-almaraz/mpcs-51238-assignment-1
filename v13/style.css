@@ -1,5 +1,11 @@
-/* A dark stage crossed by one hard beam of light. Each tab is an act with its
-   own film tint; frames, headings and shadows lean, the reading text does not. */
+/* A dark stage cut by one hard beam, with soft pools where it lands. Each tab is an act
+   with its own film tint. As in Caligari, the sharp and the curved pull against each
+   other: pointed arches with bowed flanks, slanted steps whose edges sag, a stair that
+   zigzags along a curve, spires that bend. Headings, frames and shapes warp; the
+   reading text stays upright on solid ground. */
+
+@property --lx { syntax: "<percentage>"; inherits: true; initial-value: 16%; }
+@property --ly { syntax: "<percentage>"; inherits: true; initial-value: 12%; }
 
 :root {
   --tint: #e3a649;        /* amber: the first act */
@@ -10,9 +16,30 @@
   --beam: -24deg;
   --sx: 18px;
   --sy: 22px;
+  --lx: 16%;
+  --ly: 12%;
   --serif: "Libre Caslon Text", Georgia, "Times New Roman", Times, serif;
   --display: "Big Shoulders Display", "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Impact, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* angular outlines with bowed edges (sampled curves, so corners stay sharp) */
+  --face: polygon(0.8% 3.40rem, 4.2% 2.64rem, 8.1% 1.98rem, 12.4% 1.40rem, 17.1% 0.92rem, 22.3% 0.52rem, 27.9% 0.22rem, 34.0% 0.0%, 44.2% 0.06rem, 54.0% 0.19rem, 63.6% 0.38rem, 73.0% 0.64rem, 82.1% 0.96rem, 90.9% 1.35rem, 99.4% 1.80rem, 99.7% calc(16.7% + 1.23rem), 99.8% calc(33.3% + 0.70rem), 99.8% calc(50.0% + 0.23rem), 99.6% calc(66.7% - 0.20rem), 99.2% calc(83.3% - 0.58rem), 98.6% calc(100.0% - 0.90rem), 87.2% calc(100.0% - 0.60rem), 74.9% calc(100.0% - 0.43rem), 61.8% calc(100.0% - 0.39rem), 48.0% calc(100.0% - 0.49rem), 33.3% calc(100.0% - 0.73rem), 17.7% calc(100.0% - 1.10rem), 1.4% calc(100.0% - 1.60rem), 0.9% calc(83.3% - 1.02rem), 0.6% calc(66.7% - 0.33rem), 0.4% calc(50.0% + 0.45rem), 0.4% calc(33.3% + 1.33rem), 0.5% calc(16.7% + 2.32rem));
+  --rim: polygon(0.0% 4.20rem, 3.1% 3.33rem, 6.8% 2.55rem, 11.0% 1.86rem, 15.7% 1.26rem, 20.9% 0.75rem, 26.7% 0.33rem, 33.0% 0.0%, 42.9% 0.13rem, 52.8% 0.33rem, 62.4% 0.62rem, 72.0% 1.00rem, 81.5% 1.45rem, 90.8% 1.98rem, 100.0% 2.60rem, 100.0% calc(16.7% + 1.81rem), 99.9% calc(33.3% + 1.16rem), 99.8% calc(50.0% + 0.65rem), 99.6% calc(66.7% + 0.29rem), 99.4% calc(83.3% + 0.07rem), 99.2% 100.0%, 86.4% calc(100.0% - 0.01rem), 73.1% calc(100.0% - 0.05rem), 59.3% calc(100.0% - 0.11rem), 45.2% calc(100.0% - 0.20rem), 30.5% calc(100.0% - 0.31rem), 15.5% calc(100.0% - 0.44rem), 0.0% calc(100.0% - 0.60rem), -0.2% calc(83.3% - 0.30rem), -0.3% calc(66.7% + 0.20rem), -0.3% calc(50.0% + 0.90rem), -0.3% calc(33.3% + 1.80rem), -0.2% calc(16.7% + 2.90rem));
+  --tab: polygon(8.0% 0.0%, 23.3% 3.9%, 38.7% 6.2%, 54.0% 7.0%, 69.3% 6.2%, 84.7% 3.9%, 100.0% 0.0%, 92.0% 100.0%, 76.7% 96.7%, 61.3% 94.7%, 46.0% 94.0%, 30.7% 94.7%, 15.3% 96.7%, 0.0% 100.0%);
+  --beam-shape: polygon(0.0% 0.0%, 12.9% 1.2%, 25.8% 2.9%, 38.4% 5.0%, 51.0% 7.5%, 63.4% 10.5%, 75.8% 13.9%, 87.9% 17.7%, 100.0% 22.0%, 100.0% 62.0%, 86.6% 56.2%, 73.5% 49.9%, 60.6% 43.0%, 48.0% 35.5%, 35.6% 27.5%, 23.5% 18.9%, 11.6% 9.7%);
+  --banner: polygon(3.0% 0.0%, 18.8% 4.1%, 34.7% 7.1%, 50.8% 9.0%, 67.0% 9.8%, 83.4% 9.4%, 100.0% 8.0%, 96.0% 100.0%, 80.0% 95.8%, 64.0% 92.4%, 48.0% 90.0%, 32.0% 88.4%, 16.0% 87.8%, 0.0% 88.0%);
+}
+
+/* film and paint textures: feTurbulence rasterised once as tiles, no runtime filters */
+:root {
+  --tx-grain-fine-d: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.4 0 0 0 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-grain-fine-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -2.4 0 0 0 1.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-grain-clump: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.32' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.4 0 0 0 -1.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-density: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  2.2 0 0 0 -0.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.2 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-mottle-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013' numOctaves='4' seed='21' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -1.2 0 0 0 0.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-streaks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0025 0.06' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.6 0 0 0 -0.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='1400' fill='none'%3E%3Cg stroke='%23fff' stroke-opacity='.5'%3E%3Cpath d='M212 0 C 214 300 209 700 213 1400' stroke-width='1'/%3E%3Cpath d='M640 140 C 641 400 637 600 640 820' stroke-width='.8'/%3E%3Cpath d='M771 900 L 773 1400' stroke-width='1.2' stroke-opacity='.35'/%3E%3C/g%3E%3Cg stroke='%23000' stroke-opacity='.55'%3E%3Cpath d='M455 300 C 457 600 452 900 456 1260' stroke-width='1.4'/%3E%3Cpath d='M90 760 C 92 980 88 1200 91 1400' stroke-width='1'/%3E%3C/g%3E%3Cg fill='%23fff' fill-opacity='.55'%3E%3Ccircle cx='130' cy='220' r='1.6'/%3E%3Ccircle cx='520' cy='90' r='1.1'/%3E%3Ccircle cx='810' cy='420' r='2'/%3E%3Ccircle cx='330' cy='1010' r='1.4'/%3E%3Ccircle cx='700' cy='1210' r='1'/%3E%3Cpath d='M600 600 q 6 -3 9 2 q -4 5 -9 -2z'/%3E%3C/g%3E%3Cg fill='%23000' fill-opacity='.6'%3E%3Ccircle cx='260' cy='520' r='2.2'/%3E%3Ccircle cx='740' cy='760' r='1.5'/%3E%3Ccircle cx='60' cy='1300' r='1.8'/%3E%3Cpath d='M380 1320 q 10 -6 18 0 q -6 3 -18 0z'/%3E%3Cpath d='M860 160 c 4 2 6 8 2 12' stroke='%23000' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+  --tx-streaks-soft: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.002 0.045' numOctaves='3' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.9 0 0 0 -0.4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 :root[data-act="editor"] { --tint: #79acd8; --ink: #e2ebf4; --deep: #07162a; }
 :root[data-act="viewer"] { --tint: #97c483; --ink: #e5efdc; --deep: #0b1c08; }
@@ -29,112 +56,221 @@ body {
   transition: color 0.8s;
 }
 
-/* ---------- the light ---------- */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-.light { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+/* ---------- the light: a hard beam that warps, and the pool where it falls ---------- */
+
+.light, .set { pointer-events: none; }
+.light { position: fixed; inset: 0; z-index: 1; overflow: hidden; }
+.pool {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 30vmax 22vmax at var(--lx) var(--ly), color-mix(in srgb, var(--tint) 24%, transparent), transparent 70%);
+  transition: --lx 1.6s cubic-bezier(.6, 0, .2, 1), --ly 1.6s cubic-bezier(.6, 0, .2, 1);
+}
 .beam {
   position: absolute;
   left: -12vw; top: -18vh;
   width: 190vmax; height: 120vmax;
   transform-origin: 0 0;
   transform: rotate(calc(var(--beam) + 38deg));
-  clip-path: polygon(0 0, 100% 22%, 100% 62%);
-  background: linear-gradient(to right, color-mix(in srgb, var(--tint) 55%, transparent), color-mix(in srgb, var(--tint) 12%, transparent) 70%, transparent);
-  filter: blur(10px);
+  clip-path: var(--beam-shape);
+  background: linear-gradient(to right, color-mix(in srgb, var(--tint) 50%, transparent), color-mix(in srgb, var(--tint) 12%, transparent) 70%, transparent);
+  filter: blur(1.5px);
   transition: transform 1.4s cubic-bezier(.6, 0, .2, 1), background 0.8s;
 }
 .light::after {
   content: "";
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 75% 70% at 45% 40%, transparent 45%, rgba(0, 0, 0, 0.85) 100%);
+  /* vignette, plus the darker, softly rounded edge of the projector gate */
+  background: radial-gradient(ellipse 80% 75% at 45% 40%, transparent 40%, rgba(0, 0, 0, 0.88) 100%);
+  box-shadow: inset 0 0 3vmax 1vmax rgba(0, 0, 0, 0.85);
+  border-radius: 2.5vmax;
 }
-body > :not(.light) { position: relative; z-index: 1; }
+
+/* tinted stock is never even: slow blotches of lighter and darker dye */
+.stock {
+  position: absolute; inset: 0;
+  background: var(--tx-mottle) 0 0 / 520px, var(--tx-mottle-l) 140px 90px / 620px;
+  opacity: 0.2;
+}
+/* grain: fine dark and light specks plus a clumpier layer, thinned and thickened by a slow density mask */
+.grain, .grain-top {
+  position: absolute; inset: -120px;
+  background:
+    var(--tx-grain-fine-d) 0 0 / 180px,
+    var(--tx-grain-fine-l) 37px 61px / 180px,
+    var(--tx-grain-clump) 0 0 / 260px;
+  -webkit-mask: var(--tx-density) 0 0 / 600px, linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+          mask: var(--tx-density) 0 0 / 600px, linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
+  opacity: 0.55;
+  will-change: transform;
+  animation: grain 0.5s steps(1) infinite;
+}
+/* a much fainter grain over the whole frame, text included, so the picture is one material */
+.grain-top { position: fixed; z-index: 3; pointer-events: none; opacity: 0.09; -webkit-mask: none; mask: none; }
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  17%  { transform: translate(-61px, 43px); }
+  33%  { transform: translate(37px, -88px); }
+  50%  { transform: translate(-95px, -27px); }
+  67%  { transform: translate(72px, 64px); }
+  83%  { transform: translate(-18px, 101px); }
+}
+/* scratches and dust on the print, jumping between frames */
+.wear {
+  position: absolute; inset: 0;
+  background: var(--tx-wear) 0 0 / 900px 1400px;
+  opacity: 0.5;
+  animation: wear 2.4s steps(1) infinite;
+}
+@keyframes wear {
+  0%   { background-position: 0 0; opacity: 0.5; }
+  20%  { background-position: -310px -420px; opacity: 0.3; }
+  40%  { background-position: 180px 260px; opacity: 0.55; }
+  60%  { background-position: -520px 700px; opacity: 0.25; }
+  80%  { background-position: 410px -130px; opacity: 0.45; }
+}
+
+/* the set: three painted planes, receding */
+.set { position: absolute; z-index: 0; left: 0; right: 0; top: 0; height: max(100vh, 52rem); overflow: hidden; color: var(--tint); }
+.set svg { width: 100%; height: 100%; display: block; }
+.set { -webkit-mask-image: linear-gradient(#000 62%, transparent); mask-image: linear-gradient(#000 62%, transparent); }
+.set path { transition: fill 0.8s, stroke 0.8s; }
+/* the set is a painted flat: canvas weave, distemper mottling, brush streaks */
+.set::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    var(--tx-streaks) 0 0 / 640px,
+    var(--tx-mottle) 60px 0 / 420px,
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px);
+}
+.far { opacity: 0.55; }
+.whorl { fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; opacity: 0.32; }
+.whorl.thin { stroke-width: 2; opacity: 0.22; }
+.mid { opacity: 0.9; }
+.street { fill: url(#street-g); }
+.band { fill: none; stroke: #000; stroke-width: 9; opacity: 0.6; }
+.house { fill: #050403; opacity: 0.88; }
+.window { fill: currentColor; opacity: 0.5; }
+.rail { fill: none; stroke: currentColor; stroke-width: 7; stroke-linecap: round; opacity: 0.38; }
+.steps { fill: none; stroke: currentColor; stroke-width: 4; stroke-linejoin: miter; opacity: 0.4; }
+.hand { fill: #000; opacity: 0.8; }
+body > :not(.light):not(.set):not(.grain-top) { position: relative; z-index: 2; }
 
 /* ---------- title card ---------- */
 
 .titlecard { padding-top: 2rem; }
-.back { margin: 0 0 4.5rem; font-size: 16px; width: fit-content; }
+.back { margin: 0 0 3rem; font-size: 16px; width: fit-content; }
 a { color: var(--ink); text-underline-offset: 0.2em; }
 
 h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 1; text-transform: uppercase; }
-h1 { margin: 0 0 3.5rem; perspective: 700px; overflow: visible; }
-.h1-a {
-  display: block;
-  font-size: clamp(3.6rem, 13vw, 9rem);
-  letter-spacing: 0.02em;
-  color: var(--ink);
-  transform-origin: 0 50%;
-  transform: rotateY(24deg) skewY(-5deg) scaleY(1.2);
-  text-shadow: 2px 2px 0 #000, 4px 4px 0 #000, 6px 6px 0 #000, 8px 8px 0 #000, 10px 10px 0 #000, 12px 12px 0 #000,
-    14px 14px 0 #000, 16px 16px 0 #000, 22px 26px 18px rgba(0, 0, 0, 0.8);
-}
+h1 { margin: 0 0 3.5rem; }
+svg text { font-family: var(--display); font-weight: 800; text-transform: uppercase; }
+/* FORTRAN rides a swelling curve, with a stepped shadow giving it volume */
+.h1-a { display: block; width: min(100%, 46rem); height: auto; overflow: visible; transform: skewX(-6deg); transform-origin: 0 100%; }
+.h1-a .depth { fill: #000; }
+.h1-a .cast { fill: #000; opacity: 0.75; filter: blur(8px); }
+.h1-a .face { fill: var(--ink); filter: drop-shadow(0 0 18px color-mix(in srgb, var(--tint) 40%, transparent)); }
+/* the subtitle on a slanted banner whose long edges bow */
 .h1-b {
   display: inline-block;
-  margin: 1.4rem 0 0 18%;
-  padding: 0.35em 0.7em;
+  margin: 0.4rem 0 0 14%;
+  padding: 0.5em 1.2em;
   font-size: clamp(1.1rem, 3vw, 1.7rem);
   letter-spacing: 0.24em;
   color: var(--deep);
-  background: var(--tint);
-  clip-path: polygon(3% 0, 100% 8%, 96% 100%, 0 88%);
+  background: var(--tx-mottle) 0 0 / 300px, var(--tint);
+  clip-path: var(--banner);
   transform: rotate(-4deg);
 }
 
-.titlecard > p:last-child { max-width: 36rem; margin: 0 0 0 auto; padding: 1.4rem 1.6rem; background: var(--stage); border-left: 3px solid var(--tint); }
+.titlecard > p:last-child {
+  max-width: 36rem; margin: 0 0 0 auto; padding: 1.5rem 1.8rem;
+  background: var(--stage);
+  border-left: 3px solid var(--tint);
+}
 
-/* ---------- tabs: a staircase ---------- */
+/* ---------- tabs: a stair that zigzags and curves ---------- */
 
-.tabs { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.6rem; margin: 4rem 0 1rem; }
+.tabs { position: relative; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.7rem; margin: 4rem 0 1rem; padding-bottom: 1rem; }
 .tabs [role="tab"] {
   position: relative;
-  padding: 0.8rem 1.6rem 0.8rem 1.4rem;
+  padding: 0.85rem 1.7rem 0.85rem 1.5rem;
   border: 0;
   background: #000;
   color: var(--ink);
   font: 16px/1.3 var(--serif);
   letter-spacing: 0.04em;
   cursor: pointer;
-  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  /* slanted steps with sagging edges; the offsets below accelerate like a curve */
+  clip-path: var(--tab);
   transition: background 0.4s, color 0.4s;
 }
-.tabs [role="tab"]:nth-child(2) { margin-top: 1rem; }
-.tabs [role="tab"]:nth-child(3) { margin-top: 2rem; }
+.tabs [role="tab"]:nth-child(2) { margin-top: 0.5rem; }
+.tabs [role="tab"]:nth-child(3) { margin-top: 1.5rem; }
 .tabs [role="tab"]:nth-child(4) { margin-top: 3rem; }
 .tabs [role="tab"]:hover { background: #1d1912; }
-.tabs [role="tab"][aria-selected="true"] { background: var(--tint); color: var(--deep); font-weight: 700; }
+.tabs [role="tab"][aria-selected="true"] { background: var(--tx-mottle) 0 0 / 260px, var(--tint); color: var(--deep); font-weight: 700; }
 .tabs .act { display: inline-block; min-width: 1.8em; font-style: italic; }
 .tabs [role="tab"]:focus-visible { outline: none; text-decoration: underline 3px; text-underline-offset: 0.3em; }
 
-/* ---------- panels: an irregular frame, a hard cast shadow, an iris ---------- */
+/* ---------- panels: a pointed arch with bowed flanks, a hard cast shadow, an iris ---------- */
 
 [role="tabpanel"] {
   isolation: isolate;
   margin-top: 1.5rem;
   padding: clamp(1.4rem, 4vw, 3rem);
+  padding-top: clamp(2.2rem, 5vw, 3.6rem);
   filter: drop-shadow(var(--sx) var(--sy) 0 #000);
   transition: filter 1.4s;
 }
 [role="tabpanel"]::before, [role="tabpanel"]::after { content: ""; position: absolute; pointer-events: none; }
-[role="tabpanel"]::before { inset: -8px; z-index: -2; background: var(--tint); clip-path: polygon(1.2% 0, 100% 1.6%, 98.6% 100%, 0 98.2%); transition: background 0.8s; }
-[role="tabpanel"]::after { inset: 0; z-index: -1; background: var(--stage); clip-path: polygon(1.6% 0.8%, 99.4% 1.8%, 98.2% 99.2%, 0.4% 97.6%); }
+/* rim and face have different radii, so the tinted border swells and thins */
+[role="tabpanel"]::before {
+  inset: -10px -8px -8px -12px; z-index: -2;
+  clip-path: var(--rim);
+  background: var(--tx-mottle) 0 0 / 420px, var(--tx-streaks) 0 0 / 520px, radial-gradient(ellipse 80% 60% at var(--lx) 0%, color-mix(in srgb, var(--tint) 85%, #fff), var(--tint) 45%, color-mix(in srgb, var(--tint) 45%, #000));
+  transition: background 0.8s;
+}
+/* the face: solid stage with a faint fall of light from the beam's side (far below text contrast) */
+[role="tabpanel"]::after {
+  inset: 0; z-index: -1;
+  clip-path: var(--face);
+  /* painted, but lightly: the reading surface keeps its contrast */
+  background:
+    var(--tx-streaks-soft) 0 0 / 800px,
+    radial-gradient(ellipse 60% 40% at var(--lx) 0%, color-mix(in srgb, var(--tint) 8%, transparent), transparent 80%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px),
+    var(--stage);
+}
 [role="tabpanel"]:not([hidden]) { animation: iris 0.9s cubic-bezier(.5, 0, .2, 1) both; }
 @keyframes iris {
   from { clip-path: circle(0% at 18% 12%); }
   to   { clip-path: circle(150% at 18% 12%); }
 }
-[role="tabpanel"]:focus-visible { outline: 3px solid var(--tint); outline-offset: 12px; }
+[role="tabpanel"]:focus-visible { outline: 3px solid var(--tint); outline-offset: 14px; }
 
-[role="tabpanel"] > h2 {
-  display: inline-block;
-  margin: 0 0 2rem;
-  font-size: clamp(2.4rem, 7vw, 4rem);
-  letter-spacing: 0.03em;
-  color: var(--tint);
-  transform-origin: 0 100%;
-  transform: skewX(-16deg) rotate(-3deg);
-  text-shadow: 3px 3px 0 #000, 6px 6px 0 #000, 9px 9px 0 #000;
-}
+/* act titles are lettered along a rising curve */
+[role="tabpanel"] > h2 { margin: 0 0 1.4rem; line-height: 0; }
+.arc-title { display: block; width: min(100%, 30rem); height: auto; overflow: visible; }
+.arc-title text { font-size: 118px; letter-spacing: 4px; }
+.arc-title .depth { fill: #000; }
+.arc-title .face { fill: var(--tint); }
 [role="tabpanel"] > h3 { margin: 2.6rem 0 1rem; font-size: 1.6rem; letter-spacing: 0.08em; color: var(--tint); }
+/* a swash under each section heading instead of a rule */
+[role="tabpanel"] > h3::after, .scene h3::after {
+  content: "";
+  display: block;
+  height: 18px;
+  margin-top: 0.35rem;
+  width: min(16rem, 70%);
+  background: var(--tint);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M4 20 C 60 4 120 30 180 14 S 270 2 280 14 C 286 22 276 28 268 22 C 262 17 270 10 276 14' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M4 20 C 60 4 120 30 180 14 S 270 2 280 14 C 286 22 276 28 268 22 C 262 17 270 10 276 14' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}
 
 p, li { max-width: 38rem; }
 code, kbd, pre, var { font-family: var(--mono); font-size: 16px; }
@@ -152,7 +288,8 @@ em { color: color-mix(in srgb, var(--tint) 45%, var(--ink)); }
 
 .scene { padding: 0.2rem 0 1rem; }
 .scenes-on .scene {
-  padding: clamp(1.2rem, 4vw, 2.6rem);
+  padding: clamp(1.4rem, 4vw, 2.8rem);
+  padding-top: clamp(2rem, 5vw, 3.2rem);
   border: 4px double color-mix(in srgb, var(--tint) 70%, transparent);
   min-height: 22rem;
 }
@@ -167,17 +304,11 @@ em { color: color-mix(in srgb, var(--tint) 45%, var(--ink)); }
   letter-spacing: 0.08em;
   color: var(--tint);
   text-align: center;
+  /* letters lean back into the set; the light catches their top edge */
   transform: perspective(500px) rotateX(18deg) skewX(-10deg);
+  text-shadow: 0 -1px 0 color-mix(in srgb, var(--tint) 50%, #fff), 3px 4px 0 #000, 6px 8px 0 #000;
 }
-.scene h3::before, .scene h3::after {
-  content: "";
-  display: block;
-  height: 3px;
-  margin: 0.7rem auto;
-  width: 60%;
-  background: var(--tint);
-  clip-path: polygon(0 50%, 50% 0, 100% 50%, 50% 100%);
-}
+.scene h3::after { margin: 0.6rem auto 0; width: min(20rem, 80%); }
 .scene h3:focus { outline: none; }
 .scene h3:focus-visible { outline: 2px dashed var(--tint); outline-offset: 8px; }
 .scene > p:first-of-type::first-letter {
@@ -190,7 +321,7 @@ em { color: color-mix(in srgb, var(--tint) 45%, var(--ink)); }
 .reels { margin-bottom: 1.6rem; }
 .reels ol { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
 .reels button {
-  padding: 0.45rem 0.9rem 0.45rem 0.7rem;
+  padding: 0.45rem 1rem 0.45rem 0.8rem;
   border: 1px solid color-mix(in srgb, var(--tint) 50%, transparent);
   background: #000;
   color: var(--ink);
@@ -221,7 +352,7 @@ button, select {
   background: #000;
   border: 2px solid var(--tint);
   border-radius: 0;
-  padding: 0.55rem 1rem;
+  padding: 0.55rem 1.1rem;
   cursor: pointer;
 }
 button:hover { background: color-mix(in srgb, var(--tint) 18%, #000); }
@@ -266,9 +397,13 @@ input.card:focus-visible { outline-offset: 0; outline-width: 2px; outline-color:
 
 /* ---------- cards: pale objects caught in the light ---------- */
 
-.cardview { max-width: 100%; overflow: hidden; padding: 1rem 2rem 2.5rem 0.5rem; perspective: 1100px; }
+.cardview {
+  max-width: 100%; overflow: hidden; padding: 1.5rem 2rem 3rem 0.5rem; perspective: 900px;
+  /* the card lies in a pool of light that falls off into the dark */
+  background: radial-gradient(ellipse 55% 60% at 40% 45%, color-mix(in srgb, var(--tint) 22%, transparent), transparent 75%);
+}
 .cardview svg, .stacker svg { display: block; width: 100%; height: auto; }
-.cardview svg { max-width: 52rem; transform: rotateY(-7deg) rotateX(4deg); filter: drop-shadow(var(--sx) var(--sy) 0 #000); }
+.cardview svg { max-width: 52rem; transform: rotateY(11deg) rotateX(5deg); transform-origin: 0 50%; filter: drop-shadow(var(--sx) var(--sy) 6px #000); }
 svg > rect:first-of-type, svg > polygon { fill: color-mix(in srgb, var(--tint) 28%, #f4ead2); stroke: #000; }
 svg > rect:not(:first-of-type) { fill: #0b0907; }
 svg text[fill="#000"] { fill: #0b0907; }
@@ -288,7 +423,7 @@ svg text[fill="#aaa"] { fill: #6d6352; }
 }
 .printer pre, .listing pre, .log pre { margin: 0; line-height: 1.45; }
 .printer .placeholder { color: #3f382c; }
-.log pre, .listing pre { padding: 1rem 1.2rem; background: #000; border: 1px solid color-mix(in srgb, var(--tint) 45%, transparent); }
+.log pre, .listing pre { padding: 1rem 1.3rem; background: #000; border: 1px solid color-mix(in srgb, var(--tint) 45%, transparent); }
 .log pre { white-space: pre-wrap; }
 .listing { margin-top: 1.6rem; }
 .listing summary { cursor: pointer; }
@@ -300,6 +435,7 @@ svg text[fill="#aaa"] { fill: #6d6352; }
 @media (max-width: 600px) {
   body { font-size: 17px; }
   .h1-b { margin-left: 6%; letter-spacing: 0.16em; }
+  .set { height: 46rem; }
   .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   .tabs [role="tab"]:nth-child(n) { margin-top: 0; }
   .tabs [role="tab"]:nth-child(even) { margin-top: 1.2rem; }
@@ -311,5 +447,7 @@ svg text[fill="#aaa"] { fill: #6d6352; }
 
 @media (prefers-reduced-motion: reduce) {
   [role="tabpanel"]:not([hidden]), .scenes-on .scene:not([hidden]) { animation: none; }
-  .beam, [role="tabpanel"], body { transition: none; }
+  .pool, .beam, [role="tabpanel"], body, .set path { transition: none; }
+  /* grain and wear hold still on a single frame */
+  .grain, .grain-top, .wear { animation: none; }
 }

@@ -354,3 +354,215 @@ input.card:focus-visible { outline-offset: 0; }
   td code { white-space: normal; }
   th, td { padding-right: 0.5rem; }
 }
+
+/* ================================================================
+   Grain and mess: newsprint fibre, glue, tears, scraps, bad register
+   ================================================================ */
+
+:root {
+  /* newsprint: short dark fibres and a little tooth; strong on the ground... */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8 .55' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .28 0 0 0 0 .24 0 0 0 0 .17 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='1' seed='31' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 16 0 0 0 -11.6'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23s)' opacity='.5'/%3E%3C/svg%3E");
+  /* ...and only a whisper on the sheets that carry text */
+  --grain-soft: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85 .6' numOctaves='2' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .26 0 0 0 0 .18 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23f)'/%3E%3C/svg%3E");
+  /* a torn bottom edge, used as a mask */
+  --tear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='12' preserveAspectRatio='none'%3E%3Cpath d='M0 0H220V7L211 9 203 5 192 10 181 6 170 11 158 6 149 9 137 4 126 10 113 7 104 11 92 5 80 9 71 6 60 11 47 6 38 10 27 5 16 9 8 6 0 10Z'/%3E%3C/svg%3E");
+  /* the same along a left edge */
+  --tear-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='220' preserveAspectRatio='none'%3E%3Cpath d='M12 0V220H5L3 211 7 203 2 192 6 181 1 170 6 158 3 149 8 137 2 126 5 113 1 104 7 92 3 80 6 71 1 60 6 47 2 38 7 27 3 16 6 8 2 0Z'/%3E%3C/svg%3E");
+  /* paste that soaked through and dried yellow */
+  --glue: radial-gradient(closest-side, rgba(176, 140, 52, 0.2), rgba(176, 140, 52, 0.1) 55%, rgba(176, 140, 52, 0.04) 80%, transparent);
+}
+
+body { background: var(--grain), var(--paper); }
+[role="tabpanel"], .p-news, .p-buff, .p-white, .editor, .printer, .log pre, .listing pre, .tabs [role="tab"]::before {
+  background-image: var(--grain-soft);
+}
+/* keep each sheet's own colour under the grain */
+[role="tabpanel"] { background-color: var(--sheet); }
+/* the lede's sheet is drawn by ::after so a ghost (::before) can sit beneath it */
+.lede { background: none; border-color: transparent; }
+.lede::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  background: var(--grain-soft), var(--sheet);
+  border: 3px solid var(--ink);
+  pointer-events: none;
+}
+.p-white, .editor, .printer, .log pre, .listing pre { background-color: #fff; }
+.p-news { background-color: #f1ece0; }
+.p-buff { background-color: #f5e9cf; }
+.tabs [role="tab"]::before { background-color: var(--sheet); }
+.tabs [role="tab"][aria-selected="true"]::before { background-color: var(--ink); background-image: none; }
+.tabs [role="tab"]:nth-child(2n)[aria-selected="true"]::before { background-color: var(--red); }
+.tabs [role="tab"]:hover::before { background-color: #fff; }
+
+/* the lede was pasted twice: a ghost of the first try shows behind */
+.lede::before {
+  content: "";
+  position: absolute;
+  inset: -0.6rem 1.5rem 0.9rem -1.1rem;
+  z-index: -2;
+  background: var(--grain-soft), #e2dac6;
+  border: 1px solid #b9ae94;
+  transform: rotate(-2.4deg);
+  pointer-events: none;
+}
+/* and its red block printed a little out of register with a black one */
+.lede { box-shadow: 14px 12px 0 var(--red), 19px 7px 0 -3px rgba(17, 17, 17, 0.85); }
+
+/* the board itself: grain, a glue stain, a black plate off register under the red tape */
+.board { position: relative; isolation: isolate; }
+[role="tabpanel"] {
+  background-image: var(--glue), var(--grain-soft);
+  background-size: 14rem 9rem, auto;
+  background-position: left -3rem bottom -2rem, 0 0;
+  background-repeat: no-repeat, repeat;
+  box-shadow: -12px 14px 0 var(--ink), -5px 20px 0 -3px rgba(196, 22, 28, 0.8);
+}
+[role="tabpanel"]::before { box-shadow: -7px 5px 0 rgba(17, 17, 17, 0.85); }
+[role="tabpanel"]::after {
+  /* a second, shorter strip of tape, slapped on crooked at the opposite corner */
+  content: "";
+  position: absolute;
+  left: -1.6rem;
+  bottom: 2.2rem;
+  width: 4.5rem;
+  height: 1.3rem;
+  background: rgba(236, 230, 216, 0.75);
+  border: 1px dashed rgba(17, 17, 17, 0.35);
+  transform: rotate(-11deg);
+  pointer-events: none;
+}
+/* headings: a red plate printed a hair off the black */
+[role="tabpanel"] > h2 { text-shadow: 3px -2px 0 rgba(196, 22, 28, 0.55); }
+[role="tabpanel"] > h2 .red, [role="tabpanel"] > h2 .w-rev { text-shadow: -2px 2px 0 rgba(17, 17, 17, 0.5); }
+
+/* ---- the pile: slips torn, glued, and pasted over the ghosts of earlier slips ---- */
+
+.pile { position: relative; z-index: 0; }
+.slip { background-repeat: no-repeat, repeat; }
+.slip.s1 { background-image: var(--glue), var(--grain-soft); background-size: 12rem 7rem, auto; background-position: right -2rem top -2rem, 0 0; }
+.slip.s4 { background-image: var(--glue), var(--grain-soft); background-size: 16rem 8rem, auto; background-position: left 30% bottom -3rem, 0 0; }
+.slip.s6 { background-image: var(--glue), var(--grain-soft); background-size: 10rem 10rem, auto; background-position: right -3rem bottom -3rem, 0 0; }
+/* torn edges: the rule stops where the paper does */
+.slip.s2, .slip.s5, .slip.s7 {
+  padding-bottom: 2rem;
+  border-bottom-width: 0;
+  -webkit-mask: linear-gradient(#000, #000) top / 100% calc(100% - 11px) no-repeat, var(--tear) bottom / 220px 12px repeat-x;
+  mask: linear-gradient(#000, #000) top / 100% calc(100% - 11px) no-repeat, var(--tear) bottom / 220px 12px repeat-x;
+}
+.slip.s3 {
+  border-left-width: 0;
+  padding-left: 2rem;
+  -webkit-mask: linear-gradient(#000, #000) right / calc(100% - 11px) 100% no-repeat, var(--tear-l) left / 12px 220px repeat-y;
+  mask: linear-gradient(#000, #000) right / calc(100% - 11px) 100% no-repeat, var(--tear-l) left / 12px 220px repeat-y;
+}
+/* where a slip was pasted, then peeled off and pasted again a little lower */
+.slip::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0.9rem -0.9rem -0.8rem 0.7rem;
+  background: var(--grain-soft), #ddd4bf;
+  transform: rotate(1.3deg);
+  pointer-events: none;
+}
+.slip.s2::before { inset: -0.7rem 1.2rem 1rem -1rem; transform: rotate(-1.6deg); background-color: #e8e0cc; }
+.slip.s3::before { inset: 1.2rem 2rem -1.1rem -0.6rem; transform: rotate(-0.8deg); background-color: #c9c1ad; }
+.slip.s4::before { background: var(--red); inset: auto -0.6rem -0.7rem 40%; height: 2.2rem; transform: rotate(-2deg); }
+.slip.s5::before { inset: -0.8rem -1rem 1.5rem 3rem; transform: rotate(2.2deg); }
+.slip.s6::before { inset: 1rem 0.4rem -1rem -1.2rem; transform: rotate(-1.1deg); background-color: #e2dac6; }
+.slip.s7::before { inset: -0.5rem 2.5rem 0.7rem -0.8rem; transform: rotate(0.9deg); background-color: #d6ccb4; }
+/* the masked slips cannot show a ghost outside their own box */
+.slip.s2::before, .slip.s3::before, .slip.s5::before, .slip.s7::before { display: none; }
+.slip.fresh::before { display: none; }
+
+/* ---- scraps around the board ---- */
+
+.scraps { position: absolute; inset: 0; pointer-events: none; }
+.scrap { position: absolute; display: block; }
+/* a torn column of someone else's newspaper, pushed under the board */
+.sc-news {
+  z-index: -1;
+  top: 8rem;
+  right: -1.9rem;
+  width: 6rem;
+  height: 15rem;
+  background:
+    repeating-linear-gradient(transparent 0 7px, rgba(17, 17, 17, 0.55) 7px 9px) 0.6rem 1.4rem / calc(100% - 1.2rem) calc(100% - 2rem) no-repeat,
+    linear-gradient(var(--ink), var(--ink)) 0.6rem 0.5rem / 60% 0.55rem no-repeat,
+    var(--grain), #ddd5c2;
+  transform: rotate(7deg);
+  -webkit-mask: linear-gradient(#000, #000) top / 100% calc(100% - 11px) no-repeat, var(--tear) bottom / 120px 12px repeat-x;
+  mask: linear-gradient(#000, #000) top / 100% calc(100% - 11px) no-repeat, var(--tear) bottom / 120px 12px repeat-x;
+}
+/* a ticket stub stuck over the top-left corner */
+.sc-ticket {
+  z-index: 2;
+  top: -1.4rem;
+  left: -1.6rem;
+  padding: 0.25rem 0.6rem;
+  font-family: var(--f-mono);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  background: var(--grain-soft), #f3d9a0;
+  border: 2px dashed var(--ink);
+  transform: rotate(-8deg);
+  box-shadow: 4px 3px 0 rgba(196, 22, 28, 0.7);
+}
+/* a fragment of a halftone, printed red, peeking out at the bottom */
+.sc-dots {
+  z-index: -1;
+  left: 35%;
+  bottom: -2.6rem;
+  width: 9rem;
+  height: 4rem;
+  background: radial-gradient(circle, var(--red) 0 2.2px, transparent 2.6px) 0 0 / 7px 7px, var(--sheet);
+  transform: rotate(-4deg);
+  -webkit-mask: linear-gradient(#000, #000) top / 100% calc(100% - 11px) no-repeat, var(--tear) bottom / 110px 12px repeat-x;
+  mask: linear-gradient(#000, #000) top / 100% calc(100% - 11px) no-repeat, var(--tear) bottom / 110px 12px repeat-x;
+}
+/* a postage-stamp-like square with perforated edges, half over the right border */
+.sc-stamp {
+  z-index: 2;
+  top: -1.1rem;
+  right: 8.5rem;
+  width: 3.4rem;
+  height: 3.9rem;
+  padding-top: 0.7rem;
+  font-family: var(--f-black);
+  font-size: 1.5rem;
+  line-height: 1;
+  text-align: center;
+  color: var(--sheet);
+  background: var(--ink);
+  border: 4px solid var(--sheet);
+  outline: 1px solid var(--ink);
+  transform: rotate(9deg);
+  -webkit-mask: radial-gradient(circle at 50% 50%, #000 62%, transparent 64%) -3px -3px / 6px 6px, linear-gradient(#000, #000) center / calc(100% - 6px) calc(100% - 6px) no-repeat;
+  mask: radial-gradient(circle at 50% 50%, #000 62%, transparent 64%) -3px -3px / 6px 6px, linear-gradient(#000, #000) center / calc(100% - 6px) calc(100% - 6px) no-repeat;
+}
+
+/* tab slips: one corner of glue each, and a red plate off register on the selected one */
+.tabs [role="tab"][aria-selected="true"] .tab-l { text-shadow: 2px 1px 0 rgba(196, 22, 28, 0.6); }
+.tabs [role="tab"]:nth-child(2n)[aria-selected="true"] .tab-l { text-shadow: -2px 1px 0 rgba(17, 17, 17, 0.55); }
+
+@media (max-width: 860px) {
+  .sc-news { right: -2.4rem; top: 4rem; height: 11rem; }
+  .sc-stamp { right: 4.5rem; }
+}
+@media (max-width: 600px) {
+  .lede::before { inset: -0.4rem 0.6rem 0.6rem -0.5rem; }
+  .lede { box-shadow: 9px 9px 0 var(--red), 13px 5px 0 -3px rgba(17, 17, 17, 0.85); }
+  [role="tabpanel"] { box-shadow: -6px 8px 0 var(--ink), -2px 12px 0 -2px rgba(196, 22, 28, 0.8); }
+  [role="tabpanel"]::after { left: -0.9rem; width: 3rem; }
+  .slip::before { inset: 0.6rem -0.4rem -0.5rem 0.4rem; }
+  .slip.s3 { padding-left: 1.4rem; }
+  .sc-ticket { left: -0.6rem; top: -1.5rem; font-size: 14px; }
+  .sc-stamp { right: 3.5rem; width: 2.8rem; height: 3.2rem; font-size: 1.2rem; padding-top: 0.55rem; }
+  .sc-news { display: none; }
+}

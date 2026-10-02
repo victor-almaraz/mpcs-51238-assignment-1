@@ -1,5 +1,7 @@
-/* An echo of an office: one faded yellow, one banal typeface, far too much room.
-   Things repeat, almost the same, and fade as they recede. */
+/* An echo of an office: one faded yellow, far too much room.
+   Things repeat, almost the same, and fade as they recede. Body text keeps one plain
+   face; headings and their echoes are rebuilt from memory, each time in a slightly
+   wrong typeface: grotesque, then serif, then typewriter, then the lettering on a sign. */
 
 :root {
   --wall: #e7ddab;
@@ -11,6 +13,15 @@
   --sans: "Work Sans", "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
   --indent: clamp(0rem, 24vw - 6rem, 16rem);
+  /* the faces memory reaches for */
+  --f-grot: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-caslon: "Libre Caslon Text", Georgia, serif;
+  --f-instr: "Instrument Serif", "Times New Roman", serif;
+  --f-old: "Old Standard TT", Georgia, serif;
+  --f-type: "Cutive Mono", "Courier New", monospace;
+  --f-courier: "Courier Prime", "Courier New", monospace;
+  --f-sign: "Overpass", "Highway Gothic", Arial, sans-serif;
+  --f-din: "Barlow Condensed", "Arial Narrow", sans-serif;
 }
 
 html { overflow-x: clip; background-color: var(--wall); }
@@ -54,15 +65,13 @@ var { font-style: italic; }
 /* the title, repeated and receding */
 .title-echo span {
   display: block;
-  font-size: clamp(2rem, 4.6vw, 3.3rem);
-  font-weight: 300;
+  font-size: calc(clamp(2rem, 4.6vw, 3.3rem) * var(--fs, 1));
   line-height: 1.2;
-  letter-spacing: -0.01em;
   white-space: nowrap;
   color: var(--ink);
 }
 .title-echo span:nth-child(1) { opacity: 0.2; }
-.title-echo span:nth-child(2) { opacity: 0.11; letter-spacing: 0.006em; padding-left: 0.08em; }
+.title-echo span:nth-child(2) { opacity: 0.11; padding-left: 0.08em; }
 .title-echo span:nth-child(3) { opacity: 0.05; padding-left: 0.2em; }
 
 .lobby > p:last-child { margin: 9vh 0 0; }
@@ -95,9 +104,10 @@ var { font-style: italic; }
 [role="tabpanel"]:not([hidden]) { animation: recall 1.6s ease-out both; }
 [role="tabpanel"] > h2 {
   margin: 0 0 3rem;
+  font-family: var(--f-sign);
   font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -142,8 +152,7 @@ h3 { font-size: 1.75rem; margin: 2.2rem 0 1rem; }
   }
   .h-echo span {
     display: block;
-    font-size: 1.75rem;
-    font-weight: 300;
+    font-size: calc(1.75rem * var(--fs, 1));
     line-height: 1.2;
     white-space: nowrap;
   }
@@ -267,8 +276,40 @@ svg text[fill="#aaa"] { fill: #a09461; }
 /* ---------- the afterimage at the foot of the page ---------- */
 
 .afterimage { margin-top: 55vh; padding-bottom: 30vh; color: rgba(41, 36, 15, 0.3); }
-.afterimage .echo-h { font-size: clamp(1.6rem, 3.6vw, 2.6rem); font-weight: 300; line-height: 1.2; margin: 0 0 2rem; }
+.afterimage .echo-h { font-family: var(--f-instr); font-style: italic; font-size: clamp(1.9rem, 4.4vw, 3.2rem); font-weight: 400; line-height: 1.15; margin: 0 0 2rem; }
+.afterimage > p:not(.echo-h) { font-family: var(--f-type); font-size: 17px; max-width: 40rem; }
 .afterimage .gone { color: transparent; }
+
+/* ---------- faces: assigned to headings and echoes ---------- */
+/* Each face is nudged in size so the copies keep roughly the same visual weight. */
+
+.f-grot    { font-family: var(--f-grot); font-weight: 300; font-style: normal; letter-spacing: -0.01em; }
+.f-caslon  { font-family: var(--f-caslon); font-weight: 400; font-style: italic; letter-spacing: 0; --fs: 0.94; }
+.f-instr   { font-family: var(--f-instr); font-weight: 400; font-style: normal; letter-spacing: 0; --fs: 1.12; }
+.f-old     { font-family: var(--f-old); font-weight: 400; font-style: normal; letter-spacing: 0.01em; }
+.f-type    { font-family: var(--f-type); font-weight: 400; font-style: normal; letter-spacing: -0.02em; --fs: 0.92; }
+.f-courier { font-family: var(--f-courier); font-weight: 400; font-style: normal; letter-spacing: -0.03em; --fs: 0.92; }
+.f-sign    { font-family: var(--f-sign); font-weight: 600; font-style: normal; letter-spacing: 0.02em; --fs: 0.9; }
+.f-din     { font-family: var(--f-din); font-weight: 400; font-style: normal; letter-spacing: 0.03em; --fs: 1.06; }
+
+/* a word inside an echo that came back in the wrong face; inherits the line's size */
+.title-echo i, .h-echo i, .echo-h i, .afterimage i { font-style: normal; font-size: 1em; }
+.title-echo i.f-caslon, .h-echo i.f-caslon, .echo-h i.f-caslon { font-style: italic; }
+
+/* scene headings arrive in a different face on every return */
+.scene h3[class*="f-"] { line-height: 1.2; }
+.scene h3.f-grot { font-size: 1.75rem; }
+.scene h3.f-caslon { font-size: 1.62rem; }
+.scene h3.f-instr { font-size: 2.05rem; }
+.scene h3.f-old { font-size: 1.75rem; }
+.scene h3.f-courier { font-size: 1.62rem; font-weight: 700; }
+.scene h3.f-sign { font-size: 1.6rem; font-weight: 300; }
+.scene h3.f-din { font-size: 1.95rem; }
+
+/* the Output headings are three different memories of a heading */
+#panel-output > h3:nth-of-type(1) { font-family: var(--f-instr); font-size: 1.6rem; font-weight: 400; }
+#panel-output > h3:nth-of-type(2) { font-family: var(--f-courier); font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+#panel-output > h3:nth-of-type(3) { font-family: var(--f-sign); font-size: 1.3rem; font-weight: 300; }
 
 @media (max-width: 600px) {
   body { font-size: 17px; }

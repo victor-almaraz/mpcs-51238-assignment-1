@@ -13,7 +13,8 @@
   <p class="back"><a href="../">Back to the gallery</a></p>
   <h1><span class="h1-a">FORTRAN</span> <span class="h1-b">punched card interpreter</span></h1>
   <p class="lede">This page is a working model of a 1960s computing center. You punch a FORTRAN program onto a deck of cards, hand the deck to the card reader, and collect your results from the line printer and the card punch. One of the sample decks is a program that generates the number sieves that the composer Iannis Xenakis used to write music.</p>
-  <div class="mast-fig" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="mast-fig" aria-hidden="true"><span class="sph"><b></b><b></b><b></b><b></b></span><span class="cast"></span><span class="cube"><b class="c-top"></b><b class="c-left"></b><b class="c-right"></b></span><span class="cyl"><b></b></span><span class="ground"></span></div>
+  <div class="scale" aria-hidden="true"><span><i class="v0"></i>0</span><span><i class="v1"></i>1</span><span><i class="v2"></i>2</span><span><i class="v3"></i>3</span><span><i class="v4"></i>4</span><span><i class="v5"></i>5</span><span><i class="v6"></i>6</span></div>
 </header>
 
 <div class="work">
@@ -39,7 +40,7 @@
   </ol>
 </nav>
   <section class="sub fig-circle" id="ab-1" aria-labelledby="ab-1-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.1</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.1</p><div class="fig"><span class="sph"><b></b><b></b><b></b><b></b></span><span class="cast"></span><span class="plinth"></span></div></div>
     <div class="sub-main">
       <h3 id="ab-1-h">FORTRAN and the punched card</h3>
     <p>FORTRAN, short for <em>formula translation</em>, was created at IBM by a team led by John Backus. Its first compiler shipped in 1957 for the IBM 704, and it let scientists and engineers write their calculations as formulas instead of as machine instructions. The language spread quickly. FORTRAN IV followed in 1962, and its 1966 standard, FORTRAN 66, made FORTRAN one of the first programming languages with an official standard. This simulator runs a subset of that language.</p>
@@ -58,7 +59,7 @@
     </div>
   </section>
   <section class="sub fig-bars" id="ab-2" aria-labelledby="ab-2-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.2</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.2</p><div class="fig"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
     <div class="sub-main">
       <h3 id="ab-2-h">The deck</h3>
     <p>A job is a single deck of cards. The program comes first and finishes with an <code>END</code> card, and every card after the <code>END</code> card is data for the program to read. If the program tries to read past the last data card, the job stops with the message <code>END OF FILE ON UNIT 5</code>, just as it would have on an IBM machine. Blank cards at the end of the deck are not sent to the reader.</p>
@@ -66,7 +67,7 @@
     </div>
   </section>
   <section class="sub fig-quarter" id="ab-3" aria-labelledby="ab-3-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.3</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.3</p><div class="fig"><i></i><i></i><i></i><i></i></div></div>
     <div class="sub-main">
       <h3 id="ab-3-h">Using the simulator</h3>
     <p>The index tabs beside the sheet switch between this <em>About</em> tab, the <em>Editor</em>, the <em>Card viewer</em>, and the <em>Output</em>. When a tab has keyboard focus, the up and down (or left and right) arrow keys move to the neighboring tabs, and <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and last.</p>
@@ -79,7 +80,7 @@
     </div>
   </section>
   <section class="sub fig-grid" id="ab-4" aria-labelledby="ab-4-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.4</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.4</p><div class="fig"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
     <div class="sub-main">
       <h3 id="ab-4-h">The language</h3>
     <p>The simulator understands a single main program; subroutines and functions are not supported. A name has up to six letters and digits and must start with a letter. Unless you declare otherwise, names that begin with the letters I through N hold integers, and all other names hold real numbers. Integers are 32 bits wide, and integer division throws away the remainder, so <code>7/2</code> is 3. Real numbers have single precision.</p>
@@ -104,7 +105,7 @@
     </div>
   </section>
   <section class="sub fig-stair" id="ab-5" aria-labelledby="ab-5-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.5</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.5</p><div class="fig"><i></i><i></i><i></i><i></i><i></i></div></div>
     <div class="sub-main">
       <h3 id="ab-5-h">The line printer</h3>
     <p>Results came back on a line printer such as the IBM 1403, which printed a whole line at a time onto continuous fan-fold paper. A chain of type spun past a row of hammers, and each hammer fired the moment its character went by. The first character of each printed line is never printed. Instead, it tells the printer how far to move the paper. A blank moves it one line, a <code>0</code> leaves a blank line first, a minus sign leaves two blank lines, a <code>1</code> jumps to the top of a new page, and a plus sign prints over the line before. This rule caused famous mistakes. If a <code>FORMAT</code> happens to put a <code>1</code> in the first position, the printer throws a new page, so printing 123 with <code>I3</code> starts a new page and prints only 23.</p>
@@ -112,7 +113,7 @@
     </div>
   </section>
   <section class="sub fig-disc" id="ab-6" aria-labelledby="ab-6-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.6</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.6</p><div class="fig"><svg class="hypar" viewBox="0 0 100 133" preserveAspectRatio="xMinYMin meet" focusable="false"><path d="M4.0 96.0L96.0 74.0 M4.0 96.0L96.0 74.0 M6.7 91.0L92.9 77.0 M6.0 97.8L93.6 70.2 M9.3 86.0L89.8 80.0 M8.0 99.6L91.1 66.4 M12.0 81.0L86.7 83.0 M10.0 101.3L88.7 62.7 M14.7 76.0L83.6 86.0 M12.0 103.1L86.2 58.9 M17.3 71.0L80.4 89.0 M14.0 104.9L83.8 55.1 M20.0 66.0L77.3 92.0 M16.0 106.7L81.3 51.3 M22.7 61.0L74.2 95.0 M18.0 108.4L78.9 47.6 M25.3 56.0L71.1 98.0 M20.0 110.2L76.4 43.8 M28.0 51.0L68.0 101.0 M22.0 112.0L74.0 40.0 M30.7 46.0L64.9 104.0 M24.0 113.8L71.6 36.2 M33.3 41.0L61.8 107.0 M26.0 115.6L69.1 32.4 M36.0 36.0L58.7 110.0 M28.0 117.3L66.7 28.7 M38.7 31.0L55.6 113.0 M30.0 119.1L64.2 24.9 M41.3 26.0L52.4 116.0 M32.0 120.9L61.8 21.1 M44.0 21.0L49.3 119.0 M34.0 122.7L59.3 17.3 M46.7 16.0L46.2 122.0 M36.0 124.4L56.9 13.6 M49.3 11.0L43.1 125.0 M38.0 126.2L54.4 9.8 M52.0 6.0L40.0 128.0 M40.0 128.0L52.0 6.0" fill="none" stroke="#000" stroke-width="1" vector-effect="non-scaling-stroke"/></svg></div></div>
     <div class="sub-main">
       <h3 id="ab-6-h">Iannis Xenakis and the sieve</h3>
     <p>Iannis Xenakis (1922&ndash;2001) was a Greek-French composer, architect, and engineer, born in Romania to a Greek family. He came to Paris as a political refugee in 1947. He then spent twelve years in Le Corbusier&rsquo;s studio, where he took charge of designing the Philips Pavilion for the 1958 Brussels World&rsquo;s Fair, and he brought an engineer&rsquo;s habits of mind to music. He composed with probability and set theory, and he was one of the first composers to write music with a computer. In 1962 he ran his Free Stochastic Music program on an IBM 7090 at IBM France in Paris. Xenakis designed the program, and M. F. G&eacute;nuys and M. J. Barraud coded it in FORTRAN IV. Its output became the <em>ST</em> pieces, among them <em>ST/10</em> and <em>ST/4</em>, whose titles record the date the data was generated: 8 February 1962. He published the program several times, most completely in his book <em>Formalized Music</em> (1971).</p>
@@ -121,7 +122,7 @@
     </div>
   </section>
   <section class="sub fig-band" id="ab-7" aria-labelledby="ab-7-h" tabindex="-1">
-    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.7</p><div class="fig"></div></div>
+    <div class="sub-side" aria-hidden="true"><p class="sub-n">1.7</p><div class="fig"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
     <div class="sub-main">
       <h3 id="ab-7-h">The sieve generator deck</h3>
     <p>The fifth sample deck is a sieve generator written in the same FORTRAN that the simulator runs, in the spirit of Xenakis&rsquo;s own programs. The first data card after <code>END</code> holds three numbers in 5-column fields. <code>MODE</code> is 1 for the union of the classes, 2 for their intersection, or 3 for the complement of their union. <code>N</code> is the number of classes, from 1 to 10, and <code>LIMIT</code> sets the range, because the program tests every integer from 0 to <code>LIMIT</code>&nbsp;&minus;&nbsp;1. Each of the next <var>N</var> cards describes one class with a modulus <code>M</code> and a shift <code>S</code>, again in 5-column fields.</p>
@@ -269,7 +270,13 @@
     var masks = Fortran.encodeCard(text80);
     var left = 24, colW = 10, top = 22, rowH = 13;
     var width = left + 80 * colW + 8, height = top + 12 * rowH + 6;
-    var svg = svgEl('svg', { viewBox: '0 0 ' + width + ' ' + height, role: 'img', 'aria-label': 'Punched card: ' + text80.trim() });
+    var svg = svgEl('svg', { viewBox: '0 0 ' + (width + 7) + ' ' + (height + 7), role: 'img', 'aria-label': 'Punched card: ' + text80.trim() });
+    // a cross-hatched cast shadow, offset down and right, never under the card's text
+    var pid = 'xh' + (drawCard.n = (drawCard.n || 0) + 1);
+    var pat = svgEl('pattern', { id: pid, width: 4, height: 4, patternUnits: 'userSpaceOnUse' });
+    pat.appendChild(svgEl('path', { d: 'M0 4L4 0M-1 1L1 -1M3 5L5 3M0 0L4 4M-1 3L1 5M3 -1L5 1', stroke: '#000', 'stroke-width': 0.9 }));
+    svg.appendChild(pat);
+    svg.appendChild(svgEl('polygon', { points: (width) + ',7 ' + (width + 7) + ',7 ' + (width + 7) + ',' + (height + 7) + ' 7,' + (height + 7) + ' 7,' + height + ' ' + width + ',' + height, fill: 'url(#' + pid + ')' }));
     svg.appendChild(svgEl('rect', { x: 0.5, y: 0.5, width: width - 1, height: height - 1, rx: 0, fill: '#fff', stroke: '#000' }));
     svg.appendChild(svgEl('polygon', { points: '0.5,0.5 14.5,0.5 0.5,14.5', fill: '#fff', stroke: '#000' }));
     if (opts.labels !== false) {

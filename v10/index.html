@@ -631,7 +631,9 @@
     y: { color: '#ffdf00', angle: 0, name: 'Yellow' },
     k: { color: '#231f20', angle: 45, name: 'Black' }
   };
-  var PAPER = '#f6f1e7';
+  // The canvas starts white and is multiplied onto the sheet in CSS, so the
+  // paper's grain shows through the dots as it would through real ink.
+  var PAPER = '#ffffff';
 
   function clamp(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
   function smooth(a, b, t) { t = clamp((t - a) / (b - a)); return t * t * (3 - 2 * t); }
