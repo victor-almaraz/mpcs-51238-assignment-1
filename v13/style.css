@@ -94,7 +94,8 @@ body {
   background: var(--tx-mottle) 0 0 / 520px, var(--tx-mottle-l) 140px 90px / 620px;
   opacity: 0.2;
 }
-/* grain: fine dark and light specks plus a clumpier layer, thinned and thickened by a slow density mask */
+/* grain: fine dark and light specks plus a clumpier layer, thinned and thickened by a density mask.
+   Static: moving grain over text hurts reading. */
 .grain, .grain-top {
   position: absolute; inset: -120px;
   background:
@@ -104,32 +105,14 @@ body {
   -webkit-mask: var(--tx-density) 0 0 / 600px, linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
           mask: var(--tx-density) 0 0 / 600px, linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45));
   opacity: 0.55;
-  will-change: transform;
-  animation: grain 0.5s steps(1) infinite;
 }
 /* a much fainter grain over the whole frame, text included, so the picture is one material */
 .grain-top { position: fixed; z-index: 3; pointer-events: none; opacity: 0.09; -webkit-mask: none; mask: none; }
-@keyframes grain {
-  0%   { transform: translate(0, 0); }
-  17%  { transform: translate(-61px, 43px); }
-  33%  { transform: translate(37px, -88px); }
-  50%  { transform: translate(-95px, -27px); }
-  67%  { transform: translate(72px, 64px); }
-  83%  { transform: translate(-18px, 101px); }
-}
-/* scratches and dust on the print, jumping between frames */
+/* scratches and dust on the print, held still */
 .wear {
   position: absolute; inset: 0;
   background: var(--tx-wear) 0 0 / 900px 1400px;
-  opacity: 0.5;
-  animation: wear 2.4s steps(1) infinite;
-}
-@keyframes wear {
-  0%   { background-position: 0 0; opacity: 0.5; }
-  20%  { background-position: -310px -420px; opacity: 0.3; }
-  40%  { background-position: 180px 260px; opacity: 0.55; }
-  60%  { background-position: -520px 700px; opacity: 0.25; }
-  80%  { background-position: 410px -130px; opacity: 0.45; }
+  opacity: 0.45;
 }
 
 /* the set: three painted planes, receding */
@@ -448,6 +431,4 @@ svg text[fill="#aaa"] { fill: #6d6352; }
 @media (prefers-reduced-motion: reduce) {
   [role="tabpanel"]:not([hidden]), .scenes-on .scene:not([hidden]) { animation: none; }
   .pool, .beam, [role="tabpanel"], body, .set path { transition: none; }
-  /* grain and wear hold still on a single frame */
-  .grain, .grain-top, .wear { animation: none; }
 }

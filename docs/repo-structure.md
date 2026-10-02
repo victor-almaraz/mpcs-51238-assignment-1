@@ -3,7 +3,7 @@
 ```
 .
 ├── index.html            Gallery — site entry point (/), links to every version
-├── README.md             Project overview, how to run and deploy
+├── README.md             Short summary of the project + link to the live site on Vercel
 ├── AGENTS.md             Context for the coding agent (loaded every run)
 ├── genealogy/
 │   └── index.html        Genealogy page (/genealogy), reads scripts/versions.js

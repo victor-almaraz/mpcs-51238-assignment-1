@@ -1,7 +1,7 @@
 /* A black-and-white photocopy of a working file: typed memo, printed coding
-   form, thermal printouts, all slightly crooked on the glass. Divider tabs
-   stick out of the left edge of the stack. Everything here could be paper:
-   toner specks, a roller streak, staples, tape, a carbon smudge, a coffee ring. */
+   form, thermal printouts. Folder tabs stick out of the left edge of the stack,
+   labelled up their length. Everything here could be paper: toner specks,
+   uneven toner, a faint drum streak, a staple, tape. */
 
 :root {
   --ink: #161616;
@@ -27,8 +27,6 @@
   --dust: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='640'%3E%3Cg fill='%23111'%3E%3Ccircle cx='38' cy='71' r='1.3' opacity='.7'/%3E%3Ccircle cx='471' cy='22' r='.9' opacity='.8'/%3E%3Ccircle cx='233' cy='148' r='.6' opacity='.6'/%3E%3Ccircle cx='502' cy='311' r='1.6' opacity='.6'/%3E%3Ccircle cx='11' cy='402' r='.9' opacity='.7'/%3E%3Ccircle cx='356' cy='488' r='.7' opacity='.6'/%3E%3Ccircle cx='129' cy='603' r='1.4' opacity='.6'/%3E%3Ccircle cx='420' cy='590' r='.6' opacity='.8'/%3E%3C/g%3E%3Cpath d='M488 160c-6 14 3 22-4 37s4 19 1 27' fill='none' stroke='%23111' stroke-width='.7' opacity='.45'/%3E%3C/svg%3E");
   /* on the sheets themselves: a few tiny specks only, no hairs */
   --dust-doc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='700'%3E%3Cg fill='%23222' opacity='.45'%3E%3Ccircle cx='38' cy='71' r='.9'/%3E%3Ccircle cx='471' cy='22' r='.7'/%3E%3Ccircle cx='502' cy='311' r='1.1'/%3E%3Ccircle cx='11' cy='402' r='.7'/%3E%3Ccircle cx='129' cy='683' r='.9'/%3E%3C/g%3E%3C/svg%3E");
-  /* a ring left by a coffee cup, copied grey */
-  --ring: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='.05' numOctaves='2' seed='9'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='7'/%3E%3C/filter%3E%3Cg filter='url(%23r)' fill='none' stroke='%23222'%3E%3Ccircle cx='70' cy='70' r='52' stroke-width='3.5' opacity='.22'/%3E%3Ccircle cx='70' cy='70' r='49' stroke-width='1' opacity='.18'/%3E%3Cpath d='M30 104a52 52 0 0 1-8-20' stroke-width='6' opacity='.12'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 * { box-sizing: border-box; }
@@ -45,21 +43,6 @@ body {
   font-size: 17px;
   line-height: 1.55;
 }
-
-/* the lid was not quite shut: a black wedge of open glass down the right edge
-   and along the top, crooked because the originals were placed crooked */
-.copier-edge {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.copier-edge::before, .copier-edge::after {
-  content: "";
-  position: absolute;
-  background: var(--toner), linear-gradient(#0d0d0d, #262626 60%, #121212);
-}
-.copier-edge::before { top: 0; right: 0; bottom: 0; width: 0.85rem; clip-path: polygon(15% 0, 100% 0, 100% 100%, 85% 100%, 70% 62%, 92% 18%); }
-.copier-edge::after { top: 0; left: 0; right: 0; height: 0.8rem; clip-path: polygon(0 0, 100% 0, 100% 25%, 64% 55%, 30% 85%, 0 100%); }
 
 .scan { position: relative; max-width: 62rem; margin: 0 auto; padding: 1.5rem 1.25rem 3rem 1rem; }
 
@@ -78,7 +61,6 @@ td code { white-space: nowrap; }
   padding: 1rem 1.5rem 1.25rem;
   /* uneven toner: the copier laid the grey down in soft bands */
   background:
-    var(--ring) right 1.25rem top 0.6rem / 8.5rem no-repeat,
     var(--fibre),
     linear-gradient(100deg, transparent 0 18%, rgba(0, 0, 0, 0.05) 26%, transparent 34% 70%, rgba(0, 0, 0, 0.06) 82%, transparent 90%),
     linear-gradient(#d2d2cf, var(--folder));
@@ -87,7 +69,7 @@ td code { white-space: nowrap; }
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 .back { margin: 0 0 0.75rem; font-size: 1rem; }
-/* the typed label stuck to the folder; its glue gave up at one corner */
+/* the typed label stuck to the folder */
 .folder-label {
   position: relative;
   display: inline-block;
@@ -97,18 +79,6 @@ td code { white-space: nowrap; }
   border: 1px solid #8f8f8c;
   border-left: 0.4rem solid #6f6f6d;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
-}
-.folder-label::after {
-  content: "";
-  position: absolute;
-  right: -1px;
-  bottom: -1px;
-  width: 1.1rem;
-  height: 1.1rem;
-  background: linear-gradient(135deg, transparent 50%, #9e9e9b 50% 56%, #e6e6e3 56%);
-  border-left: 1px solid #8f8f8c;
-  border-top: 1px solid #8f8f8c;
-  clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
 .folder-label h1 {
   margin: 0;
@@ -124,13 +94,13 @@ td code { white-space: nowrap; }
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: 9.75rem minmax(0, 1fr);
+  grid-template-columns: 3.1rem minmax(0, 1fr);
   align-items: start;
   margin-top: -1px;
 }
 .file > [role="tabpanel"] { grid-column: 2; grid-row: 1; }
 
-/* two sheets further down the stack, knocked crooked */
+/* two sheets further down the stack, not quite squared up */
 .file::before, .file::after {
   content: "";
   grid-column: 2;
@@ -142,13 +112,13 @@ td code { white-space: nowrap; }
 }
 .file::before {
   background: var(--fibre), var(--paper-3);
-  transform: translate(0.9rem, 0.7rem) rotate(1.1deg);
+  transform: translate(0.5rem, 0.5rem) rotate(0.45deg);
   box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.18);
 }
 .file::after {
   z-index: -2;
   background: var(--fibre), var(--paper-2);
-  transform: translate(-0.35rem, 0.35rem) rotate(-0.7deg);
+  transform: translate(-0.2rem, 0.25rem) rotate(-0.3deg);
 }
 
 .tabs {
@@ -159,19 +129,21 @@ td code { white-space: nowrap; }
   align-items: flex-end;
   padding-top: 2.25rem;
 }
-/* each divider tab: a trapezoid with rounded outer corners, grey board,
-   with a white typed slip pasted on; the open one is the top sheet itself */
+/* each folder tab: a trapezoid with rounded outer corners, grey board, with a
+   white typed slip pasted on and typed up its length, as on a real side tab.
+   The open one is the top sheet itself. */
 .tabs [role="tab"] {
   /* a divider tab: slanted shoulders, softened outer corners */
-  --tab-shape: polygon(100% 0, 1.2rem 0.3rem, 0.45rem 0.65rem, 0.1rem 1.1rem, 0 1.5rem, 0 calc(100% - 1.5rem), 0.1rem calc(100% - 1.1rem), 0.45rem calc(100% - 0.65rem), 1.2rem calc(100% - 0.3rem), 100% 100%);
+  --tab-shape: polygon(100% 0, 1rem 0.35rem, 0.4rem 0.75rem, 0.1rem 1.2rem, 0 1.7rem, 0 calc(100% - 1.7rem), 0.1rem calc(100% - 1.2rem), 0.4rem calc(100% - 0.75rem), 1rem calc(100% - 0.35rem), 100% 100%);
   position: relative;
-  z-index: -1;
+  /* z 0, not below: a negative z-index put the tabs under the .tabs box, where clicks never reached them */
+  z-index: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: calc(100% + 0.35rem);
-  min-height: 3.4rem;
   margin: 0 -0.35rem 0.25rem 0;
-  padding: 0.5rem 0.6rem 0.5rem 0.95rem;
+  padding: 0.9rem 0.4rem 0.9rem 0.6rem;
   font: inherit;
   font-size: 1rem;
   line-height: 1.3;
@@ -195,18 +167,18 @@ td code { white-space: nowrap; }
   z-index: -1;
   background: var(--fibre), linear-gradient(90deg, #c2c2bf, var(--folder) 45%, #c6c6c3);
 }
-/* messy: the dividers were never cut or filed quite in line */
-.tabs [role="tab"]:nth-child(1) { width: calc(100% + 0.1rem); }
-.tabs [role="tab"]:nth-child(2) { width: calc(100% + 0.55rem); margin-top: 0.15rem; }
-.tabs [role="tab"]:nth-child(3) { width: calc(100% - 0.1rem); }
-.tabs [role="tab"]:nth-child(4) { width: calc(100% + 0.3rem); margin-top: 0.3rem; }
+/* the dividers were cut by hand, not quite in line */
+.tabs [role="tab"]:nth-child(2) { width: calc(100% + 0.5rem); }
+.tabs [role="tab"]:nth-child(4) { width: calc(100% + 0.2rem); }
 
 .slip {
   position: relative;
   z-index: 0;
   display: block;
-  padding: 0.15rem 0.45rem;
+  padding: 0.5rem 0.15rem;
   white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
 }
 .slip::before {
   content: "";
@@ -215,11 +187,10 @@ td code { white-space: nowrap; }
   z-index: -1;
   background: #fdfdfc;
   border: 1px solid #858582;
-  transform: rotate(-1.4deg);
+  transform: rotate(-0.4deg);
 }
-.tabs [role="tab"]:nth-child(2) .slip::before { transform: rotate(1deg) translateY(1px); }
-.tabs [role="tab"]:nth-child(3) .slip::before { transform: rotate(-0.4deg); }
-.tabs [role="tab"]:nth-child(4) .slip::before { transform: rotate(1.8deg); }
+.tabs [role="tab"]:nth-child(2) .slip::before { transform: rotate(0.5deg); }
+.tabs [role="tab"]:nth-child(4) .slip::before { transform: rotate(0.3deg); }
 .tabs [role="tab"]:hover::after { background: var(--fibre), #dadad7; }
 
 /* the open divider is the sheet on top: same paper, no seam */
@@ -236,17 +207,16 @@ td code { white-space: nowrap; }
   min-width: 0;
   min-height: 24rem;
   padding: 2rem clamp(1rem, 4vw, 3rem) 2.5rem;
-  /* streak from a dirty drum and a thumb of carbon, both kept to the margin */
+  /* a faint streak from the drum, kept to the margin */
   background:
     linear-gradient(to right, transparent calc(100% - 2.1rem), rgba(0, 0, 0, 0.07) calc(100% - 2.1rem), rgba(0, 0, 0, 0.04) calc(100% - 1.85rem), transparent calc(100% - 1.8rem)),
-    radial-gradient(closest-side, rgba(20, 20, 20, 0.13), rgba(20, 20, 20, 0.05) 60%, transparent) right -2.5rem bottom -1.5rem / 9rem 6rem no-repeat,
     var(--dust-doc),
     var(--fibre),
     radial-gradient(ellipse at 50% 40%, var(--paper) 60%, #ececea 100%);
   border: 1px solid #a3a3a0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22), 3px 5px 10px rgba(0, 0, 0, 0.1);
 }
-/* a staple at the corner, and the two holes of the staple before it */
+/* a staple at the corner */
 .doc::before {
   content: "";
   position: absolute;
@@ -256,8 +226,6 @@ td code { white-space: nowrap; }
   height: 1.5rem;
   pointer-events: none;
   background:
-    radial-gradient(circle, #2a2a2a 0 1.4px, transparent 2px) 0.2rem 0.95rem / 4px 4px no-repeat,
-    radial-gradient(circle, #2a2a2a 0 1.4px, transparent 2px) 1.45rem 0.55rem / 4px 4px no-repeat,
     linear-gradient(#3a3a3a, #7a7a7a 45%, #2e2e2e) 0.5rem 0.65rem / 1.6rem 3px no-repeat;
   transform: rotate(-24deg);
   filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.7));
@@ -290,10 +258,6 @@ table { border-collapse: collapse; margin: 1rem 0; width: 100%; }
 th, td { padding: 0.35rem 0.6rem 0.35rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid #a8a8a5; }
 th { font-weight: normal; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 2px solid var(--ink-soft); }
 td:first-child { padding-right: 1rem; }
-
-/* typed strike-over: x struck over each wrong letter */
-.xo { position: relative; color: #3a3a3a; }
-.xo::after { content: attr(data-x); position: absolute; left: 0; top: 0; color: var(--ink); }
 
 /* ---------- the memo ---------- */
 
@@ -498,19 +462,16 @@ input.card:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; }
 .stacker .item { margin: 0 0 0.6rem; }
 .stacker .item svg { max-width: 40rem; }
 
-/* ---------- narrow screens: slim divider tabs, labels running up the edge ---------- */
+/* ---------- narrow screens ---------- */
 
 @media (max-width: 760px) {
   body { font-size: 16px; }
   .scan { padding: 1.25rem 1.1rem 2.5rem 0.6rem; }
-  .folder { background-size: 5.5rem, auto, auto, auto; background-position: right 0.4rem top 0.4rem, 0 0, 0 0, 0 0; }
-  .file { grid-template-columns: 2.4rem minmax(0, 1fr); }
+  .file { grid-template-columns: 2.6rem minmax(0, 1fr); }
   /* the under-sheet stays crooked, but pivots on its left edge so it can't poke past the screen */
-  .file::before { transform: translate(0, 0.6rem) rotate(0.35deg); transform-origin: 0 0; }
+  .file::before { transform: translate(0, 0.5rem) rotate(0.3deg); transform-origin: 0 0; }
   .tabs { padding-top: 1.25rem; }
-  .tabs [role="tab"] { min-height: 0; padding: 0.8rem 0.35rem 0.8rem 0.5rem; justify-content: center; }
-  .tabs [role="tab"] { --tab-shape: polygon(100% 0, 1rem 0.35rem, 0.4rem 0.75rem, 0.1rem 1.2rem, 0 1.7rem, 0 calc(100% - 1.7rem), 0.1rem calc(100% - 1.2rem), 0.4rem calc(100% - 0.75rem), 1rem calc(100% - 0.35rem), 100% 100%); }
-  .slip { writing-mode: vertical-rl; transform: rotate(180deg); padding: 0.45rem 0.1rem; }
+  .tabs [role="tab"] { padding: 0.8rem 0.3rem 0.8rem 0.45rem; }
   .doc { padding: 1.75rem 1rem 2rem; }
   .doc::before { right: 0.3rem; top: 0.35rem; }
   .rolls { grid-template-columns: minmax(0, 1fr); }

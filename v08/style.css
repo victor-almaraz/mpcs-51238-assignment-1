@@ -82,14 +82,17 @@ html.js, html.js body { height: 100%; overflow: hidden; }
   overflow: hidden;
 }
 .icons {
-  position: absolute; top: 10px; right: 8px; bottom: 8px;
-  /* columns fill from the right, as on the old Finder desk */
-  display: grid; grid-auto-flow: column; grid-template-rows: repeat(6, min-content); gap: 4px 6px;
+  /* the bottom 112px is left free for the Trash */
+  position: absolute; top: 10px; right: 8px; bottom: 112px;
+  /* columns fill from the right, as on the old Finder desk; as many fixed-height
+     rows as the desk has room for, so a short window wraps into another column */
+  display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 116px); gap: 4px 6px;
   direction: rtl; align-content: start;
   margin: 0; padding: 0; list-style: none;
 }
 .icons > li { direction: ltr; }
-.trash-slot { position: absolute; right: 0; bottom: 0; }
+/* the Trash keeps its corner of the screen, below the icon columns */
+.trash-slot { position: fixed; right: 8px; bottom: 8px; }
 .icon {
   display: flex; flex-direction: column; align-items: center; gap: 3px;
   width: 104px; padding: 4px 2px; border: 0;
