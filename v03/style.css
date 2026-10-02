@@ -1,0 +1,111 @@
+/* Black text on white, minimal styling. Folder tabs sit on one framed panel, like an application window. */
+
+body {
+  color: #000;
+  background: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.4;
+  margin: 1em auto;
+  padding: 0 1em;
+  max-width: 62em;
+}
+
+h1, h2 { line-height: 1.2; }
+h2 { margin-top: 0.6em; }
+
+a { color: #000; }
+
+table { border-collapse: collapse; margin: 0.5em 0; }
+th, td { border: 1px solid #000; padding: 0.15em 0.6em; text-align: left; vertical-align: top; }
+
+code, pre, input.card, .ruler {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+}
+
+button, select { font: inherit; color: #000; background: #fff; border: 1px solid #000; padding: 0.15em 0.6em; }
+button:disabled { color: #777; border-color: #777; }
+button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible, [role="tabpanel"]:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+
+/* Tabs: grey folder tabs; the active one is white, taller, and joined to the framed panel. */
+.tabs { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.3em; margin: 1.4em 0 0; padding-left: 0.6em; }
+.tabs [role="tab"] {
+  position: relative;
+  margin-bottom: -2px;
+  padding: 0.35em 1.2em;
+  border: 2px solid #000;
+  background: #e4e4e4;
+}
+.tabs [role="tab"][aria-selected="true"] {
+  z-index: 1;
+  padding-top: 0.65em;
+  font-weight: bold;
+  background: #fff;
+  border-bottom-color: #fff;
+}
+[role="tabpanel"] { border: 2px solid #000; padding: 0.4em 1.4em 1.4em; margin-bottom: 1em; }
+[role="tabpanel"] h2 { font-size: 1em; text-transform: uppercase; letter-spacing: 0.1em; margin: 0.6em 0; }
+
+.toolbar { margin: 0.6em 0; }
+.toolbar > * { margin-right: 0.4em; }
+.status { margin-left: 0.4em; }
+
+/* Deck editor */
+.editor { overflow-x: auto; padding-bottom: 0.4em; }
+.editor-inner { display: inline-block; min-width: min-content; }
+
+.ruler { margin: 0 0 2px calc(5ch + 1px); white-space: pre; line-height: 1.15; }
+
+.row { display: flex; align-items: center; white-space: nowrap; }
+.row .num { display: inline-block; width: 4ch; text-align: right; margin-right: 1ch; font-family: "Courier New", Courier, monospace; font-size: 15px; }
+.row.selected .num { font-weight: bold; }
+
+input.card {
+  box-sizing: content-box;
+  width: 80ch;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #000;
+  border-top-width: 0;
+  color: #000;
+  background-color: #fff;
+  /* field shading: cols 1-5, col 6, cols 7-72, cols 73-80 */
+  background-image: linear-gradient(to right,
+    #e4e4e4 0, #e4e4e4 5ch,
+    #bdbdbd 5ch, #bdbdbd 6ch,
+    #fff 6ch, #fff 72ch,
+    #e4e4e4 72ch, #e4e4e4 80ch);
+  line-height: 1.3;
+}
+.row:first-child input.card { border-top-width: 1px; }
+input.card:focus-visible { outline-offset: 0; }
+
+.legend span { display: inline-block; width: 1.2em; height: 1em; border: 1px solid #000; vertical-align: middle; margin: 0 0.3em 0 1em; }
+.legend span.f1 { background: #e4e4e4; }
+.legend span.f2 { background: #bdbdbd; }
+.legend span.f3 { background: #fff; }
+
+/* Card view and stacker */
+.cardview { max-width: 100%; overflow-x: auto; }
+.cardview svg, .stacker svg { display: block; width: 100%; max-width: 60em; height: auto; }
+.stacker .item { margin: 0 0 0.5em; }
+.stacker .item svg { max-width: 40em; }
+
+/* Output */
+.printer {
+  border: 1px solid #000;
+  padding: 0.5em;
+  overflow-x: auto;
+  max-height: 32em;
+  overflow-y: auto;
+}
+.printer pre, .log pre, .listing pre { margin: 0; }
+.pagebreak { border-top: 1px dashed #000; margin: 0.5em 0; text-align: center; font-size: 12px; font-family: "Courier New", Courier, monospace; }
+.placeholder { color: #555; margin: 0; }
+.log pre { border: 1px solid #000; padding: 0.5em; white-space: pre-wrap; }
+.listing { margin-top: 1em; }
+.listing pre { overflow-x: auto; border: 1px solid #000; padding: 0.5em; }
+
+.back { margin: 0; }
+
+td code { white-space: nowrap; }

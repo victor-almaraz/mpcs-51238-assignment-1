@@ -1,0 +1,113 @@
+/* Black text on white, minimal styling. Sub-pages read like a small website: a sidebar of pages and a titled page. */
+
+body {
+  color: #000;
+  background: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.4;
+  margin: 1em auto;
+  padding: 0 1em;
+  max-width: 78em;
+}
+
+h1, h2 { line-height: 1.2; }
+h1 { margin: 0.3em 0; }
+h2:focus { outline: none; }
+main h2 { font-size: 2em; margin: 0.2em 0 0.6em; padding-bottom: 0.2em; border-bottom: 2px solid #000; }
+
+a { color: #000; }
+
+table { border-collapse: collapse; margin: 0.5em 0; }
+th, td { border: 1px solid #000; padding: 0.15em 0.6em; text-align: left; vertical-align: top; }
+
+code, pre, input.card, .ruler {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+}
+
+button, select { font: inherit; color: #000; background: #fff; border: 1px solid #000; padding: 0.15em 0.6em; }
+button:disabled { color: #777; border-color: #777; }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+
+.toolbar { margin: 0.6em 0; }
+.toolbar > * { margin-right: 0.4em; }
+.status { margin-left: 0.4em; }
+
+/* Navigation between sub-pages: a sidebar on wide screens, a bar on narrow ones */
+.back { margin: 0; font-size: 0.9em; }
+nav ul { list-style: none; margin: 0; padding: 0; }
+nav a { display: block; padding: 0.3em 0.6em; border-left: 4px solid transparent; }
+nav a[aria-current="page"] { font-weight: bold; text-decoration: none; border-left-color: #000; }
+
+@media (min-width: 62em) {
+  body { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); column-gap: 1.5em; align-items: start; }
+  header { position: sticky; top: 1em; padding-right: 0.8em; border-right: 1px solid #000; }
+  header h1 { font-size: 1.15em; margin: 0.8em 0 1em; }
+  nav li { margin-bottom: 0.2em; }
+}
+@media (max-width: 61.99em) {
+  header { border-bottom: 1px solid #000; padding-bottom: 0.4em; }
+  nav li { display: inline-block; }
+  nav a { border-left: 0; border-bottom: 4px solid transparent; }
+  nav a[aria-current="page"] { border-bottom-color: #000; }
+}
+
+/* Deck editor */
+.editor { overflow-x: auto; padding-bottom: 0.4em; }
+.editor-inner { display: inline-block; min-width: min-content; }
+
+.ruler { margin: 0 0 2px calc(5ch + 1px); white-space: pre; line-height: 1.15; }
+
+.row { display: flex; align-items: center; white-space: nowrap; }
+.row .num { display: inline-block; width: 4ch; text-align: right; margin-right: 1ch; font-family: "Courier New", Courier, monospace; font-size: 15px; }
+.row.selected .num { font-weight: bold; }
+
+input.card {
+  box-sizing: content-box;
+  width: 80ch;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #000;
+  border-top-width: 0;
+  color: #000;
+  background-color: #fff;
+  /* field shading: cols 1-5, col 6, cols 7-72, cols 73-80 */
+  background-image: linear-gradient(to right,
+    #e4e4e4 0, #e4e4e4 5ch,
+    #bdbdbd 5ch, #bdbdbd 6ch,
+    #fff 6ch, #fff 72ch,
+    #e4e4e4 72ch, #e4e4e4 80ch);
+  line-height: 1.3;
+}
+.row:first-child input.card { border-top-width: 1px; }
+input.card:focus-visible { outline-offset: 0; }
+
+.legend { margin: 0.6em 0; }
+.legend span { display: inline-block; width: 1.2em; height: 1em; border: 1px solid #000; vertical-align: middle; margin: 0 0.3em 0 1em; }
+.legend span:first-child { margin-left: 0; }
+.legend span.f1 { background: #e4e4e4; }
+.legend span.f2 { background: #bdbdbd; }
+.legend span.f3 { background: #fff; }
+
+/* Card viewer and stacker */
+.cardview { max-width: 100%; overflow-x: auto; }
+.cardview svg, .stacker svg { display: block; width: 100%; max-width: 60em; height: auto; }
+.stacker .item { margin: 0 0 0.5em; }
+.stacker .item svg { max-width: 40em; }
+
+/* Output */
+.printer {
+  border: 1px solid #000;
+  padding: 0.5em;
+  overflow-x: auto;
+  max-height: 32em;
+  overflow-y: auto;
+}
+.printer pre, .log pre, .listing pre { margin: 0; }
+.pagebreak { border-top: 1px dashed #000; margin: 0.5em 0; text-align: center; font-size: 12px; font-family: "Courier New", Courier, monospace; }
+.placeholder { color: #555; margin: 0; }
+.log pre { border: 1px solid #000; padding: 0.5em; white-space: pre-wrap; }
+.listing { margin-top: 1em; }
+.listing pre { overflow-x: auto; border: 1px solid #000; padding: 0.5em; }
+
+td code { white-space: nowrap; }

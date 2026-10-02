@@ -20,7 +20,15 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 #### Version 1
 
-*Version 1* implements the functional core of the web site. It is focused on getting the interpreter and sieve solver to work. This version should use black text on a white background and minimal styling. 
+*Version 1* implements the functional core of the web site. It is focused on getting the interpreter and sieve solver to work. This version should use black text on a white background and minimal styling.
+
+#### Version 2
+
+*Version 1* demonstrates the principle of the idea, but it is difficult to use. The page is one long scroll of information and interactive components. *Version 2* attempts to solve this by using sub-pages for the instructions, editor, card viewer, and output. This version should use black text on a white background and minimal styling.
+
+#### Version 3
+
+*Version 1* demonstrates the principle of the idea, but it is difficult to use. The page is one long scroll of information and interactive components. *Version 3* attempts to solve this by using tabs to swap between the instructions, editor, card viewer, and output. This version should use black text on a white background and minimal styling.
 
 ### Gallery
 
