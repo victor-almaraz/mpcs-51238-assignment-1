@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Engine tests</title>
+<style>
+  body { font-family: monospace; color: #000; background: #fff; margin: 1em; }
+  .pass { color: #000; }
+  .fail { font-weight: bold; }
+  pre { margin: 0 0 0 2em; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h1>Engine tests</h1>
+<p><a href="../">Back to the gallery</a></p>
+<p id="summary">Running...</p>
+<div id="results"></div>
+
+<script src="../scripts/hollerith.js"></script>
+<script src="../scripts/fortran.js"></script>
+<script src="harness.js"></script>
+<script src="hollerith.test.js"></script>
+<script src="fortran.test.js"></script>
+<script src="sieve.test.js"></script>
+<script>
+  var results = Tests.runAll();
+  var failed = results.filter(function (r) { return !r.passed; });
+  document.getElementById('summary').textContent =
+    (failed.length ? 'FAIL: ' + failed.length + ' of ' + results.length + ' tests failed' :
+      'PASS: all ' + results.length + ' tests passed');
+  var out = document.getElementById('results');
+  results.forEach(function (r) {
+    var div = document.createElement('div');
+    div.className = r.passed ? 'pass' : 'fail';
+    div.textContent = (r.passed ? 'ok   ' : 'FAIL ') + r.name;
+    if (!r.passed) {
+      var pre = document.createElement('pre');
+      pre.textContent = r.error;
+      div.appendChild(pre);
+    }
+    out.appendChild(div);
+  });
+</script>
+</body>
+</html>

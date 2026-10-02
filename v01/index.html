@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FORTRAN punched card interpreter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<p class="back"><a href="../">Back to the gallery</a></p>
+<h1>FORTRAN punched card interpreter</h1>
+<p>Punch a deck of 80-column cards holding a FORTRAN IV program, feed it to the reader, and read the output on the line printer.</p>
+
+<section id="instructions">
+  <h2>Instructions</h2>
+
+  <h3>The card</h3>
+  <table>
+    <tr><th>Columns</th><th>Meaning</th></tr>
+    <tr><td>1</td><td><code>C</code> or <code>*</code> makes the card a comment.</td></tr>
+    <tr><td>1&ndash;5</td><td>Statement label, an unsigned integer.</td></tr>
+    <tr><td>6</td><td>Any character except blank or <code>0</code> continues the previous statement.</td></tr>
+    <tr><td>7&ndash;72</td><td>Statement text.</td></tr>
+    <tr><td>73&ndash;80</td><td>Ignored (sequence numbers), with a warning.</td></tr>
+  </table>
+  <p>Blanks are insignificant outside literals: <code>G O T O 20</code> is <code>GOTO 20</code>. Only characters the IBM 029 keypunch can punch may be typed; lowercase becomes uppercase.</p>
+
+  <h3>The deck</h3>
+  <p>Program cards run through the first <code>END</code> card; every card after it is data. Reading past the last data card ends the job with <code>END OF FILE ON UNIT 5</code>. Trailing blank cards are not sent to the reader.</p>
+
+  <h3>The language</h3>
+  <p>Main program only. Names are up to six letters or digits, starting with a letter; names starting I&ndash;N are INTEGER (32-bit, division truncates), the rest REAL (single precision).</p>
+  <ul>
+    <li><code>V = expr</code> with <code>+ - * / **</code>, parentheses, array elements, and <code>.LT. .LE. .EQ. .NE. .GT. .GE. .AND. .OR. .NOT. .TRUE. .FALSE.</code></li>
+    <li><code>INTEGER</code>, <code>REAL</code>, <code>DIMENSION A(n), B(m,n)</code></li>
+    <li><code>GO TO n</code>, <code>GO TO (n1,n2,...), I</code>, <code>IF (e) n1,n2,n3</code>, <code>IF (cond) stmt</code></li>
+    <li><code>DO n I = m1, m2 [, m3]</code> (always runs at least once), <code>CONTINUE</code>, <code>STOP [n]</code>, <code>PAUSE [n]</code>, <code>END</code></li>
+    <li><code>READ (5,f) list</code>, <code>READ f, list</code>, <code>WRITE (6,f) list</code>, <code>PRINT f, list</code>, and <code>PUNCH f, list</code> or <code>WRITE (7,f) list</code> for the output stacker</li>
+    <li><code>FORMAT</code>: <code>Iw Fw.d Ew.d nX nHtext 'text' /</code>, repeat counts, and groups</li>
+    <li><code>SQRT ABS IABS FLOAT INT IFIX MOD AMOD SIN COS ATAN EXP ALOG ALOG10 MAX0 MIN0 AMAX1 AMIN1 SIGN</code></li>
+  </ul>
+
+  <h3>The line printer</h3>
+  <p>The first character of each printed record is carriage control and is not printed: blank single space, <code>0</code> double space, <code>-</code> triple space, <code>1</code> new page, <code>+</code> overprint. So <code>I3</code> printing 123 starts a new page and prints 23.</p>
+
+  <h3>Using the simulator</h3>
+  <p>Load a sample or type cards, click a card to see its holes, and press <em>Run deck</em>. Punched cards land in the output stacker; load them into the editor and run again to read them as data. In the editor, <kbd>Enter</kbd> adds a card, <kbd>Backspace</kbd> on an empty card removes it, the arrow keys move between cards, and pasting several lines makes several cards.</p>
+
+  <h3>The sieve generator</h3>
+  <p>The last sample generates Xenakis-style sieves. The residual class <code>m@s</code> is every integer <var>x</var> with <var>x</var>&minus;<var>s</var> divisible by <var>m</var>. Its data is one card with <code>MODE</code>, <code>N</code>, <code>LIMIT</code>, then <var>N</var> cards with <code>M</code>, <code>S</code>, all in 5-column fields. Mode 1 is the union of the classes, 2 the intersection, 3 the complement of the union; <var>N</var> is 1 to 10, and the integers 0 to <code>LIMIT</code>&minus;1 are tested. Each member is printed with its interval from the previous one and punched on its own card. The sample data is <code>5@2 | 5@3</code> over 0 to 19.</p>
+</section>
+
+<section id="samples">
+  <h2>Sample decks</h2>
+  <div class="toolbar">
+    <label for="sample-select">Sample deck:</label>
+    <select id="sample-select"></select>
+    <button type="button" id="load-sample">Load sample</button>
+  </div>
+</section>
+
+<section id="deck">
+  <h2>Deck editor</h2>
+  <div class="toolbar">
+    <button type="button" id="add-card">Add card</button>
+    <button type="button" id="delete-card">Delete card</button>
+    <button type="button" id="clear-deck">Clear deck</button>
+    <span class="legend" aria-hidden="true">
+      <span class="f1"></span>label (1&ndash;5)
+      <span class="f2"></span>continuation (6)
+      <span class="f3"></span>statement (7&ndash;72)
+      <span class="f1"></span>sequence (73&ndash;80)
+    </span>
+  </div>
+  <div class="editor">
+    <div class="editor-inner">
+      <pre class="ruler" id="ruler" aria-hidden="true"></pre>
+      <div id="cards"></div>
+    </div>
+  </div>
+</section>
+
+<section id="card-view">
+  <h2>Card view</h2>
+  <p id="card-caption"></p>
+  <div class="cardview" id="card-svg"></div>
+</section>
+
+<section id="run">
+  <h2>Run</h2>
+  <div class="toolbar">
+    <button type="button" id="run-deck">Run deck</button>
+    <span class="status" id="run-status" role="status"></span>
+  </div>
+  <h3>Printer output</h3>
+  <div class="printer" id="printer"><p class="placeholder">Run the deck to see output.</p></div>
+  <h3>Job log</h3>
+  <div class="log" id="log"><p class="placeholder">Errors, warnings, and the STOP code appear here.</p></div>
+  <details class="listing" id="listing-wrap">
+    <summary>Source listing</summary>
+    <pre id="listing"></pre>
+  </details>
+</section>
+
+<section id="stacker-section">
+  <h2>Output stacker</h2>
+  <p>Cards punched by the program. The stacker is cleared at the start of each run.</p>
+  <div class="toolbar">
+    <button type="button" id="stack-replace" disabled>Load into editor (replace deck)</button>
+    <button type="button" id="stack-append" disabled>Load into editor (append to deck)</button>
+    <button type="button" id="stack-copy" disabled>Copy as text</button>
+    <button type="button" id="stack-download" disabled>Download as text</button>
+    <span class="status" id="stack-status" role="status"></span>
+  </div>
+  <div class="stacker" id="stacker"><p class="placeholder">No cards punched.</p></div>
+</section>
+
+<script src="../scripts/hollerith.js"></script>
+<script src="../scripts/fortran.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var ROWS = [12, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var STACKER_SHOWN = 500;
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function $(id) { return document.getElementById(id); }
+
+  var cardsEl = $('cards');
+  var selected = 0;
+  var stack = [];
+
+  /* ---------------- ruler ---------------- */
+  (function buildRuler() {
+    var tens = '', ones = '', fields = 'LABEL+' + 'STATEMENT'.padEnd(66) + 'SEQUENCE';
+    for (var c = 1; c <= 80; c++) {
+      tens += c % 10 === 0 ? String(c / 10) : ' ';
+      ones += String(c % 10);
+    }
+    $('ruler').textContent = fields + '\n' + tens + '\n' + ones;
+  })();
+
+  /* ---------------- card drawing ---------------- */
+
+  function svgEl(name, attrs, text) {
+    var el = document.createElementNS(SVG_NS, name);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+
+  // Draw one card as 12 rows x 80 columns. opts.grid adds the faint row digits.
+  function drawCard(text, opts) {
+    opts = opts || {};
+    var text80 = text.padEnd(80).slice(0, 80);
+    var masks = Fortran.encodeCard(text80);
+    var left = 24, colW = 10, top = 22, rowH = 13;
+    var width = left + 80 * colW + 8, height = top + 12 * rowH + 6;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + width + ' ' + height, role: 'img', 'aria-label': 'Punched card: ' + text80.trim() });
+    svg.appendChild(svgEl('rect', { x: 0.5, y: 0.5, width: width - 1, height: height - 1, fill: '#fff', stroke: '#000' }));
+    svg.appendChild(svgEl('polygon', { points: '0.5,0.5 14.5,0.5 0.5,14.5', fill: '#fff', stroke: '#000' }));
+    if (opts.labels !== false) {
+      ROWS.forEach(function (row, r) {
+        svg.appendChild(svgEl('text', { x: left - 4, y: top + r * rowH + 9, 'text-anchor': 'end', 'font-size': 9, 'font-family': 'monospace', fill: '#000' }, String(row)));
+      });
+    }
+    for (var c = 0; c < 80; c++) {
+      var x = left + c * colW;
+      var ch = text80.charAt(c);
+      if (ch !== ' ') {
+        svg.appendChild(svgEl('text', { x: x + colW / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11, 'font-family': 'monospace', fill: '#000' }, ch));
+      }
+      ROWS.forEach(function (row, r) {
+        var y = top + r * rowH;
+        if (masks[c].has(row)) {
+          svg.appendChild(svgEl('rect', { x: x + 2, y: y + 1, width: 6, height: 10, fill: '#000' }));
+        } else if (opts.grid && row <= 9) {
+          svg.appendChild(svgEl('text', { x: x + colW / 2, y: y + 9, 'text-anchor': 'middle', 'font-size': 8, 'font-family': 'monospace', fill: '#aaa' }, String(row)));
+        }
+      });
+    }
+    return svg;
+  }
+
+  function showSelectedCard() {
+    var rows = cardsEl.children;
+    if (!rows.length) return;
+    if (selected >= rows.length) selected = rows.length - 1;
+    var text = rows[selected].querySelector('input').value;
+    $('card-caption').textContent = 'Card ' + (selected + 1) + ' of ' + rows.length + '.';
+    var holder = $('card-svg');
+    holder.innerHTML = '';
+    holder.appendChild(drawCard(text, { grid: true }));
+  }
+
+  /* ---------------- deck editor ---------------- */
+
+  function sanitize(value) {
+    var out = '';
+    var upper = value.toUpperCase();
+    for (var i = 0; i < upper.length && out.length < 80; i++) {
+      var ch = upper.charAt(i);
+      if (ch === ' ' || Fortran.punches(ch).length > 0) out += ch;
+    }
+    return out;
+  }
+
+  function rowsList() { return Array.prototype.slice.call(cardsEl.children); }
+  function rowIndex(row) { return rowsList().indexOf(row); }
+
+  function renumber() {
+    rowsList().forEach(function (row, i) {
+      row.querySelector('.num').textContent = String(i + 1);
+      row.querySelector('input').setAttribute('aria-label', 'Card ' + (i + 1));
+      row.classList.toggle('selected', i === selected);
+    });
+  }
+
+  function select(i) {
+    selected = i;
+    renumber();
+    showSelectedCard();
+  }
+
+  function focusRow(i, caret) {
+    var rows = rowsList();
+    if (i < 0 || i >= rows.length) return;
+    var input = rows[i].querySelector('input');
+    input.focus();
+    var pos = caret === undefined ? input.value.length : Math.min(caret, input.value.length);
+    input.setSelectionRange(pos, pos);
+  }
+
+  function makeRow(text) {
+    var row = document.createElement('div');
+    row.className = 'row';
+    var num = document.createElement('span');
+    num.className = 'num';
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'card';
+    input.maxLength = 80;
+    input.spellcheck = false;
+    input.autocomplete = 'off';
+    input.setAttribute('autocapitalize', 'characters');
+    input.value = sanitize(text);
+    row.appendChild(num);
+    row.appendChild(input);
+
+    input.addEventListener('focus', function () { select(rowIndex(row)); });
+
+    input.addEventListener('input', function () {
+      var before = input.value.slice(0, input.selectionStart);
+      var clean = sanitize(input.value);
+      if (clean !== input.value) {
+        var pos = sanitize(before).length;
+        input.value = clean;
+        input.setSelectionRange(pos, pos);
+      }
+      if (rowIndex(row) === selected) showSelectedCard();
+    });
+
+    input.addEventListener('keydown', function (e) {
+      var i = rowIndex(row);
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        insertRow(i + 1, '');
+        focusRow(i + 1, 0);
+      } else if (e.key === 'Backspace' && input.value === '' && cardsEl.children.length > 1) {
+        e.preventDefault();
+        removeRow(i);
+        focusRow(Math.max(0, i - 1));
+      } else if (e.key === 'ArrowUp' && i > 0) {
+        e.preventDefault();
+        focusRow(i - 1, input.selectionStart);
+      } else if (e.key === 'ArrowDown' && i < cardsEl.children.length - 1) {
+        e.preventDefault();
+        focusRow(i + 1, input.selectionStart);
+      }
+    });
+
+    input.addEventListener('paste', function (e) {
+      var data = e.clipboardData && e.clipboardData.getData('text');
+      if (!data || !/[\r\n]/.test(data)) return;
+      e.preventDefault();
+      var lines = data.replace(/\r\n?/g, '\n').replace(/\n$/, '').split('\n');
+      var i = rowIndex(row);
+      var start = input.selectionStart, end = input.selectionEnd;
+      input.value = sanitize(input.value.slice(0, start) + lines[0] + input.value.slice(end));
+      for (var k = 1; k < lines.length; k++) insertRow(i + k, lines[k]);
+      focusRow(i + lines.length - 1);
+    });
+
+    return row;
+  }
+
+  function insertRow(i, text) {
+    var row = makeRow(text);
+    var rows = cardsEl.children;
+    if (i >= rows.length) cardsEl.appendChild(row);
+    else cardsEl.insertBefore(row, rows[i]);
+    if (i <= selected && rows.length > 1) selected++;
+    renumber();
+    return row;
+  }
+
+  function removeRow(i) {
+    cardsEl.removeChild(cardsEl.children[i]);
+    if (selected > i || selected >= cardsEl.children.length) selected = Math.max(0, selected - 1);
+    renumber();
+    showSelectedCard();
+  }
+
+  // The deck as sent to the reader: trailing blank cards are dropped.
+  function getDeck() {
+    var deck = rowsList().map(function (row) { return row.querySelector('input').value; });
+    while (deck.length && deck[deck.length - 1].trim() === '') deck.pop();
+    return deck;
+  }
+
+  function setDeck(deck) {
+    cardsEl.innerHTML = '';
+    (deck.length ? deck : ['']).forEach(function (t) { cardsEl.appendChild(makeRow(t)); });
+    selected = 0;
+    renumber();
+    showSelectedCard();
+  }
+
+  /* ---------------- samples ---------------- */
+
+  var sampleSelect = $('sample-select');
+  Fortran.samples.forEach(function (s, i) {
+    var opt = document.createElement('option');
+    opt.value = String(i);
+    opt.textContent = (i + 1) + '. ' + s.name;
+    sampleSelect.appendChild(opt);
+  });
+
+  $('load-sample').addEventListener('click', function () {
+    setDeck(Fortran.samples[+sampleSelect.value].cards);
+  });
+
+  $('add-card').addEventListener('click', function () {
+    insertRow(selected + 1, '');
+    focusRow(selected + 1, 0);
+  });
+
+  $('delete-card').addEventListener('click', function () {
+    if (cardsEl.children.length > 1) removeRow(selected);
+    else { rowsList()[0].querySelector('input').value = ''; showSelectedCard(); }
+  });
+
+  $('clear-deck').addEventListener('click', function () { setDeck([]); });
+
+  /* ---------------- running ---------------- */
+
+  function renderPrinter(lines) {
+    var box = $('printer');
+    box.innerHTML = '';
+    if (!lines.length) {
+      var p = document.createElement('p');
+      p.className = 'placeholder';
+      p.textContent = 'No printer output.';
+      box.appendChild(p);
+      return;
+    }
+    var pre = null;
+    lines.forEach(function (line) {
+      if (line === '\f') {
+        pre = null;
+        var div = document.createElement('div');
+        div.className = 'pagebreak';
+        div.textContent = '--- page break ---';
+        box.appendChild(div);
+        return;
+      }
+      if (!pre) { pre = document.createElement('pre'); box.appendChild(pre); pre.textContent = line; }
+      else pre.textContent += '\n' + line;
+    });
+  }
+
+  function renderLog(result) {
+    var box = $('log');
+    box.innerHTML = '';
+    var pre = document.createElement('pre');
+    var lines = result.log.slice();
+    lines.push(result.ok ? 'Job ended normally.' : 'Job ended with errors.');
+    pre.textContent = lines.join('\n');
+    box.appendChild(pre);
+  }
+
+  function renderStacker(punched) {
+    stack = punched;
+    var box = $('stacker');
+    box.innerHTML = '';
+    ['stack-replace', 'stack-append', 'stack-copy', 'stack-download'].forEach(function (id) {
+      $(id).disabled = !punched.length;
+    });
+    $('stack-status').textContent = '';
+    if (!punched.length) {
+      var p = document.createElement('p');
+      p.className = 'placeholder';
+      p.textContent = 'No cards punched.';
+      box.appendChild(p);
+      return;
+    }
+    var count = document.createElement('p');
+    count.textContent = punched.length + ' card' + (punched.length === 1 ? '' : 's') + ' punched' +
+      (punched.length > STACKER_SHOWN ? ' (showing the first ' + STACKER_SHOWN + ')' : '') + '.';
+    box.appendChild(count);
+    punched.slice(0, STACKER_SHOWN).forEach(function (text) {
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.appendChild(drawCard(text, { labels: false }));
+      box.appendChild(item);
+    });
+  }
+
+  $('run-deck').addEventListener('click', function () {
+    var result = Fortran.run(getDeck());
+    renderStacker(result.punched);
+    renderPrinter(result.printer);
+    renderLog(result);
+    $('listing').textContent = result.listing.join('\n');
+    $('run-status').textContent = result.ok ? 'Done.' : 'Finished with errors.';
+  });
+
+  /* ---------------- stacker actions ---------------- */
+
+  function stackText() { return stack.join('\n') + '\n'; }
+
+  $('stack-replace').addEventListener('click', function () {
+    setDeck(stack.map(function (c) { return c.replace(/ +$/, ''); }));
+    $('stack-status').textContent = 'Stacker loaded into the editor.';
+  });
+
+  $('stack-append').addEventListener('click', function () {
+    setDeck(getDeck().concat(stack.map(function (c) { return c.replace(/ +$/, ''); })));
+    $('stack-status').textContent = 'Stacker appended to the deck.';
+  });
+
+  $('stack-copy').addEventListener('click', function () {
+    var status = $('stack-status');
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = stackText();
+      document.body.appendChild(ta);
+      ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch (e) { done = false; }
+      document.body.removeChild(ta);
+      status.textContent = done ? 'Copied.' : 'Copy failed; use Download instead.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(stackText()).then(function () { status.textContent = 'Copied.'; }, fallback);
+    } else fallback();
+  });
+
+  $('stack-download').addEventListener('click', function () {
+    var url = URL.createObjectURL(new Blob([stackText()], { type: 'text/plain' }));
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'punched-cards.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    $('stack-status').textContent = 'Downloaded.';
+  });
+
+  /* ---------------- start ---------------- */
+  setDeck(Fortran.samples[0].cards);
+})();
+</script>
+</body>
+</html>
