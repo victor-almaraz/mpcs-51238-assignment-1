@@ -21,8 +21,8 @@
   --cobalt-hi: #74b4ff;
   --copper: #d4813a;
   --alu: #aab6c2;
-  --mono: Menlo, "SF Mono", Consolas, "Liberation Mono", monospace;
-  --sans: "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, "SF Mono", Consolas, "Liberation Mono", monospace;
+  --sans: "Manrope", "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --r: 28px;
 }
 

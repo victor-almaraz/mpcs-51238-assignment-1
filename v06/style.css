@@ -8,13 +8,13 @@
   --pen: #f4f1e8;
   --ink: #1e1c19;
   --label: #fffdf6;
-  --hand: "Bradley Hand", "Segoe Print", "Noteworthy", "Comic Sans MS", cursive;
-  --serif: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --news: "Times New Roman", Times, Georgia, serif;
-  --typed: Courier, "Courier New", monospace;
-  --humanist: "Gill Sans", "Gill Sans MT", Seravek, "Trebuchet MS", sans-serif;
-  --geo: "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --mono: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --hand: "Caveat", "Bradley Hand", "Segoe Print", "Noteworthy", "Comic Sans MS", cursive;
+  --serif: "Libre Caslon Text", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --news: "Old Standard TT", "Times New Roman", Times, Georgia, serif;
+  --typed: "Courier Prime", Courier, "Courier New", monospace;
+  --humanist: "Cabin", "Gill Sans", "Gill Sans MT", Seravek, "Trebuchet MS", sans-serif;
+  --geo: "Nunito Sans", "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
   --tape: rgba(236, 226, 192, 0.78);
   --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7 .05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23f)'/%3E%3C/svg%3E");
   --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23p)'/%3E%3C/svg%3E");
@@ -77,7 +77,7 @@ td code { white-space: nowrap; }
 }
 .bookplate h1 {
   margin: 0;
-  font-family: "Bodoni 72", Didot, "Bodoni MT", Georgia, serif;
+  font-family: "Bodoni Moda", "Bodoni 72", Didot, "Bodoni MT", Georgia, serif;
   font-size: clamp(1.5rem, 4.4vw, 2.5rem);
   font-weight: normal;
   font-variant: small-caps;
@@ -120,7 +120,7 @@ td code { white-space: nowrap; }
 .dymo {
   display: block;
   padding: 0.45rem 0.75rem 0.45rem 0.9rem;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   font-weight: 700;
   font-size: 1rem;
   letter-spacing: 0.16em;

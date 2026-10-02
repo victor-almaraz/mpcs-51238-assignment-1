@@ -10,13 +10,13 @@
   --sheet: #fbf8f0;      /* pasted sheets: text sits here */
   --ink: #111;           /* 17.6:1 on --sheet */
   --red: #c4161c;        /* 5.6:1 on --sheet; white on red 6.0:1 */
-  --f-black: "Arial Black", "Helvetica Neue", Impact, sans-serif;
-  --f-ital: "Bodoni 72", Didot, "Times New Roman", serif;
-  --f-didot: Didot, "Bodoni 72", "Times New Roman", serif;
-  --f-mono: "Courier New", Courier, monospace;
-  --f-slab: Rockwell, "American Typewriter", Georgia, serif;
-  --f-body: Georgia, "Times New Roman", serif;
-  --f-code: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --f-black: "Archivo Black", "Arial Black", "Helvetica Neue", Impact, sans-serif;
+  --f-ital: "Bodoni Moda", "Bodoni 72", Didot, "Times New Roman", serif;
+  --f-didot: "Playfair Display", Didot, "Bodoni 72", "Times New Roman", serif;
+  --f-mono: "Courier Prime", "Courier New", Courier, monospace;
+  --f-slab: "Arvo", Rockwell, "American Typewriter", Georgia, serif;
+  --f-body: "Gelasio", Georgia, "Times New Roman", serif;
+  --f-code: "IBM Plex Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 * { box-sizing: border-box; }

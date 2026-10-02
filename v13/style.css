@@ -10,9 +10,9 @@
   --beam: -24deg;
   --sx: 18px;
   --sy: 22px;
-  --serif: Georgia, "Times New Roman", Times, serif;
-  --display: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Impact, sans-serif;
-  --mono: ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  --serif: "Libre Caslon Text", Georgia, "Times New Roman", Times, serif;
+  --display: "Big Shoulders Display", "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Impact, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 :root[data-act="editor"] { --tint: #79acd8; --ink: #e2ebf4; --deep: #07162a; }
 :root[data-act="viewer"] { --tint: #97c483; --ink: #e5efdc; --deep: #0b1c08; }

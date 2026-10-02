@@ -9,9 +9,9 @@
   --frame-ink: #f1f1ef;
   --frame-dim: #bdbdb8;
   --rule: #6d6d69;
-  --serif: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
-  --cond: "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
-  --mono: Menlo, Consolas, "DejaVu Sans Mono", "Courier New", monospace;
+  --serif: "Charis SIL", Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+  --cond: "Barlow Condensed", "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, "DejaVu Sans Mono", "Courier New", monospace;
   /* film grain: dark on the clear base */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 1.05'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='.22'/%3E%3C/svg%3E");
   /* a much fainter, light grain inside the dark frames */

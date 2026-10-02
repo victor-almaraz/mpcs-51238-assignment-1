@@ -11,9 +11,9 @@
   --magenta: #e2007a;
   --magenta-deep: #c8006c;
   --yellow: #ffdf00;
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-  --display: "Avenir Next Condensed", "Futura", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
-  --mono: Menlo, Consolas, "Courier New", monospace;
+  --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --display: "Oswald", "Avenir Next Condensed", "Futura", "Franklin Gothic Medium", "Arial Narrow", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, "Courier New", monospace;
 }
 
 * { box-sizing: border-box; }

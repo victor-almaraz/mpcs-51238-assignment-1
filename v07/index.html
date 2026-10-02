@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FORTRAN punched card interpreter</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -265,21 +266,21 @@
     svg.appendChild(svgEl('polygon', { points: '0.5,0.5 14.5,0.5 0.5,14.5', fill: '#e4eaf0', stroke: '#8796a5' }));
     if (opts.labels !== false) {
       ROWS.forEach(function (row, r) {
-        svg.appendChild(svgEl('text', { x: left - 4, y: top + r * rowH + 9, 'text-anchor': 'end', 'font-size': 9, 'font-family': 'Menlo, Consolas, monospace', fill: '#0c1117' }, String(row)));
+        svg.appendChild(svgEl('text', { x: left - 4, y: top + r * rowH + 9, 'text-anchor': 'end', 'font-size': 9, 'font-family': '"IBM Plex Mono", Menlo, Consolas, monospace', fill: '#0c1117' }, String(row)));
       });
     }
     for (var c = 0; c < 80; c++) {
       var x = left + c * colW;
       var ch = text80.charAt(c);
       if (ch !== ' ') {
-        svg.appendChild(svgEl('text', { x: x + colW / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11, 'font-family': 'Menlo, Consolas, monospace', fill: '#0c1117' }, ch));
+        svg.appendChild(svgEl('text', { x: x + colW / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11, 'font-family': '"IBM Plex Mono", Menlo, Consolas, monospace', fill: '#0c1117' }, ch));
       }
       ROWS.forEach(function (row, r) {
         var y = top + r * rowH;
         if (masks[c].has(row)) {
           svg.appendChild(svgEl('rect', { x: x + 2, y: y + 1, width: 6, height: 10, fill: '#0c1117' }));
         } else if (opts.grid && row <= 9) {
-          svg.appendChild(svgEl('text', { x: x + colW / 2, y: y + 9, 'text-anchor': 'middle', 'font-size': 8, 'font-family': 'Menlo, Consolas, monospace', fill: '#8a97a3' }, String(row)));
+          svg.appendChild(svgEl('text', { x: x + colW / 2, y: y + 9, 'text-anchor': 'middle', 'font-size': 8, 'font-family': '"IBM Plex Mono", Menlo, Consolas, monospace', fill: '#8a97a3' }, String(row)));
         }
       });
     }

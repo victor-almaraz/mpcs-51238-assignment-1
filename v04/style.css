@@ -13,10 +13,10 @@
   --form-ink: #5c5546;                /* printed rules and captions on the form */
   --thermal: #f6f8f7;
   --thermal-ink: #3f4447;             /* faded grey thermal print */
-  --type: "American Typewriter", "Courier Prime", "Courier New", Courier, Georgia, serif;
+  --type: "Courier Prime", "American Typewriter", "Courier New", Courier, Georgia, serif;
   --mono: "Courier Prime", "Courier New", Courier, monospace;
-  --printed: Georgia, "Times New Roman", Times, serif;
-  --dotprint: "Andale Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --printed: "Gelasio", Georgia, "Times New Roman", Times, serif;
+  --dotprint: "IBM Plex Mono", "Andale Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
   /* scanner dust: sparse specks and one hair, drawn behind the text */
   --dust: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='640'%3E%3Cg fill='%23201a10'%3E%3Ccircle cx='38' cy='71' r='1.1' opacity='.5'/%3E%3Ccircle cx='471' cy='22' r='.7' opacity='.6'/%3E%3Ccircle cx='233' cy='148' r='.5' opacity='.5'/%3E%3Ccircle cx='502' cy='311' r='1.4' opacity='.4'/%3E%3Ccircle cx='11' cy='402' r='.8' opacity='.55'/%3E%3Ccircle cx='356' cy='488' r='.6' opacity='.5'/%3E%3Ccircle cx='129' cy='603' r='1.2' opacity='.45'/%3E%3Ccircle cx='420' cy='590' r='.5' opacity='.6'/%3E%3Ccircle cx='291' cy='366' r='.4' opacity='.5'/%3E%3Ccircle cx='86' cy='251' r='.5' opacity='.4'/%3E%3C/g%3E%3Cpath d='M488 160c-6 14 3 22-4 37s4 19 1 27' fill='none' stroke='%23201a10' stroke-width='.6' opacity='.35'/%3E%3C/svg%3E");
   --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .32 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23f)'/%3E%3C/svg%3E");

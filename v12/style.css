@@ -8,8 +8,8 @@
   --ink-2: #554c27;      /* secondary text, still >= 4.5:1 on --wall-dim */
   --paper: #efe7c0;      /* a slightly lighter surface for output */
   --line: rgba(41, 36, 15, 0.38);
-  --sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
-  --mono: ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  --sans: "Work Sans", "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
   --indent: clamp(0rem, 24vw - 6rem, 16rem);
 }
 

@@ -11,10 +11,10 @@
   --band: var(--magenta);
   --band-ink: #fff;
   --shot: var(--magenta);
-  --body: "Avenir Next", Avenir, Futura, "Century Gothic", "Helvetica Neue", Arial, sans-serif;
-  --label: Futura, "Avenir Next", "Century Gothic", "Trebuchet MS", sans-serif;
-  --display: Didot, "Bodoni 72", "Bodoni MT", "Playfair Display", "Times New Roman", serif;
-  --mono: ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+  --body: "Jost", "Avenir Next", Avenir, Futura, "Century Gothic", "Helvetica Neue", Arial, sans-serif;
+  --label: "Jost", Futura, "Avenir Next", "Century Gothic", "Trebuchet MS", sans-serif;
+  --display: "Playfair Display", Didot, "Bodoni 72", "Bodoni MT", "Playfair Display", "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 :root[data-tab="editor"] { --band: var(--cyan); --band-ink: var(--black); }
 :root[data-tab="viewer"] { --band: var(--orange); --band-ink: var(--black); }

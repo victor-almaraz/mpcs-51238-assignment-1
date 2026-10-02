@@ -8,8 +8,8 @@
 :root {
   --ink: #000;
   --paper: #fff;
-  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --mono: Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --rule: 2px;
   --h45: repeating-linear-gradient(45deg, #000 0 1.5px, transparent 1.5px 7px);
   --h135: repeating-linear-gradient(-45deg, #000 0 1.5px, transparent 1.5px 7px);
