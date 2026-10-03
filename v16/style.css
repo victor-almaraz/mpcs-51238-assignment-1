@@ -1,0 +1,490 @@
+/* A workspace on a low-resolution eight-colour screen, after the classic Macintosh
+   desktop, shown at a fixed scale: one screen pixel is 2 CSS pixels, and everything
+   (borders, rules, dither cells, icons, pictures and the type) is a whole number of those
+   pixels on one grid. Every length in this file is even for that reason.
+
+   Colour: the only colours are the eight whose R, G and B are each 0 or 255. Every tone is
+   an ordered dither, each channel thresholded against the same 8x8 Bayer matrix by the
+   script, which draws the tiles and canvases at screen resolution; CSS shows them at 2x
+   with pixelated scaling. A steel-blue desk; white windows with black chrome; blue for
+   selection and the cursor; yellow for warnings; red for the column-72 margin, page breaks
+   and the playhead; green on black for the Player's time display. Text always sits on a
+   flat palette colour, never on a dither.
+
+   Type: two bitmap faces from the Fusion Pixel family (the Latin of Ark Pixel), both on a
+   10-pixel em whose design pixel is 0.1em, so at 20px one design pixel is one screen pixel.
+     Fusion Pixel 10px Proportional, 20px: chrome and prose alike
+     Fusion Pixel 10px Monospaced, 20px: the editor, code and output; 5 pixels a column
+   No bold or italic is ever synthesised; headings stand out by inversion and spacing,
+   emphasis by underlining. Line heights are multiples of 4px (24px chrome and code, 28px
+   prose), which puts every baseline on the grid. */
+
+:root {
+  --sys: "Fusion Pixel 10px Proportional", monospace;
+  --mono: "Fusion Pixel 10px Monospaced", monospace;
+  --t: 20px;
+  --blue: #0000ff; --red: #ff0000; --yellow: #ffff00; --green: #00ff00;
+  /* dotted rules as gradients: dots one screen pixel square, one pixel apart */
+  --dots-h: repeating-linear-gradient(90deg, #000 0 2px, transparent 2px 4px);
+  --dots-v: repeating-linear-gradient(#000 0 2px, transparent 2px 4px);
+  --bar: 40px;
+  --lh: 24px;      /* one line of the buffer */
+  --gut: 56px;     /* the line-number gutter */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  background: #fff;
+  -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none; text-rendering: optimizeSpeed;
+}
+body {
+  margin: 0;
+  color: #000;
+  background: #fff;
+  font: 400 var(--t)/28px var(--sys);
+}
+.sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+a { color: #000; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+em, cite, var, i { font-style: normal; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+b, strong, th, h1, h2, h3, legend, dt { font-weight: 400; }
+:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+::selection { color: #fff; background: var(--blue); }
+canvas { image-rendering: pixelated; box-sizing: content-box; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; }
+code, kbd, pre, samp { font: 400 var(--t)/24px var(--mono); }
+
+/* ---------------- menu bar ---------------- */
+.menubar {
+  position: fixed; left: 0; right: 0; top: 0; z-index: 900;
+  height: var(--bar);
+  display: flex; align-items: flex-start; justify-content: space-between;
+  background: #fff; border-bottom: 2px solid #000;
+  font: 400 var(--t)/36px var(--sys);
+}
+.menus { display: flex; margin: 0; padding: 0 0 0 8px; list-style: none; }
+.menus > li { position: relative; display: flex; }
+.m-top {
+  display: flex; align-items: flex-start; gap: 6px;
+  height: 38px; margin: 0; padding: 0 12px; border: 0;
+  line-height: 36px; color: #000; background: #fff; cursor: default;
+}
+.m-top[aria-expanded="true"], .m-top:focus-visible { color: #fff; background: #000; outline: none; }
+.m-top[aria-expanded="true"] .m-glyph, .m-top:focus-visible .m-glyph { filter: invert(1); }
+.m-glyph { display: block; width: 32px; height: 24px; margin-top: 6px; }
+.clock { padding: 0 14px; line-height: 36px; }
+
+.menu {
+  display: none;
+  position: absolute; left: 0; top: 38px;
+  min-width: 300px; max-width: calc(100vw - 8px);
+  margin: 0; padding: 4px 0; list-style: none;
+  background: #fff; border: 2px solid #000; box-shadow: 2px 2px 0 #000;
+}
+.menu.open { display: block; }
+.menu [role="menuitem"] {
+  display: block; width: 100%;
+  padding: 4px 16px 4px 32px; border: 0;
+  font: 400 var(--t)/24px var(--sys); text-align: left; text-decoration: none; white-space: nowrap;
+  color: #000; background: #fff; cursor: default;
+}
+.menu [role="menuitem"]:focus, .menu [role="menuitem"]:hover { color: #fff; background: #000; outline: none; }
+.menu [role="menuitem"] { position: relative; }
+.menu [role="menuitem"].checked::before { content: ""; position: absolute; left: 10px; top: 12px; width: 14px; height: 10px; background: var(--check) 0 0 / 14px 10px; image-rendering: pixelated; }
+.menu [role="menuitem"].checked:focus::before, .menu [role="menuitem"].checked:hover::before { background-image: var(--check-on); }
+/* Text is never dithered, masked or clipped to a pattern. A disabled item is set in solid
+   blue (8.6:1 on white), with a dotted rule under it as a second, non-text cue, and it
+   does not highlight. */
+.menu [role="menuitem"][aria-disabled="true"],
+.menu [role="menuitem"][aria-disabled="true"]:hover,
+.menu [role="menuitem"][aria-disabled="true"]:focus {
+  color: var(--blue); background: #fff var(--dots-h) 32px bottom 2px / calc(100% - 48px) 2px no-repeat;
+}
+.menu [role="separator"] { height: 2px; margin: 4px 0; background: var(--dots-h); }
+
+/* ---------------- the desk ---------------- */
+html.js, html.js body { height: 100%; overflow: hidden; }
+.desktop {
+  position: fixed; left: 0; right: 0; top: var(--bar); bottom: 0;
+  background: #fff var(--pat-desk) 0 0 / 16px 16px;
+  image-rendering: pixelated;
+  overflow: hidden;
+}
+.icons {
+  /* columns fill from the right, as on the old Finder desk; the bottom 128px is the Trash's */
+  position: absolute; top: 12px; right: 8px; bottom: 128px;
+  display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 128px); gap: 4px 8px;
+  direction: rtl; align-content: start;
+  margin: 0; padding: 0; list-style: none;
+}
+.icons > li { direction: ltr; }
+.trash-slot { position: fixed; right: 8px; bottom: 8px; }
+.icon {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  width: 124px; padding: 4px 0; border: 0;
+  font: 400 var(--t)/24px var(--sys); color: #000; background: transparent; text-decoration: none;
+  cursor: default;
+}
+.ico { display: block; width: 64px; height: 64px; }
+/* the script nudges each label onto the screen grid; lines inside it start flush left */
+.ico-label { position: relative; max-width: 100%; padding: 0 4px; background: #fff; text-align: left; }
+.icon.sel .ico { filter: invert(1); }
+.icon.sel .ico-label { color: #fff; background: var(--blue); }
+.icon:focus-visible { outline: none; }
+.icon:focus-visible .ico-label { outline: 2px solid #000; outline-offset: 2px; box-shadow: 0 0 0 2px #fff; }
+
+/* ---------------- windows ---------------- */
+.win {
+  position: absolute;
+  display: none; flex-direction: column;
+  min-width: 240px; min-height: 140px; max-width: 100%; max-height: 100%;
+  background: #fff;
+  border: 2px solid #000; box-shadow: 2px 2px 0 #000;
+  overflow: hidden;
+}
+.win.open { display: flex; }
+.win:focus, .win:focus-visible { outline: none; }
+.win:focus-visible .title { color: #fff; background: var(--blue); }
+/* The title bar is 19 screen pixels plus its rule. The stripe band is rows 4 to 14, six
+   black lines; the title's capitals sit on rows 6 to 12, centred on it. */
+.titlebar {
+  position: relative; flex: none;
+  height: 40px;
+  border-bottom: 2px solid #000;
+  cursor: default; touch-action: none; user-select: none;
+}
+.win.active .titlebar::before {
+  content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 22px;
+  background: var(--pat-stripes) 0 0 / 2px 4px;
+  pointer-events: none;
+}
+.title {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  max-width: calc(100% - 112px); margin: 0; padding: 0 10px;
+  font: 400 var(--t)/36px var(--sys);
+  background: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+html.js .title { transform: none; }  /* the script centres it on the grid */
+/* Close and zoom boxes: 9 x 9 screen pixels on rows 5 to 13, centred on the stripe band,
+   with a one-pixel white gap on every side that fills the band exactly. */
+.box {
+  position: absolute; top: 0; width: 36px; height: 38px;
+  padding: 0; border: 0; background: transparent; cursor: default;
+}
+.box.close { left: 8px; }
+.box.zoom { right: 8px; }
+.box::before {
+  content: ""; position: absolute; left: 10px; top: 10px; width: 18px; height: 18px;
+  border: 2px solid #000; background: #fff; box-shadow: 0 0 0 2px #fff;
+}
+/* the zoom box's small square shares the outer box's top and left edges */
+.box.zoom::after { content: ""; position: absolute; left: 10px; top: 10px; width: 10px; height: 10px; border: 2px solid #000; }
+.box:active::before { background: #000; }
+.box.zoom:active::after { border-color: #fff; border-width: 0 2px 2px 0; }
+.box:focus-visible { outline: none; }
+.box:focus-visible::before { outline: 2px solid var(--blue); outline-offset: 2px; }
+.win:not(.active) .box::before, .win:not(.active) .box::after { display: none; }
+
+.infobar {
+  flex: none; display: flex; justify-content: space-between; gap: 12px;
+  max-width: none; margin: 0; padding: 2px 12px;
+  font: 400 var(--t)/24px var(--sys);
+  border-bottom: 6px double #000;
+}
+.pane {
+  flex: 1; min-height: 0; overflow: auto;
+  padding: 20px 24px 28px;
+}
+.pane.flush { padding: 0; }
+.pane > :first-child { margin-top: 0; }
+
+/* scroll bars: a dithered lilac track, a white thumb, square arrow boxes */
+.win ::-webkit-scrollbar, .win::-webkit-scrollbar { width: 20px; height: 20px; }
+.win ::-webkit-scrollbar-track:vertical { background: #fff var(--pat-track) 0 0 / 16px 16px; border-left: 2px solid #000; }
+.win ::-webkit-scrollbar-track:horizontal { background: #fff var(--pat-track) 0 0 / 16px 16px; border-top: 2px solid #000; }
+.win ::-webkit-scrollbar-thumb { background: #fff; border: 2px solid #000; }
+.win ::-webkit-scrollbar-corner { background: #fff; }
+.win ::-webkit-scrollbar-button:single-button { display: block; width: 20px; height: 20px; background: #fff no-repeat center / 10px 10px; border: 2px solid #000; }
+.win ::-webkit-scrollbar-button:single-button:vertical:decrement { border-width: 0 0 2px 2px; background-image: var(--arrow-up); }
+.win ::-webkit-scrollbar-button:single-button:vertical:increment { border-width: 2px 0 0 2px; background-image: var(--arrow-down); }
+.win ::-webkit-scrollbar-button:single-button:horizontal:decrement { border-width: 2px 2px 0 0; background-image: var(--arrow-left); }
+.win ::-webkit-scrollbar-button:single-button:horizontal:increment { border-width: 2px 0 0 2px; background-image: var(--arrow-right); }
+@supports not selector(::-webkit-scrollbar) {
+  .win * { scrollbar-color: #000 #fff; }
+}
+/* the size box in the bottom-right corner: drag it to resize the window */
+.grow {
+  position: absolute; right: 0; bottom: 0; z-index: 2; width: 16px; height: 16px;
+  background: #fff var(--grow) 0 0 / 16px 16px;
+  image-rendering: pixelated; cursor: nwse-resize; touch-action: none;
+}
+
+/* the outline that follows the pointer while a window is dragged */
+.ghost {
+  position: absolute; z-index: 800; pointer-events: none;
+  padding: 2px; background: var(--pat-50) 0 0 / 16px 16px; image-rendering: pixelated;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* ---------------- type inside windows ---------------- */
+/* headings: the same face, set apart by inversion or a rule, and spaced out */
+h1 { display: inline-block; margin: 0 0 16px; padding: 4px 12px; color: #fff; background: #000; font: 400 var(--t)/28px var(--sys); letter-spacing: 2px; }
+h3 { margin: 24px 0 12px; padding-bottom: 2px; border-bottom: 2px solid #000; font: 400 var(--t)/24px var(--sys); letter-spacing: 2px; }
+p, li, dd, figcaption { max-width: 64ch; }
+p { margin: 0 0 20px; }
+.lede { margin: 0 0 20px; }
+kbd { padding: 0 4px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+.placeholder { margin: 0; }
+
+.pic { display: block; margin: 0 0 16px; border: 2px solid #000; }
+.page { max-width: 66ch; }
+.turns { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin: 24px 0 0; max-width: none; }
+.turns .next { margin-left: auto; }
+
+/* tables keep separate borders, so every rule is a whole pixel */
+table { border-collapse: separate; border-spacing: 0; margin: 12px 0 20px; border-left: 2px solid #000; border-top: 2px solid #000; }
+/* the script fixes each column at an even width once the type has arrived */
+table.snapped { table-layout: fixed; }
+th, td { border-right: 2px solid #000; border-bottom: 2px solid #000; padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font: 400 var(--t)/24px var(--sys); color: #fff; background: #000; letter-spacing: 2px; }
+td code { white-space: nowrap; }
+
+.decklist dt { margin-top: 16px; letter-spacing: 2px; }
+.decklist dd { margin: 4px 0 0 0; padding-left: 14px; border-left: 4px solid #000; }
+
+/* list view of the disk */
+.listview { width: 100%; margin: 0; border: 0; }
+.listview th, .listview td { border-width: 0 0 2px; padding: 4px 12px; font: 400 var(--t)/24px var(--sys); letter-spacing: 0; }
+.listview th { color: #000; background: #fff; }
+.lv {
+  display: inline-block; padding: 2px 6px; margin-left: -6px; border: 0;
+  font: 400 var(--t)/24px var(--sys); color: #000; background: #fff; text-decoration: none; cursor: default;
+}
+.lv:hover, .lv:focus-visible { color: #fff; background: var(--blue); outline: none; }
+
+/* folders in icon view: fixed columns, so every icon lands on the grid */
+.folder { display: grid; grid-template-columns: repeat(auto-fill, 124px); gap: 16px 8px; margin: 0; padding: 0; list-style: none; }
+.folder .icon { width: 124px; }
+.folder li { max-width: none; }
+h3.group { margin: 20px 0 12px; padding-bottom: 4px; border-bottom: 0; background: var(--dots-h) left bottom / 100% 2px no-repeat; }
+h3.group:first-child { margin-top: 0; }
+
+/* ---------------- controls ---------------- */
+.btn {
+  display: inline-block; padding: 6px 14px; margin: 4px;
+  font: 400 var(--t)/24px var(--sys);
+  color: #000; background: #fff;
+  border: 2px solid #000; border-radius: 0;
+  box-shadow: 2px 2px 0 #000;
+  text-decoration: none; cursor: default;
+}
+.btn:active:not(:disabled) { color: #fff; background: #000; }
+.btn.default { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000; margin: 6px; }
+.btn:disabled { color: var(--blue); box-shadow: none; border-color: transparent;
+  background: var(--dots-h) left top / 100% 2px no-repeat, var(--dots-h) left bottom / 100% 2px no-repeat,
+    var(--dots-v) left top / 2px 100% no-repeat, var(--dots-v) right top / 2px 100% no-repeat, #fff;
+  background-origin: border-box; }   /* solid blue letters in a dotted frame */
+fieldset:disabled label { color: var(--blue); }
+label, legend, output { font: 400 var(--t)/24px var(--sys); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: none; }
+
+/* a status line along the foot of a window */
+.statusline {
+  flex: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px;
+  max-width: none; margin: 0; padding: 4px 12px;
+  border-top: 2px solid #000;
+  font: 400 var(--t)/28px var(--sys);
+}
+.statusline > span:empty { display: none; }
+#ed-pos { min-width: 180px; }
+#ed-warn.on { padding: 0 6px; color: #000; background: var(--yellow); }
+
+/* ---------------- the Editor ---------------- */
+.ed-tools, .pf-tools {
+  flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+  padding: 6px 10px; border-bottom: 2px solid #000;
+}
+.buffer {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
+  margin: 10px; border: 2px solid #000;
+  background: #fff;
+}
+.buffer:focus-within { outline: 2px solid #000; outline-offset: 2px; }
+/* The ruler marks the fixed-form fields above the text, never behind it. One column is
+   10px, five screen pixels, the advance of the monospaced face. */
+.ruler { flex: none; border-bottom: 2px solid #000; user-select: none; }
+.ruler-clip { margin-left: calc(var(--gut) + 2px); overflow: hidden; }
+.ruler-in { position: relative; width: 800px; height: 52px; margin-left: 8px; }
+.fields { display: flex; height: 24px; padding-top: 2px; }
+.fld {
+  flex: none; height: 22px; padding-left: 4px;
+  font: 400 var(--t)/20px var(--sys); text-align: left; white-space: nowrap; overflow: hidden;
+  border: 2px solid #000; border-top: 0;
+}
+.f-label { width: 50px; padding-left: 0; }
+.f-cont { width: 10px; padding: 0; border-left: 0; border-right: 0; background: var(--pat-50) 0 0 / 16px 16px; image-rendering: pixelated; }
+.f-stmt { width: 660px; }
+.f-ign { width: 80px; border: 0; background: var(--dots-h) left bottom / 100% 2px no-repeat, var(--dots-v) right top / 2px 100% no-repeat; }
+.ticks { display: flex; height: 24px; }
+.tk { position: relative; flex: none; width: 10px; }
+.tk::after { content: ""; position: absolute; left: 4px; bottom: 0; width: 2px; height: 4px; background: #000; }
+.tk.t5::after { height: 6px; }
+.tk.tf::after { height: 10px; }
+.tk b { position: absolute; left: 0; bottom: 8px; font: 400 var(--t)/20px var(--mono); }
+.caretcol { position: absolute; left: 0; bottom: 0; width: 10px; height: 4px; background: var(--blue); }
+
+.buf-body { flex: 1; min-height: 0; display: flex; position: relative; }
+.gutter { flex: none; width: var(--gut); overflow: hidden; border-right: 2px solid #000; user-select: none; }
+.gutter-in { padding-top: 6px; }
+.gutter-in span { display: block; height: var(--lh); padding-right: 8px; font: 400 var(--t)/var(--lh) var(--mono); text-align: right; }
+.gutter-in span.cur { color: #fff; background: var(--blue); }
+.code { flex: 1; min-width: 0; position: relative; }
+#src {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  margin: 0; padding: 6px 8px; border: 0; border-radius: 0; resize: none;
+  font: 400 var(--t)/var(--lh) var(--mono);
+  white-space: pre; overflow: auto; overflow-wrap: normal;
+  color: #000; background: transparent; caret-color: #000;
+  tab-size: 8;
+}
+#src:focus { outline: none; }
+/* a red dotted margin at column 72 and a black one at 80, between the characters */
+.margins { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.margins-in { position: absolute; top: 0; bottom: 0; left: 8px; width: 820px; }
+.margins-in i { position: absolute; top: 0; bottom: 0; width: 2px; }
+.m72 { left: 720px; background: repeating-linear-gradient(var(--red) 0 2px, transparent 2px 4px); }
+.m80 { left: 800px; background: #000; }
+
+/* ---------------- output windows ---------------- */
+.runstatus { margin: 0 0 12px; }
+/* fan-fold paper: sprocket holes run down green-bar margins, the print sits on plain white */
+.fanfold { display: grid; grid-template-columns: 20px minmax(0, 1fr) 20px; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+.fanfold::before, .fanfold::after { content: ""; grid-row: 1; background: #fff var(--pat-holes) 0 0 / 20px 20px repeat-y; image-rendering: pixelated; }
+.fanfold::before { grid-column: 1; box-shadow: inset -2px 0 #000; }
+.fanfold::after { grid-column: 3; box-shadow: inset 2px 0 #000; }
+.printer { grid-column: 2; grid-row: 1; min-width: 0; overflow-x: auto; padding: 12px 14px 16px; }
+.printer pre, .textdoc pre { margin: 0; }
+.pagebreak { position: relative; margin: 16px -14px; height: 2px; background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 14px); }
+.pagebreak span { position: absolute; left: 24px; top: -12px; padding: 0 8px; font: 400 var(--t)/24px var(--sys); background: #fff; }
+.textdoc pre { padding: 12px 14px; border: 2px solid #000; white-space: pre-wrap; overflow-x: auto; }
+#listing { white-space: pre; }
+
+.records { margin: 0; padding: 0; list-style: none; counter-reset: rec; font: 400 var(--t)/24px var(--mono); }
+.records li { max-width: none; white-space: pre; counter-increment: rec; }
+.records li::before { content: counter(rec); display: inline-block; width: 50px; margin-right: 20px; padding-right: 10px; text-align: right; border-right: 2px solid #000; }
+.pf-tools .btn { padding: 6px 10px; }
+
+/* ---------------- the Player ---------------- */
+.roll-wrap { position: relative; line-height: 0; border: 2px solid #000; background: #fff; overflow: hidden; touch-action: none; }
+.roll { display: block; }
+.playhead { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--red); pointer-events: none; }
+.deck-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 14px 0 8px; }
+.lcd { margin: 0; padding: 4px 12px; color: var(--green); background: #000; font: 400 var(--t)/24px var(--mono); letter-spacing: 2px; white-space: nowrap; max-width: none; }
+.transport { display: flex; flex-wrap: wrap; gap: 2px; }
+.tbtn { display: inline-flex; align-items: center; gap: 8px; }
+.tg { display: block; flex: none; }
+.tg-stop { width: 12px; height: 12px; background: currentColor; }
+.tg-pause { width: 12px; height: 12px; border-left: 4px solid currentColor; border-right: 4px solid currentColor; }
+.btn:disabled .tg { color: var(--blue); }
+.pl-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.pl-controls > * { flex: 0 0 auto; width: 244px; }
+.ctl { margin: 0; min-width: 0; }
+.ctl > label { display: block; margin-bottom: 4px; letter-spacing: 2px; }
+.ctl output { display: block; margin-top: 4px; }
+/* the legend floats, so the frame's top rule is not drawn through its middle */
+fieldset { margin: 0; padding: 6px 12px 10px; border: 2px solid #000; }
+legend { float: left; width: 100%; padding: 0; margin: 0 0 4px; letter-spacing: 2px; }
+legend + * { clear: both; }
+.radios label { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.note { margin: 6px 0 0; font: 400 var(--t)/28px var(--sys); }
+.pl-load { margin: 14px 0 0; }
+
+/* radio buttons are pixel circles drawn by the script */
+input[type="radio"] {
+  -webkit-appearance: none; appearance: none; flex: none;
+  width: 16px; height: 16px; margin: 0; border: 0; border-radius: 0;
+  background: var(--radio) 0 0 / 16px 16px no-repeat; image-rendering: pixelated;
+}
+input[type="radio"]:checked { background-image: var(--radio-on); }
+input[type="radio"]:disabled { background-image: var(--radio-off); }
+/* 212px wide with a 12px thumb: each 4-beat step moves the thumb 4px, two screen pixels */
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 212px; height: 24px; margin: 0; background: transparent; }
+input[type="range"]::-webkit-slider-runnable-track { height: 8px; border: 2px solid #000; background: #fff; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 20px; margin-top: -8px; border: 2px solid #000; background: #fff; box-shadow: 2px 2px 0 #000; }
+input[type="range"]::-moz-range-track { height: 4px; border: 2px solid #000; background: #fff; }
+input[type="range"]::-moz-range-thumb { width: 8px; height: 16px; border: 2px solid #000; border-radius: 0; background: #fff; }
+
+/* ---------------- miscellanea ---------------- */
+.paint { margin: 0; }
+.paint-scroll { overflow-x: auto; }
+.paint-c { display: block; border: 2px solid #000; }
+.paint figcaption, .caption { margin-top: 14px; }
+pre.st { margin: 0; padding: 12px 14px; overflow-x: auto; border: 2px solid #000; box-shadow: 2px 2px 0 #000; }
+
+/* ---------------- the Trash ---------------- */
+.trashlist { margin: 12px 0 0; padding: 0; list-style: none; }
+.trashlist li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 6px 0; background: var(--dots-h) left bottom / 100% 2px no-repeat; max-width: none; }
+
+/* ---------------- the alert ---------------- */
+.alert-veil { display: none; position: fixed; inset: 0; z-index: 1000; }
+.alert-veil.open { display: block; }
+.alert {
+  position: absolute; left: 0; top: 0;
+  width: min(480px, calc(100% - 24px));
+  display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 18px;
+  padding: 22px 22px 16px;
+  background: #fff;
+  border: 2px solid #000;
+  box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 6px #000, 2px 2px 0 #000;
+}
+.alert-ico { grid-row: 1 / 3; }
+#alert-msg { margin: 0; }
+.alert-ok { grid-column: 2; margin: 10px 0 0; text-align: right; }
+
+/* ---------------- narrow screens: the desk becomes a launcher, windows become sheets ---------------- */
+@media (max-width: 700px) {
+  .menus { padding-left: 0; }
+  .m-top { padding: 0 6px; gap: 0; }
+  .m-glyph { width: 32px; }
+  .clock { display: none; }
+  /* the desk scrolls inside itself; the page never does */
+  .desktop { overflow-y: auto; overflow-x: hidden; padding: 14px 8px 24px; }
+  .icons { position: static; display: grid; grid-template-columns: repeat(auto-fill, 124px); justify-content: space-between; grid-auto-flow: row; grid-template-rows: none; gap: 12px 4px; direction: ltr; }
+  .trash-slot { position: static; }
+  .win.open {
+    position: fixed; left: 0 !important; right: 0; top: var(--bar) !important; bottom: 0;
+    width: auto !important; height: auto !important; max-height: none;
+    border-width: 0; box-shadow: none;
+  }
+  .box.zoom, .grow { display: none; }
+  .pane { padding: 16px 16px 24px; }
+  .infobar span:last-child { display: none; }
+  .buffer { margin: 6px; }
+  .ed-tools .btn, .pf-tools .btn { padding: 6px 8px; }
+  .statusline { padding: 4px 8px; }
+}
+
+/* ---------------- without the script: every window, one after another ---------------- */
+html:not(.js) canvas, html:not(.js) .menus, html:not(.js) .icons, html:not(.js) .box, html:not(.js) .clock,
+html:not(.js) .ruler, html:not(.js) .margins, html:not(.js) .gutter, html:not(.js) .roll-wrap, html:not(.js) .grow { display: none; }
+html:not(.js) .desktop { position: static; padding: 40px 12px 24px; background: #00f; }
+html:not(.js) .win { display: flex; position: static; margin: 0 auto 24px; max-width: 920px; max-height: none; }
+html:not(.js) .buffer { min-height: 440px; }
+html:not(.js) input[type="radio"] { -webkit-appearance: radio; appearance: auto; }
+html:not(.js) .win .titlebar::before {
+  content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 22px;
+  background: repeating-linear-gradient(#000 0 2px, #fff 2px 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+  .playhead { display: none; }
+}

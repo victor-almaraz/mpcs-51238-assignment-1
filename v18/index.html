@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FORTRAN punched card interpreter</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg class="defs" aria-hidden="true" focusable="false">
+  <!-- dot screens for the cards, at the process angles: cyan 15, magenta 75, yellow 0, black 45 -->
+  <pattern id="scr-c" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><circle cx="2.5" cy="2.5" r="1.55" fill="#00a6c8"/></pattern>
+  <pattern id="scr-m" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(75)"><circle cx="2.5" cy="2.5" r="1.45" fill="#dc0078"/></pattern>
+  <pattern id="scr-y" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.8" fill="#f2c200"/></pattern>
+  <pattern id="scr-k" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.25" fill="#0d0d0d"/></pattern>
+</svg>
+<header class="titles">
+  <div class="split-a">
+    <p class="back"><a href="../">Back to the gallery</a></p>
+    <h1><span class="h1-big">FORTRAN</span> <span class="h1-small">punched card interpreter</span></h1>
+  </div>
+  <div class="split-b" aria-hidden="true"><canvas id="ht-title"></canvas></div>
+  <div class="lede">
+    <div class="colorbar" aria-hidden="true"><i class="s c"></i><i class="s m"></i><i class="s y"></i><i class="s k"></i><i class="s o"></i><i class="t c t50"></i><i class="t m t50"></i><i class="t y t50"></i><i class="t k t25"></i><i class="reg"></i></div>
+    <p>This page is a working model of a 1960s computing center. You punch a FORTRAN program onto a deck of cards, hand the deck to the card reader, and collect your results from the line printer and the card punch. The sample decks are experiments from the early meeting of art and computing: pictures printed in characters, poems drawn from a hat, a machine that writes on a tape, and patterns that grow by rule.</p>
+  </div>
+</header>
+<div class="stage">
+<nav class="band" aria-label="Sections">
+
+<div class="tabs" role="tablist" aria-label="Simulator" aria-orientation="vertical">
+  <button type="button" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="true"><span class="tn" aria-hidden="true">01</span><span class="tl">About</span></button>
+  <button type="button" role="tab" id="tab-editor" aria-controls="panel-editor" aria-selected="false" tabindex="-1"><span class="tn" aria-hidden="true">02</span><span class="tl">Editor</span></button>
+  <button type="button" role="tab" id="tab-viewer" aria-controls="panel-viewer" aria-selected="false" tabindex="-1"><span class="tn" aria-hidden="true">03</span><span class="tl">Card viewer</span></button>
+  <button type="button" role="tab" id="tab-output" aria-controls="panel-output" aria-selected="false" tabindex="-1"><span class="tn" aria-hidden="true">04</span><span class="tl">Output</span></button>
+</div>
+</nav>
+<main class="screen">
+
+<section role="tabpanel" id="panel-about" aria-labelledby="tab-about" tabindex="0">
+  <h2>About</h2>
+  <nav class="seq-nav" aria-label="About sections" data-js-only hidden>
+    <ol>
+      <li><button type="button" class="scene-link" aria-controls="scene-1"><span class="dot" aria-hidden="true">1</span><span class="t">FORTRAN and the punched card</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-2"><span class="dot" aria-hidden="true">2</span><span class="t">The deck</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-3"><span class="dot" aria-hidden="true">3</span><span class="t">Using the simulator</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-4"><span class="dot" aria-hidden="true">4</span><span class="t">The language</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-5"><span class="dot" aria-hidden="true">5</span><span class="t">The line printer</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-6"><span class="dot" aria-hidden="true">6</span><span class="t">Pictures from programs</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-7"><span class="dot" aria-hidden="true">7</span><span class="t">Chance and instructions</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-8"><span class="dot" aria-hidden="true">8</span><span class="t">Machines that follow rules</span></button></li>
+      <li><button type="button" class="scene-link" aria-controls="scene-9"><span class="dot" aria-hidden="true">9</span><span class="t">Loops and returns</span></button></li>
+    </ol>
+  </nav>
+  <div class="scenes">
+  <section class="scene" id="scene-1" aria-labelledby="scene-1-h">
+    <h3 id="scene-1-h" tabindex="-1">FORTRAN and the punched card</h3>
+    <p>FORTRAN, short for <em>formula translation</em>, was created at IBM by a team led by John Backus. Its first compiler shipped in 1957 for the IBM 704, and it let scientists and engineers write their calculations as formulas instead of as machine instructions. The language spread quickly. FORTRAN IV followed in 1962, and its 1966 standard, FORTRAN 66, made FORTRAN one of the first programming languages with an official standard. This simulator runs a subset of that language.</p>
+    <p>Programs of that era were not typed onto a screen. Each line of a program was punched onto its own 80-column card on a keypunch such as the IBM 029, which IBM introduced in 1964, and a program was a stack of cards held together with a rubber band. Dropping a deck was a real hazard. That is why programmers punched sequence numbers into the last eight columns: a card sorter could put a scrambled deck back in order.</p>
+    <p>FORTRAN gives each group of columns on a card its own job, and the editor shades the groups so that you can see them.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Columns</th><th>What they hold</th></tr>
+      <tr><td>1</td><td>A <code>C</code> or an asterisk in column 1 turns the whole card into a comment.</td></tr>
+      <tr><td>1&ndash;5</td><td>These columns hold an optional statement label, which is an unsigned number that other statements can refer to.</td></tr>
+      <tr><td>6</td><td>Any character other than a blank or a zero marks the card as a continuation of the previous statement.</td></tr>
+      <tr><td>7&ndash;72</td><td>The statement itself goes here.</td></tr>
+      <tr><td>73&ndash;80</td><td>The compiler ignores these columns, which traditionally held sequence numbers. The simulator warns you if anything is punched in them.</td></tr>
+    </table></div>
+    <p>FORTRAN ignores blanks outside of text, so <code>G O T O 20</code> means the same thing as <code>GOTO 20</code>. The editor accepts only the characters that the 029 keypunch could punch, and it turns lowercase letters into capitals, because the keypunch had no lowercase.</p>
+  </section>
+  <section class="scene" id="scene-2" aria-labelledby="scene-2-h">
+    <h3 id="scene-2-h" tabindex="-1">The deck</h3>
+    <p>A job is a single deck of cards. The program comes first and finishes with an <code>END</code> card, and every card after the <code>END</code> card is data for the program to read. If the program tries to read past the last data card, the job stops with the message <code>END OF FILE ON UNIT 5</code>, just as it would have on an IBM machine. Blank cards at the end of the deck are not sent to the reader.</p>
+  </section>
+  <section class="scene" id="scene-3" aria-labelledby="scene-3-h">
+    <h3 id="scene-3-h" tabindex="-1">Using the simulator</h3>
+    <p>The tabs switch between this <em>About</em> tab, the <em>Editor</em>, the <em>Card viewer</em>, and the <em>Output</em>. When a tab has keyboard focus, the left and right arrow keys move to the neighboring tabs, and <kbd>Home</kbd> and <kbd>End</kbd> jump to the first and last.</p>
+    <p>In the <em>Editor</em>, you can load a sample deck or type your own cards. Pressing <kbd>Enter</kbd> adds a new card below the current one, pressing <kbd>Backspace</kbd> on an empty card removes it, and the up and down arrow keys move between cards. If you paste several lines at once, each line becomes a card of its own. When the deck is ready, press <em>Run deck</em>.</p>
+    <p>The <em>Card viewer</em> shows the holes punched in the card that is selected in the editor. The <em>Previous card</em> and <em>Next card</em> buttons step through the deck, and the editor&rsquo;s selection follows along.</p>
+    <p>The <em>Output</em> tab opens after each run. It shows the printer output, the job log with any errors and warnings, and a listing of the program. Any cards that the program punched land in the output stacker at the bottom of the tab. From there you can load them into the editor as data for another run, copy them, or download them as a text file.</p>
+    <p>The deck is kept only while the page is open, so reloading the page brings back the first sample.</p>
+  </section>
+  <section class="scene" id="scene-4" aria-labelledby="scene-4-h">
+    <h3 id="scene-4-h" tabindex="-1">The language</h3>
+    <p>The simulator understands a single main program; subroutines and functions are not supported. A name has up to six letters and digits and must start with a letter. Unless you declare otherwise, names that begin with the letters I through N hold integers, and all other names hold real numbers. Integers are 32 bits wide, and integer division throws away the remainder, so <code>7/2</code> is 3. Real numbers have single precision.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Statement</th><th>What it does</th></tr>
+      <tr><td><code>V = expr</code></td><td>This evaluates the expression and stores the result in <code>V</code>, which can be a variable or an array element. Expressions use <code>+ - * /</code> and <code>**</code> for powers, with parentheses for grouping.</td></tr>
+      <tr><td><code>INTEGER</code>, <code>REAL</code></td><td>These declare names as integers or reals, overriding the first-letter rule.</td></tr>
+      <tr><td><code>DIMENSION A(n), B(m,n)</code></td><td>This declares arrays of one or two dimensions, numbered from 1.</td></tr>
+      <tr><td><code>GO TO n</code></td><td>This jumps to the statement labeled <code>n</code>. The computed form <code>GO TO (n1,n2,...), I</code> jumps to the <code>I</code>th label in the list.</td></tr>
+      <tr><td><code>IF (e) n1, n2, n3</code></td><td>This jumps to <code>n1</code>, <code>n2</code>, or <code>n3</code> when <code>e</code> is negative, zero, or positive.</td></tr>
+      <tr><td><code>IF (cond) stmt</code></td><td>This runs <code>stmt</code> only when the condition is true. Conditions compare values with <code>.LT. .LE. .EQ. .NE. .GT. .GE.</code> and combine them with <code>.AND. .OR. .NOT.</code></td></tr>
+      <tr><td><code>DO n I = m1, m2, m3</code></td><td>This repeats the statements through label <code>n</code> while <code>I</code> counts from <code>m1</code> to <code>m2</code> in steps of <code>m3</code>, or in steps of 1 if <code>m3</code> is left out. As in FORTRAN 66, the loop always runs at least once.</td></tr>
+      <tr><td><code>CONTINUE</code></td><td>This does nothing. It usually marks the end of a <code>DO</code> loop.</td></tr>
+      <tr><td><code>READ (5,f) list</code> or <code>READ f, list</code></td><td>This reads the next data card, laid out as <code>FORMAT</code> statement <code>f</code> describes.</td></tr>
+      <tr><td><code>WRITE (6,f) list</code> or <code>PRINT f, list</code></td><td>This prints a line on the line printer.</td></tr>
+      <tr><td><code>PUNCH f, list</code> or <code>WRITE (7,f) list</code></td><td>This punches a new card into the output stacker.</td></tr>
+      <tr><td><code>FORMAT (...)</code></td><td>This describes the layout of a card or a printed line. <code>Iw</code> is an integer <code>w</code> columns wide, <code>Fw.d</code> and <code>Ew.d</code> are real numbers with <code>d</code> digits after the point, <code>nX</code> skips <code>n</code> columns, <code>nHtext</code> and <code>'text'</code> are literal text, and a slash starts a new line or card. Descriptors can be repeated, as in <code>3I5</code>, or grouped, as in <code>2(I3,F6.2)</code>.</td></tr>
+      <tr><td><code>STOP</code>, <code>PAUSE</code>, <code>END</code></td><td><code>STOP</code> ends the job, <code>PAUSE</code> writes a note in the job log and carries on, and <code>END</code> marks the last card of the program.</td></tr>
+    </table></div>
+    <p>The built-in functions are <code>SQRT</code>, <code>ABS</code>, <code>IABS</code>, <code>FLOAT</code>, <code>INT</code>, <code>IFIX</code>, <code>MOD</code>, <code>AMOD</code>, <code>SIN</code>, <code>COS</code>, <code>ATAN</code>, <code>EXP</code>, <code>ALOG</code>, <code>ALOG10</code>, <code>MAX0</code>, <code>MIN0</code>, <code>AMAX1</code>, <code>AMIN1</code>, and <code>SIGN</code>.</p>
+  </section>
+  <section class="scene" id="scene-5" aria-labelledby="scene-5-h">
+    <h3 id="scene-5-h" tabindex="-1">The line printer</h3>
+    <p>Results came back on a line printer such as the IBM 1403, which printed a whole line at a time onto continuous fan-fold paper. A chain of type spun past a row of hammers, and each hammer fired the moment its character went by. The first character of each printed line is never printed. Instead, it tells the printer how far to move the paper. A blank moves it one line, a <code>0</code> leaves a blank line first, a minus sign leaves two blank lines, a <code>1</code> jumps to the top of a new page, and a plus sign prints over the line before. This rule caused famous mistakes. If a <code>FORMAT</code> happens to put a <code>1</code> in the first position, the printer throws a new page, so printing 123 with <code>I3</code> starts a new page and prints only 23.</p>
+    <p>Because the 1403 could strike the same place more than once, programmers used it to print pictures, overprinting several characters to build up darker greys; pictures such as the <em>Mona Lisa</em> were turned into text and printed this way. The printer here can overprint too, but where two characters land in the same place the later one wins, so the picture decks on this page get their greys from the choice and spacing of characters instead. They work with only two marks. A zero printed in an <code>F1.0</code> field loses its leading digit and prints as a full stop, which stands for bare paper. Any number of 1 or more is too wide for that field, so it prints as an asterisk, which stands for ink.</p>
+  </section>
+  <section class="scene" id="scene-6" aria-labelledby="scene-6-h">
+    <h3 id="scene-6-h" tabindex="-1">Pictures from programs</h3>
+    <p>Pictures made by computer were first exhibited in 1965. From 5 to 19 February, the Studiengalerie of the Technische Hochschule Stuttgart showed graphics by Georg Nees, generated by a digital computer, under the auspices of a colloquium led by the philosopher Max Bense. In April, the Howard Wise Gallery in New York showed <em>Computer-Generated Pictures</em> by B&eacute;la Julesz and A. Michael Noll of Bell Telephone Laboratories, made on an IBM 7094 with a microfilm plotter. Its invitation was a small deck of four punched cards in different colours, and not one picture was sold. In November, Nees and Frieder Nake showed their work together at the Galerie Wendelin Niedlich in Stuttgart.</p>
+    <p>At Bell Labs, Kenneth Knowlton and Leon Harmon made <em>Studies in Perception I</em>, which collections date to 1966 or 1967. They reduced a photograph of the dancer and choreographer Deborah Hay to a grid of grey squares and replaced each square with a small symbol, taken from mathematics and electronics, whose density matched its grey. The print was about 12 feet long. It was reproduced in <em>The New York Times</em> on 11 October 1967, and the Museum of Modern Art showed it in <em>The Machine as Seen at the End of the Mechanical Age</em> (25 November 1968 to 9 February 1969).</p>
+    <p>The idea is the same as a halftone, in which a picture is printed as dots whose size follows its tone, and <em>Studies in perception</em> carries it out with the two marks this printer has. The deck works out a tone from 0 to 16 for each cell of a picture 64 characters wide and 32 lines deep. It compares each tone with a 4-by-4 screen of thresholds read from a data card, and it inks the cell wherever the tone is higher, a method called ordered dithering. The picture is this page&rsquo;s own: a black disc and a target of rings on a diagonal wash. Change the ring width or the screen on the data cards and run it again. Every row is also punched as 64 digits.</p>
+    <p>Three years later, from 2 August to 20 October 1968, <em>Cybernetic Serendipity</em> at the Institute of Contemporary Arts in London, curated by Jasia Reichardt, set out to show computer-aided creative work of every kind: art, music, poetry, dance, sculpture and animation, along with painting machines and works in which chance played a large part. About 60,000 people saw it.</p>
+  </section>
+  <section class="scene" id="scene-7" aria-labelledby="scene-7-h">
+    <h3 id="scene-7-h" tabindex="-1">Chance and instructions</h3>
+    <p>Long before computers, Dada artists let chance do the composing. <em>Tzara&rsquo;s hat</em> follows Tristan Tzara&rsquo;s 1920 recipe for a Dadaist poem: sixteen words cut from a newspaper item are shaken in a bag and copied out in the order they come, and each word drawn is also punched, so the cuttings pile up in the stacker. <em>Erratum musical</em> repeats what Marcel Duchamp did in Rouen in 1913, when he drew 25 notes, from the F below middle C up to high F, out of a hat, once for each of three voices: his sisters Yvonne and Magdeleine, and himself. <em>3 standard stoppages</em> drops three threads, each one metre long, the way Duchamp did in 1913&ndash;14, and measures the new metre that each curve makes. Every deck starts from the seed on its data card, so a different seed gives a different poem, score, or set of threads, and the same seed always gives the same one.</p>
+    <p>In the 1960s, artists around Fluxus wrote works as instructions for someone else to carry out. La Monte Young&rsquo;s <em>Composition 1960 #10</em>, dated October 1960 and dedicated to Robert Morris, reads in full: &ldquo;Draw a straight line and follow it.&rdquo; At the Fluxus festival in Wiesbaden in September 1962, Nam June Paik performed it by dipping his head in ink and drawing a line down a long sheet of paper on the floor. In &ldquo;Paragraphs on Conceptual Art&rdquo; (<em>Artforum</em>, June 1967), Sol LeWitt wrote that &ldquo;the idea becomes a machine that makes the art.&rdquo;</p>
+    <p>A program is an instruction piece performed by a machine, and <em>Euclid, read aloud</em> performs one of the oldest. It is the method for finding the greatest common divisor of two numbers in Book VII of Euclid&rsquo;s <em>Elements</em>, written about 300 BC, which Donald Knuth called &ldquo;the granddaddy of all algorithms.&rdquo; The deck prints each of its own instructions as it carries it out, along with what happened. It also punches a second program: the steps it actually took, with every test already decided and the loop written out in full. Load the stacker in place of the deck and run it, and the new program prints the same answer without making a single decision.</p>
+  </section>
+  <section class="scene" id="scene-8" aria-labelledby="scene-8-h">
+    <h3 id="scene-8-h" tabindex="-1">Machines that follow rules</h3>
+    <p>In 1936 Alan Turing described a machine that does nothing but read and write symbols on a tape, one square at a time, following a table of instructions, and he argued that such a machine can carry out any calculation that a person following fixed rules can. His paper &ldquo;On Computable Numbers, with an Application to the Entscheidungsproblem&rdquo; was received by the London Mathematical Society on 28 May 1936 and read on 12 November 1936.</p>
+    <p>In May 1962, Tibor Rad&oacute; asked a question that sounds like a game, in &ldquo;On Non-Computable Functions&rdquo; in the <em>Bell System Technical Journal</em>. Of all the machines with a given number of states that start on a blank tape and eventually halt, which one leaves the most 1s behind? He proved that no program can answer that for every number of states. Shen Lin and Rad&oacute; settled three states in 1965: the most is six 1s, and no three-state machine that halts runs for more than 21 steps. Allen Brady settled four states in 1983, with 13 ones and 107 steps. <em>A busy beaver</em> runs a three-state champion, which halts after 14 steps with six 1s, and prints the tape and the head at every step. The machine itself is data: its table is on the cards after <code>END</code>, and the deck&rsquo;s comments give the four-state champion.</p>
+    <p>A cellular automaton is a row of cells that all change at once, step after step, each by looking only at its neighbours. In a 1983 paper in <em>Reviews of Modern Physics</em>, Stephen Wolfram studied the simplest kind, in which each cell is 0 or 1 and looks at itself and its two neighbours, and numbered the 256 possible rules from 0 to 255. Rule 30 grows from a single cell into a pattern that looks random. Rule 110 was shown to be capable of universal computation by Matthew Cook, in a proof published in 2004. <em>Rule 30</em> prints one generation to a line and punches the last one, so that the punched card can replace the row card and carry the run on. Its comments say how to try Rule 90 or Rule 110.</p>
+    <p>John Conway&rsquo;s Game of Life is a two-dimensional relative. It reached the public in Martin Gardner&rsquo;s &ldquo;Mathematical Games&rdquo; column in <em>Scientific American</em> in October 1970. Each cell has eight neighbours. A live cell with two or three live neighbours survives, a dead cell with exactly three comes alive, and every other cell is dead in the next generation. <em>Life</em> runs a glider, which crawls one cell diagonally every four generations, beside a blinker and a block, on a grid of 12 by 20 cells whose edges wrap around.</p>
+  </section>
+  <section class="scene" id="scene-9" aria-labelledby="scene-9-h">
+    <h3 id="scene-9-h" tabindex="-1">Loops and returns</h3>
+    <p>Some of the simplest rules are still not understood. Lothar Collatz posed this one in 1937: halve an even number, treble an odd one and add one, and repeat. Every number anyone has tried comes down to 1 in the end, but nobody has proved that every number must. <em>The 3x+1 problem</em> follows 27, which takes 111 steps and climbs as high as 9232 before it falls, and prints each value with a bar whose length grows with the value&rsquo;s logarithm.</p>
+    <p>The four decks that follow are about things that wear away or come back. <em>An echo in an empty room</em> lets a call return more quietly each time, losing letters as it fades. <em>I am sitting in a room</em> follows Alvin Lucier&rsquo;s 1969 piece, in which he recorded his voice, played the tape back into the room, and recorded it again until only the room&rsquo;s resonances were left; here a row of random levels is blurred and re-recorded until one take sounds the same as the last. <em>Erosion</em> wears a ridge of stone down a level at a time, faster where it stands exposed.</p>
+    <p><em>The corridor</em> walks from room to room, where every room has a single door that always leads to the same next room, given by the rule <var>r</var><sup>2</sup>&nbsp;+&nbsp;<var>c</var> divided by the number of rooms, keeping the remainder. Because there are only so many rooms, the walk must come back to one it has seen, and from then on it goes round the same loop for ever: a tail and a loop, like the Greek letter rho. John Pollard used the same kind of walk in his 1975 method for factoring large numbers.</p>
+  </section>
+  </div>
+  <div class="scene-step" data-js-only hidden>
+    <button type="button" id="scene-prev">Previous</button>
+    <p class="scene-pos" id="scene-pos" aria-live="polite"></p>
+    <button type="button" id="scene-next">Next</button>
+  </div>
+</section>
+
+<section role="tabpanel" id="panel-editor" aria-labelledby="tab-editor" tabindex="0" hidden>
+  <h2>Editor</h2>
+  <div class="toolbar">
+    <label for="sample-select">Sample deck:</label>
+    <select id="sample-select"></select>
+    <button type="button" id="load-sample">Load sample</button>
+  </div>
+  <div class="toolbar">
+    <button type="button" id="add-card">Add card</button>
+    <button type="button" id="delete-card">Delete card</button>
+    <button type="button" id="clear-deck">Clear deck</button>
+    <span class="legend" aria-hidden="true">
+      <span class="f1"></span>label (1&ndash;5)
+      <span class="f2"></span>continuation (6)
+      <span class="f3"></span>statement (7&ndash;72)
+      <span class="f1"></span>sequence (73&ndash;80)
+    </span>
+  </div>
+  <div class="editor">
+    <div class="editor-inner">
+      <pre class="ruler" id="ruler" aria-hidden="true"></pre>
+      <div id="cards"></div>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button type="button" id="run-deck">Run deck</button>
+    <span class="status" id="editor-status" role="status"></span>
+  </div>
+</section>
+
+<section role="tabpanel" id="panel-viewer" aria-labelledby="tab-viewer" tabindex="0" hidden>
+  <h2>Card viewer</h2>
+  <div class="toolbar">
+    <button type="button" id="prev-card">Previous card</button>
+    <button type="button" id="next-card">Next card</button>
+    <span class="status" id="card-caption" aria-live="polite"></span>
+  </div>
+  <div class="cardview" id="card-svg"></div>
+</section>
+
+<section role="tabpanel" id="panel-output" aria-labelledby="tab-output" tabindex="0" hidden>
+  <h2>Output</h2>
+  <p id="run-status" role="status">The deck has not been run yet.</p>
+  <h3>Printer output</h3>
+  <div class="printer" id="printer"><p class="placeholder">Run the deck to see output.</p></div>
+  <h3>Job log</h3>
+  <div class="log" id="log"><p class="placeholder">Errors, warnings, and the STOP code appear here.</p></div>
+  <details class="listing" id="listing-wrap">
+    <summary>Source listing</summary>
+    <pre id="listing"></pre>
+  </details>
+
+  <h3>Output stacker</h3>
+  <p>Cards that the program punches appear here. The stacker is emptied at the start of each run.</p>
+  <div class="toolbar">
+    <button type="button" id="stack-replace" disabled>Load into editor (replace deck)</button>
+    <button type="button" id="stack-append" disabled>Load into editor (append to deck)</button>
+    <button type="button" id="stack-copy" disabled>Copy as text</button>
+    <button type="button" id="stack-download" disabled>Download as text</button>
+    <span class="status" id="stack-status" role="status"></span>
+  </div>
+  <div class="stacker" id="stacker"><p class="placeholder">No cards have been punched yet.</p></div>
+</section>
+</main>
+</div>
+<footer class="colophon">
+  <p class="colophon-plate"><a href="../">Back to the gallery</a></p>
+</footer>
+<script src="../scripts/hollerith.js"></script>
+<script src="../scripts/fortran.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var ROWS = [12, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var STACKER_SHOWN = 500;
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function $(id) { return document.getElementById(id); }
+
+  var cardsEl = $('cards');
+  var selected = 0;
+  var stack = [];
+
+  /* ---------------- tabs ---------------- */
+  // Panels swap in place; the URL is never touched.
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+
+  function showTab(name, focus) {
+    var active = $('tab-' + name);
+    tabs.forEach(function (tab) {
+      var on = tab === active;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      $(tab.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) {
+      active.focus();
+      active.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  tabs.forEach(function (tab, i) {
+    var name = tab.id.slice(4);
+    tab.addEventListener('click', function () { showTab(name); });
+    tab.addEventListener('keydown', function (e) {
+      var j = { ArrowLeft: i - 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowDown: i + 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (j === undefined) return;
+      e.preventDefault();
+      showTab(tabs[(j + tabs.length) % tabs.length].id.slice(4), true);
+    });
+  });
+
+  /* ---------------- ruler ---------------- */
+  (function buildRuler() {
+    var tens = '', ones = '', fields = 'LABEL+' + 'STATEMENT'.padEnd(66) + 'SEQUENCE';
+    for (var c = 1; c <= 80; c++) {
+      tens += c % 10 === 0 ? String(c / 10) : ' ';
+      ones += String(c % 10);
+    }
+    $('ruler').textContent = fields + '\n' + tens + '\n' + ones;
+  })();
+
+  /* ---------------- card drawing ---------------- */
+
+  function svgEl(name, attrs, text) {
+    var el = document.createElementNS(SVG_NS, name);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+
+  // Draw one card as 12 rows x 80 columns. opts.grid adds the faint row digits,
+  // opts.shadow an offset shadow. Type sits on flat stock; dot screens fill only
+  // the zone rows (12 and 11, which carry no type) and the shadow.
+  function drawCard(text, opts) {
+    opts = opts || {};
+    var text80 = text.padEnd(80).slice(0, 80);
+    var masks = Fortran.encodeCard(text80);
+    var left = 24, colW = 10, top = 22, rowH = 13, sh = opts.shadow ? 12 : 0;
+    var width = left + 80 * colW + 8, height = top + 12 * rowH + 6;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + (width + sh) + ' ' + (height + sh), role: 'img', 'aria-label': 'Punched card: ' + text80.trim() });
+    if (sh) svg.appendChild(svgEl('rect', { 'class': 'card-shadow', x: sh, y: sh, width: width, height: height }));
+    svg.appendChild(svgEl('rect', { 'class': 'card-face', x: 0.5, y: 0.5, width: width - 1, height: height - 1 }));
+    svg.appendChild(svgEl('rect', { 'class': 'card-zone', x: left, y: top - 1, width: 80 * colW, height: 2 * rowH }));
+    svg.appendChild(svgEl('polygon', { 'class': 'card-corner', points: '0.5,0.5 14.5,0.5 0.5,14.5' }));
+    if (opts.labels !== false) {
+      ROWS.forEach(function (row, r) {
+        svg.appendChild(svgEl('text', { 'class': 'card-label', x: left - 4, y: top + r * rowH + 9, 'text-anchor': 'end', 'font-size': 9 }, String(row)));
+      });
+    }
+    for (var c = 0; c < 80; c++) {
+      var x = left + c * colW;
+      var ch = text80.charAt(c);
+      if (ch !== ' ') {
+        svg.appendChild(svgEl('text', { 'class': 'card-char', x: x + colW / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11 }, ch));
+      }
+      ROWS.forEach(function (row, r) {
+        var y = top + r * rowH;
+        if (masks[c].has(row)) {
+          svg.appendChild(svgEl('rect', { 'class': 'card-hole', x: x + 2, y: y + 1, width: 6, height: 10 }));
+        } else if (opts.grid && row <= 9) {
+          svg.appendChild(svgEl('text', { 'class': 'card-grid', x: x + colW / 2, y: y + 9, 'text-anchor': 'middle', 'font-size': 8 }, String(row)));
+        }
+      });
+    }
+    return svg;
+  }
+
+  function showSelectedCard() {
+    var rows = cardsEl.children;
+    if (!rows.length) return;
+    if (selected >= rows.length) selected = rows.length - 1;
+    var text = rows[selected].querySelector('input').value;
+    $('card-caption').textContent = 'Card ' + (selected + 1) + ' of ' + rows.length + '.';
+    $('prev-card').disabled = selected === 0;
+    $('next-card').disabled = selected === rows.length - 1;
+    var holder = $('card-svg');
+    holder.innerHTML = '';
+    holder.appendChild(drawCard(text, { grid: true, shadow: true }));
+  }
+
+  /* ---------------- deck editor ---------------- */
+
+  function sanitize(value) {
+    var out = '';
+    var upper = value.toUpperCase();
+    for (var i = 0; i < upper.length && out.length < 80; i++) {
+      var ch = upper.charAt(i);
+      if (ch === ' ' || Fortran.punches(ch).length > 0) out += ch;
+    }
+    return out;
+  }
+
+  function rowsList() { return Array.prototype.slice.call(cardsEl.children); }
+  function rowIndex(row) { return rowsList().indexOf(row); }
+
+  function renumber() {
+    rowsList().forEach(function (row, i) {
+      row.querySelector('.num').textContent = String(i + 1);
+      row.querySelector('input').setAttribute('aria-label', 'Card ' + (i + 1));
+      row.classList.toggle('selected', i === selected);
+    });
+  }
+
+  function select(i) {
+    selected = i;
+    renumber();
+    showSelectedCard();
+  }
+
+  function focusRow(i, caret) {
+    var rows = rowsList();
+    if (i < 0 || i >= rows.length) return;
+    var input = rows[i].querySelector('input');
+    input.focus();
+    var pos = caret === undefined ? input.value.length : Math.min(caret, input.value.length);
+    input.setSelectionRange(pos, pos);
+  }
+
+  function makeRow(text) {
+    var row = document.createElement('div');
+    row.className = 'row';
+    var num = document.createElement('span');
+    num.className = 'num';
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'card';
+    input.maxLength = 80;
+    input.spellcheck = false;
+    input.autocomplete = 'off';
+    input.setAttribute('autocapitalize', 'characters');
+    input.value = sanitize(text);
+    row.appendChild(num);
+    row.appendChild(input);
+
+    input.addEventListener('focus', function () { select(rowIndex(row)); });
+
+    input.addEventListener('input', function () {
+      var before = input.value.slice(0, input.selectionStart);
+      var clean = sanitize(input.value);
+      if (clean !== input.value) {
+        var pos = sanitize(before).length;
+        input.value = clean;
+        input.setSelectionRange(pos, pos);
+      }
+      if (rowIndex(row) === selected) showSelectedCard();
+    });
+
+    input.addEventListener('keydown', function (e) {
+      var i = rowIndex(row);
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        insertRow(i + 1, '');
+        focusRow(i + 1, 0);
+      } else if (e.key === 'Backspace' && input.value === '' && cardsEl.children.length > 1) {
+        e.preventDefault();
+        removeRow(i);
+        focusRow(Math.max(0, i - 1));
+      } else if (e.key === 'ArrowUp' && i > 0) {
+        e.preventDefault();
+        focusRow(i - 1, input.selectionStart);
+      } else if (e.key === 'ArrowDown' && i < cardsEl.children.length - 1) {
+        e.preventDefault();
+        focusRow(i + 1, input.selectionStart);
+      }
+    });
+
+    input.addEventListener('paste', function (e) {
+      var data = e.clipboardData && e.clipboardData.getData('text');
+      if (!data || !/[\r\n]/.test(data)) return;
+      e.preventDefault();
+      var lines = data.replace(/\r\n?/g, '\n').replace(/\n$/, '').split('\n');
+      var i = rowIndex(row);
+      var start = input.selectionStart, end = input.selectionEnd;
+      input.value = sanitize(input.value.slice(0, start) + lines[0] + input.value.slice(end));
+      for (var k = 1; k < lines.length; k++) insertRow(i + k, lines[k]);
+      focusRow(i + lines.length - 1);
+    });
+
+    return row;
+  }
+
+  function insertRow(i, text) {
+    var row = makeRow(text);
+    var rows = cardsEl.children;
+    if (i >= rows.length) cardsEl.appendChild(row);
+    else cardsEl.insertBefore(row, rows[i]);
+    if (i <= selected && rows.length > 1) selected++;
+    renumber();
+    showSelectedCard();
+    return row;
+  }
+
+  function removeRow(i) {
+    cardsEl.removeChild(cardsEl.children[i]);
+    if (selected > i || selected >= cardsEl.children.length) selected = Math.max(0, selected - 1);
+    renumber();
+    showSelectedCard();
+  }
+
+  // The deck as sent to the reader: trailing blank cards are dropped.
+  function getDeck() {
+    var deck = rowsList().map(function (row) { return row.querySelector('input').value; });
+    while (deck.length && deck[deck.length - 1].trim() === '') deck.pop();
+    return deck;
+  }
+
+  function setDeck(deck) {
+    cardsEl.innerHTML = '';
+    (deck.length ? deck : ['']).forEach(function (t) { cardsEl.appendChild(makeRow(t)); });
+    selected = 0;
+    renumber();
+    showSelectedCard();
+  }
+
+  /* ---------------- samples ---------------- */
+
+  /* Decks of this page only: chance, instructions, pictures in characters, machines
+     and rules, loops and decay. They follow the engine's own samples in the menu
+     (all but the fifth); the engine and its samples are unchanged. */
+  var PAGE_SAMPLES = [
+    {
+      name: "Tzara's hat (a poem by chance)",
+      cards: [
+        "C     TZARA'S HAT: A POEM BY CHANCE, AFTER TRISTAN TZARA (1920)",
+        "C     TO MAKE A DADAIST POEM, CUT AN ARTICLE OUT OF A NEWSPAPER, CUT",
+        "C     IT INTO WORDS, SHAKE THE WORDS IN A BAG, AND COPY THEM OUT IN THE",
+        "C     ORDER THEY LEAVE IT. SIXTEEN WORDS ARE CUT HERE. EVERY WORD DRAWN",
+        "C     IS ALSO PUNCHED, SO THE CUTTINGS LAND IN THE STACKER.",
+        "C     DATA CARD (2I5): SEED (1 TO 30268), WORDS TO DRAW (1 TO 16)",
+        "      DIMENSION IW(16)",
+        "      READ (5,10) IX, N",
+        "   10 FORMAT (2I5)",
+        "      DO 20 K = 1, 16",
+        "      IW(K) = K",
+        "   20 CONTINUE",
+        "C     SHAKE THE BAG",
+        "      DO 30 L = 1, 15",
+        "      K = 17 - L",
+        "      IX = MOD(171*IX, 30269)",
+        "      J = MOD(IX, K) + 1",
+        "      IT = IW(K)",
+        "      IW(K) = IW(J)",
+        "      IW(J) = IT",
+        "   30 CONTINUE",
+        "      WRITE (6,40)",
+        "   40 FORMAT (1H1,'A DADAIST POEM, DRAWN FROM THE BAG'/1H )",
+        "      DO 90 K = 1, N",
+        "      I = IW(K)",
+        "      GO TO (101,102,103,104,105,106,107,108,109,110,111,112,113,114,",
+        "     1 115,116), I",
+        "  101 WRITE (6,201)",
+        "      PUNCH 201",
+        "      GO TO 80",
+        "  102 WRITE (6,202)",
+        "      PUNCH 202",
+        "      GO TO 80",
+        "  103 WRITE (6,203)",
+        "      PUNCH 203",
+        "      GO TO 80",
+        "  104 WRITE (6,204)",
+        "      PUNCH 204",
+        "      GO TO 80",
+        "  105 WRITE (6,205)",
+        "      PUNCH 205",
+        "      GO TO 80",
+        "  106 WRITE (6,206)",
+        "      PUNCH 206",
+        "      GO TO 80",
+        "  107 WRITE (6,207)",
+        "      PUNCH 207",
+        "      GO TO 80",
+        "  108 WRITE (6,208)",
+        "      PUNCH 208",
+        "      GO TO 80",
+        "  109 WRITE (6,209)",
+        "      PUNCH 209",
+        "      GO TO 80",
+        "  110 WRITE (6,210)",
+        "      PUNCH 210",
+        "      GO TO 80",
+        "  111 WRITE (6,211)",
+        "      PUNCH 211",
+        "      GO TO 80",
+        "  112 WRITE (6,212)",
+        "      PUNCH 212",
+        "      GO TO 80",
+        "  113 WRITE (6,213)",
+        "      PUNCH 213",
+        "      GO TO 80",
+        "  114 WRITE (6,214)",
+        "      PUNCH 214",
+        "      GO TO 80",
+        "  115 WRITE (6,215)",
+        "      PUNCH 215",
+        "      GO TO 80",
+        "  116 WRITE (6,216)",
+        "      PUNCH 216",
+        "C     NOW AND THEN THE HAND PAUSES, AND A STANZA ENDS",
+        "   80 IX = MOD(171*IX, 30269)",
+        "      IF (MOD(IX,4) .EQ. 0) WRITE (6,85)",
+        "   85 FORMAT (1H )",
+        "   90 CONTINUE",
+        "      WRITE (6,95)",
+        "   95 FORMAT (1H0,'THE POEM WILL RESEMBLE YOU.')",
+        "      STOP",
+        "  201 FORMAT (1X,'THE')",
+        "  202 FORMAT (1X,'CARD')",
+        "  203 FORMAT (1X,'READER')",
+        "  204 FORMAT (1X,'SWALLOWED')",
+        "  205 FORMAT (1X,'A')",
+        "  206 FORMAT (1X,'DECK')",
+        "  207 FORMAT (1X,'OF')",
+        "  208 FORMAT (1X,'FORTY')",
+        "  209 FORMAT (1X,'HOLES')",
+        "  210 FORMAT (1X,'AND')",
+        "  211 FORMAT (1X,'THE')",
+        "  212 FORMAT (1X,'PRINTER')",
+        "  213 FORMAT (1X,'ANSWERED')",
+        "  214 FORMAT (1X,'IN')",
+        "  215 FORMAT (1X,'CAPITALS')",
+        "  216 FORMAT (1X,'NOBODY')",
+        "      END",
+        "  191   16"
+      ]
+    },
+    {
+      name: "Erratum musical (after Duchamp)",
+      cards: [
+        "C     ERRATUM MUSICAL, AFTER MARCEL DUCHAMP (ROUEN, 1913)",
+        "C     DUCHAMP MADE THREE SETS OF 25 CARDS WITH ONE NOTE ON EACH, FROM",
+        "C     THE F BELOW MIDDLE C UP TO HIGH F, ONE SET FOR EACH VOICE: HIS",
+        "C     SISTERS YVONNE AND MAGDELEINE, AND HIMSELF. EACH SET WAS MIXED IN",
+        "C     A HAT, AND THE NOTES WERE WRITTEN DOWN IN THE ORDER THEY CAME OUT.",
+        "C     NOTES ARE NUMBERED AS ON A MODERN KEYBOARD (MIDDLE C IS 60), SO",
+        "C     THE 25 CARDS ARE 53 TO 77. EVERY NOTE DRAWN IS PUNCHED (2I5) AS",
+        "C     VOICE AND NOTE.",
+        "C     DATA CARD (I5): SEED (1 TO 30268)",
+        "      DIMENSION NOTE(25)",
+        "      READ (5,10) IX",
+        "   10 FORMAT (I5)",
+        "      DO 90 IV = 1, 3",
+        "      DO 20 K = 1, 25",
+        "      NOTE(K) = 52 + K",
+        "   20 CONTINUE",
+        "C     MIX THE CARDS IN THE HAT",
+        "      DO 30 L = 1, 24",
+        "      K = 26 - L",
+        "      IX = MOD(171*IX, 30269)",
+        "      J = MOD(IX, K) + 1",
+        "      IT = NOTE(K)",
+        "      NOTE(K) = NOTE(J)",
+        "      NOTE(J) = IT",
+        "   30 CONTINUE",
+        "      GO TO (31,32,33), IV",
+        "   31 WRITE (6,41)",
+        "      GO TO 35",
+        "   32 WRITE (6,42)",
+        "      GO TO 35",
+        "   33 WRITE (6,43)",
+        "   35 WRITE (6,44)",
+        "C     DRAW THE CARDS ONE AT A TIME",
+        "      DO 80 K = 1, 25",
+        "      NP = NOTE(K)",
+        "      NOCT = NP/12 - 1",
+        "      NPC = MOD(NP,12) + 1",
+        "      PUNCH 45, IV, NP",
+        "      GO TO (61,62,63,64,65,66,67,68,69,70,71,72), NPC",
+        "   61 WRITE (6,201) K, NP, NOCT",
+        "      GO TO 80",
+        "   62 WRITE (6,202) K, NP, NOCT",
+        "      GO TO 80",
+        "   63 WRITE (6,203) K, NP, NOCT",
+        "      GO TO 80",
+        "   64 WRITE (6,204) K, NP, NOCT",
+        "      GO TO 80",
+        "   65 WRITE (6,205) K, NP, NOCT",
+        "      GO TO 80",
+        "   66 WRITE (6,206) K, NP, NOCT",
+        "      GO TO 80",
+        "   67 WRITE (6,207) K, NP, NOCT",
+        "      GO TO 80",
+        "   68 WRITE (6,208) K, NP, NOCT",
+        "      GO TO 80",
+        "   69 WRITE (6,209) K, NP, NOCT",
+        "      GO TO 80",
+        "   70 WRITE (6,210) K, NP, NOCT",
+        "      GO TO 80",
+        "   71 WRITE (6,211) K, NP, NOCT",
+        "      GO TO 80",
+        "   72 WRITE (6,212) K, NP, NOCT",
+        "   80 CONTINUE",
+        "   90 CONTINUE",
+        "      STOP",
+        "   41 FORMAT (1H1,'ERRATUM MUSICAL'/1H0,'VOICE 1, YVONNE')",
+        "   42 FORMAT (1H-,'VOICE 2, MAGDELEINE')",
+        "   43 FORMAT (1H-,'VOICE 3, MARCEL')",
+        "   44 FORMAT (1H0,'  DRAW  NOTE  NAME')",
+        "   45 FORMAT (2I5)",
+        "  201 FORMAT (1X,I6,I6,4X,'C',I1)",
+        "  202 FORMAT (1X,I6,I6,4X,'C#',I1)",
+        "  203 FORMAT (1X,I6,I6,4X,'D',I1)",
+        "  204 FORMAT (1X,I6,I6,4X,'D#',I1)",
+        "  205 FORMAT (1X,I6,I6,4X,'E',I1)",
+        "  206 FORMAT (1X,I6,I6,4X,'F',I1)",
+        "  207 FORMAT (1X,I6,I6,4X,'F#',I1)",
+        "  208 FORMAT (1X,I6,I6,4X,'G',I1)",
+        "  209 FORMAT (1X,I6,I6,4X,'G#',I1)",
+        "  210 FORMAT (1X,I6,I6,4X,'A',I1)",
+        "  211 FORMAT (1X,I6,I6,4X,'A#',I1)",
+        "  212 FORMAT (1X,I6,I6,4X,'B',I1)",
+        "      END",
+        " 1913"
+      ]
+    },
+    {
+      name: "3 standard stoppages (after Duchamp)",
+      cards: [
+        "C     3 STANDARD STOPPAGES, AFTER MARCEL DUCHAMP (PARIS, 1913-14)",
+        "C     DUCHAMP DROPPED A THREAD ONE METRE LONG FROM A HEIGHT OF ONE",
+        "C     METRE ONTO A CANVAS, WHERE IT LANDED TWISTING AS IT PLEASED. HE",
+        "C     DID IT THREE TIMES AND KEPT THE CURVES AS NEW UNITS OF LENGTH,",
+        "C     WHICH HE CALLED CANNED CHANCE. HERE EACH THREAD FALLS AS 20",
+        "C     PIECES OF 5 CM, EACH TURNED BY CHANCE FROM THE ONE BEFORE. THE",
+        "C     STRAIGHT DISTANCE FROM END TO END IS THE NEW METRE. THE THREE",
+        "C     NEW METRES ARE PUNCHED (F8.2).",
+        "C     DATA CARD (I5,F5.2): SEED, LARGEST TURN PER PIECE IN RADIANS",
+        "      READ (5,10) IX, TURN",
+        "   10 FORMAT (I5,F5.2)",
+        "      WRITE (6,20)",
+        "   20 FORMAT (1H1,'3 STANDARD STOPPAGES'/1H0,'THREAD',4X,'PIECE',",
+        "     1       6X,'X CM',7X,'Y CM')",
+        "      DO 60 IT = 1, 3",
+        "      X = 0.0",
+        "      Y = 0.0",
+        "      IX = MOD(171*IX, 30269)",
+        "      A = (FLOAT(IX)/30269.0 - 0.5)*TURN",
+        "      DO 50 K = 1, 20",
+        "      IX = MOD(171*IX, 30269)",
+        "      A = A + (2.0*FLOAT(IX)/30269.0 - 1.0)*TURN",
+        "      X = X + 5.0*COS(A)",
+        "      Y = Y + 5.0*SIN(A)",
+        "      IF (MOD(K,4) .EQ. 0) WRITE (6,30) IT, K, X, Y",
+        "   50 CONTINUE",
+        "      D = SQRT(X*X + Y*Y)",
+        "      WRITE (6,40) IT, D",
+        "      PUNCH 45, D",
+        "   60 CONTINUE",
+        "      STOP",
+        "   30 FORMAT (1X,I6,I9,F11.2,F11.2)",
+        "   40 FORMAT (1H0,'THREAD',I2,' HAS LANDED. ITS METRE IS',F7.2,",
+        "     1       ' CM.'/1H )",
+        "   45 FORMAT (F8.2)",
+        "      END",
+        " 1914 0.35"
+      ]
+    },
+    {
+      name: "An echo in an empty room",
+      cards: [
+        "C     AN ECHO IN AN EMPTY ROOM",
+        "C     A VOICE CALLS ONCE. EACH RETURN IS QUIETER THAN THE ONE BEFORE BY",
+        "C     THE RATIO R, AND LESS OF WHAT WAS SAID SURVIVES IT. LEVEL IS THE",
+        "C     LOUDNESS FROM 0 TO 9. EACH RETURN IS PUNCHED AS ITS LEVEL.",
+        "C     DATA CARD (F5.2,I5): R (BETWEEN 0 AND 1), NUMBER OF RETURNS",
+        "      READ (5,10) R, N",
+        "   10 FORMAT (F5.2,I5)",
+        "      WRITE (6,20)",
+        "   20 FORMAT (1H1,'AN ECHO IN AN EMPTY ROOM'/1H0,'RETURN  LOUDNESS',",
+        "     1       '  DECIBELS  LEVEL')",
+        "      WRITE (6,30)",
+        "   30 FORMAT (1H0,5X,'0',4X,'1.0000',7X,'0.0',6X,'9',",
+        "     1       4X,'IS ANYONE THERE')",
+        "      A = 1.0",
+        "      DO 90 K = 1, N",
+        "      A = A*R",
+        "      DB = 20.0*ALOG10(A)",
+        "      L = INT(A*9.0 + 0.5)",
+        "      IF (L .GT. 9) L = 9",
+        "      PUNCH 40, L",
+        "      LL = L + 1",
+        "      GO TO (100,101,102,103,104,105,106,107,108,109), LL",
+        "  100 WRITE (6,200) K, A, DB, L",
+        "      GO TO 90",
+        "  101 WRITE (6,201) K, A, DB, L",
+        "      GO TO 90",
+        "  102 WRITE (6,202) K, A, DB, L",
+        "      GO TO 90",
+        "  103 WRITE (6,203) K, A, DB, L",
+        "      GO TO 90",
+        "  104 WRITE (6,204) K, A, DB, L",
+        "      GO TO 90",
+        "  105 WRITE (6,205) K, A, DB, L",
+        "      GO TO 90",
+        "  106 WRITE (6,206) K, A, DB, L",
+        "      GO TO 90",
+        "  107 WRITE (6,207) K, A, DB, L",
+        "      GO TO 90",
+        "  108 WRITE (6,208) K, A, DB, L",
+        "      GO TO 90",
+        "  109 WRITE (6,209) K, A, DB, L",
+        "   90 CONTINUE",
+        "      STOP",
+        "   40 FORMAT (I5)",
+        "  200 FORMAT (1X,I6,F10.4,F10.1,I7)",
+        "  201 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'.')",
+        "  202 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'    N')",
+        "  203 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'    N      H')",
+        "  204 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'I   N  N   H')",
+        "  205 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'I  AN  N  TH')",
+        "  206 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'IS AN  NE TH R')",
+        "  207 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'IS ANY NE THER')",
+        "  208 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'IS ANYONE THER')",
+        "  209 FORMAT (1X,I6,F10.4,F10.1,I7,4X,'IS ANYONE THERE')",
+        "      END",
+        " 0.75   14"
+      ]
+    },
+    {
+      name: "I am sitting in a room (after Lucier)",
+      cards: [
+        "C     I AM SITTING IN A ROOM, AFTER ALVIN LUCIER (1969)",
+        "C     LUCIER RECORDED HIS VOICE, PLAYED THE TAPE BACK INTO THE ROOM AND",
+        "C     RECORDED IT AGAIN, OVER AND OVER, UNTIL ONLY THE RESONANCES OF",
+        "C     THE ROOM WERE LEFT. HERE 40 RANDOM LEVELS ARE PLAYED INTO A ROOM",
+        "C     WHOSE WALLS BLUR EACH POINT INTO ITS NEIGHBOURS, THEN RECORDED",
+        "C     AGAIN AT FULL VOLUME. EACH TAKE IS PRINTED AND PUNCHED AS 40",
+        "C     LEVELS FROM 0 TO 9. IT STOPS WHEN A TAKE SOUNDS LIKE THE LAST.",
+        "C     DATA CARD (3I5): SEED, MOST TAKES, REFLECTIONS PER TAKE",
+        "      DIMENSION X(40), Y(40), L(40), LP(40)",
+        "      READ (5,10) IX, NG, NREF",
+        "   10 FORMAT (3I5)",
+        "      DO 20 K = 1, 40",
+        "      IX = MOD(171*IX, 30269)",
+        "      X(K) = FLOAT(MOD(IX, 10))",
+        "      LP(K) = -1",
+        "   20 CONTINUE",
+        "      WRITE (6,25)",
+        "   25 FORMAT (1H1,'I AM SITTING IN A ROOM'/1H0,'TAKE')",
+        "      DO 90 IG = 1, NG",
+        "      IT = IG - 1",
+        "C     RECORD AT FULL VOLUME: STRETCH THE TAKE TO FILL 0 TO 9",
+        "      XMN = X(1)",
+        "      XMX = X(1)",
+        "      DO 30 K = 2, 40",
+        "      XMN = AMIN1(XMN, X(K))",
+        "      XMX = AMAX1(XMX, X(K))",
+        "   30 CONTINUE",
+        "      NSAME = 0",
+        "      DO 35 K = 1, 40",
+        "      X(K) = 9.0*(X(K) - XMN)/(XMX - XMN)",
+        "      L(K) = INT(X(K) + 0.5)",
+        "      IF (L(K) .EQ. LP(K)) NSAME = NSAME + 1",
+        "      LP(K) = L(K)",
+        "   35 CONTINUE",
+        "      IF (NSAME .EQ. 40) GO TO 92",
+        "      WRITE (6,40) IT,L(1),L(2),L(3),L(4),L(5),L(6),L(7),L(8),L(9),",
+        "     1 L(10),L(11),L(12),L(13),L(14),L(15),L(16),L(17),L(18),L(19),",
+        "     2 L(20),L(21),L(22),L(23),L(24),L(25),L(26),L(27),L(28),L(29),",
+        "     3 L(30),L(31),L(32),L(33),L(34),L(35),L(36),L(37),L(38),L(39),L(40)",
+        "      PUNCH 41,L(1),L(2),L(3),L(4),L(5),L(6),L(7),L(8),L(9),L(10),",
+        "     1 L(11),L(12),L(13),L(14),L(15),L(16),L(17),L(18),L(19),L(20),",
+        "     2 L(21),L(22),L(23),L(24),L(25),L(26),L(27),L(28),L(29),L(30),",
+        "     3 L(31),L(32),L(33),L(34),L(35),L(36),L(37),L(38),L(39),L(40)",
+        "C     PLAY IT INTO THE ROOM: EACH REFLECTION BLURS IT A LITTLE",
+        "      DO 80 IR = 1, NREF",
+        "      DO 60 K = 1, 40",
+        "      KL = K - 1",
+        "      KR = K + 1",
+        "      IF (KL .LT. 1) KL = 40",
+        "      IF (KR .GT. 40) KR = 1",
+        "      Y(K) = 0.25*X(KL) + 0.5*X(K) + 0.25*X(KR)",
+        "   60 CONTINUE",
+        "      DO 70 K = 1, 40",
+        "      X(K) = Y(K)",
+        "   70 CONTINUE",
+        "   80 CONTINUE",
+        "   90 CONTINUE",
+        "      STOP",
+        "   92 WRITE (6,93)",
+        "   93 FORMAT (1H0,'ONLY THE ROOM IS LEFT.')",
+        "      STOP",
+        "   40 FORMAT (1X,I4,3X,40I1)",
+        "   41 FORMAT (40I1)",
+        "      END",
+        " 1969   40    6"
+      ]
+    },
+    {
+      name: "Erosion",
+      cards: [
+        "C     EROSION",
+        "C     A RIDGE OF 60 COLUMNS OF STONE, EACH 0 TO 9 HIGH. EACH YEAR EVERY",
+        "C     COLUMN MAY WEAR DOWN ONE LEVEL, AND A COLUMN STANDING HIGHER THAN",
+        "C     ITS NEIGHBOURS WEARS FASTER. EVERY FEW YEARS THE RIDGE IS PRINTED",
+        "C     AS A ROW OF HEIGHTS, WITH THE STONE THAT IS LEFT, AND PUNCHED.",
+        "C     DATA CARD (3I5): SEED, YEARS BETWEEN ROWS, NUMBER OF ROWS",
+        "      DIMENSION H(60)",
+        "      INTEGER H",
+        "      READ (5,10) IX, NY, NR",
+        "   10 FORMAT (3I5)",
+        "      DO 20 K = 1, 60",
+        "      IX = MOD(171*IX, 30269)",
+        "      H(K) = 9 - IABS(K - 30)/7 - MOD(IX, 2)",
+        "   20 CONTINUE",
+        "      WRITE (6,25)",
+        "   25 FORMAT (1H1,'EROSION'/1H0,' YEAR',63X,'STONE')",
+        "      IY = 0",
+        "      DO 90 IR = 1, NR",
+        "      MASS = 0",
+        "      DO 30 K = 1, 60",
+        "      MASS = MASS + H(K)",
+        "   30 CONTINUE",
+        "      WRITE (6,40) IY,H(1),H(2),H(3),H(4),H(5),H(6),H(7),H(8),H(9),",
+        "     1 H(10),H(11),H(12),H(13),H(14),H(15),H(16),H(17),H(18),H(19),",
+        "     2 H(20),H(21),H(22),H(23),H(24),H(25),H(26),H(27),H(28),H(29),",
+        "     3 H(30),H(31),H(32),H(33),H(34),H(35),H(36),H(37),H(38),H(39),",
+        "     4 H(40),H(41),H(42),H(43),H(44),H(45),H(46),H(47),H(48),H(49),",
+        "     5 H(50),H(51),H(52),H(53),H(54),H(55),H(56),H(57),H(58),H(59),",
+        "     6 H(60),MASS",
+        "      PUNCH 41,H(1),H(2),H(3),H(4),H(5),H(6),H(7),H(8),H(9),H(10),",
+        "     1 H(11),H(12),H(13),H(14),H(15),H(16),H(17),H(18),H(19),H(20),",
+        "     2 H(21),H(22),H(23),H(24),H(25),H(26),H(27),H(28),H(29),H(30),",
+        "     3 H(31),H(32),H(33),H(34),H(35),H(36),H(37),H(38),H(39),H(40),",
+        "     4 H(41),H(42),H(43),H(44),H(45),H(46),H(47),H(48),H(49),H(50),",
+        "     5 H(51),H(52),H(53),H(54),H(55),H(56),H(57),H(58),H(59),H(60)",
+        "      IF (MASS .EQ. 0) GO TO 95",
+        "C     LET THE YEARS PASS",
+        "      DO 80 IYR = 1, NY",
+        "      IY = IY + 1",
+        "      DO 70 K = 1, 60",
+        "      IF (H(K) .EQ. 0) GO TO 70",
+        "      NE = 0",
+        "      IF (K .EQ. 1) NE = NE + 1",
+        "      IF (K .EQ. 60) NE = NE + 1",
+        "      IF (K .GT. 1 .AND. H(K-1) .LT. H(K)) NE = NE + 1",
+        "      IF (K .LT. 60 .AND. H(K+1) .LT. H(K)) NE = NE + 1",
+        "      IX = MOD(171*IX, 30269)",
+        "      IF (MOD(IX, 100) .LT. 4 + 18*NE) H(K) = H(K) - 1",
+        "   70 CONTINUE",
+        "   80 CONTINUE",
+        "   90 CONTINUE",
+        "      STOP",
+        "   95 WRITE (6,96) IY",
+        "   96 FORMAT (1H0,'AFTER',I5,' YEARS NOTHING IS LEFT STANDING.')",
+        "      STOP",
+        "   40 FORMAT (1X,I5,2X,60I1,I6)",
+        "   41 FORMAT (60I1)",
+        "      END",
+        "  808    5   16"
+      ]
+    },
+    {
+      name: "The corridor (a loop)",
+      cards: [
+        "C     THE CORRIDOR",
+        "C     EVERY ROOM HAS ONE DOOR OUT, AND IT ALWAYS LEADS TO THE SAME NEXT",
+        "C     ROOM: FROM ROOM R YOU COME TO ROOM MOD(R*R + C, NR). WALK FAR",
+        "C     ENOUGH AND YOU COME BACK TO A ROOM YOU HAVE SEEN, AND FROM THERE",
+        "C     THE WALK GOES ROUND THE SAME LOOP FOREVER. EVERY ROOM ON THE WALK",
+        "C     IS PUNCHED.",
+        "C     DATA CARD (3I5): NUMBER OF ROOMS NR (UP TO 999), C, FIRST ROOM",
+        "      DIMENSION ISEEN(999)",
+        "      READ (5,10) NR, IC, IR",
+        "   10 FORMAT (3I5)",
+        "      DO 20 K = 1, NR",
+        "      ISEEN(K) = 0",
+        "   20 CONTINUE",
+        "      WRITE (6,25)",
+        "   25 FORMAT (1H1,'THE CORRIDOR'/1H0,' STEP  ROOM')",
+        "      IS = 0",
+        "   30 IS = IS + 1",
+        "      IF (ISEEN(IR+1) .GT. 0) GO TO 60",
+        "      ISEEN(IR+1) = IS",
+        "      WRITE (6,40) IS, IR",
+        "      PUNCH 45, IR",
+        "      IR = MOD(IR*IR + IC, NR)",
+        "      GO TO 30",
+        "   60 LOOP = IS - ISEEN(IR+1)",
+        "      ITAIL = ISEEN(IR+1) - 1",
+        "      WRITE (6,70) IS, IR",
+        "      WRITE (6,71) ITAIL, LOOP",
+        "      STOP",
+        "   40 FORMAT (1X,I5,I6)",
+        "   45 FORMAT (I5)",
+        "   70 FORMAT (1X,I5,I6,'  YOU HAVE BEEN HERE BEFORE.')",
+        "   71 FORMAT (1H0,'AFTER',I4,' ROOMS THE CORRIDOR TURNED INTO A LOOP',",
+        "     1       ' OF',I4,' ROOMS.')",
+        "      END",
+        "  997    7    1"
+      ]
+    },
+    {
+      name: "Studies in perception (a printed halftone)",
+      cards: [
+        "C     STUDIES IN PERCEPTION: A PICTURE PRINTED IN TWO CHARACTERS",
+        "C     AFTER KNOWLTON AND HARMON AT BELL LABS, WHO BUILT A PICTURE OUT",
+        "C     OF SMALL SYMBOLS OF DIFFERENT DENSITY. THIS PRINTER HAS ONLY TWO:",
+        "C     A FULL STOP FOR PAPER AND AN ASTERISK FOR INK. EACH CELL GETS A",
+        "C     TONE FROM 0 TO 16, AND A 4 BY 4 SCREEN OF THRESHOLDS DECIDES",
+        "C     WHERE THE INK GOES (AN ORDERED DITHER). THE PICTURE IS A BLACK",
+        "C     DISC AND A TARGET OF RINGS ON A DIAGONAL WASH. EVERY ROW IS ALSO",
+        "C     PUNCHED AS 64 DIGITS, 1 FOR INK AND 0 FOR PAPER.",
+        "C     DATA CARDS: (I5) RING WIDTH IN LINES; (16I3) THE SCREEN, BY ROWS",
+        "      DIMENSION IB(4,4), P(64), IP(64)",
+        "      READ (5,10) IW",
+        "   10 FORMAT (I5)",
+        "      READ (5,11) IB(1,1),IB(1,2),IB(1,3),IB(1,4),IB(2,1),IB(2,2),",
+        "     1 IB(2,3),IB(2,4),IB(3,1),IB(3,2),IB(3,3),IB(3,4),IB(4,1),IB(4,2),",
+        "     2 IB(4,3),IB(4,4)",
+        "   11 FORMAT (16I3)",
+        "      WRITE (6,15)",
+        "   15 FORMAT (1H1,'STUDIES IN PERCEPTION'/1H )",
+        "      DO 60 IR = 1, 32",
+        "      DO 50 IC = 1, 64",
+        "C     THE WASH GROWS DARKER TOWARD THE LOWER RIGHT",
+        "      L = 1 + (IC + 2*IR)*6/128",
+        "C     THE TARGET: RINGS OF DARK AND LIGHT, IW LINES WIDE",
+        "      IX = IC - 18",
+        "      IY = IR - 21",
+        "      ID = 9*IX*IX + 25*IY*IY",
+        "      IF (ID .GT. 2500) GO TO 30",
+        "      K = INT(SQRT(FLOAT(ID))/FLOAT(5*IW))",
+        "      L = 15",
+        "      IF (MOD(K,2) .EQ. 1) L = 1",
+        "C     THE DISC, SOLID BLACK",
+        "   30 IX = IC - 46",
+        "      IY = IR - 11",
+        "      IF (9*IX*IX + 25*IY*IY .LE. 2025) L = 16",
+        "C     INK WHERE THE TONE PASSES THE SCREEN",
+        "      P(IC) = 0.0",
+        "      IP(IC) = 0",
+        "      IF (L .LE. IB(MOD(IR,4)+1, MOD(IC,4)+1)) GO TO 50",
+        "      P(IC) = 1.0",
+        "      IP(IC) = 1",
+        "   50 CONTINUE",
+        "      WRITE (6,55) P(1),P(2),P(3),P(4),P(5),P(6),P(7),P(8),P(9),P(10),",
+        "     1 P(11),P(12),P(13),P(14),P(15),P(16),P(17),P(18),P(19),P(20),",
+        "     2 P(21),P(22),P(23),P(24),P(25),P(26),P(27),P(28),P(29),P(30),",
+        "     3 P(31),P(32),P(33),P(34),P(35),P(36),P(37),P(38),P(39),P(40),",
+        "     4 P(41),P(42),P(43),P(44),P(45),P(46),P(47),P(48),P(49),P(50),",
+        "     5 P(51),P(52),P(53),P(54),P(55),P(56),P(57),P(58),P(59),P(60),",
+        "     6 P(61),P(62),P(63),P(64)",
+        "      PUNCH 56, IP(1),IP(2),IP(3),IP(4),IP(5),IP(6),IP(7),IP(8),IP(9),",
+        "     1 IP(10),IP(11),IP(12),IP(13),IP(14),IP(15),IP(16),IP(17),IP(18),",
+        "     2 IP(19),IP(20),IP(21),IP(22),IP(23),IP(24),IP(25),IP(26),IP(27),",
+        "     3 IP(28),IP(29),IP(30),IP(31),IP(32),IP(33),IP(34),IP(35),IP(36),",
+        "     4 IP(37),IP(38),IP(39),IP(40),IP(41),IP(42),IP(43),IP(44),IP(45),",
+        "     5 IP(46),IP(47),IP(48),IP(49),IP(50),IP(51),IP(52),IP(53),IP(54),",
+        "     6 IP(55),IP(56),IP(57),IP(58),IP(59),IP(60),IP(61),IP(62),IP(63),",
+        "     7 IP(64)",
+        "   60 CONTINUE",
+        "      STOP",
+        "   55 FORMAT (1X,64F1.0)",
+        "   56 FORMAT (64I1)",
+        "      END",
+        "    2",
+        "  0  8  2 10 12  4 14  6  3 11  1  9 15  7 13  5"
+      ]
+    },
+    {
+      name: "Rule 30 (a cellular automaton)",
+      cards: [
+        "C     AN ELEMENTARY CELLULAR AUTOMATON, NUMBERED AS STEPHEN WOLFRAM",
+        "C     NUMBERED THEM IN 1983. A ROW OF 63 CELLS IS EACH ALIVE OR DEAD.",
+        "C     IN THE NEXT GENERATION A CELL DEPENDS ONLY ON ITSELF AND ITS TWO",
+        "C     NEIGHBOURS: THE THREE CELLS READ AS A BINARY NUMBER N FROM 0 TO",
+        "C     7 PICK BIT N OF THE RULE NUMBER. CELLS PAST THE EDGES ARE DEAD.",
+        "C     AN ASTERISK IS A LIVE CELL. THE LAST GENERATION IS PUNCHED, SO IT",
+        "C     CAN REPLACE THE ROW CARD AND CARRY THE RUN ON.",
+        "C     DATA CARDS: (2I5) RULE, GENERATIONS; (63I1) THE FIRST ROW",
+        "C     TRY RULE 90, OR RULE 110 WITH THE SINGLE CELL IN COLUMN 63.",
+        "      DIMENSION IC(63), NX(63), IB(8), P(63)",
+        "      READ (5,10) IRULE, NGEN",
+        "   10 FORMAT (2I5)",
+        "      READ (5,11) IC(1),IC(2),IC(3),IC(4),IC(5),IC(6),IC(7),IC(8),",
+        "     1 IC(9),IC(10),IC(11),IC(12),IC(13),IC(14),IC(15),IC(16),IC(17),",
+        "     2 IC(18),IC(19),IC(20),IC(21),IC(22),IC(23),IC(24),IC(25),IC(26),",
+        "     3 IC(27),IC(28),IC(29),IC(30),IC(31),IC(32),IC(33),IC(34),IC(35),",
+        "     4 IC(36),IC(37),IC(38),IC(39),IC(40),IC(41),IC(42),IC(43),IC(44),",
+        "     5 IC(45),IC(46),IC(47),IC(48),IC(49),IC(50),IC(51),IC(52),IC(53),",
+        "     6 IC(54),IC(55),IC(56),IC(57),IC(58),IC(59),IC(60),IC(61),IC(62),",
+        "     7 IC(63)",
+        "   11 FORMAT (63I1)",
+        "      DO 15 K = 1, 8",
+        "      IB(K) = MOD(IRULE/2**(K-1), 2)",
+        "   15 CONTINUE",
+        "      WRITE (6,16) IRULE",
+        "   16 FORMAT (1H1,'RULE',I4/1H0,' GEN',65X,'LIVE')",
+        "      DO 60 IG = 0, NGEN",
+        "      NLIVE = 0",
+        "      DO 20 K = 1, 63",
+        "      P(K) = FLOAT(IC(K))",
+        "      NLIVE = NLIVE + IC(K)",
+        "   20 CONTINUE",
+        "      WRITE (6,25) IG, P(1),P(2),P(3),P(4),P(5),P(6),P(7),P(8),P(9),",
+        "     1 P(10),P(11),P(12),P(13),P(14),P(15),P(16),P(17),P(18),P(19),",
+        "     2 P(20),P(21),P(22),P(23),P(24),P(25),P(26),P(27),P(28),P(29),",
+        "     3 P(30),P(31),P(32),P(33),P(34),P(35),P(36),P(37),P(38),P(39),",
+        "     4 P(40),P(41),P(42),P(43),P(44),P(45),P(46),P(47),P(48),P(49),",
+        "     5 P(50),P(51),P(52),P(53),P(54),P(55),P(56),P(57),P(58),P(59),",
+        "     6 P(60),P(61),P(62),P(63),NLIVE",
+        "      IF (IG .EQ. NGEN) GO TO 60",
+        "C     EACH CELL LOOKS AT ITS NEIGHBOURS AND READS ITS FATE",
+        "      DO 40 K = 1, 63",
+        "      L = 0",
+        "      IF (K .GT. 1) L = IC(K-1)",
+        "      M = 0",
+        "      IF (K .LT. 63) M = IC(K+1)",
+        "      NX(K) = IB(4*L + 2*IC(K) + M + 1)",
+        "   40 CONTINUE",
+        "      DO 50 K = 1, 63",
+        "      IC(K) = NX(K)",
+        "   50 CONTINUE",
+        "   60 CONTINUE",
+        "      PUNCH 11, IC(1),IC(2),IC(3),IC(4),IC(5),IC(6),IC(7),IC(8),IC(9),",
+        "     1 IC(10),IC(11),IC(12),IC(13),IC(14),IC(15),IC(16),IC(17),IC(18),",
+        "     2 IC(19),IC(20),IC(21),IC(22),IC(23),IC(24),IC(25),IC(26),IC(27),",
+        "     3 IC(28),IC(29),IC(30),IC(31),IC(32),IC(33),IC(34),IC(35),IC(36),",
+        "     4 IC(37),IC(38),IC(39),IC(40),IC(41),IC(42),IC(43),IC(44),IC(45),",
+        "     5 IC(46),IC(47),IC(48),IC(49),IC(50),IC(51),IC(52),IC(53),IC(54),",
+        "     6 IC(55),IC(56),IC(57),IC(58),IC(59),IC(60),IC(61),IC(62),IC(63)",
+        "      STOP",
+        "   25 FORMAT (1X,I4,2X,63F1.0,I5)",
+        "      END",
+        "   30   31",
+        "000000000000000000000000000000010000000000000000000000000000000"
+      ]
+    },
+    {
+      name: "Life (a glider, after Conway)",
+      cards: [
+        "C     LIFE, AFTER JOHN CONWAY, AS MARTIN GARDNER DESCRIBED IT IN 1970",
+        "C     A GRID OF 12 BY 20 CELLS WHOSE EDGES WRAP AROUND. A LIVE CELL",
+        "C     WITH TWO OR THREE LIVE NEIGHBOURS SURVIVES, A DEAD CELL WITH",
+        "C     EXACTLY THREE COMES ALIVE, AND EVERY OTHER CELL IS DEAD IN THE",
+        "C     NEXT GENERATION. THE START HOLDS A GLIDER, WHICH MOVES ONE CELL",
+        "C     DOWN AND ONE RIGHT EVERY FOUR GENERATIONS, A BLINKER AND A BLOCK.",
+        "C     THE LAST GENERATION IS PUNCHED AS 12 ROW CARDS IN THE SAME FORM",
+        "C     AS THE DATA, SO IT CAN REPLACE THEM AND CARRY THE RUN ON.",
+        "C     DATA CARDS: (I5) GENERATIONS; 12 CARDS (20I1) ONE ROW EACH",
+        "      DIMENSION L(12,20), N(12,20), P(20)",
+        "      READ (5,10) NGEN",
+        "   10 FORMAT (I5)",
+        "      DO 12 I = 1, 12",
+        "      READ (5,11) L(I,1),L(I,2),L(I,3),L(I,4),L(I,5),L(I,6),L(I,7),",
+        "     1 L(I,8),L(I,9),L(I,10),L(I,11),L(I,12),L(I,13),L(I,14),L(I,15),",
+        "     2 L(I,16),L(I,17),L(I,18),L(I,19),L(I,20)",
+        "   12 CONTINUE",
+        "   11 FORMAT (20I1)",
+        "      WRITE (6,13)",
+        "   13 FORMAT (1H1,'LIFE ON A 12 BY 20 TORUS')",
+        "      DO 90 IG = 0, NGEN",
+        "      NPOP = 0",
+        "      DO 21 I = 1, 12",
+        "      DO 20 J = 1, 20",
+        "      NPOP = NPOP + L(I,J)",
+        "   20 CONTINUE",
+        "   21 CONTINUE",
+        "      WRITE (6,25) IG, NPOP",
+        "   25 FORMAT (1H0,'GENERATION',I3,', POPULATION',I4/1H )",
+        "      DO 35 I = 1, 12",
+        "      DO 30 J = 1, 20",
+        "      P(J) = FLOAT(L(I,J))",
+        "   30 CONTINUE",
+        "      WRITE (6,31) P(1),P(2),P(3),P(4),P(5),P(6),P(7),P(8),P(9),P(10),",
+        "     1 P(11),P(12),P(13),P(14),P(15),P(16),P(17),P(18),P(19),P(20)",
+        "   35 CONTINUE",
+        "      IF (IG .EQ. NGEN) GO TO 90",
+        "C     COUNT THE EIGHT NEIGHBOURS OF EVERY CELL",
+        "      DO 60 I = 1, 12",
+        "      IU = I - 1",
+        "      IF (IU .LT. 1) IU = 12",
+        "      ID = I + 1",
+        "      IF (ID .GT. 12) ID = 1",
+        "      DO 55 J = 1, 20",
+        "      JL = J - 1",
+        "      IF (JL .LT. 1) JL = 20",
+        "      JR = J + 1",
+        "      IF (JR .GT. 20) JR = 1",
+        "      K = L(IU,JL) + L(IU,J) + L(IU,JR) + L(I,JL) + L(I,JR)",
+        "     1    + L(ID,JL) + L(ID,J) + L(ID,JR)",
+        "      N(I,J) = 0",
+        "      IF (K .EQ. 3) N(I,J) = 1",
+        "      IF (K .EQ. 2 .AND. L(I,J) .EQ. 1) N(I,J) = 1",
+        "   55 CONTINUE",
+        "   60 CONTINUE",
+        "      DO 70 I = 1, 12",
+        "      DO 65 J = 1, 20",
+        "      L(I,J) = N(I,J)",
+        "   65 CONTINUE",
+        "   70 CONTINUE",
+        "   90 CONTINUE",
+        "      DO 95 I = 1, 12",
+        "      PUNCH 11, L(I,1),L(I,2),L(I,3),L(I,4),L(I,5),L(I,6),L(I,7),",
+        "     1 L(I,8),L(I,9),L(I,10),L(I,11),L(I,12),L(I,13),L(I,14),L(I,15),",
+        "     2 L(I,16),L(I,17),L(I,18),L(I,19),L(I,20)",
+        "   95 CONTINUE",
+        "      STOP",
+        "   31 FORMAT (1X,6X,20F1.0)",
+        "      END",
+        "    8",
+        "01000000000000000000",
+        "00100000000000000000",
+        "11100000000000000000",
+        "00000000000000000000",
+        "00000000000000111000",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000011000000000000",
+        "00000011000000000000",
+        "00000000000000000000",
+        "00000000000000000000"
+      ]
+    },
+    {
+      name: "A busy beaver (a Turing machine)",
+      cards: [
+        "C     A BUSY BEAVER: A TURING MACHINE, AFTER ALAN TURING (1936), RUNNING",
+        "C     THE GAME TIBOR RADO SET IN 1962. A HEAD SITS ON A TAPE OF 0S AND",
+        "C     1S. IN EACH STATE, FOR THE SYMBOL UNDER THE HEAD, THE TABLE SAYS",
+        "C     WHAT TO WRITE, WHICH WAY TO MOVE AND WHICH STATE COMES NEXT. THE",
+        "C     BUSY BEAVER IS THE MACHINE WITH N STATES THAT LEAVES THE MOST 1S",
+        "C     AND STILL HALTS. THIS IS THE 3-STATE CHAMPION. THE ROW OF DOTS",
+        "C     UNDER EACH TAPE MARKS THE HEAD. THE FINAL TAPE IS PUNCHED.",
+        "C     DATA CARDS: (3I5) STATES (UP TO 4), START CELL (1-24), MOST STEPS",
+        "C     THEN ONE CARD PER STATE (6I3): FOR SYMBOL 0 AND THEN SYMBOL 1,",
+        "C     THE SYMBOL TO WRITE, THE MOVE (1 RIGHT, -1 LEFT), THE NEXT STATE",
+        "C     (1 TO 4 FOR A TO D, 0 TO HALT). FOR THE 4-STATE CHAMPION, FOUND",
+        "C     BY ALLEN BRADY (1983), PUT 4, 16 AND 200 ON THE FIRST CARD AND",
+        "C     USE THESE FOUR STATE CARDS:",
+        "C       1  1  2  1 -1  2",
+        "C       1 -1  1  0 -1  3",
+        "C       1  1  0  1 -1  4",
+        "C       1  1  4  0  1  1",
+        "      DIMENSION IT(24), IW(4,2), IM(4,2), NXT(4,2), P(24)",
+        "      READ (5,10) NS, IH, LIMIT",
+        "   10 FORMAT (3I5)",
+        "      DO 12 K = 1, NS",
+        "      READ (5,11) IW(K,1), IM(K,1), NXT(K,1), IW(K,2), IM(K,2),",
+        "     1   NXT(K,2)",
+        "   12 CONTINUE",
+        "   11 FORMAT (6I3)",
+        "      DO 13 K = 1, 24",
+        "      IT(K) = 0",
+        "   13 CONTINUE",
+        "      IS = 1",
+        "      NSTEP = 0",
+        "      WRITE (6,14)",
+        "   14 FORMAT (1H1,'A BUSY BEAVER'/1H0,'STEP  STATE  TAPE',22X,'ONES')",
+        "   20 NONES = 0",
+        "      DO 21 K = 1, 24",
+        "      NONES = NONES + IT(K)",
+        "      P(K) = 0.0",
+        "   21 CONTINUE",
+        "      P(IH) = 1.0",
+        "      JS = IS + 1",
+        "      GO TO (35,31,32,33,34), JS",
+        "   31 WRITE (6,41) NSTEP, IT(1),IT(2),IT(3),IT(4),IT(5),IT(6),IT(7),",
+        "     1 IT(8),IT(9),IT(10),IT(11),IT(12),IT(13),IT(14),IT(15),IT(16),",
+        "     2 IT(17),IT(18),IT(19),IT(20),IT(21),IT(22),IT(23),IT(24),NONES",
+        "      GO TO 39",
+        "   32 WRITE (6,42) NSTEP, IT(1),IT(2),IT(3),IT(4),IT(5),IT(6),IT(7),",
+        "     1 IT(8),IT(9),IT(10),IT(11),IT(12),IT(13),IT(14),IT(15),IT(16),",
+        "     2 IT(17),IT(18),IT(19),IT(20),IT(21),IT(22),IT(23),IT(24),NONES",
+        "      GO TO 39",
+        "   33 WRITE (6,43) NSTEP, IT(1),IT(2),IT(3),IT(4),IT(5),IT(6),IT(7),",
+        "     1 IT(8),IT(9),IT(10),IT(11),IT(12),IT(13),IT(14),IT(15),IT(16),",
+        "     2 IT(17),IT(18),IT(19),IT(20),IT(21),IT(22),IT(23),IT(24),NONES",
+        "      GO TO 39",
+        "   34 WRITE (6,44) NSTEP, IT(1),IT(2),IT(3),IT(4),IT(5),IT(6),IT(7),",
+        "     1 IT(8),IT(9),IT(10),IT(11),IT(12),IT(13),IT(14),IT(15),IT(16),",
+        "     2 IT(17),IT(18),IT(19),IT(20),IT(21),IT(22),IT(23),IT(24),NONES",
+        "      GO TO 39",
+        "   35 WRITE (6,45) NSTEP, IT(1),IT(2),IT(3),IT(4),IT(5),IT(6),IT(7),",
+        "     1 IT(8),IT(9),IT(10),IT(11),IT(12),IT(13),IT(14),IT(15),IT(16),",
+        "     2 IT(17),IT(18),IT(19),IT(20),IT(21),IT(22),IT(23),IT(24),NONES",
+        "   39 WRITE (6,46) P(1),P(2),P(3),P(4),P(5),P(6),P(7),P(8),P(9),P(10),",
+        "     1 P(11),P(12),P(13),P(14),P(15),P(16),P(17),P(18),P(19),P(20),",
+        "     2 P(21),P(22),P(23),P(24)",
+        "      IF (IS .EQ. 0) GO TO 80",
+        "      IF (NSTEP .GE. LIMIT) GO TO 85",
+        "C     READ, WRITE, MOVE, CHANGE STATE",
+        "      ISYM = IT(IH) + 1",
+        "      IT(IH) = IW(IS,ISYM)",
+        "      IH = IH + IM(IS,ISYM)",
+        "      IS = NXT(IS,ISYM)",
+        "      NSTEP = NSTEP + 1",
+        "      IF (IH .LT. 1 .OR. IH .GT. 24) GO TO 87",
+        "      GO TO 20",
+        "   80 WRITE (6,81) NSTEP, NONES",
+        "   81 FORMAT (1H0,'THE MACHINE HALTED AFTER',I5,' STEPS',",
+        "     1       ' WITH',I3,' ONES ON THE TAPE.')",
+        "      PUNCH 82, IT(1),IT(2),IT(3),IT(4),IT(5),IT(6),IT(7),IT(8),IT(9),",
+        "     1 IT(10),IT(11),IT(12),IT(13),IT(14),IT(15),IT(16),IT(17),IT(18),",
+        "     2 IT(19),IT(20),IT(21),IT(22),IT(23),IT(24)",
+        "      STOP",
+        "   85 WRITE (6,86) LIMIT",
+        "   86 FORMAT (1H0,'NO HALT IN',I6,' STEPS. IT MAY NEVER HALT.')",
+        "      STOP",
+        "   87 WRITE (6,88) NSTEP",
+        "   88 FORMAT (1H0,'AT STEP',I5,' THE HEAD RAN OFF THE TAPE.')",
+        "      STOP",
+        "   41 FORMAT (1X,I4,4X,'A',4X,24I1,I6)",
+        "   42 FORMAT (1X,I4,4X,'B',4X,24I1,I6)",
+        "   43 FORMAT (1X,I4,4X,'C',4X,24I1,I6)",
+        "   44 FORMAT (1X,I4,4X,'D',4X,24I1,I6)",
+        "   45 FORMAT (1X,I4,4X,'H',4X,24I1,I6)",
+        "   46 FORMAT (1X,13X,24F1.0)",
+        "   82 FORMAT (24I1)",
+        "      END",
+        "    3   12  100",
+        "  1  1  2  1  1  0",
+        "  0  1  3  1  1  2",
+        "  1 -1  3  1 -1  1"
+      ]
+    },
+    {
+      name: "The 3x+1 problem (after Collatz)",
+      cards: [
+        "C     THE 3X+1 PROBLEM, OR COLLATZ PROBLEM (LOTHAR COLLATZ, 1937)",
+        "C     TAKE A WHOLE NUMBER. IF IT IS EVEN, HALVE IT; IF IT IS ODD,",
+        "C     TREBLE IT AND ADD ONE. REPEAT. EVERY NUMBER EVER TRIED HAS COME",
+        "C     DOWN TO 1, BUT NOBODY HAS PROVED THAT EVERY NUMBER MUST. EACH",
+        "C     VALUE IS PRINTED WITH A BAR OF INK WHOSE LENGTH GROWS WITH THE",
+        "C     LOGARITHM OF THE VALUE, SO THE CLIMB AND FALL CAN BE SEEN. EVERY",
+        "C     VALUE IS PUNCHED (I10).",
+        "C     DATA CARD (I10): THE STARTING NUMBER (27 CLIMBS TO 9232)",
+        "      DIMENSION IV(1000), P(50)",
+        "      READ (5,10) N",
+        "   10 FORMAT (I10)",
+        "      IV(1) = N",
+        "      K = 1",
+        "      MAX = N",
+        "   20 IF (IV(K) .LE. 1) GO TO 40",
+        "      IF (K .GE. 1000) GO TO 40",
+        "      IF (IV(K) .GT. 700000000) GO TO 40",
+        "      M = IV(K)/2",
+        "      IF (MOD(IV(K),2) .EQ. 1) M = 3*IV(K) + 1",
+        "      K = K + 1",
+        "      IV(K) = M",
+        "      IF (M .GT. MAX) MAX = M",
+        "      GO TO 20",
+        "   40 NS = K - 1",
+        "      WRITE (6,41) N, NS, MAX",
+        "   41 FORMAT (1H1,'FROM',I10,' TO 1 IN',I5,' STEPS. THE PEAK IS',",
+        "     1       I11,'.'/1H0,'STEP   VALUE')",
+        "      AMX = 1.0",
+        "      IF (MAX .GT. 1) AMX = ALOG(FLOAT(MAX))",
+        "      DO 60 J = 1, K",
+        "      NB = 0",
+        "      IF (IV(J) .GT. 0) NB = INT(50.0*ALOG(FLOAT(IV(J)))/AMX + 0.5)",
+        "      DO 50 I = 1, 50",
+        "      P(I) = 0.0",
+        "      IF (I .LE. NB) P(I) = 1.0",
+        "   50 CONTINUE",
+        "      JS = J - 1",
+        "      WRITE (6,55) JS, IV(J), P(1),P(2),P(3),P(4),P(5),P(6),P(7),P(8),",
+        "     1 P(9),P(10),P(11),P(12),P(13),P(14),P(15),P(16),P(17),P(18),P(19),",
+        "     2 P(20),P(21),P(22),P(23),P(24),P(25),P(26),P(27),P(28),P(29),",
+        "     3 P(30),P(31),P(32),P(33),P(34),P(35),P(36),P(37),P(38),P(39),",
+        "     4 P(40),P(41),P(42),P(43),P(44),P(45),P(46),P(47),P(48),P(49),P(50)",
+        "      PUNCH 10, IV(J)",
+        "   60 CONTINUE",
+        "      STOP",
+        "   55 FORMAT (1X,I4,I10,2X,50F1.0)",
+        "      END",
+        "        27"
+      ]
+    },
+    {
+      name: "Euclid, read aloud (an instruction piece)",
+      cards: [
+        "C     EUCLID'S ALGORITHM, READ ALOUD AS IT RUNS",
+        "C     AN INSTRUCTION PIECE IN THE SPIRIT OF THE 1960S EVENT SCORES: THE",
+        "C     PROGRAM PRINTS EACH OF ITS OWN INSTRUCTIONS AS IT CARRIES IT OUT,",
+        "C     WITH WHAT HAPPENED. THE ALGORITHM IS THE ONE IN BOOK VII OF",
+        "C     EUCLID'S ELEMENTS: REPLACE THE PAIR M, N BY N AND THE REMAINDER",
+        "C     OF M DIVIDED BY N, UNTIL THE REMAINDER IS 0. IT ALSO PUNCHES A",
+        "C     NEW PROGRAM: THE STEPS IT TOOK, WITH EVERY TEST AND LOOP ALREADY",
+        "C     DECIDED. LOAD THE STACKER IN PLACE OF THE DECK AND RUN THAT.",
+        "C     DATA CARD (2I10): THE TWO NUMBERS",
+        "      READ (5,10) M, N",
+        "   10 FORMAT (2I10)",
+        "      WRITE (6,11)",
+        "   11 FORMAT (1H1,'EUCLID, READ ALOUD'/1H0,'THE CARD',29X,",
+        "     1       'WHAT HAPPENED')",
+        "      WRITE (6,12) M, N",
+        "   12 FORMAT (1X,'   READ (5,10) M, N',18X,'M IS',I7,', N IS',I7)",
+        "      PUNCH 13",
+        "   13 FORMAT ('C     EUCLID, UNROLLED BY A RUN OF THE DECK')",
+        "      PUNCH 14, M",
+        "   14 FORMAT ('      M =',I10)",
+        "      PUNCH 15, N",
+        "   15 FORMAT ('      N =',I10)",
+        "   20 WRITE (6,21) N",
+        "   21 FORMAT (1X,'20 IF (N .EQ. 0) GO TO 50',12X,'N IS',I7)",
+        "      IF (N .EQ. 0) GO TO 50",
+        "      K = MOD(M, N)",
+        "      WRITE (6,31) K",
+        "   31 FORMAT (1X,'   K = MOD(M, N)',21X,'K IS',I7)",
+        "      PUNCH 32",
+        "   32 FORMAT ('      K = MOD(M, N)')",
+        "      M = N",
+        "      WRITE (6,41) M",
+        "   41 FORMAT (1X,'   M = N',29X,'M IS',I7)",
+        "      PUNCH 42",
+        "   42 FORMAT ('      M = N')",
+        "      N = K",
+        "      WRITE (6,43) N",
+        "   43 FORMAT (1X,'   N = K',29X,'N IS',I7)",
+        "      PUNCH 44",
+        "   44 FORMAT ('      N = K')",
+        "      WRITE (6,45)",
+        "   45 FORMAT (1X,'   GO TO 20',26X,'AND AGAIN')",
+        "      GO TO 20",
+        "   50 WRITE (6,51) M",
+        "   51 FORMAT (1X,'50 WRITE (6,51) M',20X,'THE ANSWER IS',I7)",
+        "      PUNCH 52",
+        "   52 FORMAT ('      WRITE (6,10) M')",
+        "      PUNCH 53",
+        "   53 FORMAT ('   10 FORMAT (1H0,30HTHE GREATEST COMMON DIVISOR IS,',",
+        "     1        'I8)')",
+        "      PUNCH 54",
+        "   54 FORMAT ('      STOP')",
+        "      PUNCH 55",
+        "   55 FORMAT ('      END')",
+        "      WRITE (6,56)",
+        "   56 FORMAT (1X,'   STOP',30X,'THE PIECE IS OVER.')",
+        "      STOP",
+        "      END",
+        "      1071       462"
+      ]
+    }
+  ];
+  var SAMPLES = Fortran.samples.filter(function (s, i) { return i !== 4; }).concat(PAGE_SAMPLES);
+
+  var sampleSelect = $('sample-select');
+  SAMPLES.forEach(function (s, i) {
+    var opt = document.createElement('option');
+    opt.value = String(i);
+    opt.textContent = (i + 1) + '. ' + s.name;
+    sampleSelect.appendChild(opt);
+  });
+
+  $('load-sample').addEventListener('click', function () {
+    setDeck(SAMPLES[+sampleSelect.value].cards);
+    $('editor-status').textContent = 'The sample deck is loaded.';
+  });
+
+  $('add-card').addEventListener('click', function () {
+    insertRow(selected + 1, '');
+    focusRow(selected + 1, 0);
+  });
+
+  $('delete-card').addEventListener('click', function () {
+    if (cardsEl.children.length > 1) removeRow(selected);
+    else { rowsList()[0].querySelector('input').value = ''; showSelectedCard(); }
+  });
+
+  $('clear-deck').addEventListener('click', function () { setDeck([]); });
+
+  /* ---------------- card viewer ---------------- */
+
+  $('prev-card').addEventListener('click', function () { if (selected > 0) select(selected - 1); });
+  $('next-card').addEventListener('click', function () { if (selected < cardsEl.children.length - 1) select(selected + 1); });
+
+  /* ---------------- running ---------------- */
+
+  function renderPrinter(lines) {
+    var box = $('printer');
+    box.innerHTML = '';
+    if (!lines.length) {
+      var p = document.createElement('p');
+      p.className = 'placeholder';
+      p.textContent = 'The program did not print anything.';
+      box.appendChild(p);
+      return;
+    }
+    var pre = null;
+    lines.forEach(function (line) {
+      if (line === '\f') {
+        pre = null;
+        var div = document.createElement('div');
+        div.className = 'pagebreak';
+        div.textContent = '--- page break ---';
+        box.appendChild(div);
+        return;
+      }
+      if (!pre) { pre = document.createElement('pre'); box.appendChild(pre); pre.textContent = line; }
+      else pre.textContent += '\n' + line;
+    });
+  }
+
+  function renderLog(result) {
+    var box = $('log');
+    box.innerHTML = '';
+    var pre = document.createElement('pre');
+    var lines = result.log.slice();
+    lines.push(result.ok ? 'Job ended normally.' : 'Job ended with errors.');
+    pre.textContent = lines.join('\n');
+    box.appendChild(pre);
+  }
+
+  function renderStacker(punched) {
+    stack = punched;
+    var box = $('stacker');
+    box.innerHTML = '';
+    ['stack-replace', 'stack-append', 'stack-copy', 'stack-download'].forEach(function (id) {
+      $(id).disabled = !punched.length;
+    });
+    $('stack-status').textContent = '';
+    if (!punched.length) {
+      var p = document.createElement('p');
+      p.className = 'placeholder';
+      p.textContent = 'The program did not punch any cards.';
+      box.appendChild(p);
+      return;
+    }
+    var count = document.createElement('p');
+    count.textContent = 'The program punched ' + punched.length + ' card' + (punched.length === 1 ? '' : 's') + '.' +
+      (punched.length > STACKER_SHOWN ? ' Only the first ' + STACKER_SHOWN + ' are drawn here.' : '');
+    box.appendChild(count);
+    punched.slice(0, STACKER_SHOWN).forEach(function (text) {
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.appendChild(drawCard(text, { labels: false }));
+      box.appendChild(item);
+    });
+  }
+
+  $('run-deck').addEventListener('click', function () {
+    var deck = getDeck();
+    var result = Fortran.run(deck);
+    renderStacker(result.punched);
+    renderPrinter(result.printer);
+    renderLog(result);
+    $('listing').textContent = result.listing.join('\n');
+    $('run-status').textContent = 'The reader took ' + deck.length + ' card' + (deck.length === 1 ? '' : 's') +
+      (result.ok ? ', and the job ran without errors.' : ', and the job stopped with errors. See the job log for details.');
+    $('editor-status').textContent = '';
+    showTab('output', true);
+  });
+
+  /* ---------------- stacker actions ---------------- */
+
+  function stackText() { return stack.join('\n') + '\n'; }
+  function stackCards() { return stack.map(function (c) { return c.replace(/ +$/, ''); }); }
+
+  $('stack-replace').addEventListener('click', function () {
+    setDeck(stackCards());
+    $('editor-status').textContent = 'The punched cards replaced the deck.';
+    showTab('editor', true);
+  });
+
+  $('stack-append').addEventListener('click', function () {
+    setDeck(getDeck().concat(stackCards()));
+    $('editor-status').textContent = 'The punched cards were added to the end of the deck.';
+    showTab('editor', true);
+  });
+
+  $('stack-copy').addEventListener('click', function () {
+    var status = $('stack-status');
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = stackText();
+      document.body.appendChild(ta);
+      ta.select();
+      var done = false;
+      try { done = document.execCommand('copy'); } catch (e) { done = false; }
+      document.body.removeChild(ta);
+      status.textContent = done ? 'The cards were copied to the clipboard.' : 'Copying failed, so please use Download instead.';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(stackText()).then(function () { status.textContent = 'The cards were copied to the clipboard.'; }, fallback);
+    } else fallback();
+  });
+
+  $('stack-download').addEventListener('click', function () {
+    var url = URL.createObjectURL(new Blob([stackText()], { type: 'text/plain' }));
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'punched-cards.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    $('stack-status').textContent = 'The cards were downloaded as a text file.';
+  });
+
+  /* ---------------- start ---------------- */
+  setDeck(Fortran.samples[0].cards);
+})();
+</script>
+<script>
+/* Presentation only. The title sequence is printed, not painted. Every large
+   colour area is a screen of round dots at its ink's angle (cyan 15, magenta 75,
+   yellow 0, black 45, and a spot orange at 60 degrees): near-solid where the
+   original was flat, ramping where light falls off, overprinting where two blocks
+   meet. Dots gain a little, each plate is a hair out of register, and nothing
+   moves. Body text, controls and output sit on flat plates of paper or ink laid
+   over the screens; only display type of 40px and up is itself screened. */
+(function () {
+  'use strict';
+
+  var INKS = {
+    c: { color: '#00a6c8', angle: 15 },
+    m: { color: '#dc0078', angle: 75 },
+    y: { color: '#ffd400', angle: 0 },
+    k: { color: '#0d0d0d', angle: 45 },
+    o: { color: '#ff5a1f', angle: 60 }
+  };
+  var PAPER = '#fffaf0';
+  var SHOT_INK = ['m', 'c', 'o', 'y'];
+  var TAB_INK = { about: 'm', editor: 'c', viewer: 'o', output: 'y' };
+  var root = document.documentElement;
+  var ready = false;   // display type is screened only once the bundled faces have loaded
+
+  function clamp(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
+  function smooth(a, b, t) { t = clamp((t - a) / (b - a)); return t * t * (3 - 2 * t); }
+  function hash(i) { var s = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return s - Math.floor(s); }
+  function lum(hex) {
+    var v = [1, 3, 5].map(function (i) { var c = parseInt(hex.substr(i, 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  }
+  // contrast of a screen of coverage t against bare paper, averaging ink and paper by area
+  function screenContrast(ink, t, ground) {
+    var a = t * lum(INKS[ink].color) + (1 - t) * lum(ground || PAPER), b = lum(ground || PAPER);
+    return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+  }
+
+  // A canvas at device resolution. bg: a colour to print on, or null for a clear canvas.
+  function setup(canvas, w, h, bg) {
+    var dpr = Math.min(3, window.devicePixelRatio || 1);
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, w, h);
+    if (bg !== null) { ctx.fillStyle = bg || PAPER; ctx.fillRect(0, 0, w, h); }
+    return ctx;
+  }
+
+  // One plate: a rotated lattice of round dots whose area follows tone(x, y).
+  function plate(ctx, w, h, ink, cell, tone, shift) {
+    var a = INKS[ink].angle * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a);
+    var n = Math.ceil(Math.sqrt(w * w + h * h) / cell / 2) + 2;
+    var ox = w / 2 + (shift ? shift[0] : 0.4), oy = h / 2 + (shift ? shift[1] : -0.3);
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.fillStyle = INKS[ink].color;
+    for (var i = -n; i <= n; i++) {
+      for (var j = -n; j <= n; j++) {
+        var x = ox + (i * ca - j * sa) * cell, y = oy + (i * sa + j * ca) * cell;
+        if (x < -cell || y < -cell || x > w + cell || y > h + cell) continue;
+        var t = tone(x, y);
+        if (t <= 0.03) continue;
+        // area-true radius with dot gain; past 85% the dots swell smoothly until they close up
+        var r = cell * Math.sqrt(clamp(t) / Math.PI) * (1.12 + 0.07 * (hash(i * 131 + j * 7 + ink.charCodeAt(0)) - 0.5));
+        if (t > 0.85) r += (cell * 0.74 - r) * smooth(0.85, 1, t);
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  // Paper grain: a fixed scatter of tiny fibres and specks.
+  function grain(ctx, w, h, seed) {
+    var count = Math.round(w * h / 140);
+    ctx.globalCompositeOperation = 'multiply';
+    for (var i = 0; i < count; i++) {
+      var x = hash(seed + i * 2.17) * w, y = hash(seed + i * 3.91 + 7) * h, v = hash(seed + i * 5.3);
+      ctx.fillStyle = 'rgba(80, 64, 40, ' + (0.05 + 0.08 * v).toFixed(3) + ')';
+      ctx.fillRect(x, y, v > 0.85 ? 2.2 : 0.9, 0.9);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  // An aria-hidden canvas laid under (first child) or over (last child) a box.
+  function layer(box, cls, over) {
+    var c = box.querySelector(':scope > canvas.' + cls);
+    if (!c) {
+      c = document.createElement('canvas');
+      c.className = 'ht-layer ' + cls;
+      c.setAttribute('aria-hidden', 'true');
+      if (over) box.appendChild(c); else box.insertBefore(c, box.firstChild);
+    }
+    return c;
+  }
+
+  /* ---------------- type: the real text's words, set again on a canvas ---------------- */
+  // Each word is measured where the browser laid it out, so the canvas copy sits exactly
+  // over the (transparent) real text: same face, size, letter-spacing and line breaks.
+  var measure = document.createElement('canvas').getContext('2d');
+  function runsOf(el, origin) {
+    var out = [], tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n;
+    while ((n = tw.nextNode())) {
+      var cs = getComputedStyle(n.parentElement);
+      var font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      var ls = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
+      measure.font = font; measure.letterSpacing = ls;
+      var re = /\S+/g, m;
+      while ((m = re.exec(n.textContent))) {
+        var r = document.createRange(); r.setStart(n, m.index); r.setEnd(n, m.index + m[0].length);
+        var q = r.getClientRects()[0];
+        if (!q) continue;
+        var asc = measure.measureText(m[0]).fontBoundingBoxAscent;
+        out.push({ t: m[0], font: font, ls: ls, x: q.left - origin.left, y: q.top - origin.top + asc,
+          top: q.top - origin.top, bottom: q.bottom - origin.top, right: q.right - origin.left });
+      }
+    }
+    return out;
+  }
+  function bbox(runs) {
+    var b = { x0: 1e9, y0: 1e9, x1: -1e9, y1: -1e9 };
+    runs.forEach(function (r) { b.x0 = Math.min(b.x0, r.x); b.x1 = Math.max(b.x1, r.right); b.y0 = Math.min(b.y0, r.top); b.y1 = Math.max(b.y1, r.bottom); });
+    return b;
+  }
+  function drawRuns(ctx, runs, color, dx, dy) {
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    runs.forEach(function (r) { ctx.font = r.font; ctx.letterSpacing = r.ls; ctx.fillText(r.t, r.x + (dx || 0), r.y + (dy || 0)); });
+    ctx.letterSpacing = '0px';
+  }
+  // A plate cut to the letterforms: the dots are drawn, then trimmed to the exact glyph
+  // outlines, so edges stay crisp and hairlines survive at any screen ruling.
+  function screenedType(ctx, w, h, runs, ink, cell, tone, shift, dx, dy) {
+    var L = document.createElement('canvas'); L.width = ctx.canvas.width; L.height = ctx.canvas.height;
+    var lc = L.getContext('2d'), s = L.width / w;
+    lc.setTransform(s, 0, 0, s, 0, 0);
+    plate(lc, w, h, ink, cell, tone, shift);
+    // all the words go on one mask first: trimming word by word would cut each away
+    var M = document.createElement('canvas'); M.width = L.width; M.height = L.height;
+    var mc = M.getContext('2d'); mc.setTransform(s, 0, 0, s, 0, 0);
+    drawRuns(mc, runs, '#000', dx, dy);
+    lc.setTransform(1, 0, 0, 1, 0, 0);
+    lc.globalCompositeOperation = 'destination-in';
+    lc.drawImage(M, 0, 0);
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'multiply'; ctx.drawImage(L, 0, 0); ctx.restore();
+  }
+  function knockout(ctx, runs, dx, dy) { ctx.globalCompositeOperation = 'source-over'; drawRuns(ctx, runs, PAPER, dx, dy); }
+
+  /* ---------------- the title plate: black screen, FORTRAN knocked out ---------------- */
+  function drawSplitA() {
+    var box = document.querySelector('.split-a'), big = box.querySelector('.h1-big');
+    var w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    var c = layer(box, 'ht-ground'), o = box.getBoundingClientRect();
+    var fs = parseFloat(getComputedStyle(big).fontSize), runs = runsOf(big, o), b = bbox(runs);
+    var ctx = setup(c, w, h), cell = Math.max(4, Math.min(6.5, fs / 28));
+    var dx = fs * 0.035, dy = fs * 0.025, foot = Math.min(42, h * 0.12);
+    // near-solid black, breaking into a vignette along the foot and the corner by the colour field
+    function ground(x, y) { return 0.96 - 0.55 * smooth(h - foot, h, y) - 0.3 * smooth(w * 0.78, w, x) * smooth(h * 0.62, h, y); }
+    if (!ready) {
+      // until the faces arrive the real title shows, so its ground stays flat ink
+      ctx.fillStyle = INKS.k.color; ctx.fillRect(0, 0, w, h);
+      big.classList.remove('ht-on');
+      return;
+    }
+    plate(ctx, w, h, 'k', cell, ground, [0.3, -0.4]);
+    grain(ctx, w, h, 5);
+    // the magenta plate printed out of register, then the letters knocked out to bare paper,
+    // with a yellow screen ramping across the word inside them
+    knockout(ctx, runs, dx, dy);
+    screenedType(ctx, w, h, runs, 'm', cell * 0.8, function () { return 0.96; }, [-0.5, 0.4], dx, dy);
+    knockout(ctx, runs, 0, 0);
+    screenedType(ctx, w, h, runs, 'y', cell * 0.7, function (x) { return 0.32 * smooth(b.x0, b.x1, x); }, [0.2, 0.2], 0, 0);
+    // effective contrast: paper letters against the thinnest part of the ground behind them
+    var tmin = 1;
+    for (var x = b.x0; x <= b.x1; x += 8) for (var y = b.y0; y <= b.y1; y += 8) tmin = Math.min(tmin, ground(x, y));
+    c.dataset.contrast = screenContrast('k', tmin).toFixed(2);
+    c.dataset.letters = 'knockout';
+    big.classList.add('ht-on');
+  }
+
+  /* ---------------- the colour field: orange, a black disc, a target ---------------- */
+  function drawTitle() {
+    var canvas = document.getElementById('ht-title'), box = canvas.parentNode;
+    var w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    var ctx = setup(canvas, w, h), wide = w > h * 1.6;
+    var cell = wide ? 6 : 8;
+    var disc = wide ? { x: w * 0.88, y: -h * 0.35, r: h * 1.05 } : { x: w * 0.92, y: h * 0.18, r: Math.min(w, h) * 0.62 };
+    var tgt = wide ? { x: w * 0.12 + 70, y: h * 0.95, r: 74 } : { x: w * 0.36, y: h * 0.7, r: Math.min(w * 0.32, h * 0.3) };
+    var ring = Math.max(18, tgt.r / 6);
+    function inTarget(x, y) { return Math.hypot(x - tgt.x, y - tgt.y) < tgt.r; }
+    plate(ctx, w, h, 'o', cell, function (x, y) {
+      if (inTarget(x, y)) return 0;
+      return 1 - 0.5 * smooth(0.25, 1.15, (x / w) * 0.3 + (y / h) * 0.9);
+    }, [0.6, 0.4]);
+    // the target's rings on a finer screen than the field, so their edges stay round
+    plate(ctx, w, h, 'm', 3, function (x, y) {
+      var d = Math.hypot(x - tgt.x, y - tgt.y);
+      if (d >= tgt.r) return 0.06 * smooth(0.5, 1, y / h);
+      return (d % ring) > ring / 2 ? 1 : 0;
+    }, [-0.7, 0.3]);
+    plate(ctx, w, h, 'k', cell, function (x, y) {
+      var d = Math.hypot(x - disc.x, y - disc.y);
+      return 1 - smooth(disc.r - cell * 4, disc.r, d);
+    }, [0.2, -0.6]);
+    grain(ctx, w, h, 11);
+  }
+
+  /* ---------------- the lede: cyan and yellow overprinting into green ---------------- */
+  function drawLede() {
+    var box = document.querySelector('.lede'), w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    var ctx = setup(layer(box, 'ht-ground'), w, h), rule = 22;
+    plate(ctx, w, h, 'y', 7, function (x, y) { return y > h - rule ? 0 : 0.95 * (1 - smooth(0.15, 0.75, x / w)); }, [0.5, 0.2]);
+    plate(ctx, w, h, 'c', 7, function (x, y) { return y > h - rule ? 0 : 0.95 * smooth(0.3, 0.95, x / w) * (0.75 + 0.25 * (y / h)); }, [-0.4, 0.5]);
+    // a black rule along the foot whose top edge breaks up into dots
+    plate(ctx, w, h, 'k', 5, function (x, y) { return smooth(h - rule - 8, h - rule + 6, y); }, [0.2, -0.3]);
+    grain(ctx, w, h, 17);
+  }
+
+  /* ---------------- the band: the tab's ink, screened, with rings at its foot ---------------- */
+  function drawBand() {
+    var box = document.querySelector('.band'), w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    var tab = root.getAttribute('data-tab') || 'about', ink = TAB_INK[tab];
+    var ctx = setup(layer(box, 'ht-ground'), w, h), narrow = window.innerWidth <= 820;
+    var rh = narrow ? 0 : Math.min(248, h * 0.4), R = Math.hypot(w, rh), P = 22;
+    // solid at the top, thinning toward the foot like light falling off
+    plate(ctx, w, h, ink, 6, function (x, y) { return narrow ? 0.95 - 0.3 * smooth(0.6, 1, x / w) : 0.97 - 0.5 * smooth(h * 0.35, h, y); }, [0.4, -0.3]);
+    if (rh) {
+      plate(ctx, w, h, 'k', 3, function (x, y) {
+        if (y < h - rh) return 0;
+        var d = Math.hypot(x, y - h);
+        var big = Math.abs(d - rh * 0.42) < 5 ? 1 : 0;
+        var rings = (d % P) / P < 0.62 * (1 - d / (R * 1.05)) ? 0.95 : 0;
+        return Math.max(big, rings * (1 - 0.55 * smooth(0.2, 1, d / R)));
+      }, [-0.3, 0.5]);
+    }
+    grain(ctx, w, h, 23);
+  }
+
+  /* ---------------- the printer's frame: yellow, overprinted with black at the foot ---------------- */
+  function drawPrinterFrame() {
+    var box = document.querySelector('.printer-frame');
+    if (!box || box.offsetParent === null) return;
+    var w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    var ctx = setup(layer(box, 'ht-ground'), w, h);
+    plate(ctx, w, h, 'y', 6, function () { return 0.96; }, [0.3, 0.3]);
+    plate(ctx, w, h, 'k', 6, function (x, y) { return 0.85 * smooth(0.55, 1, (y / h) * 0.7 + (x / w) * 0.3); }, [-0.4, 0.2]);
+  }
+
+  /* ---------------- the footer: magenta and cyan blocks, overprinting where they meet ---------------- */
+  function drawFooter() {
+    var box = document.querySelector('.colophon');
+    if (!box) return;
+    var w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    var ctx = setup(layer(box, 'ht-ground'), w, h);
+    plate(ctx, w, h, 'm', 7, function (x, y) { return 0.96 * (1 - smooth(0.52, 0.66, x / w)) * smooth(0, 0.35, y / h); }, [0.5, -0.2]);
+    plate(ctx, w, h, 'c', 7, function (x, y) { return 0.96 * smooth(0.4, 0.5, x / w) * smooth(0, 0.35, y / h); }, [-0.3, 0.4]);
+    plate(ctx, w, h, 'k', 6, function (x) { return 0.9 * smooth(0.82, 1, x / w); }, [0.1, 0.1]);
+    grain(ctx, w, h, 31);
+  }
+
+  /* ---------------- headings: screened display type ---------------- */
+  // Panel headings: a black screen ramping lighter across the word (never below 88%),
+  // over the band's ink printed out of register. Section titles of 40px and up: a black
+  // screen over the shot's ink, and a screened rule of that ink under the line.
+  var KMIN = 0.88;
+  function drawHeading(el, ink, kind) {
+    var cs = getComputedStyle(el), fs = parseFloat(cs.fontSize);
+    var old = el.querySelector(':scope > canvas.ht-type');
+    if (!ready || fs < 40 || el.offsetParent === null) {
+      if (el.offsetParent !== null || !ready) { el.classList.remove('ht-on'); if (old) old.remove(); }
+      return;
+    }
+    var r = el.getBoundingClientRect(), pad = Math.ceil(fs * 0.45);
+    var w = Math.ceil(r.width + 2 * pad), h = Math.ceil(r.height + 2 * pad);
+    // the overhang room never reaches past the page's right edge
+    w = Math.min(w, Math.floor(document.documentElement.clientWidth - (r.left - pad)));
+    var c = layer(el, 'ht-type', true);
+    c.style.left = -pad + 'px'; c.style.top = -pad + 'px';
+    var runs = runsOf(el, { left: r.left - pad, top: r.top - pad }), b = bbox(runs);
+    var ctx = setup(c, w, h, null), cell = Math.max(2.6, fs / 30);
+    var dx = fs * 0.04, dy = fs * 0.03;
+    screenedType(ctx, w, h, runs, ink, cell * 1.15, function () { return 0.95; }, [0.6, -0.4], dx, dy);
+    screenedType(ctx, w, h, runs, 'k', cell, function (x) { return 1 - (1 - KMIN) * smooth(b.x0, b.x1, x); }, [-0.3, 0.2], 0, 0);
+    if (kind === 'scene') {
+      var last = runs.reduce(function (m, q) { return q.bottom > m ? q.bottom : m; }, 0), lastLeft = 1e9, lastRight = 0;
+      runs.forEach(function (q) { if (q.bottom === last) { lastLeft = Math.min(lastLeft, q.x); lastRight = Math.max(lastRight, q.right); } });
+      var y0 = last + fs * 0.04, y1 = y0 + fs * 0.16;
+      plate(ctx, w, h, ink, cell * 1.3, function (x, y) { return y >= y0 && y <= y1 && x >= lastLeft && x <= lastRight ? 0.95 - 0.55 * smooth(lastLeft, lastRight, x) : 0; }, [0.2, 0.3]);
+    }
+    c.dataset.contrast = screenContrast('k', KMIN).toFixed(2);
+    c.dataset.fontSize = fs.toFixed(0);
+    el.classList.add('ht-on');
+  }
+  function drawHeadings() {
+    var tab = root.getAttribute('data-tab') || 'about';
+    Array.prototype.forEach.call(document.querySelectorAll('[role="tabpanel"] > h2'), function (h2) {
+      if (h2.parentNode.hidden) return;
+      drawHeading(h2, TAB_INK[tab], 'panel');
+    });
+    var scene = document.querySelector('#panel-about .scene:not([hidden])');
+    if (scene) drawHeading(scene.querySelector('h3'), SHOT_INK[(+scene.id.split('-')[1] - 1) % 4], 'scene');
+  }
+
+  /* ---------------- About: a block of the shot's ink per section ---------------- */
+  // The numeral is knocked out of it to bare paper with a screened black drop shadow,
+  // and an op-art swatch is overprinted on it in black (and knocked out where it is light).
+  // Each swatch function takes unit-square coordinates and returns [shot ink, black],
+  // or null outside its shape.
+  var OP = [
+    function (u, v) { var d = Math.hypot(u - 0.5, v - 0.5); if (d > 0.5) return null; var k = Math.floor(d * 10); return k % 2 ? [0.95, 0] : [0, 0.95]; },
+    function (u, v) { var s = ((u + v) * 7) % 1; return s < 0.5 ? [0, 0.05] : [0.6, 0.95]; },
+    function (u, v) { var d = Math.hypot(u - 0.5, v - 0.5); if (d > 0.5) return null; var q = Math.floor((Math.atan2(v - 0.5, u - 0.5) / Math.PI + 1) * 2); return q % 2 ? [0, 0] : [0.15, 0.95]; },
+    function (u, v) { if (v < 0.5 && Math.hypot(u - 0.5, v - 0.5) > 0.5) return null; return Math.floor(v * 12) % 2 ? [0, 0] : [0.9, 0.95]; },
+    function (u, v) { var a = Math.hypot(u - 0.38, v - 0.45), b = Math.hypot(u - 0.62, v - 0.55); return [0.2 + 0.6 * u, ((a * 14) % 1 < 0.5 ? 0.6 : 0) + ((b * 14) % 1 < 0.5 ? 0.4 : 0)]; },
+    function (u, v) { var x = u + 0.08 * Math.sin(v * 9), c = (Math.floor(x * 6) + Math.floor(v * 6)) % 2; return c ? [0, 0] : [0.9, 0.95]; },
+    function (u, v) { var d = Math.hypot(u - 0.5, v - 0.5); if (d > 0.5) return null; var ray = Math.floor((Math.atan2(v - 0.5, u - 0.5) / Math.PI + 1) * 8) % 2; return ray ? [0, 0] : [0.9, 0.95 - d]; },
+    function (u, v) { var m = Math.max(Math.abs(u - 0.5), Math.abs(v - 0.5)); return Math.floor(m * 14) % 2 ? [0, 0] : [0.9, 0.95]; },
+    function (u, v) { var d = Math.hypot(u - 0.5, v - 0.5); if (d > 0.5) return null; var s = (Math.atan2(v - 0.5, u - 0.5) / (2 * Math.PI) + Math.log(d + 0.02) * 0.9) * 3; return ((s % 1) + 1) % 1 < 0.5 ? [0, 0] : [0.9, 0.9]; }
+  ];
+
+  function drawShot(canvas, k) {
+    var mark = canvas.parentNode, narrow = window.innerWidth <= 820;
+    var w = Math.floor(mark.getBoundingClientRect().width);
+    if (!w) return;
+    var h = narrow ? 136 : Math.round(w * 1.7);
+    var ctx = setup(canvas, w, h), ink = SHOT_INK[k % 4], f = OP[k % OP.length];
+    var size = narrow ? h * 0.92 : w * 0.98, text = '0' + (k + 1);
+    // the numeral is fitted to the block, italic overhang included
+    measure.font = 'italic 400 100px "Playfair Display", Didot, serif';
+    var m100 = measure.measureText(text), wide100 = m100.actualBoundingBoxLeft + m100.actualBoundingBoxRight;
+    size = Math.min(size, (narrow ? w * 0.5 : w * 0.9) / wide100 * 100);
+    var op = narrow ? { x: w - h * 0.85 - 10, y: h * 0.075, s: h * 0.85 } : { x: w * 0.1, y: h - w * 0.9, s: w * 0.8 };
+    function inOp(x, y) { var u = (x - op.x) / op.s, v = (y - op.y) / op.s; return u >= 0 && u <= 1 && v >= 0 && v <= 1 ? f(u, v) : null; }
+    // the ink block: solid, with a vignette falling off away from the numeral
+    // the ink block on a 5px screen; the swatch on its own much finer one, so that
+    // spirals and rings keep smooth edges (several dots across the narrowest band)
+    var fine = Math.max(1.6, Math.min(2.2, op.s / 80));
+    plate(ctx, w, h, ink, 5, function (x, y) {
+      if (inOp(x, y)) return 0;
+      return narrow ? 0.96 - 0.45 * smooth(0.35, 1, x / w) : 0.96 - 0.4 * smooth(0.25, 0.9, y / h);
+    }, [0.5, -0.3]);
+    plate(ctx, w, h, ink, fine, function (x, y) { var o = inOp(x, y); return o ? o[0] : 0; }, [0.3, -0.2]);
+    plate(ctx, w, h, 'k', fine, function (x, y) { var o = inOp(x, y); return o ? o[1] : 0; }, [-0.3, 0.4]);
+    canvas.dataset.pitch = '5 / ' + fine.toFixed(2);
+    // the numeral, set in the display face once it has loaded
+    measure.font = 'italic 400 ' + size + 'px "Playfair Display", Didot, serif';
+    var mt = measure.measureText(text), asc = mt.actualBoundingBoxAscent;
+    var runs = [{ t: text, font: measure.font, ls: '0px', x: w * 0.04 + mt.actualBoundingBoxLeft, y: asc + size * 0.08 }];
+    var sx = size * 0.035, sy = size * 0.025;
+    knockout(ctx, runs, sx, sy);
+    screenedType(ctx, w, h, runs, 'k', 4, function () { return 0.6; }, [0.1, 0.2], sx, sy);
+    knockout(ctx, runs, 0, 0);
+    grain(ctx, w, h, 40 + k);
+  }
+
+  function drawScene() {
+    var scene = document.querySelector('#panel-about .scene:not([hidden])');
+    if (!scene || scene.offsetParent === null) return;
+    var k = +scene.id.split('-')[1] - 1, shot = scene.querySelector('canvas.shot');
+    if (shot) drawShot(shot, k);
+  }
+
+  /* ---------------- About as a title sequence ---------------- */
+  var panel = document.getElementById('panel-about');
+  var scenes = Array.prototype.slice.call(panel.querySelectorAll('.scene'));
+  var links = Array.prototype.slice.call(panel.querySelectorAll('.scene-link'));
+  var prevBtn = document.getElementById('scene-prev');
+  var nextBtn = document.getElementById('scene-next');
+  var posEl = document.getElementById('scene-pos');
+  var current = -1;
+  root.classList.add('ht');
+  panel.classList.add('scenes-on');
+  Array.prototype.forEach.call(panel.querySelectorAll('[data-js-only]'), function (el) { el.hidden = false; });
+  links.forEach(function (link, k) { link.addEventListener('click', function () { show(k, true); }); });
+
+  scenes.forEach(function (scene) {
+    var mark = document.createElement('div');
+    mark.className = 'shot-mark';
+    mark.setAttribute('aria-hidden', 'true');
+    mark.innerHTML = '<canvas class="shot"></canvas>';
+    scene.insertBefore(mark, scene.firstChild);
+  });
+
+  // the printer's black panel sits on a flat plate inside a screened frame
+  var printer = document.getElementById('printer');
+  var frame = document.createElement('div');
+  frame.className = 'printer-frame';
+  printer.parentNode.insertBefore(frame, printer);
+  frame.appendChild(printer);
+
+  function show(i, focus) {
+    if (i < 0 || i >= scenes.length) return;
+    current = i;
+    scenes.forEach(function (s, k) { s.hidden = k !== i; });
+    links.forEach(function (l, k) {
+      if (k === i) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current');
+    });
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === scenes.length - 1;
+    posEl.textContent = (i + 1) + ' / ' + scenes.length;
+    root.setAttribute('data-shot', String(i % 4));
+    drawScene(); drawHeadings();
+    if (focus) scenes[i].querySelector('h3').focus({ preventScroll: true });
+  }
+  prevBtn.addEventListener('click', function () { show(current - 1, true); });
+  nextBtn.addEventListener('click', function () { show(current + 1, true); });
+
+  // The band changes ink with the selected tab (watching the tabs, not changing them).
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function paint() {
+    tabs.forEach(function (t) {
+      if (t.getAttribute('aria-selected') === 'true') root.setAttribute('data-tab', t.id.slice(4));
+    });
+    drawBand(); drawScene(); drawHeadings(); drawPrinterFrame();
+  }
+  var mo = new MutationObserver(paint);
+  tabs.forEach(function (t) { mo.observe(t, { attributes: true, attributeFilter: ['aria-selected'] }); });
+
+  // the printer frame and the band follow their boxes as runs change their height
+  if (window.ResizeObserver) {
+    var lastFrame = '', lastBand = '';
+    new ResizeObserver(function () {
+      var s = frame.clientWidth + 'x' + frame.clientHeight;
+      if (s !== lastFrame) { lastFrame = s; drawPrinterFrame(); }
+    }).observe(frame);
+    var band = document.querySelector('.band');
+    new ResizeObserver(function () {
+      var s = band.clientWidth + 'x' + band.clientHeight;
+      if (s !== lastBand) { lastBand = s; drawBand(); }
+    }).observe(band);
+  }
+
+  var timer = null, lastW = 0;
+  function layout(force) {
+    if (!force && window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    var t0 = performance.now();
+    drawSplitA(); drawTitle(); drawLede(); drawBand(); drawFooter(); drawScene(); drawHeadings(); drawPrinterFrame();
+    root.dataset.htMs = Math.round(performance.now() - t0);
+  }
+  window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(layout, 150); });
+
+  show(0, false);
+  paint();
+  layout(true);
+  // screen the display type only with the bundled faces in hand
+  function fontsIn() { ready = true; layout(true); }
+  if (document.fonts && document.fonts.load) {
+    Promise.all([
+      document.fonts.load('italic 400 100px "Playfair Display"'),
+      document.fonts.load('400 17px "Jost"'),
+      document.fonts.ready
+    ]).then(fontsIn, fontsIn);
+  } else fontsIn();
+})();
+</script>
+</body>
+</html>

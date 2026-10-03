@@ -78,6 +78,18 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 *Version 15* is a skeuomorph of a physical working space. It draws from the warm, tactile feeling of *Version 4* and *Version 6*. It breaks with the layout of *Version 3* and instead the design organizes materials in books, notebooks, decks, etc. This version keeps and expands on the miscellanea from *Version 6*. It also adds more music decks and a reel-to-reel player to play generated sieves. Note that the audio code should be `scripts/` as it may be reused by other versions.
 
+#### Version 16
+
+*Version 16* is a skeuomorph of a digital working space. It draws from the vintage computer desktop of *Version 8*. It breaks with the layout of *Version 3* and instead the design organizes materials like *Version 8* . It also adds more music decks and a player program to play generated sieves. This design also adds some of the miscellanea from *Version 15* as digital documents. Since this version relies on the metaphor of a computer desktop, the punch cards are superfluous and should be dropped in favor of a traditional buffer editor. The language can remain as FORTRAN.
+
+#### Version 17
+
+*Version 17* takes the design and style of *Version 9* but drops the framing device of Xenakis's sieves. Instead, this version implements a puzzle game centered around the mechanics of punch cards. The puzzles are intended to help the user learn how to write and use punch cards.
+
+#### Version 18
+
+*Version 18* combines the design of *Version 10* and *Version 14*. More concretely, it applies half-toning to the graphics of *Version 14*. This version also drops the framing device of Xenakis's sieves. Instead, it takes the more experimental decks from *Version 11* and *Version 12* and expands on them. Experimental card decks are framed by code art and computation theory.
+
 ### Gallery
 
 ### Genealogy

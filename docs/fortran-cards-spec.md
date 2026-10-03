@@ -32,7 +32,7 @@ Build and verify in this order. Each step has acceptance checks in "Acceptance c
 5. **Output stacker:** cards punched by the program (`PUNCH`) shown as real cards and reusable. See "Punched output".
 6. **Sample menu:** loads the five decks in "Sample decks" (read from `Fortran.samples`), including the sieve generator.
 
-   Later versions keep these five decks. A version may append page-only decks after them without changing `scripts/`: v11 adds three (8 in all), v12 adds four (9 in all), and v15 adds five music decks (10 in all), shown as decks in a card tray rather than a menu. In v08 the sample menu sits in the Editor window, and the File menu's Load Sample Deck command does the same.
+   Later versions keep these five decks. A version may append page-only decks after them without changing `scripts/`: v11 adds three (8 in all), v12 adds four (9 in all), and v15 adds five music decks (10 in all), shown as decks in a card tray rather than a menu. v16 drops cards altogether: its Programs folder holds page-local copies of the five samples plus seven music programs (12 in all) as text files for a buffer editor, with `PUNCH` written as the equivalent `WRITE (7,f)`, so the unit 7 records (`result.punched`) become the program's "Output" document. The engine's log wording is translated for display; `scripts/` is unchanged. v17 offers samples 1–4 in its workbench, and v18 offers samples 1–4 plus v11's three decks, v12's four and six new code-art decks (17 in all). In v08 the sample menu sits in the Editor window, and the File menu's Load Sample Deck command does the same.
 
 ## Repo placement
 

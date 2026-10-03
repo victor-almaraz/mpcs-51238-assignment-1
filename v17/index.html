@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eighty columns: exercises in punched cards and FORTRAN</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+<header class="mast">
+  <p class="back"><a href="../">Back to the gallery</a></p>
+  <h1><span class="h1-a">80</span> <span class="h1-b">columns.</span> <span class="h1-c">Ten exercises in punching FORTRAN on cards</span></h1>
+  <p class="lede">A punched card holds one line of a program, written as holes in 80 columns and 12 rows. These ten sheets teach you to read the holes, punch them, lay out a FORTRAN statement on a card, and run decks through a card reader, a line printer and a card punch. A working FORTRAN interpreter checks every answer.</p>
+  <div class="mast-fig" aria-hidden="true" id="mast-fig"></div>
+  <div class="progress">
+    <p class="progress-h">Progress</p>
+    <ol class="index" id="progress-index" aria-hidden="true"></ol>
+    <p class="progress-t" id="progress-text" role="status">None of the ten sheets is solved yet.</p>
+    <p class="progress-note">Progress is kept only while this page is open. Nothing is stored, so reloading the page resets every sheet.</p>
+  </div>
+</header>
+
+<div class="work">
+<div class="tabs" role="tablist" aria-label="Sheets" aria-orientation="vertical" id="tabs">
+  <button type="button" role="tab" id="tab-start" aria-controls="panel-start" aria-selected="true" data-tone="0"><span class="tab-n" aria-hidden="true">00</span><span class="tab-l">Start</span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l1" aria-controls="panel-l1" aria-selected="false" tabindex="-1" data-tone="1"><span class="tab-n" aria-hidden="true">01</span><span class="tab-l">Read a card</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l2" aria-controls="panel-l2" aria-selected="false" tabindex="-1" data-tone="1"><span class="tab-n" aria-hidden="true">02</span><span class="tab-l">Punch a character</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l3" aria-controls="panel-l3" aria-selected="false" tabindex="-1" data-tone="2"><span class="tab-n" aria-hidden="true">03</span><span class="tab-l">Punch a word</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l4" aria-controls="panel-l4" aria-selected="false" tabindex="-1" data-tone="2"><span class="tab-n" aria-hidden="true">04</span><span class="tab-l">The card&rsquo;s fields</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l5" aria-controls="panel-l5" aria-selected="false" tabindex="-1" data-tone="3"><span class="tab-n" aria-hidden="true">05</span><span class="tab-l">Continuation</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l6" aria-controls="panel-l6" aria-selected="false" tabindex="-1" data-tone="3"><span class="tab-n" aria-hidden="true">06</span><span class="tab-l">The dropped deck</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l7" aria-controls="panel-l7" aria-selected="false" tabindex="-1" data-tone="4"><span class="tab-n" aria-hidden="true">07</span><span class="tab-l">Data cards</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l8" aria-controls="panel-l8" aria-selected="false" tabindex="-1" data-tone="4"><span class="tab-n" aria-hidden="true">08</span><span class="tab-l">The line printer</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l9" aria-controls="panel-l9" aria-selected="false" tabindex="-1" data-tone="5"><span class="tab-n" aria-hidden="true">09</span><span class="tab-l">Punch, then feed</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-l10" aria-controls="panel-l10" aria-selected="false" tabindex="-1" data-tone="6"><span class="tab-n" aria-hidden="true">10</span><span class="tab-l">A deck of your own</span><span class="tab-s"></span><span class="tab-h" aria-hidden="true"></span></button>
+  <button type="button" role="tab" id="tab-bench" aria-controls="panel-bench" aria-selected="false" tabindex="-1" data-tone="x"><span class="tab-n" aria-hidden="true">W</span><span class="tab-l">Workbench</span><span class="tab-h" aria-hidden="true"></span></button>
+</div>
+
+<div class="sheets">
+
+<!-- ======================= 00 START ======================= -->
+<section role="tabpanel" id="panel-start" aria-labelledby="tab-start" tabindex="0" data-tone="0">
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">00</p></div>
+    <div class="main">
+      <h2>Start</h2>
+      <p>Each of the ten numbered sheets sets one puzzle. The first three teach the holes themselves: how to read a card, and how to punch digits, letters and signs with the codes of the IBM&nbsp;029 keypunch, which IBM introduced in 1964. The next sheets teach the parts of a FORTRAN card, continuation cards, the order of a deck, data cards, the line printer and the card punch. On the last sheet you punch a whole program.</p>
+      <p>A FORTRAN interpreter runs inside this page, and it checks every answer. When an answer is wrong, the feedback says why, and it quotes the interpreter&rsquo;s own messages where there are any. Every sheet has hints, and the later sheets can show a correct card if you are stuck. The sheets are numbered from easy to hard, but you can open them in any order.</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="side"><p class="side-h">The card</p></div>
+    <div class="main">
+      <p>IBM introduced its 80-column card in 1928. A card has 80 columns and 12 rows, and each column holds one character as a pattern of holes. From top to bottom the rows are 12, 11, 0, and then 1 to 9. A digit is a single hole in its own row. A letter is a <em>zone</em> hole in row 12, 11 or 0 together with one digit hole. Most signs add a hole in row 8 to a digit hole, and some add a zone hole as well. The two charts below are built from the interpreter&rsquo;s own code table.</p>
+    </div>
+  </div>
+  <div class="charts">
+    <div class="chart-wrap">
+      <table class="chart" id="chart-a">
+        <caption>Single holes, and a zone hole with one digit hole</caption>
+      </table>
+    </div>
+    <div class="chart-wrap">
+      <table class="chart" id="chart-b">
+        <caption>A hole in row 8 with a digit hole from 2 to 7, and an optional zone hole</caption>
+      </table>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="side"><p class="side-h">Using the card</p></div>
+    <div class="main">
+      <p>Click a position on a card to punch a hole there, and click it again to fill the hole in. A real hole could not be filled in, but here it can.</p>
+      <p>With the keyboard, press <kbd>Tab</kbd> to move into the card. The arrow keys move between positions, <kbd>Home</kbd> and <kbd>End</kbd> go to the first and the last column, and <kbd>Page Up</kbd> and <kbd>Page Down</kbd> go to the top and the bottom row. <kbd>Space</kbd> or <kbd>Enter</kbd> punches or clears the hole under the cursor. A screen reader announces the row, the column and whether the position is punched.</p>
+      <p>From sheet 4 on, the keypunch is switched on. Typing a character on the card punches that character&rsquo;s code into the current column and moves on to the next one, as a keypunch did. <kbd>Delete</kbd> clears the current column, <kbd>Backspace</kbd> clears the column before it, and the right arrow key leaves a column blank. Those sheets also have a keypunch line under the card, where you can type the whole card as text.</p>
+      <p>The numbered tabs beside the sheet move between sheets. When a tab has focus, the arrow keys move to the next or the previous tab. The tab marked W opens the workbench, a complete card simulator for free experiments.</p>
+      <p class="next"><button type="button" data-go="l1">Begin with sheet 01</button></p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 01 READ ======================= -->
+<section role="tabpanel" id="panel-l1" aria-labelledby="tab-l1" tabindex="0" data-tone="1" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">01</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 1 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>Read a card</h2>
+      <p class="goal">This card was punched without printing, so nothing is written along its top edge. Read the holes column by column and type the text that the card holds. FORTRAN ignores blanks, and so does this check, so you need not count the empty columns.</p>
+      <p class="note"><strong>On the machine.</strong> The IBM 029 printed each character along the top edge of the card as it punched the column. Cards punched by other machines could come out with no printing at all, and an interpreter such as the IBM 557 read their holes and printed the characters for people to read.</p>
+    </div>
+  </div>
+  <div class="bench" id="l1-card"></div>
+  <div class="answer">
+    <label for="l1-answer">The card reads</label>
+    <input type="text" id="l1-answer" class="mono-in" maxlength="80" spellcheck="false" autocomplete="off" autocapitalize="characters">
+  </div>
+  <div class="actions"><button type="button" class="primary" data-check="l1">Check</button><button type="button" data-hint="l1">Show a hint</button><button type="button" id="l1-new">Another card</button></div>
+  <ol class="hints" id="l1-hints" hidden></ol>
+  <div class="feedback" id="l1-fb" role="status"></div>
+</section>
+
+<!-- ======================= 02 CHARACTER ======================= -->
+<section role="tabpanel" id="panel-l2" aria-labelledby="tab-l2" tabindex="0" data-tone="1" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">02</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 1 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>Punch a character</h2>
+      <p class="goal">Punch five characters, one in each column of this short card: a digit, then a letter from each of the three zones, then a sign. Each character is checked as you go, and the next one appears when it is right. The keypunch is switched off on this sheet, so put in every hole yourself, with a click or with <kbd>Space</kbd> or <kbd>Enter</kbd>.</p>
+      <p class="note"><strong>The zones.</strong> Rows 12, 11 and 0 are the zone rows. A to I take a hole in row 12, J to R a hole in row 11, and S to Z a hole in row 0, each with a digit hole that counts its place in the group. S is the first letter of its group, but its digit is 2, because 0 and 1 together already mean the slash.</p>
+    </div>
+  </div>
+  <p class="target" id="l2-target"></p>
+  <div class="bench" id="l2-card"></div>
+  <div class="actions"><button type="button" class="primary" data-check="l2">Check</button><button type="button" data-hint="l2">Show a hint</button><button type="button" id="l2-new">Start again</button></div>
+  <ol class="hints" id="l2-hints" hidden></ol>
+  <div class="feedback" id="l2-fb" role="status"></div>
+</section>
+
+<!-- ======================= 03 WORD ======================= -->
+<section role="tabpanel" id="panel-l3" aria-labelledby="tab-l3" tabindex="0" data-tone="2" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">03</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 2 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>Punch a word</h2>
+      <p class="goal">Punch the expression shown below, starting in column 1, with one character in each column. A blank is a column with no holes in it. The printing along the top of the card shows what you have punched so far. The keypunch is still switched off.</p>
+      <p class="note"><strong>On the machine.</strong> A hole could not be unpunched, so the only way to correct a mistake was to punch a new card. The operator put the spoiled card in the 029&rsquo;s reading station and held down the DUP key, which copied its columns onto a fresh card up to the mistake.</p>
+    </div>
+  </div>
+  <p class="target" id="l3-target"></p>
+  <div class="bench" id="l3-card"></div>
+  <div class="actions"><button type="button" class="primary" data-check="l3">Check</button><button type="button" data-hint="l3">Show a hint</button><button type="button" id="l3-new">Another expression</button><button type="button" id="l3-clear">Clear the card</button></div>
+  <ol class="hints" id="l3-hints" hidden></ol>
+  <div class="feedback" id="l3-fb" role="status"></div>
+</section>
+
+<!-- ======================= 04 FIELDS ======================= -->
+<section role="tabpanel" id="panel-l4" aria-labelledby="tab-l4" tabindex="0" data-tone="2" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">04</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 2 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>The card&rsquo;s fields</h2>
+      <p class="goal">This program sets <code>I</code> to 7, jumps over the card that would reset it, and prints <code>I</code> at statement 30. Two of its cards are blank. Punch card 1 as a comment that says what the program does. Punch card 5 with the label <code>30</code> and the statement <code>WRITE (6,40) I</code>. The program has to run and print the target.</p>
+      <table class="fields">
+        <tr><th>Columns</th><th>What they hold</th></tr>
+        <tr><td>1</td><td>A <code>C</code> or an asterisk here makes the whole card a comment.</td></tr>
+        <tr><td>1&ndash;5</td><td>An optional statement label: a number that other statements can jump to.</td></tr>
+        <tr><td>6</td><td>Any character but a blank or a zero marks a continuation card.</td></tr>
+        <tr><td>7&ndash;72</td><td>The statement itself.</td></tr>
+        <tr><td>73&ndash;80</td><td>Ignored by the compiler. These columns held sequence numbers.</td></tr>
+      </table>
+      <p class="note"><strong>On paper first.</strong> Programmers often wrote their programs on coding forms ruled into the same columns, and keypunch operators punched the cards from the forms. The band under each card here is ruled the same way.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l4-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l4-target"></div></div>
+  <div class="actions"><button type="button" class="primary" data-check="l4">Run and check</button><button type="button" data-hint="l4">Show a hint</button><button type="button" data-reset="l4">Reset the deck</button><button type="button" data-bench="l4">Open in the workbench</button></div>
+  <ol class="hints" id="l4-hints" hidden></ol>
+  <div class="feedback" id="l4-fb" role="status"></div>
+</section>
+
+<!-- ======================= 05 CONTINUATION ======================= -->
+<section role="tabpanel" id="panel-l5" aria-labelledby="tab-l5" tabindex="0" data-tone="3" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">05</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 3 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>Continuation cards</h2>
+      <p class="goal">The line that this program prints is too long for the 66 statement columns of one card. Card 3 holds the start of its <code>FORMAT</code> statement and ends with a comma. Punch card 4 as a continuation card that finishes the statement, so that the printer prints exactly the target line.</p>
+      <p>A statement continues onto the next card when that card has any character other than a blank or a zero in column 6. Columns 1 to 5 of a continuation card stay blank, and its columns 7 to 72 are joined onto the end of the statement. Blanks outside quoted text are ignored, so the empty columns at the end of card 3 do no harm. Inside quotes, every blank is printed.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l5-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l5-target"></div></div>
+  <div class="actions"><button type="button" class="primary" data-check="l5">Run and check</button><button type="button" data-hint="l5">Show a hint</button><button type="button" data-reset="l5">Reset the deck</button><button type="button" data-bench="l5">Open in the workbench</button></div>
+  <ol class="hints" id="l5-hints" hidden></ol>
+  <div class="feedback" id="l5-fb" role="status"></div>
+</section>
+
+<!-- ======================= 06 DROPPED DECK ======================= -->
+<section role="tabpanel" id="panel-l6" aria-labelledby="tab-l6" tabindex="0" data-tone="3" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">06</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 3 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>The dropped deck</h2>
+      <p class="goal">Someone dropped this deck. Every card still carries its sequence number in columns 73 to 80, so the order can be restored. Put the cards back in order, either with the card sorter or by moving them one at a time, and then run the deck to check it.</p>
+      <p>The sorter reads one column of every card and drops each card into the pocket for the digit punched there. Cards with no digit in that column go to the reject pocket. The pockets are then picked up in order, from 0 to 9 with the rejects last, and the cards inside each pocket keep the order in which they arrived.</p>
+      <p class="note"><strong>On the machine.</strong> IBM&rsquo;s 083 sorter read one column per pass at 1,000 cards a minute and had 13 pockets, one for each row and one for blanks and rejects. A key several columns wide took one pass per column.</p>
+    </div>
+  </div>
+  <div class="sorter">
+    <div class="sorter-ctl">
+      <label for="l6-col">Sort on column</label>
+      <select id="l6-col"></select>
+      <button type="button" id="l6-sort">Run the sorter</button>
+      <button type="button" id="l6-shuffle">Drop the deck again</button>
+    </div>
+    <div class="pockets" id="l6-pockets" aria-hidden="true"></div>
+    <p class="sorter-st" id="l6-sort-st" role="status"></p>
+  </div>
+  <div class="deckarea" id="l6-deck"></div>
+  <div class="actions"><button type="button" class="primary" data-check="l6">Run and check</button><button type="button" data-hint="l6">Show a hint</button><button type="button" data-bench="l6">Open in the workbench</button></div>
+  <ol class="hints" id="l6-hints" hidden></ol>
+  <div class="feedback" id="l6-fb" role="status"></div>
+</section>
+
+<!-- ======================= 07 DATA CARDS ======================= -->
+<section role="tabpanel" id="panel-l7" aria-labelledby="tab-l7" tabindex="0" data-tone="4" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">07</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 4 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>Data cards</h2>
+      <p class="goal">This program reads a count from its first data card, then reads that many numbers, one to a card, and prints the count and the sum. Punch data cards after the <code>END</code> card so that the printer prints the target line. Any numbers that give the target will do.</p>
+      <p>Every card after <code>END</code> is data. <code>FORMAT (I5)</code> reads an integer from columns 1 to 5 of a card and ignores the rest of it. If the program asks for a card after the last one, the job stops with <code>END OF FILE ON UNIT 5</code>.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l7-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l7-target"></div></div>
+  <div class="actions"><button type="button" class="primary" data-check="l7">Run and check</button><button type="button" data-hint="l7">Show a hint</button><button type="button" data-reset="l7">Reset the deck</button><button type="button" data-bench="l7">Open in the workbench</button></div>
+  <ol class="hints" id="l7-hints" hidden></ol>
+  <div class="feedback" id="l7-fb" role="status"></div>
+</section>
+
+<!-- ======================= 08 FORMAT ======================= -->
+<section role="tabpanel" id="panel-l8" aria-labelledby="tab-l8" tabindex="0" data-tone="4" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">08</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 4 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>FORMAT and the line printer</h2>
+      <p class="goal">Card 5 is blank. Punch <code>FORMAT</code> statement 10 so that the printer output matches the target exactly, character for character. Note that the target begins on a new page.</p>
+      <p>A <code>FORMAT</code> lays out a printed line. <code>Iw</code> prints an integer right-justified in <var>w</var> positions, <code>Fw.d</code> a real number with <var>d</var> digits after the point, <code>nX</code> skips <var>n</var> positions, and <code>nHtext</code> or <code>'text'</code> prints text.</p>
+      <table class="fields">
+        <tr><th>First character</th><th>What the printer does</th></tr>
+        <tr><td>blank</td><td>Moves the paper up one line.</td></tr>
+        <tr><td><code>0</code></td><td>Leaves one blank line first.</td></tr>
+        <tr><td><code>-</code></td><td>Leaves two blank lines first.</td></tr>
+        <tr><td><code>1</code></td><td>Starts a new page.</td></tr>
+        <tr><td><code>+</code></td><td>Prints over the line before.</td></tr>
+      </table>
+      <p>The first character of every printed record is this carriage control character, and it is never printed.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l8-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l8-target"></div></div>
+  <div class="actions"><button type="button" class="primary" data-check="l8">Run and check</button><button type="button" data-hint="l8">Show a hint</button><button type="button" data-reset="l8">Reset the deck</button><button type="button" data-bench="l8">Open in the workbench</button></div>
+  <ol class="hints" id="l8-hints" hidden></ol>
+  <div class="feedback" id="l8-fb" role="status"></div>
+</section>
+
+<!-- ======================= 09 PUNCH THEN FEED ======================= -->
+<section role="tabpanel" id="panel-l9" aria-labelledby="tab-l9" tabindex="0" data-tone="5" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">09</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 5 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>Punch, then feed back</h2>
+      <p class="goal">Program A reads a number <var>N</var> from its data card. It punches a card holding <var>N</var>, and then one card for each square 1, 4, 9 and so on, up to <var>N</var> squared. Program B reads cards like these and prints their total. Choose <var>N</var>, punch it on program A&rsquo;s data card, run program A, and feed the cards it punches to program B, so that program B prints the target line.</p>
+      <p>The cards a program punches land in the output stacker. They are ordinary cards, so they can be carried back to the reader as data for the next job. A program cannot read the cards it punches during the same run.</p>
+    </div>
+  </div>
+  <h3 class="part"><span class="part-n" aria-hidden="true">A</span>Program A, the punch</h3>
+  <div class="deckarea" id="l9-deck-a"></div>
+  <div class="actions"><button type="button" class="primary" id="l9-run-a">Run program A</button><button type="button" data-reset="l9">Reset both decks</button></div>
+  <div class="stack-out">
+    <p class="out-h">Output stacker</p>
+    <p id="l9-stack-st" role="status">Program A has not been run yet.</p>
+    <div class="decklist-wrap"><ol class="decklist" id="l9-stack"></ol></div>
+    <div class="actions"><button type="button" id="l9-feed" disabled>Feed the stacker to program B</button></div>
+  </div>
+  <h3 class="part"><span class="part-n" aria-hidden="true">B</span>Program B, the reader</h3>
+  <div class="deckarea" id="l9-deck-b"></div>
+  <div class="target-out"><p class="out-h">Target printer output for program B</p><div class="printer" id="l9-target"></div></div>
+  <div class="actions"><button type="button" class="primary" data-check="l9">Run program B and check</button><button type="button" data-hint="l9">Show a hint</button></div>
+  <ol class="hints" id="l9-hints" hidden></ol>
+  <div class="feedback" id="l9-fb" role="status"></div>
+</section>
+
+<!-- ======================= 10 FINAL ======================= -->
+<section role="tabpanel" id="panel-l10" aria-labelledby="tab-l10" tabindex="0" data-tone="6" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">10</p><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 6 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h2>A deck of your own</h2>
+      <p class="goal">Punch a complete program, from its first card to its <code>END</code> card, that prints the target output exactly. Any program that does it counts. Add cards with the buttons under the deck, and use everything the earlier sheets taught: the fields, <code>FORMAT</code>, and the carriage control character.</p>
+      <p>The workbench (tab W) lists the statements the interpreter understands in its sample decks. A loop is written <code>DO 10 I = 1, 5</code>, and it repeats every card down to the one labelled 10, which is usually a <code>CONTINUE</code>.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l10-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l10-target"></div></div>
+  <div class="actions"><button type="button" class="primary" data-check="l10">Run and check</button><button type="button" data-hint="l10">Show a hint</button><button type="button" data-reset="l10">Clear the deck</button><button type="button" data-bench="l10">Open in the workbench</button></div>
+  <ol class="hints" id="l10-hints" hidden></ol>
+  <div class="feedback" id="l10-fb" role="status"></div>
+</section>
+
+<!-- ======================= WORKBENCH ======================= -->
+<section role="tabpanel" id="panel-bench" aria-labelledby="tab-bench" tabindex="0" data-tone="x" hidden>
+  <div class="sheet-head">
+    <div class="side"><p class="big-n" aria-hidden="true">W</p></div>
+    <div class="main">
+      <h2>Workbench</h2>
+      <p>The workbench is the whole simulator, with no puzzle attached. Load a sample deck or punch your own, look at any card, run the deck, and collect the printer output, the job log, the listing and the punched cards. Nothing here is checked or scored.</p>
+    </div>
+  </div>
+  <div class="subtabs" role="tablist" aria-label="Workbench">
+    <button type="button" role="tab" id="wtab-deck" aria-controls="wpanel-deck" aria-selected="true"><span class="st-n" aria-hidden="true">W.1</span>Deck</button>
+    <button type="button" role="tab" id="wtab-card" aria-controls="wpanel-card" aria-selected="false" tabindex="-1"><span class="st-n" aria-hidden="true">W.2</span>Card</button>
+    <button type="button" role="tab" id="wtab-output" aria-controls="wpanel-output" aria-selected="false" tabindex="-1"><span class="st-n" aria-hidden="true">W.3</span>Output</button>
+  </div>
+
+  <div role="tabpanel" id="wpanel-deck" aria-labelledby="wtab-deck" class="wpanel">
+    <div class="toolbar">
+      <label for="sample-select">Sample deck</label>
+      <select id="sample-select"></select>
+      <button type="button" id="load-sample">Load sample</button>
+    </div>
+    <div class="toolbar">
+      <button type="button" id="add-card">Add card</button>
+      <button type="button" id="delete-card">Delete card</button>
+      <button type="button" id="clear-deck">Clear deck</button>
+    </div>
+    <div class="editor">
+      <div class="editor-inner">
+        <pre class="ruler" id="ruler" aria-hidden="true"></pre>
+        <div id="cards"></div>
+      </div>
+    </div>
+    <p class="hint-line">Enter adds a card below the current one, Backspace on an empty card removes it, and the up and down arrow keys move between cards. Pasting several lines makes one card per line.</p>
+    <div class="toolbar">
+      <button type="button" id="run-deck" class="primary">Run deck</button>
+      <span class="status" id="editor-status" role="status"></span>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="wpanel-card" aria-labelledby="wtab-card" class="wpanel" hidden>
+    <div class="toolbar">
+      <button type="button" id="prev-card">Previous card</button>
+      <button type="button" id="next-card">Next card</button>
+      <span class="status" id="card-caption" aria-live="polite"></span>
+    </div>
+    <p>The card under the keypunch is the card selected in the deck. Punching here changes that card in the deck.</p>
+    <div class="bench" id="bench-card"></div>
+  </div>
+
+  <div role="tabpanel" id="wpanel-output" aria-labelledby="wtab-output" class="wpanel" hidden>
+    <p id="run-status" class="run-status" role="status">The deck has not been run yet.</p>
+    <h3>Printer output</h3>
+    <div class="printer" id="printer"><p class="placeholder">Run the deck to see output.</p></div>
+    <h3>Job log</h3>
+    <div class="log" id="log"><p class="placeholder">Errors, warnings and the STOP code appear here.</p></div>
+    <details class="listing">
+      <summary>Source listing</summary>
+      <pre id="listing"></pre>
+    </details>
+    <h3>Output stacker</h3>
+    <p>Cards that the program punches land here. The stacker is emptied at the start of each run.</p>
+    <div class="toolbar">
+      <button type="button" id="stack-replace" disabled>Load into the deck (replace)</button>
+      <button type="button" id="stack-append" disabled>Load into the deck (append)</button>
+      <button type="button" id="stack-copy" disabled>Copy as text</button>
+      <button type="button" id="stack-download" disabled>Download as text</button>
+      <span class="status" id="stack-status" role="status"></span>
+    </div>
+    <div class="stacker" id="stacker"><p class="placeholder">No cards have been punched yet.</p></div>
+  </div>
+</section>
+
+</div>
+</div>
+</div>
+
+<script src="../scripts/hollerith.js"></script>
+<script src="../scripts/fortran.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var ROWS = [12, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  function rtrim(s) { return String(s).replace(/ +$/, ''); }
+  function pick(list, not) {
+    var c;
+    do { c = list[Math.floor(Math.random() * list.length)]; } while (list.length > 1 && c === not);
+    return c;
+  }
+
+  /* ---------------- punch-code helpers (all from the engine) ---------------- */
+
+  function orderRows(rows) { return ROWS.filter(function (r) { return rows.indexOf(r) !== -1; }); }
+  // Written in the 029 table's notation: zone first, then 8, then the digit (0-8-3).
+  function rank(r) { return r === 12 ? 0 : r === 11 ? 1 : r === 0 ? 2 : r === 8 ? 3 : 4 + r; }
+  function rowsText(rows) {
+    rows = orderRows(rows).sort(function (a, b) { return rank(a) - rank(b); });
+    return rows.length ? rows.join('-') : 'no holes';
+  }
+  function holes(rows) { return rows.length === 1 ? 'a hole in row ' + rows[0] : 'holes in rows ' + rowsText(rows); }
+  // Read one column: { rows, ch, valid }. A pattern that is not in the 029 table is not valid.
+  function readColumn(mask) {
+    var rows = orderRows(Array.from(mask));
+    if (!rows.length) return { rows: rows, ch: ' ', valid: true };
+    var ch = Fortran.decodeCard([new Set(rows)]).charAt(0);
+    var ok = rowsText(Fortran.punches(ch)) === rowsText(rows);
+    return { rows: rows, ch: ok ? ch : null, valid: ok };
+  }
+  function punchable(ch) { return ch === ' ' || Fortran.punches(ch).length > 0; }
+  function sanitize(value) {
+    var out = '', up = String(value).toUpperCase();
+    for (var i = 0; i < up.length && out.length < 80; i++) {
+      var ch = up.charAt(i);
+      if (punchable(ch)) out += ch;
+    }
+    return out;
+  }
+  function showCh(ch) {
+    if (ch === undefined || ch === null) return 'nothing';
+    if (ch === ' ') return 'a blank';
+    return '“' + ch + '”';
+  }
+  function plural(n, one, many) { return n + ' ' + (n === 1 ? one : (many || one + 's')); }
+
+  /* ---------------- the interactive card ---------------- */
+  // A role="grid" of 12 rows by N columns with a roving tabindex. Each cell is a
+  // punch position; the column headers carry the printing along the top edge.
+
+  var gridCount = 0;
+  function CardGrid(host, o) {
+    o = o || {};
+    var self = this;
+    var cols = this.cols = o.cols || 80;
+    this.readOnly = !!o.readOnly;
+    this.typing = !!o.typing;
+    this.printed = o.printed !== false;
+    this.onChange = o.onChange || function () {};
+    this.masks = [];
+    for (var c = 0; c < cols; c++) this.masks.push(new Set());
+    this.r = 0; this.c = 0;
+    this.colEls = [];
+    this.cells = [];
+    var id = 'cg' + (++gridCount);
+
+    var box = el('div', 'cardbox' + (cols <= 12 ? ' big' : ''));
+    var card = el('div', 'card');
+    card.style.setProperty('--cols', cols);
+    var grid = el('div', 'cardgrid');
+    grid.setAttribute('role', 'grid');
+    grid.setAttribute('aria-label', o.label || 'Card');
+    grid.setAttribute('aria-rowcount', '13');
+    grid.setAttribute('aria-colcount', String(cols + 1));
+    grid.setAttribute('aria-describedby', id + '-help');
+    if (this.readOnly) grid.setAttribute('aria-readonly', 'true');
+    this.grid = grid;
+
+    var head = el('div', 'crow head');
+    head.setAttribute('role', 'row');
+    var corner = el('div', 'corner');
+    corner.setAttribute('role', 'columnheader');
+    corner.appendChild(el('span', 'vh', 'Row'));
+    head.appendChild(corner);
+    for (c = 0; c < cols; c++) {
+      var h = el('div', 'ch');
+      h.setAttribute('role', 'columnheader');
+      head.appendChild(h);
+      this.colEls.push([h]);
+    }
+    grid.appendChild(head);
+
+    ROWS.forEach(function (row, ri) {
+      var re = el('div', 'crow');
+      re.setAttribute('role', 'row');
+      var rh = el('div', 'rh', String(row));
+      rh.setAttribute('role', 'rowheader');
+      re.appendChild(rh);
+      var line = [];
+      for (var cc = 0; cc < cols; cc++) {
+        var cell = el('div', 'cell');
+        cell.setAttribute('role', 'gridcell');
+        cell.tabIndex = -1;
+        cell.dataset.r = ri;
+        cell.dataset.c = cc;
+        if (row >= 0 && row <= 9) cell.dataset.d = String(row);
+        re.appendChild(cell);
+        line.push(cell);
+        self.colEls[cc].push(cell);
+      }
+      self.cells.push(line);
+      grid.appendChild(re);
+    });
+    card.appendChild(grid);
+
+    // column numbers and the field band, drawn under the card (never behind text)
+    var ruler = el('div', 'cruler');
+    ruler.setAttribute('aria-hidden', 'true');
+    ruler.appendChild(el('span', 'corner'));
+    for (c = 0; c < cols; c++) {
+      var n = c + 1;
+      ruler.appendChild(el('span', '', (cols <= 12 || n === 1 || n % 10 === 0) ? String(n) : ''));
+    }
+    card.appendChild(ruler);
+    if (cols === 80) {
+      var band = el('div', 'fieldband');
+      band.setAttribute('aria-hidden', 'true');
+      band.innerHTML = '<span class="corner"></span><i class="fb-l"></i><i class="fb-c"></i><i class="fb-s"></i><i class="fb-q"></i>';
+      card.appendChild(band);
+      var names = el('div', 'fieldnames');
+      names.setAttribute('aria-hidden', 'true');
+      names.innerHTML = '<span class="corner"></span><span class="fn-l">label</span><span class="fn-c"></span><span class="fn-s">statement</span><span class="fn-q">sequence</span>';
+      card.appendChild(names);
+    }
+    box.appendChild(card);
+    host.appendChild(box);
+
+    var help = el('p', 'vh', this.readOnly ? 'Use the arrow keys to read the card.' :
+      (this.typing ? 'Arrow keys move. Space or Enter punches or clears a hole. Typing a character punches its code and moves to the next column.' :
+        'Arrow keys move. Space or Enter punches or clears a hole.'));
+    help.id = id + '-help';
+    host.appendChild(help);
+    this.status = el('p', 'cardstatus');
+    this.status.setAttribute('role', 'status');
+    host.appendChild(this.status);
+
+    grid.addEventListener('click', function (e) {
+      var cell = e.target.closest('.cell');
+      if (!cell) return;
+      self.moveTo(+cell.dataset.r, +cell.dataset.c, true);
+      if (!self.readOnly) self.toggle(self.r, self.c);
+    });
+    grid.addEventListener('keydown', function (e) { self.key(e); });
+
+    this.refreshAll();
+    this.moveTo(0, 0, false);
+  }
+
+  CardGrid.prototype.cellLabel = function (ri, c) {
+    var on = this.masks[c].has(ROWS[ri]);
+    return 'Row ' + ROWS[ri] + ', column ' + (c + 1) + ', ' + (on ? 'punched' : 'not punched');
+  };
+  CardGrid.prototype.refreshCol = function (c) {
+    var info = readColumn(this.masks[c]);
+    var els = this.colEls[c];
+    var h = els[0];
+    h.classList.toggle('bad', !info.valid);
+    if (!this.printed) { h.textContent = ''; h.setAttribute('aria-label', 'Column ' + (c + 1)); }
+    else if (!info.valid) { h.textContent = ''; h.setAttribute('aria-label', 'Column ' + (c + 1) + ': not a character'); }
+    else { h.textContent = info.ch === ' ' ? '' : info.ch; h.setAttribute('aria-label', 'Column ' + (c + 1) + ': ' + (info.ch === ' ' ? 'blank' : info.ch)); }
+    for (var ri = 0; ri < 12; ri++) {
+      var cell = els[ri + 1];
+      var on = this.masks[c].has(ROWS[ri]);
+      cell.classList.toggle('p', on);
+      cell.setAttribute('aria-label', this.cellLabel(ri, c));
+    }
+  };
+  CardGrid.prototype.refreshAll = function () { for (var c = 0; c < this.cols; c++) this.refreshCol(c); };
+  CardGrid.prototype.moveTo = function (r, c, focus) {
+    r = Math.max(0, Math.min(11, r));
+    c = Math.max(0, Math.min(this.cols - 1, c));
+    var old = this.cells[this.r][this.c];
+    old.tabIndex = -1;
+    this.colEls[this.c].forEach(function (e) { e.classList.remove('cur'); });
+    this.r = r; this.c = c;
+    var cell = this.cells[r][c];
+    cell.tabIndex = 0;
+    this.colEls[c].forEach(function (e) { e.classList.add('cur'); });
+    if (focus) {
+      cell.focus({ preventScroll: true });
+      cell.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  };
+  CardGrid.prototype.announce = function (c, extra) {
+    var info = readColumn(this.masks[c]);
+    var what = !info.valid ? 'no character' : (info.ch === ' ' ? 'blank' : info.ch);
+    this.status.textContent = (extra ? extra + ' ' : '') + 'Column ' + (c + 1) + ': ' + rowsText(info.rows) + ', ' + what + '.';
+  };
+  CardGrid.prototype.changed = function (c) { this.refreshCol(c); this.announce(c); this.onChange(this); };
+  CardGrid.prototype.toggle = function (ri, c) {
+    var row = ROWS[ri], m = this.masks[c];
+    if (m.has(row)) m.delete(row); else m.add(row);
+    this.changed(c);
+  };
+  CardGrid.prototype.setColumn = function (c, rows) { this.masks[c] = new Set(rows); this.changed(c); };
+  CardGrid.prototype.key = function (e) {
+    var k = e.key, r = this.r, c = this.c;
+    if (e.altKey || e.metaKey) return;
+    var moves = { ArrowLeft: [r, c - 1], ArrowRight: [r, c + 1], ArrowUp: [r - 1, c], ArrowDown: [r + 1, c],
+      Home: e.ctrlKey ? [0, 0] : [r, 0], End: e.ctrlKey ? [11, this.cols - 1] : [r, this.cols - 1], PageUp: [0, c], PageDown: [11, c] };
+    if (moves[k]) { e.preventDefault(); this.moveTo(moves[k][0], moves[k][1], true); return; }
+    if (e.ctrlKey) return;
+    if (k === ' ' || k === 'Enter') {
+      e.preventDefault();
+      if (this.readOnly) this.announce(c, 'This card is read only.');
+      else this.toggle(r, c);
+      return;
+    }
+    if (this.readOnly) return;
+    if (k === 'Delete' && this.typing) { e.preventDefault(); this.setColumn(c, []); return; }
+    if (k === 'Backspace' && this.typing) {
+      e.preventDefault();
+      if (c > 0) { this.moveTo(r, c - 1, true); this.setColumn(c - 1, []); }
+      return;
+    }
+    if (k.length === 1) {
+      if (!this.typing) { e.preventDefault(); this.status.textContent = 'The keypunch is off on this sheet. Put the holes in with Space or Enter.'; return; }
+      var ch = k.toUpperCase();
+      e.preventDefault();
+      if (!punchable(ch)) { this.status.textContent = showCh(ch) + ' is not on the 029 keypunch.'; return; }
+      this.setColumn(c, Fortran.punches(ch));
+      if (c < this.cols - 1) this.moveTo(r, c + 1, true);
+    }
+  };
+  CardGrid.prototype.getText = function () {
+    var m = this.masks.slice();
+    while (m.length < 80) m.push(new Set());
+    return Fortran.decodeCard(m).slice(0, this.cols);
+  };
+  CardGrid.prototype.setText = function (t) {
+    var m = Fortran.encodeCard(String(t || '').padEnd(80).slice(0, 80));
+    this.masks = m.slice(0, this.cols);
+    this.refreshAll();
+  };
+  CardGrid.prototype.setMasks = function (masks) {
+    this.masks = masks.slice(0, this.cols).map(function (s) { return new Set(s); });
+    while (this.masks.length < this.cols) this.masks.push(new Set());
+    this.refreshAll();
+  };
+  CardGrid.prototype.badColumns = function () {
+    var out = [];
+    for (var c = 0; c < this.cols; c++) if (!readColumn(this.masks[c]).valid) out.push(c + 1);
+    return out;
+  };
+  CardGrid.prototype.setLabel = function (t) { this.grid.setAttribute('aria-label', t); };
+
+  /* ---------------- column ruler for text lines ---------------- */
+
+  function rulerText(cols) {
+    var tens = '', ones = '';
+    for (var c = 1; c <= cols; c++) {
+      tens += c % 10 === 0 ? String(c / 10 % 10) : ' ';
+      ones += String(c % 10);
+    }
+    return tens + '\n' + ones;
+  }
+
+  /* ---------------- decks: a list of cards, some of them yours to punch ---------------- */
+  // items: [{ text, fixed }]. Selecting one of your cards puts it under the keypunch.
+
+  function Deck(host, o) {
+    var self = this;
+    this.o = o = o || {};
+    this.items = (o.items || []).map(function (it) { return { text: rtrim(it.text), fixed: !!it.fixed }; });
+    this.sel = -1;
+    this.name = o.name || 'Deck';
+
+    var wrap = el('div', 'decklist-wrap');
+    var rul = el('pre', 'deckruler', rulerText(80));
+    rul.setAttribute('aria-hidden', 'true');
+    wrap.appendChild(rul);
+    this.list = el('ol', 'decklist');
+    this.list.setAttribute('aria-label', this.name);
+    wrap.appendChild(this.list);
+    host.appendChild(wrap);
+
+    if (o.edit !== false) {
+      this.tools = el('div', 'deck-tools');
+      host.appendChild(this.tools);
+      if (o.add) {
+        this.addBtn = this.button(o.addLabel || 'Add a card after this one', function () { self.add(); });
+        this.delBtn = this.button('Remove this card', function () { self.remove(); });
+      }
+      if (o.move) {
+        this.upBtn = this.button('Move up', function () { self.move(-1); });
+        this.downBtn = this.button('Move down', function () { self.move(1); });
+      }
+      this.keyBox = el('div', 'keypunch');
+      var lab = el('label', '', 'Keypunch');
+      var kid = 'kp' + (++gridCount);
+      lab.htmlFor = kid;
+      this.keyBox.appendChild(lab);
+      var kwrap = el('div', 'kp-wrap');
+      var kr = el('pre', 'kp-ruler', rulerText(80));
+      kr.setAttribute('aria-hidden', 'true');
+      kwrap.appendChild(kr);
+      this.input = el('input', 'mono-in kp-in');
+      this.input.id = kid;
+      this.input.type = 'text';
+      this.input.maxLength = 80;
+      this.input.spellcheck = false;
+      this.input.autocomplete = 'off';
+      this.input.setAttribute('autocapitalize', 'characters');
+      kwrap.appendChild(this.input);
+      this.keyBox.appendChild(kwrap);
+      host.appendChild(this.keyBox);
+      this.input.addEventListener('input', function () {
+        if (self.sel < 0) return;
+        var pos = sanitize(self.input.value.slice(0, self.input.selectionStart)).length;
+        var clean = sanitize(self.input.value);
+        if (clean !== self.input.value) { self.input.value = clean; self.input.setSelectionRange(pos, pos); }
+        self.items[self.sel].text = rtrim(clean);
+        self.grid.setText(clean);
+        self.renderLine(self.sel);
+        if (self.o.onEdit) self.o.onEdit();
+      });
+      this.grid = new CardGrid(host, { typing: true, label: 'Card under the keypunch', onChange: function (g) {
+        if (self.sel < 0) return;
+        var t = rtrim(g.getText());
+        self.items[self.sel].text = t;
+        self.input.value = t;
+        self.renderLine(self.sel);
+        if (self.o.onEdit) self.o.onEdit();
+      } });
+    }
+    this.render();
+    var first = this.items.findIndex(function (it) { return !it.fixed; });
+    this.select(first);
+  }
+  Deck.prototype.button = function (label, fn) {
+    var b = el('button', '', label);
+    b.type = 'button';
+    b.addEventListener('click', fn);
+    this.tools.appendChild(b);
+    return b;
+  };
+  Deck.prototype.render = function () {
+    var self = this;
+    this.list.innerHTML = '';
+    this.items.forEach(function (it, i) {
+      var li = el('li', it.fixed ? 'fixed' : 'slot');
+      if (it.fixed) {
+        li.appendChild(el('span', 'num', String(i + 1)));
+        li.appendChild(el('code', 'line'));
+      } else {
+        var b = el('button', 'slot-b');
+        b.type = 'button';
+        b.appendChild(el('span', 'num', String(i + 1)));
+        b.appendChild(el('code', 'line'));
+        b.appendChild(el('span', 'tag', 'your card'));
+        b.addEventListener('click', function () { self.select(i, true); });
+        li.appendChild(b);
+      }
+      self.list.appendChild(li);
+      self.renderLine(i);
+    });
+    this.list.querySelectorAll('li').forEach(function (li, i) { li.classList.toggle('sel', i === self.sel); });
+    this.updateTools();
+  };
+  Deck.prototype.renderLine = function (i) {
+    var li = this.list.children[i];
+    if (!li) return;
+    var t = this.items[i].text;
+    var code = li.querySelector('.line');
+    code.textContent = t.padEnd(80);
+    var desc = 'Card ' + (i + 1) + (this.items[i].fixed ? '' : ', your card') + ': ' + (t.trim() === '' ? 'blank' : t.replace(/ +/g, ' ').trim());
+    if (this.items[i].fixed) li.setAttribute('aria-label', desc);
+    else { li.querySelector('button').setAttribute('aria-label', desc); li.querySelector('button').setAttribute('aria-pressed', String(i === this.sel)); }
+  };
+  Deck.prototype.select = function (i, focusGrid) {
+    this.sel = i;
+    var self = this;
+    this.list.querySelectorAll('li').forEach(function (li, k) {
+      li.classList.toggle('sel', k === i);
+      var b = li.querySelector('button');
+      if (b) b.setAttribute('aria-pressed', String(k === i));
+    });
+    if (this.grid) {
+      var on = i >= 0 && !this.items[i].fixed;
+      this.input.disabled = !on;
+      this.grid.setText(on ? this.items[i].text : '');
+      this.input.value = on ? this.items[i].text : '';
+      this.grid.setLabel(on ? 'Card ' + (i + 1) + ' under the keypunch' : 'Card under the keypunch');
+      if (focusGrid && on) this.input.focus();
+    }
+    this.updateTools();
+  };
+  Deck.prototype.updateTools = function () {
+    var it = this.items[this.sel];
+    var mine = !!it && !it.fixed;
+    if (this.delBtn) this.delBtn.disabled = !mine || this.slotCount() <= 1;
+    if (this.upBtn) this.upBtn.disabled = !mine || this.sel <= 0;
+    if (this.downBtn) this.downBtn.disabled = !mine || this.sel >= this.items.length - 1;
+    if (this.addBtn) this.addBtn.disabled = this.items.length >= (this.o.max || 40);
+  };
+  Deck.prototype.slotCount = function () { return this.items.filter(function (it) { return !it.fixed; }).length; };
+  Deck.prototype.add = function () {
+    var at = this.sel >= 0 ? this.sel + 1 : this.items.length;
+    this.items.splice(at, 0, { text: '', fixed: false });
+    this.render();
+    this.select(at, true);
+    if (this.o.onEdit) this.o.onEdit();
+  };
+  Deck.prototype.remove = function () {
+    if (this.sel < 0 || this.items[this.sel].fixed || this.slotCount() <= 1) return;
+    this.items.splice(this.sel, 1);
+    var next = Math.min(this.sel, this.items.length - 1);
+    while (next >= 0 && this.items[next].fixed) next--;
+    if (next < 0) next = this.items.findIndex(function (it) { return !it.fixed; });
+    this.render();
+    this.select(next, true);
+    if (this.o.onEdit) this.o.onEdit();
+  };
+  Deck.prototype.move = function (d) {
+    var i = this.sel, j = i + d;
+    if (i < 0 || j < 0 || j >= this.items.length) return;
+    var t = this.items[i]; this.items[i] = this.items[j]; this.items[j] = t;
+    this.render();
+    this.select(j);
+    var b = this.list.children[j].querySelector('button');
+    if (b) b.focus();
+  };
+  Deck.prototype.setItems = function (items) {
+    this.items = items.map(function (it) { return { text: rtrim(it.text), fixed: !!it.fixed }; });
+    this.render();
+    this.select(this.items.findIndex(function (it) { return !it.fixed; }));
+  };
+  Deck.prototype.cards = function () { return this.items.map(function (it) { return it.text; }); };
+  Deck.prototype.slots = function () {
+    var out = [];
+    this.items.forEach(function (it, i) { if (!it.fixed) out.push({ index: i, text: it.text }); });
+    return out;
+  };
+
+  /* ---------------- printer output and feedback ---------------- */
+
+  function renderPrinter(box, lines, empty) {
+    box.innerHTML = '';
+    if (!lines.length) { box.appendChild(el('p', 'placeholder', empty || 'Nothing was printed.')); return; }
+    var pre = null;
+    lines.forEach(function (line) {
+      if (line === '\f') { pre = null; box.appendChild(el('div', 'pagebreak', 'new page')); return; }
+      if (!pre) { pre = el('pre'); box.appendChild(pre); pre.textContent = line; }
+      else pre.textContent += '\n' + line;
+    });
+  }
+  function samePrinter(a, b) {
+    if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i++) if (rtrim(a[i]) !== rtrim(b[i])) return false;
+    return true;
+  }
+  function printerDiff(target, yours) {
+    var t = target.map(rtrim), y = yours.map(rtrim);
+    if (!y.length) return 'The printer printed nothing at all.';
+    if (t[0] === '\f' && y[0] !== '\f') return 'The target starts on a new page, but your output does not. A 1 as the first character of a record sends the printer to a new page.';
+    if (y[0] === '\f' && t[0] !== '\f') return 'Your output starts with a new page that the target does not have. The first character of the record was a 1, which the printer takes as carriage control.';
+    for (var i = 0; i < Math.max(t.length, y.length); i++) {
+      if (t[i] === y[i]) continue;
+      if (y[i] === undefined) return 'Your output stops after line ' + i + ', but the target has ' + plural(t.length, 'line') + '.';
+      if (t[i] === undefined) return 'Your output has ' + plural(y.length, 'line') + ', more than the ' + t.length + ' of the target.';
+      var a = t[i], b = y[i], k = 0;
+      while (k < a.length && k < b.length && a.charAt(k) === b.charAt(k)) k++;
+      var tail = '';
+      if (b.length && a.slice(1) === b) tail = ' Your line is the target with its first character missing: that character was taken as carriage control.';
+      else if (a === b.slice(1) || a === b.replace(/^ /, '')) tail = ' Your line has an extra character at the front.';
+      return 'Line ' + (i + 1) + ' differs from print position ' + (k + 1) + ' on: the target has ' + showCh(a.charAt(k) || undefined) + ' there, and yours has ' + showCh(b.charAt(k) || undefined) + '.' + tail;
+    }
+    return '';
+  }
+  // Engine diagnostics, worded for the page. Sequence-number warnings are folded together.
+  function diagList(log, opts) {
+    opts = opts || {};
+    var seqWarn = 0, out = [];
+    log.forEach(function (l) {
+      if (/warning: columns 73-80 are ignored/.test(l)) { seqWarn++; return; }
+      out.push(l.replace(/^card (\d+): /, 'Card $1: '));
+    });
+    if (seqWarn && !opts.hideSeq) out.push('The reader warned on ' + plural(seqWarn, 'card') + ' that columns 73 to 80 are ignored.' + (opts.seqOk ? ' That is expected: they hold the sequence numbers.' : ''));
+    return out;
+  }
+
+  function Feedback(box) { this.box = box; }
+  Feedback.prototype.show = function (kind, head, parts) {
+    var box = this.box;
+    box.innerHTML = '';
+    box.className = 'feedback ' + kind;
+    var h = el('p', 'fb-head');
+    h.appendChild(el('span', 'fb-mark'));
+    h.lastChild.setAttribute('aria-hidden', 'true');
+    h.appendChild(document.createTextNode(head));
+    box.appendChild(h);
+    (parts || []).forEach(function (p) {
+      if (!p) return;
+      if (typeof p === 'string') { box.appendChild(el('p', '', p)); return; }
+      if (p.diag && p.diag.length) {
+        box.appendChild(el('p', 'fb-sub', 'The interpreter reported'));
+        var ul = el('ul', 'diag');
+        p.diag.forEach(function (d) { ul.appendChild(el('li', '', d)); });
+        box.appendChild(ul);
+      }
+      if (p.printer) {
+        box.appendChild(el('p', 'fb-sub', p.label || 'Your printer output'));
+        var pr = el('div', 'printer small');
+        renderPrinter(pr, p.printer);
+        box.appendChild(pr);
+      }
+    });
+  };
+
+  /* ---------------- tabs and progress ---------------- */
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('#tabs [role="tab"]'));
+  function showTab(name, focus) {
+    var active = $('tab-' + name);
+    tabs.forEach(function (tab) {
+      var on = tab === active;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      $(tab.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus === 'panel') {
+      var p = $('panel-' + name);
+      p.focus({ preventScroll: true });
+      if (p.getBoundingClientRect().top < 0) p.scrollIntoView({ block: 'start' });
+    } else if (focus) { active.focus(); }
+  }
+  tabs.forEach(function (tab, i) {
+    var name = tab.id.slice(4);
+    tab.addEventListener('click', function () { showTab(name); });
+    tab.addEventListener('keydown', function (e) {
+      var j = { ArrowLeft: i - 1, ArrowUp: i - 1, ArrowRight: i + 1, ArrowDown: i + 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (j === undefined) return;
+      e.preventDefault();
+      showTab(tabs[(j + tabs.length) % tabs.length].id.slice(4), true);
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-go]'), function (b) {
+    b.addEventListener('click', function () { showTab(b.getAttribute('data-go'), 'panel'); });
+  });
+
+  var solved = {};
+  var TITLES = {};
+  (function buildIndex() {
+    var ol = $('progress-index');
+    for (var n = 1; n <= 10; n++) {
+      var tab = $('tab-l' + n);
+      TITLES[n] = tab.querySelector('.tab-l').textContent;
+      var li = el('li');
+      li.dataset.tone = tab.dataset.tone;
+      li.appendChild(el('span', 'ix-sw'));
+      li.appendChild(el('span', 'ix-n', (n < 10 ? '0' : '') + n));
+      ol.appendChild(li);
+    }
+  })();
+  function updateProgress() {
+    var count = 0;
+    for (var n = 1; n <= 10; n++) {
+      var on = !!solved[n];
+      if (on) count++;
+      $('progress-index').children[n - 1].classList.toggle('done', on);
+      var tab = $('tab-l' + n);
+      tab.classList.toggle('done', on);
+      tab.querySelector('.tab-s').textContent = on ? ', solved' : '';
+      tab.querySelector('.tab-s').className = 'tab-s' + (on ? ' vh' : '');
+      var stamp = $('panel-l' + n).querySelector('.stamp');
+      stamp.hidden = !on;
+    }
+    $('progress-text').textContent = count === 0 ? 'None of the ten sheets is solved yet.' :
+      (count === 10 ? 'All ten sheets are solved.' : plural(count, 'sheet') + ' of ten ' + (count === 1 ? 'is' : 'are') + ' solved.');
+  }
+  function solve(n) { solved[n] = true; updateProgress(); }
+  function nextButton(n) {
+    if (n >= 10) return null;
+    return 'Sheet ' + (n + 1 < 10 ? '0' : '') + (n + 1) + ', ' + TITLES[n + 1] + ', is next.';
+  }
+
+  /* ---------------- hints ---------------- */
+
+  var hintSets = {}, hintShown = {};
+  function setHints(id, list) { hintSets[id] = list; hintShown[id] = 0; var ol = $(id + '-hints'); ol.innerHTML = ''; ol.hidden = true; updateHintBtn(id); }
+  function updateHintBtn(id) {
+    var b = document.querySelector('[data-hint="' + id + '"]');
+    var total = hintSets[id].length, k = hintShown[id];
+    b.disabled = k >= total;
+    b.textContent = k >= total ? 'No more hints' : 'Show a hint (' + (k + 1) + ' of ' + total + ')';
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-hint]'), function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-hint');
+      var list = hintSets[id], k = hintShown[id];
+      if (!list || k >= list.length) return;
+      var h = typeof list[k] === 'function' ? list[k]() : list[k];
+      var li = el('li');
+      if (typeof h === 'string') li.textContent = h;
+      else { li.appendChild(document.createTextNode(h.text)); var pre = el('pre', 'hint-pre', h.pre); li.appendChild(pre); }
+      var ol = $(id + '-hints');
+      ol.appendChild(li);
+      ol.hidden = false;
+      hintShown[id] = k + 1;
+      updateHintBtn(id);
+    });
+  });
+
+  var checks = {};
+  Array.prototype.forEach.call(document.querySelectorAll('[data-check]'), function (b) {
+    b.addEventListener('click', function () { checks[b.getAttribute('data-check')](); });
+  });
+  var resets = {};
+  Array.prototype.forEach.call(document.querySelectorAll('[data-reset]'), function (b) {
+    b.addEventListener('click', function () { resets[b.getAttribute('data-reset')](); });
+  });
+  var benchDecks = {};
+  Array.prototype.forEach.call(document.querySelectorAll('[data-bench]'), function (b) {
+    b.addEventListener('click', function () { bench.open(benchDecks[b.getAttribute('data-bench')]()); });
+  });
+
+  /* ---------------- 00: code charts, built from the engine's table ---------------- */
+
+  (function charts() {
+    function cellFor(rows) {
+      var info = readColumn(new Set(rows));
+      return info.valid && info.ch !== ' ' ? info.ch : '';
+    }
+    function build(table, zoneRows, digits, extra, head) {
+      var thead = el('thead'), tr = el('tr');
+      tr.appendChild(el('th', '', head));
+      digits.forEach(function (d) { tr.appendChild(el('th', '', extra.concat([d]).join('-'))); });
+      thead.appendChild(tr);
+      table.appendChild(thead);
+      var tb = el('tbody');
+      zoneRows.forEach(function (z) {
+        var r = el('tr');
+        var th = el('th', '', z === null ? 'none' : String(z));
+        th.scope = 'row';
+        r.appendChild(th);
+        digits.forEach(function (d) {
+          var rows = (z === null ? [] : [z]).concat(extra, [d]);
+          if (z === d) { r.appendChild(el('td', 'na', '')); return; }
+          var ch = cellFor(rows);
+          var td = el('td', ch ? '' : 'na', ch);
+          td.setAttribute('aria-label', ch ? rowsText(rows) + ' is ' + ch : rowsText(rows) + ' is not a character');
+          r.appendChild(td);
+        });
+        tb.appendChild(r);
+      });
+      table.appendChild(tb);
+    }
+    var a = $('chart-a'), b = $('chart-b');
+    build(a, [null, 12, 11, 0], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [], 'Zone');
+    // single zone holes on their own
+    var tf = el('tfoot'), r = el('tr');
+    var th = el('th', '', 'alone'); th.scope = 'row'; r.appendChild(th);
+    var td = el('td', '', '');
+    td.colSpan = 10;
+    td.textContent = '12 is ' + cellFor([12]) + ', 11 is ' + cellFor([11]) + ', and 0 alone is the digit 0. A column with no holes is a blank.';
+    r.appendChild(td); tf.appendChild(r); a.appendChild(tf);
+    build(b, [null, 12, 11, 0], [2, 3, 4, 5, 6, 7], [8], 'Zone');
+  })();
+
+  /* ---------------- masthead figure: a fragment of punched columns ---------------- */
+  // The word on the fragment is encoded by the engine; each column's holes take the
+  // next value of the hatch scale, so the figure reads as a tonal sequence.
+  (function mastFig() {
+    var fig = $('mast-fig');
+    var word = 'PUNCH 80', masks = Fortran.encodeCard(word);
+    for (var c = 0; c < word.length; c++) {
+      var col = el('span', 'mf-col t' + (1 + c % 6));
+      ROWS.forEach(function (row) { col.appendChild(el('i', masks[c].has(row) ? 'h' : '')); });
+      fig.appendChild(col);
+    }
+  })();
+
+  /* ======================= 01: read a card ======================= */
+  (function level1() {
+    var POOL = ['      GO TO 20', '   10 X = A + B', '      PRINT 5, N', '      STOP 7', '   40 FORMAT (I5)',
+      '      DO 50 I = 1, 9', '      Y = SQRT(X)', '      READ (5,10) K', '      IF (N) 10, 20, 30', '      WRITE (6,30) Z'];
+    var fb = new Feedback($('l1-fb'));
+    var grid = new CardGrid($('l1-card'), { readOnly: true, printed: false, label: 'Card to read, without printing' });
+    var src = '';
+    function fresh() {
+      src = pick(POOL, src);
+      grid.setMasks(Fortran.encodeCard(src));
+      $('l1-answer').value = '';
+      fb.box.innerHTML = ''; fb.box.className = 'feedback';
+      setHints('l1', [
+        'Look at the zone rows first. A hole in row 12 with a digit hole is a letter from A to I, a hole in row 11 is J to R, and a hole in row 0 is S to Z. A single hole is a digit. The charts on the Start sheet list every code.',
+        function () {
+          var m = grid.masks, c = 0;
+          while (c < 80 && !m[c].size) c++;
+          var info = readColumn(m[c]);
+          return 'The first punched column is column ' + (c + 1) + '. It has ' + holes(info.rows) + ', which is ' + showCh(info.ch) + '.';
+        },
+        'Columns 1 to 5 hold a statement label, if there is one, and the statement starts in column 7.'
+      ]);
+    }
+    $('l1-new').addEventListener('click', fresh);
+    $('l1-answer').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); checks.l1(); } });
+    checks.l1 = function () {
+      var truth = Fortran.decodeCard(grid.masks);           // the engine reads the holes
+      var want = truth.replace(/ /g, ''), got = $('l1-answer').value.toUpperCase().replace(/\s/g, '');
+      if (!got) { fb.show('no', 'Not yet', ['Type what the card says into the field above the buttons first.']); return; }
+      if (got === want) {
+        solve(1);
+        fb.show('ok', 'Correct', ['The card reads ' + truth.trim().replace(/ +/g, ' ') + '. Every column you decoded matches the holes.', nextButton(1), 'Choose Another card to read one more.']);
+        return;
+      }
+      // line the typed characters up with the punched columns
+      var cols = [];
+      for (var c = 0; c < 80; c++) if (truth.charAt(c) !== ' ') cols.push(c);
+      var k = 0;
+      while (k < want.length && k < got.length && want.charAt(k) === got.charAt(k)) k++;
+      var msg;
+      if (k >= want.length) msg = 'You typed more characters than the card holds. The last punched column is column ' + (cols[cols.length - 1] + 1) + '.';
+      else {
+        var col = cols[k], info = readColumn(grid.masks[col]);
+        msg = 'Column ' + (col + 1) + ' has ' + holes(info.rows) + ', which is ' + showCh(info.ch) + (k < got.length ? ', but you typed ' + showCh(got.charAt(k)) + ' there.' : '. Your answer stops before it.');
+      }
+      fb.show('no', 'Not yet', [msg, k ? 'Everything before that is right.' : '']);
+    };
+    fresh();
+  })();
+
+  /* ======================= 02: punch a character ======================= */
+  (function level2() {
+    var CLASSES = [
+      { set: '0123456789', what: 'the digit', rule: 'A digit is one hole in the row with its own number.' },
+      { set: 'ABCDEFGHI', what: 'the letter', rule: 'A to I take the zone hole in row 12, plus a digit hole that counts the place in the group: A is 1, B is 2, and so on to I, which is 9.' },
+      { set: 'JKLMNOPQR', what: 'the letter', rule: 'J to R take the zone hole in row 11, plus a digit hole from 1 for J to 9 for R.' },
+      { set: 'STUVWXYZ', what: 'the letter', rule: 'S to Z take the zone hole in row 0, plus a digit hole from 2 for S to 9 for Z.' },
+      { set: "=+-*/(),.$'", what: 'the sign', rule: 'Most signs combine a hole in row 8 with a digit hole from 2 to 7, and some add a zone hole. The minus sign is a lone 11 hole, and the slash is 0-1. The second chart on the Start sheet lists them all.' }
+    ];
+    var fb = new Feedback($('l2-fb'));
+    var grid = new CardGrid($('l2-card'), { cols: 5, typing: false, label: 'Five-column card' });
+    var targets = [], round = 0;
+    function fresh() {
+      targets = CLASSES.map(function (k) { return pick(k.set.split('')); });
+      round = 0;
+      grid.setText('');
+      fb.box.innerHTML = ''; fb.box.className = 'feedback';
+      show();
+    }
+    function show() {
+      var t = $('l2-target');
+      t.innerHTML = '';
+      if (round >= 5) { t.appendChild(el('span', 'tg-l', 'All five characters are punched.')); setHints('l2', ['Nothing is left to punch on this card. Choose Start again for five new characters.']); return; }
+      var k = CLASSES[round];
+      t.appendChild(el('span', 'tg-l', 'Column ' + (round + 1) + ' of 5: punch ' + k.what));
+      t.appendChild(el('span', 'tg-big', targets[round]));
+      var cur = targets[round];
+      setHints('l2', [k.rule, function () { return showCh(cur) + ' is punched ' + rowsText(Fortran.punches(cur)) + '.'; }]);
+    }
+    $('l2-new').addEventListener('click', fresh);
+    checks.l2 = function () {
+      if (round >= 5) { fb.show('ok', 'Correct', ['All five characters are already punched. Choose Start again for new ones.']); return; }
+      var ch = targets[round], want = Fortran.punches(ch), c = round;
+      var info = readColumn(grid.masks[c]);
+      var got = info.rows;
+      if (rowsText(got) === rowsText(want)) {
+        round++;
+        show();
+        if (round >= 5) {
+          solve(2);
+          fb.show('ok', 'Correct', [showCh(ch) + ' is ' + rowsText(want) + '. All five columns are right: the card reads ' + grid.getText() + '.', nextButton(2)]);
+        } else fb.show('ok', 'Correct', [showCh(ch) + ' is ' + rowsText(want) + '. Now punch column ' + (round + 1) + '.']);
+        grid.moveTo(0, round, false);
+        return;
+      }
+      var missing = want.filter(function (r) { return got.indexOf(r) === -1; });
+      var extra = got.filter(function (r) { return want.indexOf(r) === -1; });
+      var parts = [];
+      if (!got.length) parts.push('Column ' + (c + 1) + ' has no holes yet.');
+      else parts.push('Column ' + (c + 1) + ' has ' + holes(got) + ', which ' + (info.valid ? 'reads ' + showCh(info.ch) : 'is not a character on the 029') + '.');
+      var fix = [];
+      if (missing.length) fix.push('punch row' + (missing.length > 1 ? 's ' : ' ') + orderRows(missing).join(' and '));
+      if (extra.length) fix.push('clear row' + (extra.length > 1 ? 's ' : ' ') + orderRows(extra).join(' and '));
+      parts.push(showCh(ch) + ' needs ' + plural(want.length, 'hole') + '. To get there, ' + fix.join(', and ') + '.');
+      var others = [];
+      for (var k = 0; k < 5; k++) if (k !== c && grid.masks[k].size && k > round) others.push(k + 1);
+      if (others.length) parts.push('Only column ' + (c + 1) + ' is checked now; the holes in column ' + others.join(' and ') + ' are ignored until its turn.');
+      fb.show('no', 'Not yet', parts);
+    };
+    fresh();
+  })();
+
+  /* ======================= 03: punch a word ======================= */
+  (function level3() {
+    var POOL = ['A(I,J)', 'X=Y+1.5', 'N=N-1', 'GO TO 9', 'K=2*L', 'Z=X/Y', "'HELLO'", 'B$=C,D'];
+    var fb = new Feedback($('l3-fb'));
+    var grid = new CardGrid($('l3-card'), { cols: 10, typing: false, label: 'Ten-column card' });
+    var word = '';
+    function fresh() {
+      word = pick(POOL, word);
+      var t = $('l3-target');
+      t.innerHTML = '';
+      t.appendChild(el('span', 'tg-l', 'Punch, from column 1'));
+      t.appendChild(el('span', 'tg-big mono', word));
+      grid.setText('');
+      fb.box.innerHTML = ''; fb.box.className = 'feedback';
+      setHints('l3', [
+        'Work one column at a time. Punch a column, check the printing above it, and move to the next. The blank in an expression is a column with no holes.',
+        function () {
+          var c = 0, txt = rtrim(grid.getText());
+          while (c < word.length && txt.charAt(c) === word.charAt(c)) c++;
+          if (c >= word.length) return 'Every column already matches. Press Check.';
+          return 'Column ' + (c + 1) + ' should be ' + showCh(word.charAt(c)) + ', which is punched ' + rowsText(Fortran.punches(word.charAt(c))) + '.';
+        }
+      ]);
+    }
+    $('l3-new').addEventListener('click', fresh);
+    $('l3-clear').addEventListener('click', function () { grid.setText(''); grid.status.textContent = 'The card is clear.'; });
+    checks.l3 = function () {
+      var got = rtrim(grid.getText()), bad = grid.badColumns();
+      if (got === word && !bad.length) {
+        solve(3);
+        fb.show('ok', 'Correct', ['The card reads ' + word + ', one character in each of the first ' + word.length + ' columns.', 'From the next sheet on, the keypunch is switched on: typing on a card punches the codes for you.', nextButton(3)]);
+        return;
+      }
+      var wrong = [];
+      for (var c = 0; c < 10; c++) {
+        var w = word.charAt(c) || ' ', info = readColumn(grid.masks[c]);
+        if (info.valid && info.ch === w) continue;
+        var have = !info.rows.length ? 'is blank' : 'has ' + rowsText(info.rows) + (info.valid ? ', which is ' + showCh(info.ch) : ', which is not a character');
+        wrong.push('Column ' + (c + 1) + ' ' + have + '. It should ' + (w === ' ' ? 'be blank.' : 'be ' + showCh(w) + ', punched ' + rowsText(Fortran.punches(w)) + '.'));
+      }
+      var parts = wrong.slice(0, 3);
+      if (wrong.length > 3) parts.push('Another ' + plural(wrong.length - 3, 'column') + ' also differ' + (wrong.length - 3 === 1 ? 's' : '') + '.');
+      fb.show('no', 'Not yet', parts);
+    };
+    fresh();
+  })();
+
+  /* ---------------- shared checking for the deck sheets ---------------- */
+
+  // Run the user's deck and the reference; compare printer output. Returns a result object.
+  function runAndCompare(cards, target) {
+    var r = Fortran.run(cards);
+    return { r: r, same: r.ok && samePrinter(target, r.printer) };
+  }
+  function badCols(text) {
+    var m = Fortran.encodeCard(text.padEnd(80)), out = [];
+    for (var c = 0; c < 80; c++) if (!readColumn(m[c]).valid) out.push(c + 1);
+    return out;
+  }
+  // Notes on a statement card: where its label, continuation and statement sit.
+  function fieldNotes(text, n, want) {
+    var t = text.padEnd(80), notes = [];
+    var lab = t.slice(0, 5), c6 = t.charAt(5), body = t.slice(6, 72);
+    if (t.charAt(0) === 'C' || t.charAt(0) === '*') { notes.push('Card ' + n + ' has ' + showCh(t.charAt(0)) + ' in column 1, so the whole card is a comment and the reader skips it.'); return notes; }
+    if (want.label !== undefined) {
+      var l = lab.replace(/ /g, '');
+      if (l === '') notes.push('Card ' + n + ' has no label in columns 1 to 5. It needs the label ' + want.label + '.');
+      else if (!/^\d+$/.test(l)) notes.push('Columns 1 to 5 of card ' + n + ' hold ' + showCh(lab.trim()) + ', which is not a number. Only the label goes there; the statement starts in column 7.');
+      else if (+l !== want.label) notes.push('Card ' + n + ' has the label ' + l + ', but this statement needs the label ' + want.label + '.');
+    }
+    if (want.cont) {
+      if (c6 === ' ' || c6 === '0') notes.push('Column 6 of card ' + n + ' is ' + (c6 === ' ' ? 'blank' : 'a zero') + ', so the reader takes the card as a new statement instead of a continuation.');
+      if (lab.trim() !== '') notes.push('Columns 1 to 5 of a continuation card should be blank. Card ' + n + ' has ' + showCh(lab.trim()) + ' there.');
+    } else if (c6 !== ' ' && c6 !== '0') {
+      notes.push('Column 6 of card ' + n + ' holds ' + showCh(c6) + ', so the reader takes the card as a continuation of the card before it. Leave column 6 blank and start the statement in column 7.');
+    }
+    if (t.slice(72).trim() !== '') notes.push('Card ' + n + ' has something in columns 73 to 80, which the compiler ignores. Your statement may run past column 72.');
+    if (!body.trim() && !want.cont) notes.push('Columns 7 to 72 of card ' + n + ' are blank, so it holds no statement.');
+    var bad = badCols(text);
+    if (bad.length) notes.push('Column ' + bad.join(', ') + ' of card ' + n + ' has holes that do not make a character.');
+    return notes;
+  }
+  function answerHint(text, cards) {
+    return { text: text, pre: (rulerText(40) + '\n' + cards.join('\n')) };
+  }
+
+  /* ======================= 04: fields ======================= */
+  (function level4() {
+    var FIX = ['      I = 7', '      GO TO 30', '      I = 0', null, '   40 FORMAT (1X,I3)', '      STOP', '      END'];
+    var REF = ['C     PRINT THE VALUE OF I', '   30 WRITE (6,40) I'];
+    function items() {
+      var it = [{ text: '', fixed: false }];
+      FIX.forEach(function (t) { it.push(t === null ? { text: '', fixed: false } : { text: t, fixed: true }); });
+      return it;
+    }
+    var refDeck = [REF[0]].concat(FIX.map(function (t) { return t === null ? REF[1] : t; }));
+    var target = Fortran.run(refDeck).printer;
+    renderPrinter($('l4-target'), target);
+    var fb = new Feedback($('l4-fb'));
+    var deck = new Deck($('l4-deck'), { name: 'Program deck', items: items() });
+    resets.l4 = function () { deck.setItems(items()); fb.box.innerHTML = ''; fb.box.className = 'feedback'; };
+    benchDecks.l4 = function () { return deck.cards(); };
+    setHints('l4', [
+      'Card 1 needs a C in column 1. After that, anything at all can follow, because the reader skips a comment card.',
+      'On card 5, put the label 30 in columns 1 to 5, leave column 6 blank, and start WRITE in column 7. Right-justifying the label in column 5 was the custom, but anywhere in columns 1 to 5 works.',
+      answerHint('A correct pair of cards, with a column ruler:', REF)
+    ]);
+    checks.l4 = function () {
+      var cards = deck.cards(), c1 = cards[0].padEnd(80), notes = [];
+      var res = runAndCompare(cards, target);
+      var isComment = c1.charAt(0) === 'C' || c1.charAt(0) === '*';
+      if (!isComment) notes.push(cards[0].trim() === '' ? 'Card 1 is still blank. Punch a C in column 1 and a few words after it.' : 'Card 1 has ' + showCh(c1.charAt(0)) + ' in column 1, so the reader takes it as a statement, not a comment. Put a C in column 1.');
+      else if (c1.slice(1).trim() === '') notes.push('Card 1 is a comment, but it says nothing. Add a few words that describe the program.');
+      if (res.same && !notes.length) {
+        solve(4);
+        fb.show('ok', 'Correct', ['The program ran and printed ' + rtrim(res.r.printer[0]).trim() + '. Card 1 is a comment, and card 5 carries label 30 in the label field with its statement from column 7.', nextButton(4)]);
+        return;
+      }
+      notes = notes.concat(fieldNotes(cards[4], 5, { label: 30 }));
+      if (res.r.ok && !res.same) notes.push(printerDiff(target, res.r.printer));
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log) }, res.r.ok ? { printer: res.r.printer } : null]));
+    };
+  })();
+
+  /* ======================= 05: continuation ======================= */
+  (function level5() {
+    var FIX = ['C     ONE LONG LINE OF PRINT', '      WRITE (6,10)', "   10 FORMAT (1X,'THE CARD READER TAKES ONE CARD AT A TIME,',", null, '      STOP', '      END'];
+    var REF = "     1' AND THE PRINTER ONE LINE AT A TIME.')";
+    function items() { return FIX.map(function (t) { return t === null ? { text: '', fixed: false } : { text: t, fixed: true }; }); }
+    var target = Fortran.run(FIX.map(function (t) { return t === null ? REF : t; })).printer;
+    renderPrinter($('l5-target'), target);
+    var fb = new Feedback($('l5-fb'));
+    var deck = new Deck($('l5-deck'), { name: 'Program deck', items: items() });
+    resets.l5 = function () { deck.setItems(items()); fb.box.innerHTML = ''; fb.box.className = 'feedback'; };
+    benchDecks.l5 = function () { return deck.cards(); };
+    setHints('l5', [
+      'Compare the target with the text on card 3. The rest of the line, from the blank after the comma onwards, still has to be printed, inside its own pair of quotes.',
+      'Punch a 1 (or any character but a blank or 0) in column 6, and start the text in column 7. The statement still needs its closing parenthesis.',
+      answerHint('A correct card 4, with a column ruler:', [REF])
+    ]);
+    checks.l5 = function () {
+      var cards = deck.cards();
+      var res = runAndCompare(cards, target);
+      if (res.same) {
+        solve(5);
+        fb.show('ok', 'Correct', ['Card 4 continues statement 10, and the printer prints the whole line of ' + rtrim(target[0]).length + ' characters.', nextButton(5)]);
+        return;
+      }
+      var notes = fieldNotes(cards[3], 4, { cont: true });
+      if (res.r.ok) notes.push(printerDiff(target, res.r.printer));
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log) }, res.r.ok ? { printer: res.r.printer } : null]));
+    };
+  })();
+
+  /* ======================= 06: the dropped deck ======================= */
+  (function level6() {
+    var SRC = ['C     A TABLE OF SQUARES', 'C     EACH LINE GIVES N AND N SQUARED', '      WRITE (6,10)', '   10 FORMAT (1H1,5X,1HN,6X,6HSQUARE)',
+      '      DO 20 I = 1, 5', '      ISQ = I*I', '      WRITE (6,30) I, ISQ', '   20 CONTINUE', '   30 FORMAT (1X,I6,I12)', '      STOP', '      END'];
+    var ORDERED = SRC.map(function (t, i) { return t.padEnd(72) + 'SQRS' + String((i + 1) * 10).padStart(4, '0'); });
+    var target = Fortran.run(ORDERED).printer;
+    var fb = new Feedback($('l6-fb'));
+    var order = [], sel = 0;
+    var listHost = $('l6-deck');
+    var wrap = el('div', 'decklist-wrap');
+    var rul = el('pre', 'deckruler', rulerText(80));
+    rul.setAttribute('aria-hidden', 'true');
+    wrap.appendChild(rul);
+    var list = el('ol', 'decklist movable');
+    list.setAttribute('aria-label', 'Dropped deck');
+    wrap.appendChild(list);
+    listHost.appendChild(wrap);
+    var grid = new CardGrid(listHost, { readOnly: true, label: 'Selected card' });
+
+    var colSel = $('l6-col');
+    for (var c = 73; c <= 80; c++) { var o = el('option', '', String(c)); o.value = String(c); colSel.appendChild(o); }
+    colSel.value = '80';
+
+    function seqOf(t) { return t.slice(72, 80); }
+    function render(focusIdx, focusWhat) {
+      list.innerHTML = '';
+      order.forEach(function (t, i) {
+        var li = el('li', 'mv' + (i === sel ? ' sel' : ''));
+        var b = el('button', 'slot-b');
+        b.type = 'button';
+        b.appendChild(el('span', 'num', String(i + 1)));
+        b.appendChild(el('code', 'line', t));
+        b.setAttribute('aria-label', 'Position ' + (i + 1) + ': sequence ' + seqOf(t) + ', ' + t.slice(0, 72).replace(/ +/g, ' ').trim());
+        b.setAttribute('aria-pressed', String(i === sel));
+        b.addEventListener('click', function () { sel = i; render(i, 'card'); });
+        li.appendChild(b);
+        var up = el('button', 'mv-b', 'Up'), dn = el('button', 'mv-b', 'Down');
+        up.type = dn.type = 'button';
+        up.setAttribute('aria-label', 'Move ' + seqOf(t) + ' up');
+        dn.setAttribute('aria-label', 'Move ' + seqOf(t) + ' down');
+        up.disabled = i === 0; dn.disabled = i === order.length - 1;
+        up.addEventListener('click', function () { swap(i, i - 1, 'up'); });
+        dn.addEventListener('click', function () { swap(i, i + 1, 'down'); });
+        li.appendChild(up); li.appendChild(dn);
+        list.appendChild(li);
+      });
+      grid.setMasks(Fortran.encodeCard(order[sel]));
+      grid.setLabel('Card at position ' + (sel + 1) + ', sequence ' + seqOf(order[sel]));
+      if (focusIdx !== undefined) {
+        var li2 = list.children[focusIdx];
+        var target = focusWhat === 'up' ? li2.querySelector('.mv-b') : focusWhat === 'down' ? li2.querySelectorAll('.mv-b')[1] : li2.querySelector('.slot-b');
+        if (target.disabled) target = li2.querySelector('.slot-b');
+        target.focus();
+      }
+    }
+    function swap(i, j, what) {
+      var t = order[i]; order[i] = order[j]; order[j] = t;
+      sel = j;
+      render(j, what);
+    }
+    function shuffle() {
+      do {
+        order = ORDERED.slice();
+        for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; }
+      } while (order.join() === ORDERED.join());
+      sel = 0;
+      $('l6-pockets').innerHTML = '';
+      $('l6-sort-st').textContent = 'The deck is shuffled.';
+      fb.box.innerHTML = ''; fb.box.className = 'feedback';
+      render();
+    }
+    // One pass of the sorter: pockets by the single hole in the column, read from the punches.
+    var POCKETS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'R'];
+    function sortPass(col) {
+      var pockets = {};
+      POCKETS.forEach(function (p) { pockets[p] = []; });
+      order.forEach(function (t) {
+        var rows = orderRows(Array.from(Fortran.encodeCard(t)[col - 1]));
+        var p = rows.length === 1 && rows[0] >= 0 && rows[0] <= 9 ? String(rows[0]) : 'R';
+        pockets[p].push(t);
+      });
+      order = [];
+      POCKETS.forEach(function (p) { order = order.concat(pockets[p]); });
+      return pockets;
+    }
+    $('l6-sort').addEventListener('click', function () {
+      var col = +colSel.value;
+      var pockets = sortPass(col);
+      var box = $('l6-pockets');
+      box.innerHTML = '';
+      var max = 0, used = [];
+      POCKETS.forEach(function (p) { max = Math.max(max, pockets[p].length); if (pockets[p].length) used.push((p === 'R' ? 'reject' : p) + ': ' + pockets[p].length); });
+      POCKETS.forEach(function (p) {
+        var k = el('div', 'pk');
+        var bar = el('span', 'pk-bar');
+        bar.style.height = (pockets[p].length / Math.max(1, max) * 100) + '%';
+        var well = el('span', 'pk-well');
+        well.appendChild(bar);
+        k.appendChild(well);
+        k.appendChild(el('span', 'pk-n', String(pockets[p].length)));
+        k.appendChild(el('span', 'pk-l', p));
+        box.appendChild(k);
+      });
+      $('l6-sort-st').textContent = 'Sorted on column ' + col + '. Pockets ' + used.join(', ') + '. The pockets were stacked back from 0 to 9.';
+      sel = 0;
+      render();
+    });
+    $('l6-shuffle').addEventListener('click', shuffle);
+    benchDecks.l6 = function () { return order.slice(); };
+    setHints('l6', [
+      'The sequence numbers run SQRS0010, SQRS0020 and so on, in steps of ten. Column 80 is a 0 on every card, so sorting on it changes nothing.',
+      'Sort on the rightmost column that differs first, then work leftwards: that is column 79, then column 78. The sorter keeps the cards in each pocket in the order they arrived, so each pass keeps the order the earlier passes made.',
+      'If you prefer, use the Up and Down buttons to move each card until the sequence numbers run in order.'
+    ]);
+    checks.l6 = function () {
+      var res = runAndCompare(order, target);
+      var inOrder = order.join('\n') === ORDERED.join('\n');
+      var out = [];
+      for (var i = 1; i < order.length; i++) if (seqOf(order[i]) < seqOf(order[i - 1])) out.push(i + 1);
+      if (res.same && inOrder) {
+        solve(6);
+        fb.show('ok', 'Correct', ['The deck is back in sequence, from SQRS0010 to SQRS0110, and the program prints its table of squares.', { diag: diagList(res.r.log, { seqOk: true }) }, nextButton(6)]);
+        return;
+      }
+      var notes = [];
+      if (out.length) notes.push(plural(out.length, 'card is', 'cards are') + ' out of sequence. The first is at position ' + out[0] + ': ' + seqOf(order[out[0] - 1]) + ' comes after ' + seqOf(order[out[0] - 2]) + '.');
+      if (res.same) notes.push('The program happens to print the right output already, but a deck out of sequence is not finished: the next person to sort it would be misled.');
+      else if (res.r.ok) notes.push(printerDiff(target, res.r.printer));
+      else notes.push('With the cards in this order, the program does not run.');
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log, { seqOk: true }) }]));
+    };
+    shuffle();
+  })();
+
+  /* ======================= 07: data cards ======================= */
+  var ADDER = ['C     ADD UP A LIST OF NUMBERS', '      READ (5,10) N', '   10 FORMAT (I5)', '      ISUM = 0', '      DO 20 I = 1, N',
+    '      READ (5,10) K', '      ISUM = ISUM + K', '   20 CONTINUE', '      WRITE (6,30) N, ISUM', '   30 FORMAT (1X,I3,13H NUMBERS SUM ,I6)', '      STOP', '      END'];
+  (function level7() {
+    var REF = ['    4', '   10', '   20', '   30', '   40'];
+    function items() { return ADDER.map(function (t) { return { text: t, fixed: true }; }).concat([{ text: '', fixed: false }]); }
+    var target = Fortran.run(ADDER.concat(REF)).printer;
+    renderPrinter($('l7-target'), target);
+    var fb = new Feedback($('l7-fb'));
+    var deck = new Deck($('l7-deck'), { name: 'Program and data deck', items: items(), add: true, addLabel: 'Add a data card after this one', max: 40 });
+    resets.l7 = function () { deck.setItems(items()); fb.box.innerHTML = ''; fb.box.className = 'feedback'; };
+    benchDecks.l7 = function () { return deck.cards(); };
+    setHints('l7', [
+      'The target says the program read 4 numbers, so the first data card holds the count 4, and four more cards follow it.',
+      'Each number must fit in columns 1 to 5. Anything punched in column 6 or later is never read. Right-justify each number so its last digit is in column 5, as the I5 field was designed for.',
+      answerHint('One correct set of data cards:', REF)
+    ]);
+    checks.l7 = function () {
+      var cards = deck.cards();
+      var res = runAndCompare(cards, target);
+      if (res.same) {
+        var data = deck.slots().map(function (s) { return s.text.trim(); });
+        solve(7);
+        fb.show('ok', 'Correct', ['The program read ' + data.join(', ') + ' and printed the target line.', nextButton(7)]);
+        return;
+      }
+      var notes = [];
+      deck.slots().forEach(function (s) {
+        var t = s.text.padEnd(80);
+        if (t.slice(5).trim() !== '') notes.push('Card ' + (s.index + 1) + ' has something after column 5: ' + showCh(t.slice(5).trim()) + '. The I5 field never reads it.');
+        if (s.text.trim() === '') notes.push('Card ' + (s.index + 1) + ' is blank, and a blank field reads as 0.');
+      });
+      if (res.r.log.some(function (l) { return /END OF FILE/.test(l); })) notes.push('The program asked for more data cards than the deck has. The first data card tells it how many numbers to read.');
+      if (res.r.ok) notes.push(printerDiff(target, res.r.printer));
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log) }, res.r.ok ? { printer: res.r.printer } : null]));
+    };
+  })();
+
+  /* ======================= 08: FORMAT ======================= */
+  (function level8() {
+    var FIX = ['C     ONE REPORT LINE AT THE TOP OF A PAGE', '      N = 42', '      X = 3.5', '      WRITE (6,10) N, X', null, '      STOP', '      END'];
+    var REF = '   10 FORMAT (1H1,3HN =,I5,6H   X =,F6.2)';
+    function items() { return FIX.map(function (t) { return t === null ? { text: '', fixed: false } : { text: t, fixed: true }; }); }
+    var target = Fortran.run(FIX.map(function (t) { return t === null ? REF : t; })).printer;
+    var tbox = $('l8-target');
+    renderPrinter(tbox, target);
+    var tr = el('pre', 'out-ruler', rulerText(32));
+    tr.setAttribute('aria-hidden', 'true');
+    tbox.insertBefore(tr, tbox.querySelector('pre'));
+    var fb = new Feedback($('l8-fb'));
+    var deck = new Deck($('l8-deck'), { name: 'Program deck', items: items() });
+    resets.l8 = function () { deck.setItems(items()); fb.box.innerHTML = ''; fb.box.className = 'feedback'; };
+    benchDecks.l8 = function () { return deck.cards(); };
+    setHints('l8', [
+      'Count the print positions in the target with the ruler above it. N is 42 and ends in position 8, so after "N =" it is printed in a field 5 wide: I5. X is 3.50, with two decimals, in a field 6 wide.',
+      'The record must begin with the carriage control character 1 for a new page. 1H1 is a Hollerith constant of one character, the 1.',
+      answerHint('A correct card 5, with a column ruler:', [REF])
+    ]);
+    checks.l8 = function () {
+      var cards = deck.cards();
+      var res = runAndCompare(cards, target);
+      if (res.same) {
+        solve(8);
+        fb.show('ok', 'Correct', ['The printer starts a new page and prints the line exactly as the target shows it.', nextButton(8)]);
+        return;
+      }
+      var notes = fieldNotes(cards[4], 5, { label: 10 });
+      if (cards[4].slice(6, 72).replace(/ /g, '').indexOf('FORMAT') !== 0 && cards[4].trim() !== '') notes.push('The statement on card 5 should begin with the word FORMAT.');
+      if (res.r.ok) notes.push(printerDiff(target, res.r.printer));
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log) }, res.r.ok ? { printer: res.r.printer } : null]));
+    };
+  })();
+
+  /* ======================= 09: punch, then feed back ======================= */
+  (function level9() {
+    var PROG_A = ['C     PUNCH N, THEN THE SQUARES OF 1 TO N', '      READ (5,10) N', '   10 FORMAT (I5)', '      PUNCH 10, N', '      DO 20 I = 1, N',
+      '      ISQ = I*I', '      PUNCH 10, ISQ', '   20 CONTINUE', '      STOP', '      END'];
+    var PROG_B = ['C     ADD UP THE CARDS THAT FOLLOW A COUNT', '      READ (5,10) N', '   10 FORMAT (I5)', '      ISUM = 0', '      DO 20 I = 1, N',
+      '      READ (5,10) K', '      ISUM = ISUM + K', '   20 CONTINUE', '      WRITE (6,30) ISUM', '   30 FORMAT (1X,13HTHE TOTAL IS ,I6)', '      STOP', '      END'];
+    var nTarget, target, refPunched;
+    var fb = new Feedback($('l9-fb'));
+    var lastPunched = null, fed = false;
+    function itemsA() { return PROG_A.map(function (t) { return { text: t, fixed: true }; }).concat([{ text: '', fixed: false }]); }
+    function itemsB(data) { return PROG_B.concat(data || []).map(function (t) { return { text: t, fixed: true }; }); }
+    var deckA = new Deck($('l9-deck-a'), { name: 'Program A deck', items: itemsA(), onEdit: function () { if (lastPunched) $('l9-stack-st').textContent = 'The data card has changed since program A last ran. Run it again to punch new cards.'; } });
+    var deckB = new Deck($('l9-deck-b'), { name: 'Program B deck', items: itemsB(), edit: false });
+    function pickTarget() {
+      nTarget = 3 + Math.floor(Math.random() * 6);   // 3 to 8
+      refPunched = Fortran.run(PROG_A.concat([String(nTarget).padStart(5)])).punched;
+      target = Fortran.run(PROG_B.concat(refPunched)).printer;
+      renderPrinter($('l9-target'), target);
+    }
+    function renderStack(cards) {
+      var ol = $('l9-stack');
+      ol.innerHTML = '';
+      (cards || []).forEach(function (t, i) {
+        var li = el('li', 'fixed');
+        li.appendChild(el('span', 'num', String(i + 1)));
+        li.appendChild(el('code', 'line', t));
+        li.setAttribute('aria-label', 'Punched card ' + (i + 1) + ': ' + (t.trim() || 'blank'));
+        ol.appendChild(li);
+      });
+    }
+    function reset() {
+      deckA.setItems(itemsA());
+      deckB.setItems(itemsB());
+      lastPunched = null; fed = false;
+      renderStack([]);
+      $('l9-feed').disabled = true;
+      $('l9-stack-st').textContent = 'Program A has not been run yet.';
+      fb.box.innerHTML = ''; fb.box.className = 'feedback';
+    }
+    resets.l9 = reset;
+    $('l9-run-a').addEventListener('click', function () {
+      var r = Fortran.run(deckA.cards());
+      lastPunched = r.punched;
+      renderStack(r.punched);
+      $('l9-feed').disabled = !r.punched.length;
+      var d = diagList(r.log);
+      $('l9-stack-st').textContent = 'Program A ' + (r.ok ? 'ran' : 'stopped with errors') + ' and punched ' + plural(r.punched.length, 'card') + '.' + (d.length ? ' ' + d.join(' ') : '');
+    });
+    $('l9-feed').addEventListener('click', function () {
+      if (!lastPunched) return;
+      deckB.setItems(itemsB(lastPunched.map(rtrim)));
+      fed = true;
+      $('l9-stack-st').textContent = 'The ' + plural(lastPunched.length, 'punched card') + ' now follow' + (lastPunched.length === 1 ? 's' : '') + ' the END card of program B.';
+    });
+    benchDecks.l9 = function () { return deckB.cards(); };
+    setHints('l9', [
+      'Program B prints 1 + 4 + 9 + ... up to N squared. Add squares until you reach the target total; the last number you squared is N.',
+      'Punch N right-justified in columns 1 to 5 of program A’s data card, then press Run program A, then Feed the stacker to program B.',
+      function () { return 'The target needs N = ' + nTarget + '.'; }
+    ]);
+    checks.l9 = function () {
+      var data = deckB.cards().slice(PROG_B.length);
+      if (!data.length) { fb.show('no', 'Not yet', ['Program B has no data cards yet. Run program A, then feed its stacker to program B.']); return; }
+      var fresh = Fortran.run(deckA.cards()).punched.map(rtrim);
+      var res = runAndCompare(deckB.cards(), target);
+      var fromA = data.join('\n') === fresh.join('\n');
+      if (res.same && fromA) {
+        solve(9);
+        fb.show('ok', 'Correct', ['Program A punched ' + plural(data.length, 'card') + ' for N = ' + data[0].trim() + ', and program B read them back and printed the target total.', nextButton(9)]);
+        return;
+      }
+      var notes = [];
+      if (!fromA) notes.push('The cards behind program B are not the ones program A punches from its current data card. Run program A again and feed its stacker to program B.');
+      if (res.r.ok && !res.same) {
+        var n = parseInt(data[0], 10);
+        notes.push('Program B printed ' + rtrim(res.r.printer[0] || '').trim() + ', the total for N = ' + (isNaN(n) ? '?' : n) + '. ' + (n < nTarget ? 'That is too small.' : n > nTarget ? 'That is too large.' : ''));
+      }
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log) }, res.r.ok ? { printer: res.r.printer } : null]));
+    };
+    pickTarget();
+    reset();
+  })();
+
+  /* ======================= 10: a deck of your own ======================= */
+  (function level10() {
+    var REF = ['C     COUNT DOWN FROM 5', '      DO 10 I = 1, 5', '      J = 6 - I', '      WRITE (6,20) J', '   10 CONTINUE', '      WRITE (6,30)',
+      '   20 FORMAT (1X,I4)', "   30 FORMAT (8H LIFTOFF)", '      STOP', '      END'];
+    var target = Fortran.run(REF).printer;
+    renderPrinter($('l10-target'), target);
+    var fb = new Feedback($('l10-fb'));
+    function items() { return [{ text: '', fixed: false }]; }
+    var deck = new Deck($('l10-deck'), { name: 'Your deck', items: items(), add: true, move: true, max: 40 });
+    resets.l10 = function () { deck.setItems(items()); fb.box.innerHTML = ''; fb.box.className = 'feedback'; };
+    benchDecks.l10 = function () { return deck.cards(); };
+    setHints('l10', [
+      'Each number is printed right-justified, ending in print position 4, so after the carriage control blank the field is I4. The program needs an END card at the end, and usually a STOP before it.',
+      'A loop can count I from 1 to 5 and print 6 - I. A FORMAT with 8H LIFTOFF prints the word: the first of the 8 characters is the blank for carriage control.',
+      answerHint('One correct deck:', REF)
+    ]);
+    checks.l10 = function () {
+      var cards = deck.cards();
+      while (cards.length && !cards[cards.length - 1].trim()) cards.pop();
+      var res = runAndCompare(cards, target);
+      if (res.same) {
+        solve(10);
+        fb.show('ok', 'Correct', ['Your ' + plural(cards.length, 'card') + ' ran and printed the countdown exactly. That is the whole course.']);
+        return;
+      }
+      var notes = [];
+      if (!cards.length) notes.push('The deck is empty. Punch the first card, then add more.');
+      deck.slots().forEach(function (s) {
+        var t = s.text.padEnd(80);
+        if (t.trim() && t.charAt(0) !== 'C' && t.charAt(0) !== '*' && t.charAt(5) !== ' ' && t.charAt(5) !== '0' && s.index === 0) notes.push('Card 1 has ' + showCh(t.charAt(5)) + ' in column 6, which makes it a continuation of nothing. Statements start in column 7.');
+        if (t.slice(72).trim()) notes.push('Card ' + (s.index + 1) + ' runs past column 72.');
+      });
+      if (res.r.ok) notes.push(printerDiff(target, res.r.printer));
+      fb.show('no', 'Not yet', notes.concat([{ diag: diagList(res.r.log) }, res.r.ok ? { printer: res.r.printer } : null]));
+    };
+  })();
+
+  /* ======================= workbench ======================= */
+  var bench = (function workbench() {
+    var STACKER_SHOWN = 300;
+    var cardsEl = $('cards');
+    var selected = 0, stack = [];
+
+    var sub = Array.prototype.slice.call(document.querySelectorAll('.subtabs [role="tab"]'));
+    function showSub(name, focus) {
+      sub.forEach(function (t) {
+        var on = t.id === 'wtab-' + name;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        $(t.getAttribute('aria-controls')).hidden = !on;
+        if (on && focus) t.focus();
+      });
+    }
+    sub.forEach(function (t, i) {
+      t.addEventListener('click', function () { showSub(t.id.slice(5)); });
+      t.addEventListener('keydown', function (e) {
+        var j = { ArrowLeft: i - 1, ArrowRight: i + 1, Home: 0, End: sub.length - 1 }[e.key];
+        if (j === undefined) return;
+        e.preventDefault();
+        showSub(sub[(j + sub.length) % sub.length].id.slice(5), true);
+      });
+    });
+
+    $('ruler').textContent = 'LABEL+' + 'STATEMENT'.padEnd(66) + 'SEQUENCE\n' + rulerText(80);
+
+    var grid = new CardGrid($('bench-card'), { typing: true, label: 'Selected card', onChange: function (g) {
+      var row = cardsEl.children[selected];
+      if (row) row.querySelector('input').value = rtrim(g.getText());
+    } });
+
+    function rowsList() { return Array.prototype.slice.call(cardsEl.children); }
+    function rowIndex(row) { return rowsList().indexOf(row); }
+    function showSelectedCard() {
+      var rows = cardsEl.children;
+      if (!rows.length) return;
+      if (selected >= rows.length) selected = rows.length - 1;
+      grid.setText(rows[selected].querySelector('input').value);
+      grid.setLabel('Card ' + (selected + 1) + ' of ' + rows.length);
+      $('card-caption').textContent = 'Card ' + (selected + 1) + ' of ' + rows.length + '.';
+      $('prev-card').disabled = selected === 0;
+      $('next-card').disabled = selected === rows.length - 1;
+    }
+    function renumber() {
+      rowsList().forEach(function (row, i) {
+        row.querySelector('.num').textContent = String(i + 1);
+        row.querySelector('input').setAttribute('aria-label', 'Card ' + (i + 1));
+        row.classList.toggle('selected', i === selected);
+      });
+    }
+    function select(i) { selected = i; renumber(); showSelectedCard(); }
+    function focusRow(i, caret) {
+      var rows = rowsList();
+      if (i < 0 || i >= rows.length) return;
+      var input = rows[i].querySelector('input');
+      input.focus();
+      var pos = caret === undefined ? input.value.length : Math.min(caret, input.value.length);
+      input.setSelectionRange(pos, pos);
+    }
+    function makeRow(text) {
+      var row = el('div', 'row');
+      var num = el('span', 'num');
+      var input = el('input', 'card-in');
+      input.type = 'text';
+      input.maxLength = 80;
+      input.spellcheck = false;
+      input.autocomplete = 'off';
+      input.setAttribute('autocapitalize', 'characters');
+      input.value = sanitize(text);
+      row.appendChild(num);
+      row.appendChild(input);
+      input.addEventListener('focus', function () { select(rowIndex(row)); });
+      input.addEventListener('input', function () {
+        var before = input.value.slice(0, input.selectionStart);
+        var clean = sanitize(input.value);
+        if (clean !== input.value) {
+          var pos = sanitize(before).length;
+          input.value = clean;
+          input.setSelectionRange(pos, pos);
+        }
+        if (rowIndex(row) === selected) showSelectedCard();
+      });
+      input.addEventListener('keydown', function (e) {
+        var i = rowIndex(row);
+        if (e.key === 'Enter') { e.preventDefault(); insertRow(i + 1, ''); focusRow(i + 1, 0); }
+        else if (e.key === 'Backspace' && input.value === '' && cardsEl.children.length > 1) { e.preventDefault(); removeRow(i); focusRow(Math.max(0, i - 1)); }
+        else if (e.key === 'ArrowUp' && i > 0) { e.preventDefault(); focusRow(i - 1, input.selectionStart); }
+        else if (e.key === 'ArrowDown' && i < cardsEl.children.length - 1) { e.preventDefault(); focusRow(i + 1, input.selectionStart); }
+      });
+      input.addEventListener('paste', function (e) {
+        var data = e.clipboardData && e.clipboardData.getData('text');
+        if (!data || !/[\r\n]/.test(data)) return;
+        e.preventDefault();
+        var lines = data.replace(/\r\n?/g, '\n').replace(/\n$/, '').split('\n');
+        var i = rowIndex(row);
+        var start = input.selectionStart, end = input.selectionEnd;
+        input.value = sanitize(input.value.slice(0, start) + lines[0] + input.value.slice(end));
+        for (var k = 1; k < lines.length; k++) insertRow(i + k, lines[k]);
+        focusRow(i + lines.length - 1);
+      });
+      return row;
+    }
+    function insertRow(i, text) {
+      var row = makeRow(text), rows = cardsEl.children;
+      if (i >= rows.length) cardsEl.appendChild(row); else cardsEl.insertBefore(row, rows[i]);
+      if (i <= selected && rows.length > 1) selected++;
+      renumber(); showSelectedCard();
+    }
+    function removeRow(i) {
+      cardsEl.removeChild(cardsEl.children[i]);
+      if (selected > i || selected >= cardsEl.children.length) selected = Math.max(0, selected - 1);
+      renumber(); showSelectedCard();
+    }
+    function getDeck() {
+      var deck = rowsList().map(function (row) { return row.querySelector('input').value; });
+      while (deck.length && deck[deck.length - 1].trim() === '') deck.pop();
+      return deck;
+    }
+    function setDeck(deck) {
+      cardsEl.innerHTML = '';
+      (deck.length ? deck : ['']).forEach(function (t) { cardsEl.appendChild(makeRow(t)); });
+      selected = 0; renumber(); showSelectedCard();
+    }
+
+    // The engine's first four sample decks; the fifth belongs to the other pages' theme.
+    var samples = Fortran.samples.slice(0, 4);
+    var sampleSelect = $('sample-select');
+    samples.forEach(function (s, i) {
+      var opt = el('option', '', (i + 1) + '. ' + s.name);
+      opt.value = String(i);
+      sampleSelect.appendChild(opt);
+    });
+    $('load-sample').addEventListener('click', function () {
+      setDeck(samples[+sampleSelect.value].cards);
+      $('editor-status').textContent = 'The sample deck is loaded.';
+    });
+    $('add-card').addEventListener('click', function () { insertRow(selected + 1, ''); focusRow(selected + 1, 0); });
+    $('delete-card').addEventListener('click', function () {
+      if (cardsEl.children.length > 1) removeRow(selected);
+      else { rowsList()[0].querySelector('input').value = ''; showSelectedCard(); }
+    });
+    $('clear-deck').addEventListener('click', function () { setDeck([]); });
+    $('prev-card').addEventListener('click', function () { if (selected > 0) select(selected - 1); });
+    $('next-card').addEventListener('click', function () { if (selected < cardsEl.children.length - 1) select(selected + 1); });
+
+    // small drawn cards for the stacker
+    function svgEl(name, attrs, text) {
+      var e = document.createElementNS(SVG_NS, name);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      if (text !== undefined) e.textContent = text;
+      return e;
+    }
+    function drawCard(text) {
+      var t80 = text.padEnd(80).slice(0, 80), masks = Fortran.encodeCard(t80);
+      var left = 6, colW = 10, top = 22, rowH = 13, width = left + 80 * colW + 6, height = top + 12 * rowH + 6;
+      var svg = svgEl('svg', { viewBox: '0 0 ' + width + ' ' + height, role: 'img', 'aria-label': 'Punched card: ' + (t80.trim() || 'blank') });
+      svg.appendChild(svgEl('rect', { x: 0.5, y: 0.5, width: width - 1, height: height - 1, fill: '#fff', stroke: '#000' }));
+      svg.appendChild(svgEl('polygon', { points: '0.5,0.5 14.5,0.5 0.5,14.5', fill: '#fff', stroke: '#000' }));
+      for (var c = 0; c < 80; c++) {
+        var x = left + c * colW, ch = t80.charAt(c);
+        if (ch !== ' ') svg.appendChild(svgEl('text', { x: x + colW / 2, y: 15, 'text-anchor': 'middle', 'font-size': 11, 'font-family': 'IBM Plex Mono, Menlo, monospace', fill: '#000' }, ch));
+        ROWS.forEach(function (row, r) {
+          if (masks[c].has(row)) svg.appendChild(svgEl('rect', { x: x + 2, y: top + r * rowH + 1, width: 6, height: 10, fill: '#000' }));
+        });
+      }
+      return svg;
+    }
+    function renderLog(result) {
+      var box = $('log');
+      box.innerHTML = '';
+      var lines = result.log.slice();
+      lines.push(result.ok ? 'Job ended normally.' : 'Job ended with errors.');
+      box.appendChild(el('pre', '', lines.join('\n')));
+    }
+    function renderStacker(punched) {
+      stack = punched;
+      var box = $('stacker');
+      box.innerHTML = '';
+      ['stack-replace', 'stack-append', 'stack-copy', 'stack-download'].forEach(function (id) { $(id).disabled = !punched.length; });
+      $('stack-status').textContent = '';
+      if (!punched.length) { box.appendChild(el('p', 'placeholder', 'The program did not punch any cards.')); return; }
+      box.appendChild(el('p', '', 'The program punched ' + plural(punched.length, 'card') + '.' + (punched.length > STACKER_SHOWN ? ' Only the first ' + STACKER_SHOWN + ' are drawn here.' : '')));
+      punched.slice(0, STACKER_SHOWN).forEach(function (text) {
+        var item = el('div', 'item');
+        item.appendChild(drawCard(text));
+        box.appendChild(item);
+      });
+    }
+    $('run-deck').addEventListener('click', function () {
+      var deck = getDeck();
+      var result = Fortran.run(deck);
+      renderStacker(result.punched);
+      renderPrinter($('printer'), result.printer, 'The program did not print anything.');
+      renderLog(result);
+      $('listing').textContent = result.listing.join('\n');
+      $('run-status').textContent = 'The reader took ' + plural(deck.length, 'card') +
+        (result.ok ? ', and the job ran without errors.' : ', and the job stopped with errors. See the job log for details.');
+      $('editor-status').textContent = '';
+      showSub('output', true);
+    });
+    function stackText() { return stack.join('\n') + '\n'; }
+    function stackCards() { return stack.map(rtrim); }
+    $('stack-replace').addEventListener('click', function () { setDeck(stackCards()); $('editor-status').textContent = 'The punched cards replaced the deck.'; showSub('deck', true); });
+    $('stack-append').addEventListener('click', function () { setDeck(getDeck().concat(stackCards())); $('editor-status').textContent = 'The punched cards were added to the end of the deck.'; showSub('deck', true); });
+    $('stack-copy').addEventListener('click', function () {
+      var status = $('stack-status');
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = stackText();
+        document.body.appendChild(ta);
+        ta.select();
+        var done = false;
+        try { done = document.execCommand('copy'); } catch (e) { done = false; }
+        document.body.removeChild(ta);
+        status.textContent = done ? 'The cards were copied to the clipboard.' : 'Copying failed, so please use Download instead.';
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(stackText()).then(function () { status.textContent = 'The cards were copied to the clipboard.'; }, fallback);
+      else fallback();
+    });
+    $('stack-download').addEventListener('click', function () {
+      var url = URL.createObjectURL(new Blob([stackText()], { type: 'text/plain' }));
+      var a = document.createElement('a');
+      a.href = url; a.download = 'punched-cards.txt';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      $('stack-status').textContent = 'The cards were downloaded as a text file.';
+    });
+
+    setDeck(samples[0].cards);
+    return {
+      open: function (cards) {
+        setDeck(cards);
+        $('editor-status').textContent = 'The deck from the sheet is loaded. Changes here do not affect the sheet.';
+        showTab('bench');
+        showSub('deck');
+        $('panel-bench').focus({ preventScroll: true });
+        $('panel-bench').scrollIntoView({ block: 'start' });
+      }
+    };
+  })();
+
+  updateProgress();
+})();
+</script>
+</body>
+</html>
