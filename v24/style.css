@@ -1,0 +1,915 @@
+/* (Drawn as pixel art: see "the room in pixels" at the end of this file. Below, the room's
+   plan and its stations, as v21 laid them out, with the pixel faces and hard shadows.)
+   A composer's workroom at a computing centre, lived in: a blue papered wall with two
+   prints, one oak shelf on wire ladders, a walnut desk on a slender black trestle with a
+   birch stool under it, plants on the floor at either end, a pothos and a mug on it,
+   and on the desk a computer with a desktop of its own. The room is drawn straight on, as
+   an elevation, in quiet materials (plaster, oak, walnut, linen, aluminium) with soft
+   contact shadows and one muted accent, a terracotta. Nothing in the room is captioned:
+   each thing's name is its button's. Each thing is a station, one in front at a time,
+   reached from the room itself or from the menu in the corner:
+     the shelf        the reference manual in three linen volumes, the magazine
+                      (magazine.css) in its ledge, the miscellanea's file box, the deck box
+     the coding form  the decks' form, with the card in hand
+     the out tray     printout, job ticket, listing and the punch's stacker
+     the computer     a display and keyboard; on its screen, in a frame, the desktop
+                      (computer/), in the room's palette: see computer/style.css
+     the tape player  a reel-to-reel machine in a teak case
+   Inside a station the desk is seen from above, its oak under the papers. Text always
+   sits on paper or plaster, never on the wood. Type, after Neue Grafik, Knoll and IBM's
+   manuals: Work Sans (a grotesque) for display, Jost in small tracked capitals for labels,
+   Charis SIL for reading, Arvo on the manuals' spines, IBM Plex Mono for cards and code. */
+
+:root {
+  --wall: #ede4d4;
+  --paper-blue: #2b4560;   /* the room's wallpaper, a deep blue */
+  --wall-low: #e3d8c6;
+  --oak: #c8a97e;
+  --oak-d: #a98b68;
+  --oak-l: #dcc6a7;
+  --walnut: #4e3727;
+  --walnut-d: #3d2b20;
+  --walnut-l: #7a5a45;
+  --floor: #b9a184;
+  --paper: #f7f4ec;
+  --ivory: #f4f0e7;
+  --stone: #d8d1c3;
+  --ink: #1e1d1b;
+  --ink-soft: #5d5851;
+  --rule: #d6cfc2;
+  --accent: #b5462b;     /* the vermilion-terracotta of Knoll and Arts & Architecture, used sparingly */
+  --ochre: #c99a2e;      /* the ochre of the period's flat colour fields */
+  --sage: #7d8a78;
+  --slate: #49555a;
+  --linen: #c7bba5;
+  --brass: #b0975f;
+  --steel: #d2d0cb;
+  --steel-d: #8f8c86;
+  --form-ink: #3b6a55;
+  /* soft contact shadows: a lift for what lies on the desk, a fall for what stands */
+  --lift: 4px 4px 0 rgba(30, 22, 14, 0.3);
+  --lift-em: calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(30, 22, 14, 0.3);
+  /* what stands against the wall casts a soft shadow on it, down and to the right */
+  --cast: drop-shadow(calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(40, 28, 18, 0.3));
+  /* a fine grain, for plaster, paper and wood: fractal noise, very faint */
+  --grain: none;   /* a pixel picture has no grain finer than its pixels */
+
+  /* a grotesque after the early Stephenson Blake and Bauer cuts (Akzidenz-Grotesk's family), as in
+     Neue Grafik and Knoll's advertising; Futura's cousin for labels, as Arts & Architecture set them;
+     a Charter-like text face for the Century of IBM's manuals; a slab for the manuals' spines */
+  --display: "Fusion Pixel 10px Proportional", monospace;
+  --slab: "Fusion Pixel 10px Proportional", monospace;
+  --sans: "Fusion Pixel 10px Proportional", monospace;
+  --serif: "Fusion Pixel 10px Proportional", monospace;
+  --mono: "Fusion Pixel 10px Monospaced", monospace;
+
+  /* the desk seen from above: pale oak, a faint grain running across */
+  --oak-top: url(assets/oak-tile.png) 0 0 / 128px 64px repeat, var(--oak);
+}
+
+* { box-sizing: border-box; }
+html { height: 100%; background: var(--wall); }
+body {
+  height: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+h1, h2, h3, h4 { line-height: 1.2; }
+code, kbd, pre { font-family: var(--mono); font-size: 0.95em; }
+td code { white-space: nowrap; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+[tabindex="-1"]:focus { outline: none; }
+[tabindex="-1"]:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* small tracked capitals: every label and caption */
+.caps, .obj-tag, .running, .contents-h, .tray-plate, .tray-div, .desk-tag, .kicker, .sheet-note, .engraved,
+.fanfold h3, .job-ticket h3, .stack-box h3, .in-hand summary, .maker, .form-boxes dt {
+  font-family: var(--sans);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---------- the room: always exactly one screen tall ---------- */
+
+.room { height: 100vh; height: 100dvh; }
+.desk { position: relative; height: 100%; display: grid; grid-template-rows: minmax(0, 1fr); background: var(--oak-top); }
+.desk[data-at="desk"] { background: var(--paper-blue); }
+.desk > * { min-width: 0; min-height: 0; }
+
+/* ---------- the menu in the corner ---------- */
+
+.drawer { position: absolute; top: 0.8rem; right: 1rem; z-index: 5; display: flex; align-items: flex-start; gap: 0.5rem; }
+.menu-btn { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.menu-btn::after { content: ""; display: inline-block; width: 0.45rem; height: 0.45rem; margin-left: 0.55rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-0.18rem) rotate(45deg); }
+.menu-btn[aria-expanded="true"]::after { transform: translateY(0.08rem) rotate(-135deg); }
+:where(.menu-btn:hover:not(:disabled)) { background: #3a3835; }
+.places { position: absolute; top: calc(100% + 0.5rem); right: 0; width: 17rem; padding: 0.6rem 0.4rem; background: var(--paper); border: 1px solid var(--rule); box-shadow: var(--lift); }
+.places[hidden] { display: none; }
+.labels { display: grid; margin: 0; padding: 0; list-style: none; }
+.label { display: block; width: 100%; padding: 0.35rem 0.8rem; font: 400 20px/1.3 var(--sans); text-align: left; color: var(--ink); background: transparent; border: 0; border-radius: 0; box-shadow: none; cursor: pointer; }
+.label:hover { background: var(--ivory); }
+/* the place in front: a rule at its left */
+.label[aria-current="true"] { font-weight: 600; box-shadow: inset 2px 0 0 var(--accent); }
+.back { margin: 0.5rem 0 0; padding: 0.6rem 0.8rem 0.1rem; font: 400 20px/1.3 var(--sans); border-top: 1px solid var(--rule); }
+
+/* ---------- stations ---------- */
+
+.stations { height: 100%; }
+.station { height: 100%; min-height: 0; overflow: auto; padding: 3.8rem 1.6rem 1.4rem; }
+.station[hidden] { display: none; }
+
+/* buttons: hairline outlines, square corners; zero specificity so each object restyles its own */
+:where(button, select) {
+  font-family: var(--sans);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  padding: 0.3rem 0.9rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+:where(button:not(.obj, .deck, .key, .label):hover:not(:disabled)) { background: var(--ivory); }
+:where(button:not(.obj, .deck, .key, .label):active:not(:disabled)) { background: var(--stone); }
+:where(button:disabled) { color: var(--ink-soft); border-color: var(--steel-d); border-style: dashed; cursor: default; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }
+.status { font-family: var(--sans); font-size: 20px; }
+
+.desk-tag { width: fit-content; margin: 0; padding: 0.2rem 0 0.2rem; font-size: 20px; line-height: 1.4; color: var(--ink); border-bottom: 1px solid var(--ink); }
+
+/* ================================================================ the room, in elevation */
+/* The drawing is 92em by 46em, and its em is chosen to fit the station; below a size
+   where its captions would be too small, it becomes a list. */
+
+.st-desk { container-type: size; display: grid; padding: 0; overflow: hidden; }
+.scene {
+  position: relative;
+  align-self: end;
+  justify-self: center;
+  width: 92em;
+  height: 46em;
+  font-size: min(calc(100cqw / 92), calc(100cqh / 46.5));
+  font-family: var(--sans);
+}
+.scene ul { margin: 0; padding: 0; list-style: none; }
+.scene .obj { padding: 0; font: inherit; color: inherit; background: none; border: 0; border-radius: 0; box-shadow: none; cursor: pointer; }
+.scene .obj:focus-visible { outline: none; }
+
+/* wallpaper (assets/wallpaper.svg): a deep blue under a half-drop ogee trellis in a paler
+   hairline, a cream seed pod with leaves and an ochre crown in each cell, small flowers at
+   the crossings; hung to the em so it scales with the room, a little darker toward the floor;
+   the oak floor along its foot */
+.wall { position: absolute; inset: -100vh -100vw 0; background: var(--grain), linear-gradient(transparent 55%, rgba(18, 28, 42, 0.2)), url(../v21/assets/wallpaper.svg) 0 0 / 6em 9em, var(--paper-blue); }
+/* the light from the window, a soft parallelogram across the wall, over the scene only */
+.wall::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(112deg, rgba(255, 246, 228, 0) 4%, rgba(255, 246, 228, 0.24) 14%, rgba(255, 246, 228, 0.16) 30%, rgba(255, 246, 228, 0) 42%),
+    radial-gradient(ellipse 40% 55% at 0 30%, rgba(255, 244, 226, 0.22), transparent 70%);
+  background-attachment: fixed;   /* laid out on the screen, so the light falls the same whatever the wall's size */
+  pointer-events: none;
+}
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 1.6em; background: linear-gradient(rgba(60, 40, 20, 0.3) 0 0.12em, transparent 0.12em), repeating-linear-gradient(90deg, transparent 0 11em, rgba(70, 48, 26, 0.3) 11em 11.06em), var(--grain), linear-gradient(var(--floor), #a88f72); }
+
+/* in the title's place, a print: a sieve as rows of dots, framed in oak over a wide mat */
+.wall-print { position: absolute; left: 9.4em; top: 3em; width: 19em; height: auto; filter: drop-shadow(0.4em 0.3em 0 rgba(40, 28, 18, 0.18)); pointer-events: none; }
+/* beside it, a Dada print: Ball's sound poem in mixed faces, red and black, in a black frame */
+.wall-dada { left: 31.2em; top: 4.2em; width: 11.4em; }
+/* the menu's places, numbered, the numeral in the accent */
+.label .no { margin-right: 0.6em; font-weight: 600; color: var(--accent); }
+.label .no { display: inline-block; width: 1.2em; }
+
+/* --- the bookshelf (assets/shelf.webp): a String-style shelf, one long oak board on two
+   wire ladders, under a screen print of ruled surfaces, with a steel bookend. On the board,
+   each a picture and a button: the manual's three volumes, the magazine in a walnut ledge
+   before two back issues, the miscellanea's folders in a sage file box, and the deck box.
+ --- */
+.shelf-unit { position: absolute; left: 47em; top: 2.4em; width: 40em; height: 12em; }
+.shelf-pic { position: absolute; left: 0; top: -3.2em; width: 40em; height: 15.2em; pointer-events: none; }
+.shelf > li { position: absolute; z-index: 2; bottom: 2.4em; }
+.sh-vols { left: 2.6em; }
+.sh-mag { left: 13.4em; }
+.sh-folio { left: 21.8em; }
+.sh-box { left: 27.4em; }
+.vols { display: flex; align-items: flex-end; gap: 0.12em; filter: var(--cast); }
+.shelf .obj { position: relative; display: block; }
+.shelf .obj > span:first-child { display: block; filter: var(--cast); transition: transform 0.25s ease, filter 0.25s ease; }
+.shelf .obj:hover > span:first-child, .shelf .obj:focus-visible > span:first-child { transform: translateY(-0.35em); filter: drop-shadow(0.75em 0.6em 0 rgba(40, 28, 18, 0.22)); }
+/* the magazine stands in its ledge: back issues behind, the cover (its own plate, drawn
+   live by magazine.js), the walnut lip in front */
+.o-mag { width: 7.6em; height: 9em; }
+.o-mag .mini-mag { position: absolute; z-index: 1; left: 0.7em; bottom: 0.2em; width: 6.2em; box-shadow: 0.08em 0.1em 0 rgba(30, 22, 14, 0.25); }
+.shelf .o-mag:hover > span:first-child, .shelf .o-mag:focus-visible > span:first-child { transform: translateY(-0.9em); }
+.ledge { position: absolute; left: 0; bottom: 0; width: 7.6em; height: 9em; pointer-events: none; }
+.ledge-back { z-index: 0; filter: var(--cast); }
+.ledge-front { z-index: 2; }
+.o-folio .folders { width: 4.6em; height: 7.4em; }
+.folders img, .clipboard img, .deckbox img, .outtray img { display: block; width: 100%; height: 100%; }
+/* cloth-bound volumes (assets/vol-1..3.webp): the round of the spine in two flat bands and a
+   halftone, the stamping a hair out of register, the number on a pasted paper label */
+.spine { position: relative; display: block !important; padding: 0 !important; transition: transform 0.2s ease; }
+.spine.v1 { width: 3.2em; height: 9.8em; }
+.spine.v2 { width: 2.9em; height: 9.1em; }
+.spine.v3 { width: 3.05em; height: 9.5em; }
+.sp-pic { display: block; width: 100%; height: 100%; }
+.spine .sp-no, .spine .sp-t { display: none; }
+.spine:hover, .spine:focus-visible { transform: translateY(-0.45em); }
+.spine:focus-visible { outline: 0.12em solid var(--ink) !important; outline-offset: 0.2em !important; }
+.shelf-tag { margin: 0; font: 500 0.78em/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+
+/* --- the desk: a thin walnut top on a slender black trestle --- */
+.desk-body {
+  position: absolute; left: 10em; right: 10em; top: 30em; height: 2em;
+  background: linear-gradient(var(--walnut-l) 0 0.12em, var(--walnut) 0.12em 0.85em, var(--walnut-d) 0.85em 0.95em, transparent 0.95em),
+              linear-gradient(transparent 0.95em, var(--walnut-d) 0.95em) 4em 0 / calc(100% - 8em) 100% no-repeat;
+}
+.desk-body::after { content: ""; position: absolute; left: 0; right: 0; top: 0.85em; height: 2.2em; background: linear-gradient(rgba(30, 22, 14, 0.16), transparent); pointer-events: none; }
+/* the grain along the walnut's front edge */
+.desk-body::before { content: ""; position: absolute; left: 0; right: 0; top: 0.12em; height: 0.73em; background: repeating-linear-gradient(90.6deg, transparent 0 2.4em, rgba(255, 225, 190, 0.08) 2.4em 2.7em, transparent 2.7em 5.6em), repeating-linear-gradient(89.4deg, transparent 0 3.9em, rgba(0, 0, 0, 0.12) 3.9em 4em, transparent 4em 7.3em), var(--grain); pointer-events: none; }
+/* the desk's shadow on the floor, thrown to the right */
+.floor::after { content: ""; position: absolute; left: 6em; right: 0; top: -0.4em; height: 1.6em; background: radial-gradient(closest-side, rgba(40, 26, 14, 0.32), transparent); }
+.leg { position: absolute; top: 0.95em; width: 0.32em; height: 13.6em; }
+.leg::before, .leg::after { content: ""; position: absolute; top: 0; width: 0.32em; height: 13.8em; background: var(--ink); transform-origin: top center; }
+.leg::before { transform: rotate(9deg); }
+.leg::after { transform: rotate(-9deg); }
+.leg-l { left: 5.5em; }
+.leg-r { right: 5.5em; }
+/* the lamp, a picture (assets/lamp.webp): a thin black stem and arm and a slant-cut shade,
+   after Serge Mouille's lamps of the 1950s; the pool of warm light it throws on the desk and
+   the wall stays a gradient */
+.lamp { position: absolute; left: 10.6em; top: 19.4em; width: 7em; height: 10.6em; filter: var(--cast); }
+.lamp img { position: relative; display: block; width: 100%; height: 100%; }
+.lamp::before { content: ""; position: absolute; left: 3.6em; top: 1.4em; width: 16em; height: 9.6em; background: radial-gradient(ellipse 50% 45% at 30% 72%, rgba(255, 214, 150, 0.55), rgba(255, 220, 160, 0.16) 55%, transparent 75%); transform: rotate(12deg); transform-origin: 0 0; pointer-events: none; mix-blend-mode: multiply; filter: saturate(0.8); }
+
+/* --- the things on the desk, set by hand in loose groups: the lamp, the pothos, the coding
+   form and a mug at the left; the out tray by the computer; the tape player at the end. The
+   room carries no captions: each thing's name is its button's, read aloud, and shows in the
+   list the room becomes on a small screen --- */
+.desk-top { position: absolute; left: 0; right: 0; top: 0; height: 30em; }
+.desk-top > li { position: absolute; bottom: 0; }
+.desk-top > li:nth-child(1) { left: 25.8em; }
+.desk-top > li:nth-child(2) { left: 37.6em; }
+.desk-top > li:nth-child(3) { left: 48.6em; }
+.desk-top > li:nth-child(4) { left: 66.4em; }
+.desk-top .obj { display: block; }
+.scene .obj-tag, .scene .shelf-tag { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.scene .obj:focus-visible > span:first-child { outline: 0.12em solid var(--ink); outline-offset: 0.35em; }
+.desk-top .obj > span:first-child { display: block; filter: var(--cast); transition: transform 0.25s ease, filter 0.25s ease; }
+.desk-top .obj:hover > span:first-child, .desk-top .obj:focus-visible > span:first-child { transform: translateY(-0.35em); filter: drop-shadow(0.75em 0.6em 0 rgba(40, 28, 18, 0.22)); }
+/* what makes it lived in: a pothos trailing over the desk's edge, a mug by the form, a
+   birch stool, after Aalto's, under the computer */
+.pothos, .mug, .stool, .plant { position: absolute; pointer-events: none; }
+.pothos img, .mug img, .stool img, .plant img { display: block; width: 100%; height: 100%; }
+.pothos { left: 16.4em; top: 21.8em; width: 10em; height: 11.6em; z-index: 1; filter: var(--cast); }
+.mug { left: 33.4em; top: 27em; width: 3.2em; height: 3em; filter: var(--cast); }
+.stool { left: 53.1em; top: 35.8em; width: 8.4em; height: 9.2em; z-index: 1; filter: drop-shadow(0 0.2em 0.5em rgba(20, 24, 34, 0.3)); }
+/* a plant on the floor at each end of the desk: a fiddle-leaf fig on a teak stand, a
+   monstera on brass hairpin legs */
+.plant { bottom: 1em; z-index: 1; filter: drop-shadow(0.5em 0.2em 0 rgba(20, 24, 34, 0.32)); }
+.plant-l { left: 0.6em; width: 11em; height: 21em; }
+.plant-r { right: 0.4em; width: 14em; height: 16em; }
+/* where each thing meets the desk, a short soft shadow */
+.desk-top > li::after { content: ""; position: absolute; left: 4%; right: -6%; bottom: -0.25em; height: 0.55em; background: radial-gradient(closest-side, rgba(25, 15, 8, 0.38), transparent); pointer-events: none; }
+
+/* the coding form on its clipboard, stood against the wall; the deck box, walnut, the cards
+   upright in it with their guide tabs; the out tray, graphite, fan-fold printout and two
+   cards in it. All three are pictures (assets/coding-form, deck-box, out-tray.webp) */
+.clipboard { position: relative; display: block; width: 7em; height: 9.4em; transform: rotate(1.5deg); }
+.deckbox { position: relative; display: block; width: 9.6em; height: 6.4em; }
+.outtray { position: relative; display: block; width: 10.4em; height: 4.4em; }
+
+/* the tape player, a picture (assets/tape-room.webp): a reel-to-reel machine in a teak case,
+   its brushed aluminium deck over a graphite strip of keys, knobs and a level meter */
+.player { position: relative; display: block; width: 15em; height: 10.6em; }
+.player img { display: block; width: 100%; height: 100%; }
+/* the computer, a picture (assets/computer-room.webp): a display in a stone-white hood on a
+   graphite plinth and a low keyboard, after the Olivetti machines of Sottsass and Bellini; on
+   its screen, the desktop it runs */
+.computer { position: relative; display: block; width: 17em; height: 13em; }
+.computer img { display: block; width: 100%; height: 100%; }
+
+/* --- below a readable size, the room becomes a list of what is in it --- */
+@container (max-width: 1011px), (max-height: 505px) {
+  /* (the station is the query container, so the drawing pads and scrolls itself) */
+  .scene { align-self: stretch; justify-self: stretch; width: auto; height: 100%; overflow: auto; padding: 3.8rem 1.1rem 1.6rem; font-size: 20px; display: grid; align-content: start; gap: 1.6rem; }
+  .wall, .desk-body, .lamp, .shelf-pic, .wall-print, .pothos, .mug, .stool, .plant, .scene .swap { display: none; }
+  .scene .obj-tag, .scene .shelf-tag { position: static !important; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
+  .desk-top > li { position: static; }
+  .desk-top > li::after { display: none; }
+  .shelf, .vols, .desk-top .obj > span:first-child, .shelf .obj > span:first-child { filter: none; }
+  .shelf-unit, .shelf, .desk-top { position: static; width: auto; height: auto; }
+  .shelf-unit { display: grid; gap: 0; }
+  .shelf-unit::before, .desk-top::before { display: block; padding-bottom: 0.5rem; font: 500 20px/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--ink); }
+  .shelf-unit::before { content: "On the bookshelf"; }
+  .desk-top::before { content: "On the desk"; }
+  .shelf-tag { position: static; order: 1; margin: 0.5rem 0 0; font-size: 20px; }
+  .shelf { order: 2; }
+  .shelf, .desk-top { display: grid; grid-template-columns: minmax(0, 1fr); justify-content: stretch; align-items: stretch; gap: 0; }
+  .desk-top > li { width: 100%; }
+  .shelf > li { position: static; }
+  .vols { display: grid; }
+  .sh-vols { display: grid; }
+  .sh-vols .shelf-tag { order: -1; }
+  .ledge { display: none; }
+  .scene .obj, .desk-top .obj, .spine { display: grid !important; grid-template-columns: 3.4rem minmax(0, 1fr); grid-template-rows: auto; align-items: center; justify-items: start; gap: 0.9rem; width: 100%; height: auto; min-height: 3.4rem; padding: 0.5rem 0.2rem !important; text-align: left; background: none !important; color: var(--ink) !important; border-bottom: 1px solid var(--rule) !important; border-radius: 0; box-shadow: none important; transform: none !important; }
+  .spine .sp-pic { display: none; }
+  .spine .sp-no { display: grid; place-items: center; width: 2rem; height: 2.6rem; font-size: 20px; color: var(--paper); background: var(--slate); }
+  .spine.v1 .sp-no { background: var(--linen); color: var(--ink); }
+  .spine.v3 .sp-no { background: var(--accent); }
+  .spine .sp-t { display: block; writing-mode: horizontal-tb; margin: 0; font: 600 20px/1.2 var(--display); letter-spacing: 0; text-transform: none; }
+  .spine .sp-no { order: 0; margin: 0; box-shadow: none; border-radius: 0; }
+  .obj-tag { align-self: center; padding: 0; font-size: 20px; white-space: normal; }
+  .obj-tag::before { display: none; }
+  .desk-top .obj > span:first-child, .shelf .obj > span:first-child { font-size: 20px; transform: none !important; }
+  .o-mag { width: 100%; height: auto; }
+  .o-mag .mini-mag { position: relative; left: auto; bottom: auto; }
+}
+
+/* ================================================================ the manual, open */
+/* a slate linen case round two pages */
+
+.st-manual, .st-folio { padding-left: 1.2rem; padding-right: 1.2rem; }
+.spread {
+  display: grid;
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 2px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 2px);
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: 0.6rem;
+  background-color: var(--slate);
+  border-radius: 0;
+  box-shadow: var(--lift);
+}
+.page { position: relative; min-height: 0; padding: 1.8rem 2rem 1.3rem; background: var(--grain), var(--paper); }
+.page-l { overflow: auto; box-shadow: inset -1.4rem 0 0 -1.4rem rgba(30, 22, 14, 0.18); }
+.page-r { display: flex; flex-direction: column; padding-left: 2.6rem; box-shadow: inset 0 0 1.4rem -1.4rem rgba(30, 22, 14, 0.18); }
+.chapters { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 0.6rem; }
+.page-l h2 { margin: 0 0 1.6rem; padding-bottom: 0.9rem; font: 600 20px/1.1 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
+.contents-h { margin: 0 0 0.8rem; font-size: 20px; color: var(--ink-soft); }
+.contents { margin: 0; padding: 0; list-style: none; }
+.contents .vol { margin: 0 0 1.1rem; }
+.vol-h { display: block; font: 600 20px/1.35 var(--display); }
+.contents ol { margin: 0.25rem 0 0; padding: 0; list-style: none; }
+.contents ol li { margin: 0; }
+.contents button { display: block; width: 100%; padding: 0.2rem 0; text-align: left; font: 400 20px/1.4 var(--serif); background: none; border: 0; border-radius: 0; border-bottom: 1px solid var(--rule); box-shadow: none; }
+.contents button:hover { color: var(--accent); }
+.contents button[aria-current="page"] { font-weight: 700; }
+.chapter { max-width: 66ch; }
+.running { margin: 0 0 0.6rem; font-size: 20px; color: var(--ink-soft); }
+.chapter h3 { margin: 0 0 1.1rem; font: 600 40px/1.12 var(--display); letter-spacing: -0.015em; }
+.chapter table { width: 100%; margin: 1rem 0; border-collapse: collapse; }
+.chapter th, .chapter td { padding: 0.35rem 0.7rem 0.35rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+.chapter th { font: 500 20px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
+.decklist dt { margin-top: 0.9rem; font: 600 20px var(--serif); }
+.decklist dd { margin: 0.2rem 0 0; }
+.page-turn { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0.5rem 1rem; max-width: 66ch; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--ink); }
+.folio-no { margin-left: auto; font: 400 20px var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
+
+/* ================================================================ the miscellanea, open */
+/* a stone-grey folder lying open: its index on the left flap, the sheets on the right */
+
+.folio-inside {
+  display: grid;
+  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0.7rem;
+  height: 100%;
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: 0.7rem;
+  background: #bfae8e;
+  border-radius: 0;
+  box-shadow: var(--lift);
+}
+.flap { min-height: 0; padding: 1.2rem 1.1rem; overflow: auto; background: var(--grain), var(--ivory); }
+.flap h2 { margin: 0 0 1.2rem; padding-bottom: 0.8rem; font: 600 20px/1.1 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
+.folio-index { display: grid; margin: 0; padding: 0; list-style: none; }
+.folio-index button { display: flex; align-items: baseline; gap: 0.7rem; width: 100%; padding: 0.3rem 0; text-align: left; font: 400 20px/1.35 var(--serif); background: none; border: 0; border-radius: 0; border-bottom: 1px solid var(--rule); box-shadow: none; }
+.idx-letter { flex: none; width: 1.1rem; font: 700 20px/1 var(--slab); color: var(--ink-soft); }
+.folio-index button[aria-current="page"] .idx-letter { color: var(--accent); }
+.folio-index button[aria-current="page"] .idx-title { font-weight: 700; }
+.folio-index button:hover .idx-title { color: var(--accent); }
+.flap-r { display: flex; flex-direction: column; gap: 0.7rem; min-height: 0; }
+.sheets { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0 0.6rem 0.6rem 0; }
+.flap-r .page-turn { max-width: none; margin: 0; padding: 0.5rem 0.9rem; background: var(--ivory); border: 0; }
+
+.sheet { display: grid; gap: 1.1rem; padding: 1.4rem clamp(0.9rem, 2.5vw, 2rem) 1.6rem; background: var(--grain), var(--paper); box-shadow: var(--lift); }
+.sheet[hidden] { display: none; }
+.sheet.two { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+.sheet.two:has(.printout) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.sheet-note, .sheet h3 { grid-column: 1 / -1; }
+.sheet-note { margin: 0 0 -0.6rem; font-size: 20px; color: var(--accent); }
+.sheet h3 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0; padding-bottom: 0.7rem; font: 600 40px/1.12 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
+.sheet-letter { flex: none; font: 700 0.9em/1 var(--slab); color: var(--ink-soft); }
+.exhibit { margin: 0; min-width: 0; }
+.exhibit .art { margin: 0 0 0.9rem; }
+.exhibit .art svg { width: 100%; }
+.exhibit .art svg, .exhibit .art img.drawing { display: block; height: auto; box-shadow: 0 0 0 1px var(--rule); }
+/* the drawings are SVG files (assets/misc/), their lines merged and their type in outline */
+/* each drawing as wide as the sheet allows, or as 52% of the window's height lets it be */
+.exhibit .art img.drawing { max-width: 100%; max-height: none; margin: 0 auto; }   /* at 2x: the size its attributes give, twice its pixels */
+.exhibit figcaption { max-width: 66ch; font: 20px/1.6 var(--serif); color: var(--ink-soft); }
+.exhibit figcaption cite { color: var(--ink); }
+.exhibit.printout .art { overflow-x: auto; }
+.exhibit.plan .art { max-width: 30rem; }
+/* a photographic print mounted on the sheet, in its white border */
+.exhibit.photo .art img { display: block; max-width: 100%; height: auto; max-height: none; padding: 0.4rem; background: #fff; box-shadow: var(--lift); }
+.exhibit.photo.tall { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0 1.6rem; }
+.exhibit.photo.tall .art { flex: none; max-width: 100%; }
+.exhibit.photo.tall .art img { max-height: none; }
+.exhibit.photo.tall figcaption { flex: 1 1 16rem; }
+.st {
+  margin: 0; padding: 0.4rem 2.2rem; font-size: 20px; line-height: 1.45; color: #15200f; white-space: pre;
+  background:
+    radial-gradient(circle at 50% 50%, #d4cdbd 0 0.3rem, transparent 0.34rem) 0.3rem 0.3rem / 1.2rem 1.27rem repeat-y,
+    radial-gradient(circle at 50% 50%, #d4cdbd 0 0.3rem, transparent 0.34rem) calc(100% - 0.3rem) 0.3rem / 1.2rem 1.27rem repeat-y,
+    repeating-linear-gradient(to bottom, #fdfdf8 0 4.35em, #dfe9da 4.35em 8.7em);
+}
+/* a book jacket of the period: a stone ground, a slate block, the title in a serif */
+.jacket { justify-self: start; max-width: 24rem; }
+.jacket-art {
+  position: relative; display: grid; place-items: end start; width: min(14rem, 100%); aspect-ratio: 2 / 3; margin: 0 auto; padding: 1.1rem;
+  background: linear-gradient(var(--slate) 0 46%, transparent 46%), radial-gradient(circle at 70% 46%, var(--accent) 0 1.9rem, transparent 1.95rem), var(--stone);
+  box-shadow: var(--lift);
+}
+.jacket-label { font: 600 20px/1.05 var(--display); letter-spacing: -0.015em; text-align: left; color: var(--ink); }
+
+/* ================================================================ the magazine's page turns */
+/* the same strip and buttons as the manual's and the folder's page turns */
+.mag-turn { justify-self: stretch; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; max-width: 58rem; width: 100%; margin: 0 auto; padding: 0.5rem 0.9rem; background: var(--grain), var(--ivory); box-shadow: var(--lift); }
+.mag-index ol { display: flex; gap: 0.25rem; margin: 0; padding: 0; list-style: none; }
+.mag-index li { margin: 0; }
+.mag-index button { min-width: 2rem; padding: 0.3rem 0.5rem; font-variant-numeric: tabular-nums; }
+.mag-index button[aria-current="page"] { color: var(--paper); background: var(--ink); }
+.mag-dot { font: inherit; }
+.mag-turn > [data-turn="-1"] { order: 1; }
+.mag-turn > .mag-next { order: 2; }
+.mag-index { order: 3; }
+.mag-folio { order: 4; }
+.mag-folio { margin: 0 0 0 auto; font: 400 20px var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
+
+/* ================================================================ the coding form and the deck box */
+
+.st-form { display: grid; grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 1.4rem; }
+
+/* the deck box from above: a walnut rim round the well, the decks standing in it */
+.tray { display: flex; flex-direction: column; min-height: 0; padding: 0.7rem; background: var(--walnut); border-radius: 0; box-shadow: var(--lift); }
+.tray-plate { width: fit-content; margin: 0 auto 0.6rem; padding: 0.15rem 0.9rem; font-size: 20px; line-height: 1.4; color: var(--ink); background: var(--ivory); border: 2px solid var(--brass); }
+.tray-hint { margin: 0 0 0.6rem; padding: 0.3rem 0.6rem; font: 400 20px/1.4 var(--serif); color: var(--ink); background: var(--ivory); }
+/* each group behind a divider card with its tab */
+.tray-div { width: fit-content; margin: 0.6rem 0 0.4rem; padding: 0.12rem 0.8rem; font-size: 20px; line-height: 1.5; color: var(--ink); background: var(--stone); border-radius: 0; }
+.tray-well h4:nth-of-type(3) { background: var(--accent); color: var(--paper); }
+.tray-well { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0.4rem 0.6rem 0.6rem; background: var(--walnut-d); box-shadow: inset 0 0.3rem 0 rgba(0, 0, 0, 0.35); }
+.decks { display: grid; gap: 0.4rem; margin: 0 0 0.6rem; padding: 0; list-style: none; }
+
+/* each deck: an index card standing in the box */
+.deck {
+  position: relative;
+  display: grid;
+  width: 100%;
+  padding: 0.4rem 0.8rem 0.45rem 0.9rem;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--ivory);
+  border: 0;
+  border-left: 3px solid var(--band, var(--linen));
+  border-radius: 0;
+  box-shadow: 0 0.1rem 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.deck-label { font: 400 20px/1.3 var(--serif); }
+.deck-count { font: 400 20px/1.3 var(--sans); letter-spacing: 0.06em; color: var(--ink-soft); }
+.deck:hover { transform: translateY(-2px); }
+.deck:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+.deck.out-of-tray { transform: translateX(0.45rem); background: var(--paper); }
+.deck.out-of-tray .deck-count::after { content: " \00b7  on the form"; }
+#deck-tray-music .deck { --band: var(--slate); }
+#deck-tray-magazine .deck { --band: var(--accent); }
+
+/* the coding form: a pad of green-ruled sheets */
+.pad { display: flex; flex-direction: column; gap: 0.9rem; min-height: 0; padding-bottom: 6px; }
+.pad-sheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 1.6rem clamp(0.8rem, 2vw, 1.7rem) 0.9rem;
+  background: linear-gradient(var(--form-ink) 0 0.4rem, transparent 0.4rem), var(--paper);
+  box-shadow: 0 2px 0 -1px #efece4, 0 4px 0 -2px #e4dfd3, var(--lift);
+}
+.pad-sheet > * { flex: none; }
+.form-head { display: flex; flex-wrap: wrap; align-items: end; gap: 0.5rem 2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--form-ink); }
+.form-head h2 { margin: 0; font: 600 20px/1.15 var(--display); letter-spacing: -0.01em; color: var(--form-ink); }
+.form-boxes { display: flex; flex-wrap: wrap; margin: 0; border: 1px solid var(--form-ink); }
+.form-boxes > div { padding: 0.15rem 0.6rem 0.25rem; border-left: 1px solid var(--form-ink); }
+.form-boxes > div:first-child { border-left: 0; min-width: 14rem; }
+.form-boxes dt { font-size: 20px; line-height: 1.3; color: var(--form-ink); }
+.form-boxes dd { margin: 0; font: 500 20px/1.35 var(--sans); color: var(--ink); }
+.pad .toolbar { margin: 0.6rem 0 0.4rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; margin: 0 0 0.5rem; font: 400 20px var(--sans); color: var(--form-ink); }
+.legend .key span { display: inline-block; width: 1.4em; height: 0.9em; margin-right: 0.35em; border: 1px solid var(--form-ink); vertical-align: -0.05em; }
+.legend .f1 { background: #e5eadc; }
+.legend .f2 { background: #cfdccb; }
+.legend .f3 { background: #fffdf6; }
+.pad-sheet > .editor { flex: 1 1 auto; min-height: 7rem; overflow: auto; padding: 0.5rem 0.4rem 0.6rem; background: #fffdf6; border: 1px solid var(--form-ink); }
+.editor-inner { display: inline-block; min-width: min-content; }
+.ruler, input.card, .row .num { font-family: var(--mono); font-size: 20px; }
+.ruler { margin: 0 0 2px calc(5ch + 1px); white-space: pre; line-height: 1.15; color: var(--form-ink); }
+.row { display: flex; align-items: center; white-space: nowrap; }
+.row .num { display: inline-block; width: 4ch; margin-right: 1ch; text-align: right; color: var(--form-ink); }
+.row.selected .num { color: var(--accent); font-weight: 700; }
+input.card {
+  box-sizing: content-box;
+  width: 80ch;
+  margin: 0;
+  padding: 0.1rem 0;
+  border: 1px solid #9fb2a6;
+  border-top-width: 0;
+  border-radius: 0;
+  color: #15130f;
+  line-height: 1.35;
+  background-color: #fffdf6;
+  background-image: linear-gradient(to right, #e5eadc 0 5ch, #cfdccb 5ch 6ch, #fffdf6 6ch 72ch, #e5eadc 72ch 80ch);
+}
+.row:first-child input.card { border-top-width: 1px; }
+input.card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.run-line { margin: 0.8rem 0 0; }
+#run-deck { padding: 0.45rem 1.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper); background: var(--ink); }
+#run-deck:hover { background: #3a3835; }
+
+/* the card in hand */
+.in-hand { flex: none; padding: 0.55rem 0.9rem 0.6rem; background: var(--paper); box-shadow: var(--lift); }
+.in-hand summary { cursor: pointer; font-size: 20px; }
+.in-hand .toolbar { margin: 0.4rem 0 0; }
+.cardview { overflow-x: auto; padding: 0.4rem 0.4rem 0.6rem 0.2rem; }
+.cardview svg { --card: #efe4c6; display: block; width: 100%; min-width: 36rem; height: auto; max-height: 24vh; filter: drop-shadow(0 0.2rem 0 rgba(30, 22, 14, 0.25)); }
+.run-slip, .tape-status { width: fit-content; max-width: 100%; margin: 0; padding: 0.45rem 0.9rem; font: 400 20px/1.45 var(--sans); background: var(--paper); box-shadow: var(--lift); }
+
+/* ================================================================ the out tray */
+
+.st-out { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 1rem; }
+.print-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.4rem; }
+.st-out .desk-tag { padding: 0.35rem 0.9rem; color: var(--paper); background: var(--ink); border: 0; }
+.out-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 23rem); grid-template-rows: minmax(0, 1fr); gap: 1.6rem; min-height: 0; }
+
+/* fan-fold paper: tractor holes in both margins, green bands every three lines */
+.fanfold {
+  --holes: radial-gradient(circle at 50% 50%, var(--oak-d) 0 0.28rem, transparent 0.3rem);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 1rem 2.4rem 1.1rem;
+  background:
+    var(--holes) 0.2rem 0.3rem / 1.5rem 1.27rem repeat-y,
+    var(--holes) calc(100% - 0.2rem) 0.3rem / 1.5rem 1.27rem repeat-y,
+    linear-gradient(to right, transparent 1.9rem, #ddd7c8 1.9rem calc(1.9rem + 1px), transparent calc(1.9rem + 1px) calc(100% - 1.9rem - 1px), #ddd7c8 calc(100% - 1.9rem - 1px) calc(100% - 1.9rem), transparent calc(100% - 1.9rem)),
+    var(--paper);
+  box-shadow: var(--lift);
+}
+.fanfold h3, .job-ticket h3 { flex: none; margin: 0 0 0.6rem; font-size: 20px; line-height: 1.3; }
+.printer { flex: 1 1 auto; min-height: 0; overflow: auto; }
+.printer pre { width: max-content; min-width: 100%; background: repeating-linear-gradient(to bottom, transparent 0 4.35em, #dfe9da 4.35em 8.7em); }
+.printer pre, .log pre, .listing pre { margin: 0; font-size: 20px; line-height: 1.45; color: #1c2219; }
+.pagebreak { margin: 0.75rem 0; font-family: var(--mono); font-size: 20px; letter-spacing: 0.15em; text-align: center; border-top: 1px dashed #8a9686; color: #3d4a3a; }
+.placeholder { margin: 0; color: var(--ink-soft); }
+
+.ticket-col { display: flex; flex-direction: column; gap: 1.1rem; min-height: 0; overflow: auto; padding: 0 0.6rem 0.8rem 0; }
+/* the job ticket: a buff card with a terracotta band */
+.job-ticket { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 6rem; padding: 0.9rem 1.1rem 1rem; background: #ebe2cf; border-top: 0.35rem solid var(--accent); box-shadow: var(--lift); }
+.log { min-height: 0; overflow: auto; }
+.log pre { font-family: var(--mono); white-space: pre-wrap; color: var(--ink); }
+.listing { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 3rem; padding: 0.6rem 1rem; background: var(--paper); box-shadow: var(--lift); }
+.listing[open] { flex: 1 1 auto; }
+.listing summary { flex: none; cursor: pointer; font: 400 20px var(--sans); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.listing[open] summary { padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.listing pre { min-height: 5rem; max-height: calc(100dvh - 25rem); margin-top: 0.5rem; overflow: auto; }
+.st-out.fresh .fanfold { animation: feed 0.5s ease-out; }
+@keyframes feed { from { transform: translateY(-0.8rem); } to { transform: none; } }
+
+/* the stacker: a walnut box at the foot of the ticket column, the punched cards in it */
+.stack-box { flex: none; display: flex; flex-direction: column; gap: 0.5rem; padding: 0.8rem 0.9rem 0.9rem; color: var(--paper); background: var(--walnut); border-radius: 0; box-shadow: var(--lift); }
+.stack-box h3 { margin: 0; font-size: 20px; line-height: 1.3; }
+.stack-count { margin: 0; font: 400 20px/1.4 var(--sans); }
+.stacker { display: flex; flex-wrap: wrap; gap: 0.35rem; max-height: 11.5rem; overflow: auto; padding: 0.3rem; background: var(--walnut-d); box-shadow: inset 0 0.2rem 0 rgba(0, 0, 0, 0.35); }
+.stacker:empty { display: none; }
+.stacker canvas { display: block; width: 168px; height: 76px; }
+.stack-tools { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.stack-tools button { padding: 0.22rem 0.7rem; border-color: var(--paper); }
+.stack-tools button:disabled { color: #cfc5b8; background: transparent; border-color: #a38c7b; }
+.stack-box .status { margin: 0; }
+.stack-box .status:empty { display: none; }
+button.thread { color: var(--paper); background: var(--accent); border-color: var(--accent); }
+.stack-box button:focus-visible { outline-color: var(--paper); }
+
+/* ================================================================ the tape player */
+/* a teak case round a brushed aluminium deck plate; pale keys, the play key terracotta */
+
+/* ================================================================ the computer */
+/* the display seen face on, as large as the room allows: its stone-white hood a nine-slice
+   picture (assets/bezel.webp) round the glass, and on the glass, in a frame, the desktop it
+   runs (computer/), drawn in its own style: an eight-colour screen of hatched pixels */
+.st-computer { display: grid; padding: 3.4rem 1.2rem 1rem; }
+.monitor {
+  position: relative; isolation: isolate; display: grid; min-width: 0; min-height: 0;
+  border: solid transparent; border-width: 23px 26px 45px;
+  border-image: url(assets/st/bezel.png) 12 13 23 / 24px 26px 46px round;
+}
+/* the hood's shadow on the desk is a box shadow behind it, not a filter over it: a filter
+   would resample the desktop's pixels, which must land whole on the screen's */
+.monitor::before { content: ""; position: absolute; inset: -23px -26px -45px; z-index: -1; border-radius: 0; box-shadow: 0.5rem 0.7rem 0 rgba(40, 28, 18, 0.3); pointer-events: none; }
+.glass { position: relative; overflow: hidden; background: #000; border-radius: 0; }
+/* computer.js sets the frame's place and size in whole device pixels, a whole number of the
+   desktop's two-pixel screen pixels, so nothing in it is resampled */
+.glass iframe { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0; background: #000; }
+.glass::after { content: ""; position: absolute; inset: 0; border-radius: 0; box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.45); pointer-events: none; }
+.screen-off { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 20px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--steel-d); }
+.screen-off[hidden] { display: none; }
+.badge { position: absolute; left: 0.3rem; right: 0.3rem; bottom: -36px; display: flex; align-items: center; gap: 0.6rem; margin: 0; font: 600 20px/1 var(--display); letter-spacing: 0.42em; text-transform: uppercase; color: var(--ink-soft); }
+.power { order: 2; margin-left: auto; width: 0.55rem; height: 0.55rem; border-radius: 0; background: var(--accent); box-shadow: 0 0 0 rgba(181, 70, 43, 0.55); }
+
+.st-tape { display: grid; place-items: center; }
+.recorder { width: min(100%, 62rem); padding: 0.8rem; background: linear-gradient(#b98a5e 0 0.25rem, transparent 0.25rem), var(--grain), linear-gradient(to right, #a87850, #9a6a43 6%, #9a6a43 94%, #7d5334); border-radius: 0; box-shadow: var(--lift); }
+.deck-plate {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  grid-template-areas: "maker maker" "reels reels" "counter controls" "status status";
+  gap: 0.9rem 1.6rem;
+  padding: 0.9rem 1.4rem 1.1rem;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 3px), linear-gradient(#e3e1dc, var(--steel));
+  border-radius: 0;
+}
+.maker { grid-area: maker; display: flex; align-items: center; gap: 0.8rem; margin: 0; font-size: 20px; letter-spacing: 0.32em; color: var(--ink); }
+/* the run lamp, lit while the tape plays */
+.run-lamp { width: 0.7rem; height: 0.7rem; border-radius: 0; background: var(--steel-d); }
+.recorder[data-state="playing"] .run-lamp { background: #c9603d; box-shadow: 0 0 0 0.05rem rgba(201, 96, 61, 0.6); }
+.reels { grid-area: reels; min-width: 0; }
+.reel-svg { display: block; width: 520px; max-width: 100%; height: auto; margin: 0 auto; }   /* the deck's pictures at 2x: one art pixel, two CSS pixels */
+
+.engraved { font-size: 20px; line-height: 1.3; color: var(--ink); }
+.counter-box { grid-area: counter; display: grid; gap: 0.35rem; align-content: start; }
+.counter { margin: 0; }
+.wheels { display: inline-flex; align-items: center; gap: 2px; padding: 0.3rem 0.4rem; background: var(--ink); border-radius: 0; }
+.wheels .w { display: inline-block; width: 1.5rem; padding: 0.15rem 0; text-align: center; font: 500 20px/1.2 var(--mono); color: var(--paper); background: #34322f; border-radius: 0; }
+.wheels .sep { padding: 0 0.15rem; font: 500 20px/1 var(--mono); color: var(--paper); }
+.counter-of { font: 400 20px/1.3 var(--sans); color: var(--ink); }
+
+.controls { grid-area: controls; display: grid; gap: 0.9rem; min-width: 0; }
+.thread-row, .knobs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; }
+.switch { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.9rem; margin: 0; padding: 0.3rem 0.8rem 0.45rem; border: 1px solid var(--ink-soft); border-radius: 0; }
+.switch legend { padding: 0 0.3rem; }
+.switch label { display: inline-flex; align-items: center; gap: 0.35rem; font: 400 20px var(--sans); color: var(--ink); cursor: pointer; }
+.switch input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--ink); }
+.switch:disabled { border-style: dashed; }
+.switch:disabled label { color: var(--ink-soft); cursor: default; }
+
+/* the transport: pale keys in a row; the playing key stays down */
+.transport { display: flex; flex-wrap: wrap; gap: 0.3rem; padding-top: 4px; }
+button.key {
+  min-width: 6.5rem;
+  padding: 0.7rem 0.9rem 0.75rem;
+  font: 500 20px/1.1 var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(#f7f6f2, #e1dfd9);
+  border: 1px solid var(--steel-d);
+  border-radius: 0;
+  box-shadow: 0 4px 0 #a3a09a, 0 5px 0 rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
+}
+button.key .glyph { margin-right: 0.35rem; font-family: var(--mono); letter-spacing: -0.1em; }
+button.key:active:not(:disabled), button.key[aria-pressed="true"] { transform: translateY(0); box-shadow: 0 0 0 #a3a09a, 0 1px 0 rgba(0, 0, 0, 0.2); }
+#tape-play { color: var(--paper); background: linear-gradient(#b05a3e, var(--accent)); border-color: #7b3a26; box-shadow: 0 4px 0 #6e3322, 0 5px 0 rgba(0, 0, 0, 0.18); }
+#tape-play[aria-pressed="true"] { box-shadow: 0 0 0 #6e3322; }
+#tape-play:disabled { color: var(--ink-soft); background: linear-gradient(#eadbd3, #dcc8bd); border-color: var(--steel-d); box-shadow: 0 4px 0 #b9a79c; }
+button.key:disabled { color: var(--ink-soft); }
+
+.tempo { display: grid; grid-template-columns: auto minmax(8rem, 14rem); grid-template-areas: "l r" "o o"; align-items: center; gap: 0.2rem 0.8rem; }
+.tempo label { grid-area: l; }
+.tempo output { grid-area: o; font: 400 20px var(--sans); color: var(--ink); }
+input[type="range"] { -webkit-appearance: none; appearance: none; grid-area: r; width: 100%; height: 1.8rem; margin: 0; background: transparent; accent-color: var(--ink); cursor: pointer; }
+input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--ink); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 0.9rem; height: 1.5rem; margin-top: -0.7rem; background: linear-gradient(to right, #c8c5bf, #f4f3ef 45%, #b3b0a9); border: 1px solid var(--ink-soft); border-radius: 0; }
+input[type="range"]::-moz-range-track { height: 2px; background: var(--ink); }
+input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; background: linear-gradient(to right, #c8c5bf, #f4f3ef 45%, #b3b0a9); border: 1px solid var(--ink-soft); border-radius: 0; }
+
+.tape-status { grid-area: status; width: auto; box-shadow: none; border: 1px solid var(--ink-soft); }
+
+/* ================================================================ flow */
+/* A thing in the room grows into its station and shrinks back (desk.js names the pair for
+   the change); everything else fades across. Where there is no view transition, a station
+   arrives with a short rise. */
+::view-transition-group(thing) { animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.22, 0.75, 0.2, 1); }
+::view-transition-old(thing), ::view-transition-new(thing) { height: 100%; animation-duration: 0.55s; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.4s; }
+.drawer { view-transition-name: corner; }
+@supports not (view-transition-name: none) {
+  .station:not(.st-desk) > * { animation: arrive 0.35s ease-out; }
+}
+@keyframes arrive { from { opacity: 0; transform: translateY(0.6rem); } to { opacity: 1; transform: none; } }
+
+/* ================================================================ smaller screens */
+
+/* below a wide desk: the deck box lies across the head of the form */
+@media (max-width: 1359px) {
+  .st-form { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 1rem; }
+  .tray { flex-direction: row; align-items: center; gap: 0.8rem; padding: 0.5rem; }
+  .tray-head { flex: none; }
+  .tray-plate { margin: 0 0 0.4rem; }
+  .tray-hint { display: none; }
+  .tray-well { display: flex; align-items: center; gap: 0.8rem; overflow-x: auto; overflow-y: hidden; padding: 0.55rem 0.6rem 0.8rem; }
+  .tray-div { flex: none; margin: 0; border-radius: 0; }
+  .decks { display: flex; gap: 0.5rem; margin: 0; }
+  .decks li { flex: none; width: 12.5rem; }
+}
+
+@media (max-width: 1280px) {
+  .sheet.two, .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1fr); }
+  /* the fan-fold takes the full width (printer lines run to 132 columns); the job ticket
+     and listing lie in a short row beneath it */
+  .out-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 1.2rem; }
+  .ticket-col { flex-direction: row; align-items: flex-start; max-height: 12rem; }
+  .ticket-col > * { flex: 1 1 0; min-width: 0; max-height: 11.5rem; }
+  .listing pre { max-height: 7rem; }
+}
+
+@media (max-height: 820px) {
+  .pad-sheet { padding-top: 1.4rem; }
+  .pad .toolbar { margin: 0.4rem 0 0.3rem; }
+  .station { padding-top: 3.5rem; padding-bottom: 0.9rem; }
+  .st-desk { padding: 0; }
+  .deck-plate { gap: 0.7rem 1.4rem; padding: 0.7rem 1.2rem 0.9rem; }
+}
+
+@media (max-width: 900px) {
+  .drawer { top: 0.55rem; right: 0.6rem; }
+  .station { padding: 3.4rem 0.8rem 1rem; }
+  .st-desk { padding: 0; }
+  .out-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1rem; }
+  .ticket-col { flex-direction: column; align-items: stretch; max-height: none; overflow: auto; padding: 0 0.4rem 0.6rem 0; }
+  .ticket-col > * { flex: 0 1 auto; max-height: none; }
+  .deck-plate { grid-template-columns: minmax(0, 1fr); grid-template-areas: "maker" "reels" "counter" "controls" "status"; }
+  .counter-box { grid-template-columns: auto auto auto; justify-content: start; align-items: center; gap: 0.3rem 0.8rem; }
+  .spread, .folio-inside { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 0.4rem; padding: 0.4rem; }
+  .page-l, .flap { max-height: 30dvh; overflow: auto; }
+  .page-l { box-shadow: none; border-bottom: 1px solid var(--rule); padding: 0.9rem 1rem; }
+  .page-r { padding: 1rem 1rem 0.8rem; box-shadow: none; }
+  .page-l h2 { margin-bottom: 0.7rem; font-size: 20px; }
+  .flap { padding: 0.7rem; }
+  .flap h2 { margin-bottom: 0.6rem; font-size: 20px; }
+  .chapter h3, .sheet h3 { font-size: 40px; }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 20px; }
+  .pad-sheet { padding-left: 0.6rem; padding-right: 0.6rem; }
+  .form-boxes > div:first-child { min-width: 0; }
+  .legend { display: none; }
+  .fanfold { padding-left: 2rem; padding-right: 2rem; }
+  .tray-head { display: none; }
+  .tray { padding: 0.35rem; }
+  .decks li { width: 11rem; }
+  .form-boxes > div + div { display: none; }
+  .form-head h2 { font-size: 20px; }
+  .pad .toolbar button { padding: 0.2rem 0.6rem; }
+  .recorder { padding: 0.45rem; }
+  .deck-plate { padding: 0.7rem; gap: 0.6rem; }
+  .reel-svg { width: 260px; }
+  button.key { min-width: 0; flex: 1 1 5rem; padding: 0.55rem 0.5rem 0.6rem; }
+  .chapter th, .chapter td { padding-right: 0.4rem; }
+  td code { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* ================================================================ the room in pixels
+   The room is pixel art, 6 art pixels to the em, 552 x 276 in all: one picture of the wall,
+   floor, desk and everything that stays where it is (assets/room-*.png, one for each paper), and a sprite for each
+   thing that can be taken up (assets/px-*.png), all cut from v21's drawings in one palette.
+   The room fills its window as v21's does, its pictures scaled by nearest neighbour; places
+   and sizes are whole art pixels (a sixth of an em), so every sprite sits on the room's grid. Shadows are hard, one or
+   two art pixels down and to the right; nothing is blurred and nothing turns. */
+/* the room is 640 x 320 art pixels; each art pixel is a whole number of CSS pixels (2 at
+   1280 x 720, 3 at 1920 x 1080), the largest that fits, so every pixel in the room is the size
+   of every other and of the computer's (2 CSS pixels) at the usual sizes */
+.scene { --ap: max(1px, round(down, min(calc(100cqw / 640), calc(100cqh / 323)), 1px)); font-size: calc(var(--ap) * 640 / 92); }
+.scene img, .wall, .floor { image-rendering: pixelated; }
+/* past the picture the paper and the floor run on, their tiles set from the room's corner */
+.wall { background: var(--tile) 100vw 100vh / calc(var(--tw) * 1em * 92 / 640) calc(var(--th) * 1em * 92 / 640), var(--paper-blue); }
+.wall::after { content: ""; position: absolute; left: 100vw; top: 100vh; width: 92em; height: 46em; background: var(--backdrop) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
+/* the papers (decor.js hangs one by setting data-paper on the room): each its own picture of
+   the room and its own tile for the wall past it, all lit and coloured as one */
+.desk { --paper-blue: #273765; --tile: url(assets/tile-ogee.png); --tw: 42; --th: 63; --backdrop: url(assets/room-ogee.png); }
+.desk[data-paper="atomic"] { --paper-blue: #3e4261; --tile: url(assets/tile-atomic.png); --tw: 42; --th: 42; --backdrop: url(assets/room-atomic.png); }
+.desk[data-paper="trellis"] { --paper-blue: #473043; --tile: url(assets/tile-trellis.png); --tw: 28; --th: 42; --backdrop: url(assets/room-trellis.png); }
+.desk[data-paper="grass"] { --paper-blue: #87818f; --tile: url(assets/tile-grass.png); --tw: 34; --th: 12; --backdrop: url(assets/room-grass.png); }
+.floor { height: calc(11em * 92 / 640); background: url(assets/floor-tile.png) 100vw 0 / calc(77em * 92 / 640) 100% repeat-x; }
+.floor::after { display: none; }
+.shelf-unit { left: calc(327em * 92 / 640); top: calc(17em * 92 / 640); width: calc(278em * 92 / 640); height: calc(66em * 92 / 640); }
+.shelf > li { bottom: 0; }
+.sh-vols { left: calc(18em * 92 / 640); }
+.sh-mag { left: calc(93em * 92 / 640); }
+.sh-folio { left: calc(152em * 92 / 640); }
+.sh-box { left: calc(191em * 92 / 640); }
+.vols { gap: 0 !important; }
+.spine.v1 { width: calc(22em * 92 / 640); height: calc(68em * 92 / 640); }
+.spine.v2 { width: calc(20em * 92 / 640); height: calc(63em * 92 / 640); }
+.spine.v3 { width: calc(21em * 92 / 640); height: calc(66em * 92 / 640); }
+.ledge { width: calc(53em * 92 / 640); height: calc(63em * 92 / 640); }
+.o-mag .mini-mag { left: calc(5em * 92 / 640); bottom: calc(1em * 92 / 640); width: calc(43em * 92 / 640); height: calc(58em * 92 / 640); box-shadow: none; }
+.o-mag .mini-mag img { width: 100%; height: 100%; }
+.o-folio .folders { width: calc(32em * 92 / 640); height: calc(51em * 92 / 640); }
+.deckbox { width: calc(67em * 92 / 640); height: calc(45em * 92 / 640); }
+.desk-top { height: calc(209em * 92 / 640); }
+.desk-top > li:nth-child(1) { left: calc(179em * 92 / 640); }
+.desk-top > li:nth-child(2) { left: calc(262em * 92 / 640); }
+.desk-top > li:nth-child(3) { left: calc(338em * 92 / 640); }
+.desk-top > li:nth-child(4) { left: calc(462em * 92 / 640); }
+.desk-top > li::after { display: none; }
+.clipboard { width: calc(49em * 92 / 640); height: calc(65em * 92 / 640); transform: none; }
+.outtray { width: calc(72em * 92 / 640); height: calc(31em * 92 / 640); }
+.computer { width: calc(118em * 92 / 640); height: calc(90em * 92 / 640); }
+.player { width: calc(104em * 92 / 640); height: calc(74em * 92 / 640); }
+.shelf .obj > span:first-child, .desk-top .obj > span:first-child, .spine, .ledge { filter: drop-shadow(calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(20, 16, 12, 0.35)); transition: none; }
+
+/* the point-and-click scene (hotspots.js): a thing under the pointer, or with the keyboard's
+   focus, is outlined in white one art pixel wide and lifts a step; H outlines them all */
+.scene { --hl: drop-shadow(calc(1em * 92 / 640) 0 0 #fffaf0) drop-shadow(calc(-1em * 92 / 640) 0 0 #fffaf0) drop-shadow(0 calc(1em * 92 / 640) 0 #fffaf0) drop-shadow(0 calc(-1em * 92 / 640) 0 #fffaf0); }
+.scene .obj:is(:hover, :focus-visible), .scene.reveal .obj { filter: var(--hl); outline: none !important; }
+.scene .obj:is(:hover, :focus-visible) :is(span, img), .scene.reveal .obj :is(span, img) { filter: none !important; }
+.shelf .obj:is(:hover, :focus-visible) > span:first-child, .desk-top .obj:is(:hover, :focus-visible) > span:first-child { transform: translateY(calc(-1em * 92 / 640)); }
+.spine:is(:hover, :focus-visible) { transform: translateY(calc(-2em * 92 / 640)); }
+.shelf .o-mag:is(:hover, :focus-visible) > span:first-child { transform: translateY(calc(-3em * 92 / 640)); }
+.scene .obj:focus-visible > span:first-child, .spine:focus-visible { outline: none !important; }
+/* the caption beside the cursor: ink, paper type, a hard shadow */
+.hint { position: fixed; z-index: 2000; padding: 2px 8px 4px; font: 400 20px/24px var(--sans); color: #fffaf0; background: var(--ink); box-shadow: 3px 3px 0 rgba(20, 16, 12, 0.4); pointer-events: none; white-space: nowrap; }
+.hint[hidden] { display: none; }
+/* the cursors: a pixel arrow, and a pointing hand over what can be pressed */
+html { cursor: url(assets/cursor-arrow.png) 1 1, default; }
+button, a, summary, label, select, [role="button"], .obj, .label, input[type="radio"], input[type="checkbox"], input[type="range"] { cursor: url(assets/cursor-hand.png) 9 1, pointer !important; }
+input[type="text"], textarea, [contenteditable] { cursor: text; }
+button:disabled { cursor: url(assets/cursor-arrow.png) 1 1, default !important; }
+
+/* the pixel faces are drawn on a 10px grid and shown without smoothing, at whole multiples */
+html { -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
+img, .st-form, .st-out, .st-manual, .st-magazine, .st-portfolio, .st-tape, .st-computer, .desk { image-rendering: pixelated; }
+
+/* ================================================================ the object views at evening
+   Taken up, a thing lies on the desk under the lamp, as the room is lit (after NORCO): the
+   lamp's pool falls warm across the desk from the top left and grades in six dithered steps to
+   the cool violet dark that runs on past it (assets/st/lamplight.png, a multiplier at 2x,
+   anchored to the corner). It falls on the desk round the papers, not on them: text always
+   sits on flat colour, so the papers take one flat lamplit tone (the tokens below) and stay
+   legible to their last line. */
+.desk:not([data-at="desk"])::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: url(assets/st/lamplight.png) 0 0 / 1280px 800px no-repeat, rgb(144, 135, 180);
+  image-rendering: pixelated; mix-blend-mode: multiply;
+}
+.desk > .stations { position: relative; z-index: 1; }
+.desk { --paper: #f1e7d5; --ivory: #ede2ce; --stone: #d5cab8; }
+
+/* ================================================================ the things that change
+   The prints, the plants, the lamp and the mug (decor.js): each a sprite lit where it stands,
+   in the place and the box of the first of its kind; pressing one puts the next in its place
+   at once, as a scene changes in a point-and-click game. The bare wall changes its paper. */
+.scene .swap { position: absolute; margin: 0; padding: 0; font: inherit; background: none; border: 0; border-radius: 0; box-shadow: none; }
+.scene .swap img { display: block; width: 100%; height: 100%; }
+.scene .swap:is(:hover, :focus-visible), .scene.reveal .swap { filter: var(--hl); outline: none !important; }
+.sw-lamp { filter: drop-shadow(calc(2em * 92 / 640) calc(2em * 92 / 640) 0 rgba(16, 12, 36, 0.3)); }
+.scene.on-wall { cursor: url(assets/cursor-hand.png) 9 1, pointer; }
+.paper-btn { padding: 0; font: inherit; color: var(--ink); background: none; border: 0; text-decoration: underline; text-underline-offset: 0.18em; }
+.paper-btn:hover { background: none; }
+.sw-print-wide { left: calc(65em * 92 / 640); top: calc(21em * 92 / 640); width: calc(132em * 92 / 640); height: calc(103em * 92 / 640); }
+.sw-print-narrow { left: calc(217em * 92 / 640); top: calc(29em * 92 / 640); width: calc(79em * 92 / 640); height: calc(100em * 92 / 640); }
+.sw-print-shelf { left: calc(444em * 92 / 640); top: calc(1em * 92 / 640); width: calc(137em * 92 / 640); height: calc(70em * 92 / 640); }
+.sw-floor-l { left: calc(4em * 92 / 640); top: calc(167em * 92 / 640); width: calc(77em * 92 / 640); height: calc(146em * 92 / 640); }
+.sw-floor-r { left: calc(540em * 92 / 640); top: calc(202em * 92 / 640); width: calc(97em * 92 / 640); height: calc(111em * 92 / 640); }
+.sw-lamp { left: calc(74em * 92 / 640); top: calc(135em * 92 / 640); width: calc(49em * 92 / 640); height: calc(74em * 92 / 640); }
+.sw-desk-plant { left: calc(114em * 92 / 640); top: calc(152em * 92 / 640); width: calc(70em * 92 / 640); height: calc(81em * 92 / 640); }
+.sw-mug { left: calc(232em * 92 / 640); top: calc(188em * 92 / 640); width: calc(22em * 92 / 640); height: calc(21em * 92 / 640); }
+
+/* below a readable size the room is a list (above): the pixel room's places and sizes give way */
+@container (max-width: 1011px), (max-height: 505px) {
+  .shelf-unit, .desk-top { width: auto; height: auto; }
+  .shelf > li, .desk-top > li { left: auto; }
+  .scene .spine { width: 100%; height: auto; }
+  .o-mag .mini-mag { left: auto; bottom: auto; }
+  .desk-top .obj > span:first-child, .shelf .obj > span:first-child { font-size: 0.22rem; }
+}
