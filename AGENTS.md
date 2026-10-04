@@ -90,6 +90,14 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 *Version 18* combines the design of *Version 10* and *Version 14*. More concretely, it applies half-toning to the graphics of *Version 14*. This version also drops the framing device of Xenakis's sieves. Instead, it takes the more experimental decks from *Version 11* and *Version 12* and expands on them. Experimental card decks are framed by code art and computation theory.
 
+#### Version 19
+
+*Version 19* combines the design of *Version 15* and *Version 18*. *Version 18* is reintroduced as a magazine within the virtual desktop of *Version 15*. The cards from *Version 18* are included as actually usable programs in this version. *Version 19* tightens the virtual desktop concept from *Version 15* and cleans it up. This version also takes the efficiency of the code into consideration, taking care to clean up and refactor the code that gets imported into its implementation from past versions.
+
+#### Version 20
+
+*Version 20* combines *Version 16* and *Version 17*, where the puzzles now exist within the fantasy computer desktop. *Version 20* refines the graphics of *Version 16* by implementing some of the design language from *Version 17*. This version also takes the efficiency of the code into consideration, taking care to clean up and refactor the code that gets imported into its implementation from past versions.
+
 ### Gallery
 
 ### Genealogy
