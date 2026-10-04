@@ -813,3 +813,9 @@ select { padding: 4px 8px; border: 2px solid var(--ink); border-radius: 0; color
   .pockets { grid-template-columns: repeat(11, 24px); gap: 0 4px; }
   .pk { grid-template-rows: 96px auto auto; }
 }
+
+/* the room's cursor on the screen too: a pixel arrow (the room's own, ../assets/), the text
+   cursor in fields, and the sizing cursor on the size box */
+html, html * { cursor: url(../assets/cursor-arrow.png) 1 1, default; }
+textarea, input[type="text"], .ico-edit { cursor: text; }
+.grow { cursor: nwse-resize; }

@@ -15,7 +15,7 @@
   --mag-yellow: #ffd400;
   --mag-edge: #e4d9c2;
   --mag-edge-2: #cfc3a8;
-  --mag-display: "Pixelify Sans", "Fusion Pixel 10px Proportional", monospace;
+  --mag-display: "Fusion Pixel 10px Proportional", monospace;
   --mag-body: "Fusion Pixel 10px Proportional", monospace;
   --mag-mono: "Fusion Pixel 10px Monospaced", monospace;
   --mag-tint: var(--mag-magenta);
@@ -45,7 +45,7 @@
 .mag p, .mag li { margin: 0 0 1em; }
 .mag code, .mag var { font-family: var(--mag-mono); font-size: 20px; }
 .mag var { font-style: italic; }
-.mag img.mag-plate { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.mag img.mag-plate { position: absolute; left: 50%; top: 50%; display: block; width: auto; height: auto; max-width: none; transform: translate(-50%, -50%) scale(2); pointer-events: none; }   /* at 2x: one art pixel, two CSS pixels; the box crops it */
 .mag-vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ---------- without script: every opening in one scroll ---------- */
@@ -101,7 +101,7 @@
 }
 /* the title band is flat black; the field under it is its plate, an SVG, cut to fit from the foot */
 .mag-cover-top { flex: none; padding: 5cqi 5cqi 7cqi; background: var(--scr-k); color: var(--mag-paper); }
-.mag-cover-field { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 0.6rem; padding: 5cqi; background: var(--mag-orange) url(assets/st/mag-cover-field.png) 50% 0 / cover no-repeat; }
+.mag-cover-field { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 0.6rem; padding: 5cqi; background: var(--mag-orange) url(assets/st/mag-cover-field.png) 50% 0 / 600px 450px no-repeat; }
 
 .mag-dateline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1rem; margin: 0 0 3cqi; font: 600 20px/1.3 var(--mag-body); letter-spacing: 0.14em; text-transform: uppercase; }
 .mag-dateline span { padding: 0.15em 0.5em; background: var(--scr-k); color: var(--mag-paper); }
@@ -159,7 +159,7 @@
 }
 .mag-spread h3:focus { outline: none; }
 .mag-spread h3:focus-visible { outline: 3px solid var(--mag-magenta); outline-offset: 6px; }
-.mag-pull { margin: 0.4rem 0 0; padding-left: 0.9rem; border-left: 6px solid var(--mag-ink); font: italic 400 30px/1.3 var(--mag-display); }
+.mag-pull { margin: 0.4rem 0 0; padding-left: 0.9rem; border-left: 6px solid var(--mag-ink); font: italic 400 40px/1.3 var(--mag-display); }
 .mag-label { margin: 0 0 1rem; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.22em; text-transform: uppercase; }
 .mag-colophon { padding-top: 0.8rem; border-top: 2px solid var(--mag-ink); font-style: italic; }
 
@@ -174,7 +174,7 @@
 .mag-contents { margin: 0.8rem 0 0; padding: 0; list-style: none; }
 .mag-contents li { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); align-items: start; margin: 0; padding: 0.7rem 0; border-top: 2px solid var(--mag-ink); }
 .mag-contents li:last-child { border-bottom: 2px solid var(--mag-ink); }
-.mag-n { font: italic 400 30px/1 var(--mag-display); }
+.mag-n { font: italic 400 40px/1 var(--mag-display); }
 .mag-contents p { margin: 0.15rem 0 0; }
 .mag .mag-link {
   padding: 0; border: 0; border-radius: 0; background: none;

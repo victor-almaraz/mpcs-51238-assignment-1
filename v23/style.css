@@ -48,23 +48,23 @@
   --form-ink: #3b6a55;
   /* soft contact shadows: a lift for what lies on the desk, a fall for what stands */
   --lift: 4px 4px 0 rgba(30, 22, 14, 0.3);
-  --lift-em: calc(1em / 6) calc(1em / 6) 0 rgba(30, 22, 14, 0.3);
+  --lift-em: calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(30, 22, 14, 0.3);
   /* what stands against the wall casts a soft shadow on it, down and to the right */
-  --cast: drop-shadow(calc(1em / 6) calc(1em / 6) 0 rgba(40, 28, 18, 0.3));
+  --cast: drop-shadow(calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(40, 28, 18, 0.3));
   /* a fine grain, for plaster, paper and wood: fractal noise, very faint */
   --grain: none;   /* a pixel picture has no grain finer than its pixels */
 
   /* a grotesque after the early Stephenson Blake and Bauer cuts (Akzidenz-Grotesk's family), as in
      Neue Grafik and Knoll's advertising; Futura's cousin for labels, as Arts & Architecture set them;
      a Charter-like text face for the Century of IBM's manuals; a slab for the manuals' spines */
-  --display: "Pixelify Sans", "Fusion Pixel 10px Proportional", monospace;
-  --slab: "Pixelify Sans", "Fusion Pixel 10px Proportional", monospace;
+  --display: "Fusion Pixel 10px Proportional", monospace;
+  --slab: "Fusion Pixel 10px Proportional", monospace;
   --sans: "Fusion Pixel 10px Proportional", monospace;
   --serif: "Fusion Pixel 10px Proportional", monospace;
   --mono: "Fusion Pixel 10px Monospaced", monospace;
 
   /* the desk seen from above: pale oak, a faint grain running across */
-  --oak-top: url(assets/oak-tile.png) 0 0 / 256px 128px repeat, var(--oak);
+  --oak-top: url(assets/oak-tile.png) 0 0 / 128px 64px repeat, var(--oak);
 }
 
 * { box-sizing: border-box; }
@@ -144,7 +144,7 @@ td code { white-space: nowrap; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }
 .status { font-family: var(--sans); font-size: 20px; }
 
-.desk-tag { width: fit-content; margin: 0; padding: 0.2rem 0 0.2rem; font-size: 10px; line-height: 1.4; color: var(--ink); border-bottom: 1px solid var(--ink); }
+.desk-tag { width: fit-content; margin: 0; padding: 0.2rem 0 0.2rem; font-size: 20px; line-height: 1.4; color: var(--ink); border-bottom: 1px solid var(--ink); }
 
 /* ================================================================ the room, in elevation */
 /* The drawing is 92em by 46em, and its em is chosen to fit the station; below a size
@@ -308,10 +308,10 @@ td code { white-space: nowrap; }
   .shelf, .vols, .desk-top .obj > span:first-child, .shelf .obj > span:first-child { filter: none; }
   .shelf-unit, .shelf, .desk-top { position: static; width: auto; height: auto; }
   .shelf-unit { display: grid; gap: 0; }
-  .shelf-unit::before, .desk-top::before { display: block; padding-bottom: 0.5rem; font: 500 10px/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--ink); }
+  .shelf-unit::before, .desk-top::before { display: block; padding-bottom: 0.5rem; font: 500 20px/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--ink); }
   .shelf-unit::before { content: "On the bookshelf"; }
   .desk-top::before { content: "On the desk"; }
-  .shelf-tag { position: static; order: 1; margin: 0.5rem 0 0; font-size: 10px; }
+  .shelf-tag { position: static; order: 1; margin: 0.5rem 0 0; font-size: 20px; }
   .shelf { order: 2; }
   .shelf, .desk-top { display: grid; grid-template-columns: minmax(0, 1fr); justify-content: stretch; align-items: stretch; gap: 0; }
   .desk-top > li { width: 100%; }
@@ -327,9 +327,9 @@ td code { white-space: nowrap; }
   .spine.v3 .sp-no { background: var(--accent); }
   .spine .sp-t { display: block; writing-mode: horizontal-tb; margin: 0; font: 600 20px/1.2 var(--display); letter-spacing: 0; text-transform: none; }
   .spine .sp-no { order: 0; margin: 0; box-shadow: none; border-radius: 0; }
-  .obj-tag { align-self: center; padding: 0; font-size: 10px; white-space: normal; }
+  .obj-tag { align-self: center; padding: 0; font-size: 20px; white-space: normal; }
   .obj-tag::before { display: none; }
-  .desk-top .obj > span:first-child, .shelf .obj > span:first-child { font-size: 10px; transform: none !important; }
+  .desk-top .obj > span:first-child, .shelf .obj > span:first-child { font-size: 20px; transform: none !important; }
   .o-mag { width: 100%; height: auto; }
   .o-mag .mini-mag { position: relative; left: auto; bottom: auto; }
 }
@@ -356,7 +356,7 @@ td code { white-space: nowrap; }
 .page-r { display: flex; flex-direction: column; padding-left: 2.6rem; box-shadow: inset 0 0 1.4rem -1.4rem rgba(30, 22, 14, 0.18); }
 .chapters { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 0.6rem; }
 .page-l h2 { margin: 0 0 1.6rem; padding-bottom: 0.9rem; font: 600 20px/1.1 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
-.contents-h { margin: 0 0 0.8rem; font-size: 10px; color: var(--ink-soft); }
+.contents-h { margin: 0 0 0.8rem; font-size: 20px; color: var(--ink-soft); }
 .contents { margin: 0; padding: 0; list-style: none; }
 .contents .vol { margin: 0 0 1.1rem; }
 .vol-h { display: block; font: 600 20px/1.35 var(--display); }
@@ -366,15 +366,15 @@ td code { white-space: nowrap; }
 .contents button:hover { color: var(--accent); }
 .contents button[aria-current="page"] { font-weight: 700; }
 .chapter { max-width: 66ch; }
-.running { margin: 0 0 0.6rem; font-size: 10px; color: var(--ink-soft); }
-.chapter h3 { margin: 0 0 1.1rem; font: 600 30px/1.12 var(--display); letter-spacing: -0.015em; }
+.running { margin: 0 0 0.6rem; font-size: 20px; color: var(--ink-soft); }
+.chapter h3 { margin: 0 0 1.1rem; font: 600 40px/1.12 var(--display); letter-spacing: -0.015em; }
 .chapter table { width: 100%; margin: 1rem 0; border-collapse: collapse; }
 .chapter th, .chapter td { padding: 0.35rem 0.7rem 0.35rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
-.chapter th { font: 500 10px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
+.chapter th { font: 500 20px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
 .decklist dt { margin-top: 0.9rem; font: 600 20px var(--serif); }
 .decklist dd { margin: 0.2rem 0 0; }
 .page-turn { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0.5rem 1rem; max-width: 66ch; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--ink); }
-.folio-no { margin-left: auto; font: 400 10px var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
+.folio-no { margin-left: auto; font: 400 20px var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
 
 /* ================================================================ the miscellanea, open */
 /* a stone-grey folder lying open: its index on the left flap, the sheets on the right */
@@ -409,24 +409,25 @@ td code { white-space: nowrap; }
 .sheet.two { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
 .sheet-note, .sheet h3 { grid-column: 1 / -1; }
-.sheet-note { margin: 0 0 -0.6rem; font-size: 10px; color: var(--accent); }
-.sheet h3 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0; padding-bottom: 0.7rem; font: 600 30px/1.12 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
+.sheet-note { margin: 0 0 -0.6rem; font-size: 20px; color: var(--accent); }
+.sheet h3 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0; padding-bottom: 0.7rem; font: 600 40px/1.12 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
 .sheet-letter { flex: none; font: 700 0.9em/1 var(--slab); color: var(--ink-soft); }
 .exhibit { margin: 0; min-width: 0; }
 .exhibit .art { margin: 0 0 0.9rem; }
-.exhibit .art svg, .exhibit .art img.drawing { display: block; width: 100%; height: auto; max-height: 52vh; box-shadow: 0 0 0 1px var(--rule); }
+.exhibit .art svg { width: 100%; }
+.exhibit .art svg, .exhibit .art img.drawing { display: block; height: auto; box-shadow: 0 0 0 1px var(--rule); }
 /* the drawings are SVG files (assets/misc/), their lines merged and their type in outline */
 /* each drawing as wide as the sheet allows, or as 52% of the window's height lets it be */
-.exhibit .art img.drawing { width: min(100%, 52vh * var(--ar)); max-width: 100%; margin: 0 auto; }
+.exhibit .art img.drawing { max-width: 100%; max-height: none; margin: 0 auto; }   /* at 2x: the size its attributes give, twice its pixels */
 .exhibit figcaption { max-width: 66ch; font: 20px/1.6 var(--serif); color: var(--ink-soft); }
 .exhibit figcaption cite { color: var(--ink); }
 .exhibit.printout .art { overflow-x: auto; }
 .exhibit.plan .art { max-width: 30rem; }
 /* a photographic print mounted on the sheet, in its white border */
-.exhibit.photo .art img { display: block; width: auto; max-width: 100%; height: auto; max-height: 50vh; padding: 0.4rem; background: #fff; box-shadow: var(--lift); }
+.exhibit.photo .art img { display: block; max-width: 100%; height: auto; max-height: none; padding: 0.4rem; background: #fff; box-shadow: var(--lift); }
 .exhibit.photo.tall { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0 1.6rem; }
 .exhibit.photo.tall .art { flex: none; max-width: 100%; }
-.exhibit.photo.tall .art img { max-height: min(48vh, 30rem); }
+.exhibit.photo.tall .art img { max-height: none; }
 .exhibit.photo.tall figcaption { flex: 1 1 16rem; }
 .st {
   margin: 0; padding: 0.4rem 2.2rem; font-size: 20px; line-height: 1.45; color: #15200f; white-space: pre;
@@ -456,7 +457,7 @@ td code { white-space: nowrap; }
 .mag-turn > .mag-next { order: 2; }
 .mag-index { order: 3; }
 .mag-folio { order: 4; }
-.mag-folio { margin: 0 0 0 auto; font: 400 10px var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
+.mag-folio { margin: 0 0 0 auto; font: 400 20px var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
 
 /* ================================================================ the coding form and the deck box */
 
@@ -464,10 +465,10 @@ td code { white-space: nowrap; }
 
 /* the deck box from above: a walnut rim round the well, the decks standing in it */
 .tray { display: flex; flex-direction: column; min-height: 0; padding: 0.7rem; background: var(--walnut); border-radius: 0; box-shadow: var(--lift); }
-.tray-plate { width: fit-content; margin: 0 auto 0.6rem; padding: 0.15rem 0.9rem; font-size: 10px; line-height: 1.4; color: var(--ink); background: var(--ivory); border: 2px solid var(--brass); }
-.tray-hint { margin: 0 0 0.6rem; padding: 0.3rem 0.6rem; font: 400 10px/1.4 var(--serif); color: var(--ink); background: var(--ivory); }
+.tray-plate { width: fit-content; margin: 0 auto 0.6rem; padding: 0.15rem 0.9rem; font-size: 20px; line-height: 1.4; color: var(--ink); background: var(--ivory); border: 2px solid var(--brass); }
+.tray-hint { margin: 0 0 0.6rem; padding: 0.3rem 0.6rem; font: 400 20px/1.4 var(--serif); color: var(--ink); background: var(--ivory); }
 /* each group behind a divider card with its tab */
-.tray-div { width: fit-content; margin: 0.6rem 0 0.4rem; padding: 0.12rem 0.8rem; font-size: 10px; line-height: 1.5; color: var(--ink); background: var(--stone); border-radius: 0; }
+.tray-div { width: fit-content; margin: 0.6rem 0 0.4rem; padding: 0.12rem 0.8rem; font-size: 20px; line-height: 1.5; color: var(--ink); background: var(--stone); border-radius: 0; }
 .tray-well h4:nth-of-type(3) { background: var(--accent); color: var(--paper); }
 .tray-well { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0.4rem 0.6rem 0.6rem; background: var(--walnut-d); box-shadow: inset 0 0.3rem 0 rgba(0, 0, 0, 0.35); }
 .decks { display: grid; gap: 0.4rem; margin: 0 0 0.6rem; padding: 0; list-style: none; }
@@ -490,7 +491,7 @@ td code { white-space: nowrap; }
   transition: transform 0.15s ease;
 }
 .deck-label { font: 400 20px/1.3 var(--serif); }
-.deck-count { font: 400 10px/1.3 var(--sans); letter-spacing: 0.06em; color: var(--ink-soft); }
+.deck-count { font: 400 20px/1.3 var(--sans); letter-spacing: 0.06em; color: var(--ink-soft); }
 .deck:hover { transform: translateY(-2px); }
 .deck:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
 .deck.out-of-tray { transform: translateX(0.45rem); background: var(--paper); }
@@ -515,10 +516,10 @@ td code { white-space: nowrap; }
 .form-boxes { display: flex; flex-wrap: wrap; margin: 0; border: 1px solid var(--form-ink); }
 .form-boxes > div { padding: 0.15rem 0.6rem 0.25rem; border-left: 1px solid var(--form-ink); }
 .form-boxes > div:first-child { border-left: 0; min-width: 14rem; }
-.form-boxes dt { font-size: 10px; line-height: 1.3; color: var(--form-ink); }
+.form-boxes dt { font-size: 20px; line-height: 1.3; color: var(--form-ink); }
 .form-boxes dd { margin: 0; font: 500 20px/1.35 var(--sans); color: var(--ink); }
 .pad .toolbar { margin: 0.6rem 0 0.4rem; }
-.legend { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; margin: 0 0 0.5rem; font: 400 10px var(--sans); color: var(--form-ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; margin: 0 0 0.5rem; font: 400 20px var(--sans); color: var(--form-ink); }
 .legend .key span { display: inline-block; width: 1.4em; height: 0.9em; margin-right: 0.35em; border: 1px solid var(--form-ink); vertical-align: -0.05em; }
 .legend .f1 { background: #e5eadc; }
 .legend .f2 { background: #cfdccb; }
@@ -551,7 +552,7 @@ input.card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2p
 
 /* the card in hand */
 .in-hand { flex: none; padding: 0.55rem 0.9rem 0.6rem; background: var(--paper); box-shadow: var(--lift); }
-.in-hand summary { cursor: pointer; font-size: 10px; }
+.in-hand summary { cursor: pointer; font-size: 20px; }
 .in-hand .toolbar { margin: 0.4rem 0 0; }
 .cardview { overflow-x: auto; padding: 0.4rem 0.4rem 0.6rem 0.2rem; }
 .cardview svg { --card: #efe4c6; display: block; width: 100%; min-width: 36rem; height: auto; max-height: 24vh; filter: drop-shadow(0 0.2rem 0 rgba(30, 22, 14, 0.25)); }
@@ -578,7 +579,7 @@ input.card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2p
     var(--paper);
   box-shadow: var(--lift);
 }
-.fanfold h3, .job-ticket h3 { flex: none; margin: 0 0 0.6rem; font-size: 10px; line-height: 1.3; }
+.fanfold h3, .job-ticket h3 { flex: none; margin: 0 0 0.6rem; font-size: 20px; line-height: 1.3; }
 .printer { flex: 1 1 auto; min-height: 0; overflow: auto; }
 .printer pre { width: max-content; min-width: 100%; background: repeating-linear-gradient(to bottom, transparent 0 4.35em, #dfe9da 4.35em 8.7em); }
 .printer pre, .log pre, .listing pre { margin: 0; font-size: 20px; line-height: 1.45; color: #1c2219; }
@@ -600,7 +601,7 @@ input.card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2p
 
 /* the stacker: a walnut box at the foot of the ticket column, the punched cards in it */
 .stack-box { flex: none; display: flex; flex-direction: column; gap: 0.5rem; padding: 0.8rem 0.9rem 0.9rem; color: var(--paper); background: var(--walnut); border-radius: 0; box-shadow: var(--lift); }
-.stack-box h3 { margin: 0; font-size: 10px; line-height: 1.3; }
+.stack-box h3 { margin: 0; font-size: 20px; line-height: 1.3; }
 .stack-count { margin: 0; font: 400 20px/1.4 var(--sans); }
 .stacker { display: flex; flex-wrap: wrap; gap: 0.35rem; max-height: 11.5rem; overflow: auto; padding: 0.3rem; background: var(--walnut-d); box-shadow: inset 0 0.2rem 0 rgba(0, 0, 0, 0.35); }
 .stacker:empty { display: none; }
@@ -624,7 +625,7 @@ button.thread { color: var(--paper); background: var(--accent); border-color: va
 .monitor {
   position: relative; isolation: isolate; display: grid; min-width: 0; min-height: 0;
   border: solid transparent; border-width: 23px 26px 45px;
-  border-image: url(assets/st/bezel.png) 23 26 45 / 23px 26px 45px round;
+  border-image: url(assets/st/bezel.png) 12 13 23 / 24px 26px 46px round;
 }
 /* the hood's shadow on the desk is a box shadow behind it, not a filter over it: a filter
    would resample the desktop's pixels, which must land whole on the screen's */
@@ -634,9 +635,9 @@ button.thread { color: var(--paper); background: var(--accent); border-color: va
    desktop's two-pixel screen pixels, so nothing in it is resampled */
 .glass iframe { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .glass::after { content: ""; position: absolute; inset: 0; border-radius: 0; box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.45); pointer-events: none; }
-.screen-off { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 10px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--steel-d); }
+.screen-off { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 400 20px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--steel-d); }
 .screen-off[hidden] { display: none; }
-.badge { position: absolute; left: 0.3rem; right: 0.3rem; bottom: -36px; display: flex; align-items: center; gap: 0.6rem; margin: 0; font: 600 10px/1 var(--display); letter-spacing: 0.42em; text-transform: uppercase; color: var(--ink-soft); }
+.badge { position: absolute; left: 0.3rem; right: 0.3rem; bottom: -36px; display: flex; align-items: center; gap: 0.6rem; margin: 0; font: 600 20px/1 var(--display); letter-spacing: 0.42em; text-transform: uppercase; color: var(--ink-soft); }
 .power { order: 2; margin-left: auto; width: 0.55rem; height: 0.55rem; border-radius: 0; background: var(--accent); box-shadow: 0 0 0 rgba(181, 70, 43, 0.55); }
 
 .st-tape { display: grid; place-items: center; }
@@ -655,9 +656,9 @@ button.thread { color: var(--paper); background: var(--accent); border-color: va
 .run-lamp { width: 0.7rem; height: 0.7rem; border-radius: 0; background: var(--steel-d); }
 .recorder[data-state="playing"] .run-lamp { background: #c9603d; box-shadow: 0 0 0 0.05rem rgba(201, 96, 61, 0.6); }
 .reels { grid-area: reels; min-width: 0; }
-.reel-svg { display: block; width: 100%; height: auto; max-width: 40rem; max-height: clamp(8rem, 100dvh - 36rem, 18rem); margin: 0 auto; }
+.reel-svg { display: block; width: 520px; max-width: 100%; height: auto; margin: 0 auto; }   /* the deck's pictures at 2x: one art pixel, two CSS pixels */
 
-.engraved { font-size: 10px; line-height: 1.3; color: var(--ink); }
+.engraved { font-size: 20px; line-height: 1.3; color: var(--ink); }
 .counter-box { grid-area: counter; display: grid; gap: 0.35rem; align-content: start; }
 .counter { margin: 0; }
 .wheels { display: inline-flex; align-items: center; gap: 2px; padding: 0.3rem 0.4rem; background: var(--ink); border-radius: 0; }
@@ -679,7 +680,7 @@ button.thread { color: var(--paper); background: var(--accent); border-color: va
 button.key {
   min-width: 6.5rem;
   padding: 0.7rem 0.9rem 0.75rem;
-  font: 500 10px/1.1 var(--sans);
+  font: 500 20px/1.1 var(--sans);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
@@ -769,7 +770,7 @@ input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; backgroun
   .page-l h2 { margin-bottom: 0.7rem; font-size: 20px; }
   .flap { padding: 0.7rem; }
   .flap h2 { margin-bottom: 0.6rem; font-size: 20px; }
-  .chapter h3, .sheet h3 { font-size: 30px; }
+  .chapter h3, .sheet h3 { font-size: 40px; }
 }
 
 @media (max-width: 600px) {
@@ -786,7 +787,7 @@ input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; backgroun
   .pad .toolbar button { padding: 0.2rem 0.6rem; }
   .recorder { padding: 0.45rem; }
   .deck-plate { padding: 0.7rem; gap: 0.6rem; }
-  .reel-svg { max-height: 24dvh; }
+  .reel-svg { width: 260px; }
   button.key { min-width: 0; flex: 1 1 5rem; padding: 0.55rem 0.5rem 0.6rem; }
   .chapter th, .chapter td { padding-right: 0.4rem; }
   td code { white-space: normal; }
@@ -801,46 +802,63 @@ input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; backgroun
    The room is pixel art, 6 art pixels to the em, 552 x 276 in all: one picture of the wall,
    floor, desk and everything that stays where it is (assets/room.png), and a sprite for each
    thing that can be taken up (assets/px-*.png), all cut from v21's drawings in one palette.
-   The em is a whole multiple of 6 CSS pixels, so every art pixel lands on whole screen
-   pixels; places and sizes are whole art pixels (a sixth of an em). Shadows are hard, one or
+   The room fills its window as v21's does, its pictures scaled by nearest neighbour; places
+   and sizes are whole art pixels (a sixth of an em), so every sprite sits on the room's grid. Shadows are hard, one or
    two art pixels down and to the right; nothing is blurred and nothing turns. */
-.scene { font-size: max(6px, round(down, min(calc(100cqw / 92), calc(100cqh / 46.5)), 6px)); }
+/* the room is 640 x 320 art pixels; each art pixel is a whole number of CSS pixels (2 at
+   1280 x 720, 3 at 1920 x 1080), the largest that fits, so every pixel in the room is the size
+   of every other and of the computer's (2 CSS pixels) at the usual sizes */
+.scene { --ap: max(1px, round(down, min(calc(100cqw / 640), calc(100cqh / 323)), 1px)); font-size: calc(var(--ap) * 640 / 92); }
 .scene img, .wall, .floor { image-rendering: pixelated; }
 /* past the picture the paper and the floor run on, their tiles set from the room's corner */
-.wall { background: url(assets/wall-tile.png) 100vw 100vh / 6em 9em, var(--paper-blue); }
+.wall { background: url(assets/wall-tile.png) 100vw 100vh / calc(42em * 92 / 640) calc(63em * 92 / 640), var(--paper-blue); }
 .wall::after { content: ""; position: absolute; left: 100vw; top: 100vh; width: 92em; height: 46em; background: url(assets/room.png) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
-.floor { height: calc(10em / 6); background: url(assets/floor-tile.png) 100vw 0 / 11em 100% repeat-x; }
+.floor { height: calc(11em * 92 / 640); background: url(assets/floor-tile.png) 100vw 0 / calc(77em * 92 / 640) 100% repeat-x; }
 .floor::after { display: none; }
-.shelf-unit { top: calc(14em / 6); }
-.shelf > li { bottom: calc(14em / 6); }
-.sh-vols { left: calc(15em / 6); }
-.sh-mag { left: calc(80em / 6); }
-.sh-folio { left: calc(131em / 6); }
-.sh-box { left: calc(164em / 6); }
+.shelf-unit { left: calc(327em * 92 / 640); top: calc(17em * 92 / 640); width: calc(278em * 92 / 640); height: calc(66em * 92 / 640); }
+.shelf > li { bottom: 0; }
+.sh-vols { left: calc(18em * 92 / 640); }
+.sh-mag { left: calc(93em * 92 / 640); }
+.sh-folio { left: calc(152em * 92 / 640); }
+.sh-box { left: calc(191em * 92 / 640); }
 .vols { gap: 0 !important; }
-.spine.v1 { width: calc(19em / 6); height: calc(59em / 6); }
-.spine.v2 { width: calc(17em / 6); height: calc(55em / 6); }
-.spine.v3 { width: calc(18em / 6); height: calc(57em / 6); }
-.ledge { width: calc(46em / 6); height: 9em; }
-.o-mag .mini-mag { left: calc(4em / 6); bottom: calc(1em / 6); width: calc(37em / 6); height: calc(50em / 6); box-shadow: none; }
+.spine.v1 { width: calc(22em * 92 / 640); height: calc(68em * 92 / 640); }
+.spine.v2 { width: calc(20em * 92 / 640); height: calc(63em * 92 / 640); }
+.spine.v3 { width: calc(21em * 92 / 640); height: calc(66em * 92 / 640); }
+.ledge { width: calc(53em * 92 / 640); height: calc(63em * 92 / 640); }
+.o-mag .mini-mag { left: calc(5em * 92 / 640); bottom: calc(1em * 92 / 640); width: calc(43em * 92 / 640); height: calc(58em * 92 / 640); box-shadow: none; }
 .o-mag .mini-mag img { width: 100%; height: 100%; }
-.o-folio .folders { width: calc(28em / 6); height: calc(44em / 6); }
-.deckbox { width: calc(58em / 6); height: calc(38em / 6); }
-.desk-top > li:nth-child(1) { left: calc(155em / 6); }
-.desk-top > li:nth-child(2) { left: calc(226em / 6); }
-.desk-top > li:nth-child(3) { left: calc(292em / 6); }
-.desk-top > li:nth-child(4) { left: calc(398em / 6); }
+.o-folio .folders { width: calc(32em * 92 / 640); height: calc(51em * 92 / 640); }
+.deckbox { width: calc(67em * 92 / 640); height: calc(45em * 92 / 640); }
+.desk-top { height: calc(209em * 92 / 640); }
+.desk-top > li:nth-child(1) { left: calc(179em * 92 / 640); }
+.desk-top > li:nth-child(2) { left: calc(262em * 92 / 640); }
+.desk-top > li:nth-child(3) { left: calc(338em * 92 / 640); }
+.desk-top > li:nth-child(4) { left: calc(462em * 92 / 640); }
 .desk-top > li::after { display: none; }
-.clipboard { width: 7em; height: calc(56em / 6); transform: none; }
-.outtray { width: calc(62em / 6); height: calc(26em / 6); }
-.computer { width: 17em; height: 13em; }
-.player { width: 15em; height: calc(64em / 6); }
-.shelf .obj > span:first-child, .desk-top .obj > span:first-child, .spine, .ledge { filter: drop-shadow(calc(1em / 6) calc(1em / 6) 0 rgba(20, 16, 12, 0.35)); transition: none; }
-.shelf .obj:hover > span:first-child, .shelf .obj:focus-visible > span:first-child,
-.desk-top .obj:hover > span:first-child, .desk-top .obj:focus-visible > span:first-child { transform: translateY(calc(-2em / 6)); filter: drop-shadow(calc(2em / 6) calc(2em / 6) 0 rgba(20, 16, 12, 0.3)); }
-.spine:hover, .spine:focus-visible { transform: translateY(calc(-3em / 6)); }
-.shelf .o-mag:hover > span:first-child, .shelf .o-mag:focus-visible > span:first-child { transform: translateY(calc(-5em / 6)); }
-.scene .obj:focus-visible > span:first-child, .spine:focus-visible { outline: calc(1em / 6) solid var(--ink) !important; outline-offset: calc(2em / 6) !important; }
+.clipboard { width: calc(49em * 92 / 640); height: calc(65em * 92 / 640); transform: none; }
+.outtray { width: calc(72em * 92 / 640); height: calc(31em * 92 / 640); }
+.computer { width: calc(118em * 92 / 640); height: calc(90em * 92 / 640); }
+.player { width: calc(104em * 92 / 640); height: calc(74em * 92 / 640); }
+.shelf .obj > span:first-child, .desk-top .obj > span:first-child, .spine, .ledge { filter: drop-shadow(calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(20, 16, 12, 0.35)); transition: none; }
+
+/* the point-and-click scene (hotspots.js): a thing under the pointer, or with the keyboard's
+   focus, is outlined in white one art pixel wide and lifts a step; H outlines them all */
+.scene { --hl: drop-shadow(calc(1em * 92 / 640) 0 0 #fffaf0) drop-shadow(calc(-1em * 92 / 640) 0 0 #fffaf0) drop-shadow(0 calc(1em * 92 / 640) 0 #fffaf0) drop-shadow(0 calc(-1em * 92 / 640) 0 #fffaf0); }
+.scene .obj:is(:hover, :focus-visible), .scene.reveal .obj { filter: var(--hl); outline: none !important; }
+.scene .obj:is(:hover, :focus-visible) :is(span, img), .scene.reveal .obj :is(span, img) { filter: none !important; }
+.shelf .obj:is(:hover, :focus-visible) > span:first-child, .desk-top .obj:is(:hover, :focus-visible) > span:first-child { transform: translateY(calc(-1em * 92 / 640)); }
+.spine:is(:hover, :focus-visible) { transform: translateY(calc(-2em * 92 / 640)); }
+.shelf .o-mag:is(:hover, :focus-visible) > span:first-child { transform: translateY(calc(-3em * 92 / 640)); }
+.scene .obj:focus-visible > span:first-child, .spine:focus-visible { outline: none !important; }
+/* the caption beside the cursor: ink, paper type, a hard shadow */
+.hint { position: fixed; z-index: 2000; padding: 2px 8px 4px; font: 400 20px/24px var(--sans); color: #fffaf0; background: var(--ink); box-shadow: 3px 3px 0 rgba(20, 16, 12, 0.4); pointer-events: none; white-space: nowrap; }
+.hint[hidden] { display: none; }
+/* the cursors: a pixel arrow, and a pointing hand over what can be pressed */
+html { cursor: url(assets/cursor-arrow.png) 1 1, default; }
+button, a, summary, label, select, [role="button"], .obj, .label, input[type="radio"], input[type="checkbox"], input[type="range"] { cursor: url(assets/cursor-hand.png) 9 1, pointer !important; }
+input[type="text"], textarea, [contenteditable] { cursor: text; }
+button:disabled { cursor: url(assets/cursor-arrow.png) 1 1, default !important; }
 
 /* the pixel faces are drawn on a 10px grid and shown without smoothing, at whole multiples */
 html { -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
