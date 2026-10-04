@@ -863,3 +863,21 @@ button:disabled { cursor: url(assets/cursor-arrow.png) 1 1, default !important; 
 /* the pixel faces are drawn on a 10px grid and shown without smoothing, at whole multiples */
 html { -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
 img, .st-form, .st-out, .st-manual, .st-magazine, .st-portfolio, .st-tape, .st-computer, .desk { image-rendering: pixelated; }
+
+/* ================================================================ the object views at evening
+   Taken up, a thing lies on the desk under the lamp, as the room is lit (after NORCO): the
+   lamp's pool falls warm from the top left and grades in a dithered six steps to the cool
+   violet dark that runs on past it (assets/st/lamplight.png, a multiplier at 2x, anchored to
+   the corner, so its pixels are the room's size at any size of window). The papers, the
+   manual, the magazine, the plates and the printouts all lie in it. The computer's glass lights
+   itself, so the lamp's dark falls only on the desk round the display. */
+.desk:not([data-at="desk"]):not([data-at="computer"])::after,
+.st-computer::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url(assets/st/lamplight.png) 0 0 / 1280px 800px no-repeat, rgb(156, 146, 184);
+  image-rendering: pixelated; mix-blend-mode: multiply;
+}
+.desk:not([data-at="desk"]):not([data-at="computer"])::after { z-index: 4; }
+.st-computer { position: relative; }
+.st-computer::before { z-index: 0; }
+.st-computer .monitor { z-index: 1; }

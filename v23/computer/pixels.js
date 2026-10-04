@@ -1,7 +1,9 @@
 /* Pixels: everything on screen that is drawn rather than set in type, in full colour.
 
    The screen shows the room's palette (PALETTE, 46 colours cut from the room's own
-   drawings), and one screen pixel is 2 CSS pixels. Tones are flat colours of the palette,
+   drawings) graded for evening as the room is (GRADED: dark tones toward violet-blue,
+   highlights rolled off, a faint cool cast; the screen lights itself in a dark room). Things
+   are drawn in PALETTE and every pixel written takes its colour's graded one, and one screen pixel is 2 CSS pixels. Tones are flat colours of the palette,
    or a dither of two neighbours where a tone falls between them, never a hatch. Icons are
    32x32 bitmaps drawn here, outlined in ink, filled in colour, and shaded by one rule: a
    filled pixel under or left of the outline's lit side takes a lighter step, one over or
@@ -19,6 +21,7 @@ var Px = (function () {
   'use strict';
   var doc = document, root = doc.documentElement;
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  var GRADED = [[49, 41, 65], [59, 54, 75], [87, 66, 74], [102, 77, 77], [63, 90, 130], [82, 87, 103], [99, 93, 101], [132, 82, 75], [92, 103, 120], [77, 122, 115], [113, 112, 115], [88, 118, 152], [176, 86, 66], [106, 135, 96], [117, 129, 122], [139, 132, 122], [165, 129, 101], [132, 145, 136], [120, 146, 174], [198, 121, 98], [133, 161, 116], [165, 145, 122], [150, 155, 150], [186, 157, 60], [176, 162, 146], [186, 168, 141], [152, 175, 199], [173, 172, 170], [170, 187, 153], [185, 182, 178], [196, 181, 158], [186, 188, 190], [209, 186, 123], [200, 192, 180], [196, 194, 193], [203, 203, 202], [208, 204, 192], [217, 207, 176], [208, 209, 211], [215, 216, 219], [214, 217, 223], [198, 1, 138], [217, 103, 42], [0, 166, 196], [217, 196, 0], [217, 217, 219]];
   var PALETTE = [[19, 16, 14], [30, 29, 27], [61, 43, 32], [78, 55, 39], [43, 69, 96], [60, 66, 66], [79, 73, 67], [116, 62, 43], [73, 85, 90], [59, 106, 85], [98, 96, 89], [74, 104, 134], [181, 70, 43], [90, 122, 70], [105, 117, 101], [134, 123, 104], [168, 119, 83], [125, 138, 120], [111, 140, 168], [220, 110, 80], [126, 160, 98], [169, 139, 104], [148, 152, 136], [201, 154, 46], [185, 161, 132], [200, 169, 126], [150, 180, 205], [180, 175, 162], [176, 198, 140], [198, 190, 173], [216, 189, 146], [201, 199, 191], [240, 196, 106], [224, 205, 176], [216, 209, 195], [229, 224, 209], [239, 226, 194], [255, 232, 170], [239, 236, 225], [251, 248, 240], [250, 250, 246], [220, 0, 120], [255, 90, 31], [0, 166, 200], [255, 212, 0], [255, 250, 240]];
   function nearest(c) {
     var best = PALETTE[0], bd = 1e9;
@@ -27,6 +30,10 @@ var Px = (function () {
       if (d < bd) { bd = d; best = p; }
     });
     return best;
+  }
+  function graded(c) {
+    for (var i = 0; i < PALETTE.length; i++) { var p = PALETTE[i]; if (p[0] === c[0] && p[1] === c[1] && p[2] === c[2]) return GRADED[i]; }
+    return GRADED[PALETTE.indexOf(nearest(c))];
   }
   function colour(c) { return nearest([c[0] * 255, c[1] * 255, c[2] * 255]); }
   function shade(c, k) { return nearest(k < 1 ? [c[0] * k, c[1] * k, c[2] * k] : [c[0] + (255 - c[0]) * (k - 1), c[1] + (255 - c[1]) * (k - 1), c[2] + (255 - c[2]) * (k - 1)]); }
@@ -46,6 +53,7 @@ var Px = (function () {
     for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
       var o = (y * w + x) * 4, p = fn(x, y);
       if (!p) continue;
+      p = graded(p);
       d[o] = p[0]; d[o + 1] = p[1]; d[o + 2] = p[2]; d[o + 3] = 255;
     }
     ctx.putImageData(img, 0, 0);
@@ -314,12 +322,15 @@ var Px = (function () {
     c.width = g.w; c.height = g.h;
     var ctx = c.getContext('2d'), img = ctx.createImageData(g.w, g.h), d = img.data;
     for (var y = 0; y < g.h; y++) for (var x = 0; x < g.w; x++) {
-      var o = (y * g.w + x) * 4, v = s[y][x], p = rgbAt(v);
+      var o = (y * g.w + x) * 4, v = s[y][x], p = v ? graded(rgbAt(v)) : null;
       if (!v) continue;
       d[o] = p[0]; d[o + 1] = p[1]; d[o + 2] = p[2]; d[o + 3] = 255;
     }
     ctx.putImageData(img, 0, 0);
   }
 
-  return { colour: colour, shade: shade, nearest: nearest, mix3: mix3, TONES: TONES, PALETTE: PALETTE, drawIcon: drawIcon };
+  // for the pictures drawn in other scripts (the piano roll): the graded colour nearest a colour
+  function gnearest(c) { return graded(nearest(c)); }
+  function gshade(c, k) { return graded(shade(c, k)); }
+  return { colour: colour, shade: gshade, nearest: gnearest, graded: graded, mix3: mix3, TONES: TONES, PALETTE: PALETTE, drawIcon: drawIcon };
 })();

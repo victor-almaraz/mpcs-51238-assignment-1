@@ -29,8 +29,8 @@
   --t: 20px;
   /* the room's palette: ink and paper, the wallpaper's blue for selection, terracotta,
      ochre for warnings, sage green for the displays */
-  --ink: #1e1d1b; --paper: #fbf8f0; --chrome: #efe2c2;
-  --blue: #2b4560; --red: #b5462b; --yellow: #f0c46a; --green: #b0c68c;
+  --ink: #3b364b; --paper: #d7d8db; --chrome: #d0ccc0;
+  --blue: #3f5a82; --red: #b05642; --yellow: #d1ba7b; --green: #aabb99;
   /* dotted rules as gradients: dots one screen pixel square, one pixel apart */
   --dots-h: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px);
   --dots-v: repeating-linear-gradient(var(--ink) 0 2px, transparent 2px 4px);
