@@ -1,477 +1,428 @@
-/* A composer's working desk at a computing centre: a leather-topped walnut desk with
-   gilt tooling. Its objects are stations, one in front at a time, reached from a drawer
-   of labels or from the desk itself: a cloth-bound manual, a marbled portfolio, a
-   magazine (magazine.css), the oak card tray beside the coding form with the card in
-   hand under it, the out tray (printout, job ticket, listing and stacker), and a
-   reel-to-reel recorder. The desk is one screen tall; long things scroll inside their
-   own object. Text always sits on paper; the photographed textures, kept with the paper
-   desk (../v15/assets/), are the desk's materials, each a seamless tile. */
+/* A composer's workroom at a computing centre, photographed for an architecture review:
+   a plaster wall, one oak shelf on hairline steel rails, a walnut desk on a slender black
+   trestle. The room is drawn straight on, as an elevation, in quiet materials (plaster,
+   oak, walnut, linen, aluminium) with soft contact shadows and one muted accent, a
+   terracotta. Things are named as plates are captioned: small tracked capitals on the
+   plaster, under the desk. Each thing is a station, one in front at a time, reached from
+   the room itself or from the menu in the corner:
+     the bookshelf    the reference manual, in three linen volumes
+     the stack        the magazine (magazine.css) on the folders, among them the miscellanea
+     the deck box     the decks, beside the coding form and the card in hand
+     the out tray     printout, job ticket, listing and the punch's stacker
+     the tape player  a reel-to-reel machine in a walnut case
+   Inside a station the desk is seen from above, its oak under the papers. Text always
+   sits on paper or plaster, never on the wood. Type: Instrument Serif for display, Jost
+   in small tracked capitals for labels, Source Serif 4 for reading, IBM Plex Mono for
+   cards and code. */
 
 :root {
-  --walnut: #3f2718;
-  --leather: #2c3b2c;
-  --gilt: #c9a55a;
-  --paper: #f6efdc;
-  --cream: #fbf7ea;
-  --ink: #2a2118;
-  --ink-soft: #4d4234;
-  --manila: #e8d6a4;
-  --form-ink: #2b5646;
-  --oxblood: #6b2620;
-  --focus: #f2c46d;
+  --wall: #eeebe5;
+  --wall-low: #e4dfd5;
+  --oak: #c9ae8b;
+  --oak-d: #a98b68;
+  --oak-l: #dcc6a7;
+  --walnut: #5b4131;
+  --walnut-d: #3d2b20;
+  --walnut-l: #7a5a45;
+  --floor: #b9a184;
+  --paper: #fbfaf6;
+  --ivory: #f4f0e7;
+  --stone: #d8d1c3;
+  --ink: #1f1e1c;
+  --ink-soft: #5d5851;
+  --rule: #d6cfc2;
+  --accent: #9a4a31;     /* terracotta, used sparingly */
+  --sage: #7d8a78;
+  --slate: #49555a;
+  --linen: #c7bba5;
+  --brass: #b0975f;
+  --steel: #d2d0cb;
+  --steel-d: #8f8c86;
+  --form-ink: #3b6a55;
+  /* soft contact shadows: a lift for what lies on the desk, a fall for what stands */
+  --lift: 0 0.15rem 0.3rem rgba(30, 22, 14, 0.14), 0 0.7rem 1.4rem -0.6rem rgba(30, 22, 14, 0.38);
+  --lift-em: 0 0.12em 0.25em rgba(30, 22, 14, 0.14), 0 0.6em 1.1em -0.5em rgba(30, 22, 14, 0.4);
 
-  --book: "Gelasio", Georgia, "Times New Roman", serif;
-  --display: "Libre Caslon Text", Palatino, Georgia, serif;
-  --didone: "Bodoni Moda", Didot, Georgia, serif;
-  --type: "Courier Prime", "Courier New", Courier, monospace;
+  --display: "Instrument Serif", "Libre Caslon Text", Georgia, serif;
+  --sans: "Jost", "Futura", "Avenir Next", "Helvetica Neue", sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
-  --hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
-  --plate: "Barlow Condensed", "Arial Narrow", sans-serif;
 
-  --morris: url("../v06/assets/morris-thief.jpeg");
-  --willow: url("../v06/assets/morris-willow.jpeg");
-  --acanthus: url("../v06/assets/morris-acanthus-band.jpg");
-  --marble-comb: url("../v06/assets/marble-nonpareil-tile.jpg");
-  --marble-spanish: url("../v06/assets/marble-spanish.jpeg");
-
-  /* the desk's materials, seamless tiles */
-  --walnut-tex: url("../v15/assets/walnut.jpeg") 0 0 / 900px auto;
-  --leather-tex: url("../v15/assets/leather-green.jpeg") 0 0 / 820px auto;
-  --oak-tex: url("../v15/assets/oak.jpeg") 0 0 / 600px auto;
-  --teak-tex: url("../v15/assets/teak.jpeg") 0 0 / 700px auto;
-  --cloth-tex: url("../v15/assets/bookcloth-red.jpeg") 0 0 / 600px auto;
-  --plate-tex: url("../v15/assets/brushed-plate.jpeg") 0 0 / 800px auto;
-  --laid-tex: url("../v15/assets/laid-paper.jpeg") 0 0 / 760px auto;
+  /* the desk seen from above: pale oak, a faint grain running across */
+  --oak-top:
+    repeating-linear-gradient(179deg, rgba(90, 60, 30, 0) 0 1.4rem, rgba(90, 60, 30, 0.06) 1.4rem 1.5rem, rgba(90, 60, 30, 0) 1.5rem 3.3rem),
+    repeating-linear-gradient(181.2deg, rgba(255, 245, 225, 0) 0 2.6rem, rgba(255, 245, 225, 0.12) 2.6rem 2.75rem, rgba(255, 245, 225, 0) 2.75rem 4.6rem),
+    var(--oak);
 }
 
-
-
-
-
-
 * { box-sizing: border-box; }
-
-html { height: 100%; background: var(--walnut-tex), var(--walnut); }
-
+html { height: 100%; background: var(--wall); }
 body {
   height: 100%;
   margin: 0;
   color: var(--ink);
-  font-family: var(--book);
+  font-family: var(--serif);
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.6;
 }
-
-a { color: inherit; text-underline-offset: 0.15em; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
 h1, h2, h3, h4 { line-height: 1.2; }
 code, kbd, pre { font-family: var(--mono); font-size: 0.95em; }
 td code { white-space: nowrap; }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 [tabindex="-1"]:focus { outline: none; }
-[tabindex="-1"]:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+[tabindex="-1"]:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-/* ---------- the desk: always exactly one screen tall ---------- */
+/* small tracked capitals: every label and caption */
+.caps, .obj-tag, .running, .contents-h, .tray-plate, .tray-div, .desk-tag, .kicker, .sheet-note, .engraved,
+.fanfold h3, .job-ticket h3, .stack-box h3, .in-hand summary, .maker, .form-boxes dt {
+  font-family: var(--sans);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
 
-.room { height: 100vh; height: 100dvh; padding: 0.5rem; }
+/* ---------- the room: always exactly one screen tall ---------- */
 
-.desk {
-  position: relative;
-  height: 100%;
-  max-width: 100rem;
-  margin: 0 auto;
-  padding: 2.3rem 1.6rem 2.3rem 1.3rem;
-  display: grid;
-  grid-template-columns: 9.6rem minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  gap: 1.4rem;
-  /* a lamp over the desk, then the leather */
-  background: radial-gradient(ellipse at 40% 30%, rgba(255, 240, 200, 0.06), transparent 55%, rgba(0, 0, 0, 0.3)), var(--leather-tex), var(--leather);
-  border-radius: 0.4rem;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0.6rem 1.6rem rgba(0, 0, 0, 0.55);
-}
-/* the gilt fillet tooled round the leather: a line and a fainter line inside it */
-.desk::before {
-  content: "";
-  position: absolute;
-  inset: 0.55rem;
-  border: 1.5px solid var(--gilt);
-  border-radius: 0.15rem;
-  outline: 1px solid rgba(201, 165, 90, 0.7);
-  outline-offset: -5px;
-  pointer-events: none;
-}
-/* a tooled acanthus frieze along the head and foot of the leather */
-.desk-rim {
-  position: absolute;
-  inset: 0.95rem 1.1rem;
-  background: var(--acanthus) 0 0 / auto 0.85rem repeat-x, var(--acanthus) 0 100% / auto 0.85rem repeat-x;
-  opacity: 0.8;
-  pointer-events: none;
-}
-.desk > :not(.desk-rim) { position: relative; min-width: 0; min-height: 0; }
+.room { height: 100vh; height: 100dvh; }
+.desk { position: relative; height: 100%; display: grid; grid-template-rows: minmax(0, 1fr); background: var(--oak-top); }
+.desk[data-at="desk"] { background: var(--wall); }
+.desk > * { min-width: 0; min-height: 0; }
 
-/* ---------- the drawer of labels: one brass card-holder per station ---------- */
+/* ---------- the menu in the corner ---------- */
 
-.drawer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.8rem 0.6rem;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.12), rgba(255, 230, 200, 0.05) 60%, rgba(0, 0, 0, 0.12)), var(--walnut-tex), var(--walnut);
-  background-position: 0 0, 310px 140px;
-  border-radius: 0.3rem;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.45), inset 0 2px 6px rgba(0, 0, 0, 0.35), 2px 4px 10px rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
-}
-.back { margin: 0; font-family: var(--type); font-size: 1rem; line-height: 1.3; }
-.back a {
-  display: block;
-  padding: 0.3rem 0.5rem 0.3rem 1.2rem;
-  color: var(--ink);
-  background: radial-gradient(circle at 0.55rem 50%, #5a3824 0 0.2rem, #8c7a55 0.23rem 0.28rem, transparent 0.3rem), var(--manila);
-  border-radius: 0.15rem 0.5rem 0.5rem 0.15rem;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.45);
-}
-.labels { display: flex; flex-direction: column; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
-/* a typed label slid into a brass frame */
-.label {
-  position: relative;
-  display: block;
-  width: 100%;
-  padding: 0.35rem 0.5rem;
-  font: 1rem/1.25 var(--type);
-  text-align: left;
-  color: var(--ink);
-  background: var(--cream);
-  border: 3px solid #b8954f;
-  border-radius: 2px;
-  box-shadow: 0 0 0 1px #6f5320, 1px 2px 3px rgba(0, 0, 0, 0.45);
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
-.label:hover { background: #fff; }
-/* the station in front: its label pulled out of the drawer, the frame polished */
-.label[aria-current="true"] {
-  transform: translateX(0.35rem);
-  font-weight: 700;
-  border-color: #e0bf72;
-  box-shadow: 0 0 0 1px #6f5320, 3px 4px 6px rgba(0, 0, 0, 0.55);
-}
-.label[aria-current="true"]::before {
-  content: "";
-  position: absolute;
-  left: -0.85rem;
-  top: 50%;
-  width: 0.45rem;
-  height: 0.45rem;
-  margin-top: -0.225rem;
-  border-radius: 50%;
-  background: var(--focus);
-  box-shadow: 0 0 0 1px #6f5320;
-}
-.label:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.drawer { position: absolute; top: 0.8rem; right: 1rem; z-index: 5; display: flex; align-items: flex-start; gap: 0.5rem; }
+.menu-btn { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+.menu-btn::after { content: ""; display: inline-block; width: 0.45rem; height: 0.45rem; margin-left: 0.55rem; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-0.18rem) rotate(45deg); }
+.menu-btn[aria-expanded="true"]::after { transform: translateY(0.08rem) rotate(-135deg); }
+:where(.menu-btn:hover:not(:disabled)) { background: #3a3835; }
+.places { position: absolute; top: calc(100% + 0.5rem); right: 0; width: 17rem; padding: 0.6rem 0.4rem; background: var(--paper); border: 1px solid var(--rule); box-shadow: var(--lift); }
+.places[hidden] { display: none; }
+.labels { display: grid; margin: 0; padding: 0; list-style: none; }
+.label { display: block; width: 100%; padding: 0.35rem 0.8rem; font: 400 1rem/1.3 var(--sans); text-align: left; color: var(--ink); background: transparent; border: 0; border-radius: 0; box-shadow: none; cursor: pointer; }
+.label:hover { background: var(--ivory); }
+/* the place in front: a rule at its left */
+.label[aria-current="true"] { font-weight: 600; box-shadow: inset 2px 0 0 var(--accent); }
+.back { margin: 0.5rem 0 0; padding: 0.6rem 0.8rem 0.1rem; font: 400 0.95rem/1.3 var(--sans); border-top: 1px solid var(--rule); }
 
 /* ---------- stations ---------- */
 
 .stations { height: 100%; }
-.station { height: 100%; min-height: 0; overflow: auto; padding: 0.4rem 0.6rem 0.9rem 0.4rem; }
+.station { height: 100%; min-height: 0; overflow: auto; padding: 3.8rem 1.6rem 1.4rem; }
 .station[hidden] { display: none; }
 
-/* paper buttons, typed; zero specificity so each object restyles its own */
+/* buttons: hairline outlines, square corners; zero specificity so each object restyles its own */
 :where(button, select) {
-  font-family: var(--type);
-  font-size: 1rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   color: var(--ink);
-  background: var(--cream);
-  border: 1px solid #6b5b45;
+  background: var(--paper);
+  border: 1px solid var(--ink);
   border-radius: 2px;
-  padding: 0.3rem 0.75rem;
-  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-:where(button:not(.obj, .deck, .key, .label):hover:not(:disabled)) { background: #fff; }
-:where(button:not(.obj, .deck, .key, .label):active:not(:disabled)) { background: #ece3cb; box-shadow: none; }
-:where(button:disabled) { color: #6e6456; border-style: dashed; cursor: default; box-shadow: none; }
-.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }
-.status { font-family: var(--type); font-size: 1rem; }
-
-/* a manila tag tied to an object */
-.desk-tag {
-  width: fit-content;
-  margin: 0;
-  padding: 0.15rem 0.9rem 0.15rem 1.3rem;
-  font: 700 1rem/1.4 var(--type);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: radial-gradient(circle at 0.6rem 50%, var(--leather) 0 0.2rem, #8c7a55 0.23rem 0.28rem, transparent 0.3rem), var(--manila);
-  border-radius: 0.15rem 0.5rem 0.5rem 0.15rem;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.4);
-}
-
-/* ---------- the desk station: the nameplate and every object ---------- */
-
-.st-desk { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 1.6rem; }
-.st-desk .overview { align-self: center; }
-/* an engraved brass nameplate on a walnut block, standing at the front of the desk */
-.nameplate {
-  justify-self: start;
-  max-width: 100%;
-  padding: 0.35rem;
-  background: linear-gradient(rgba(255, 230, 200, 0.06), rgba(0, 0, 0, 0.25)), var(--walnut-tex), var(--walnut);
-  background-position: 0 0, 120px 420px;
-  border-radius: 0.2rem;
-  box-shadow: 0 2px 0 #24160c, 3px 8px 12px rgba(0, 0, 0, 0.5);
-}
-.nameplate h1 {
-  margin: 0;
-  padding: 0.55rem 1.6rem 0.6rem;
-  font: normal clamp(1.3rem, 2.6vw, 2rem)/1.2 var(--display);
-  letter-spacing: 0.06em;
-  color: #2b1d0c;
-  text-shadow: 0 1px 0 rgba(255, 244, 200, 0.55);
-  background: linear-gradient(170deg, #f1d98f, #c9a34e 45%, #e6c672 60%, #b08a3a);
-  border-radius: 0.1rem;
-  box-shadow: inset 0 0 0 1px rgba(80, 55, 15, 0.6), inset 0 0 0 3px rgba(255, 238, 180, 0.35);
-}
-
-.overview {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(8.6rem, 1fr));
-  gap: 1.6rem 1rem;
-  align-items: end;
-  align-content: start;
-  margin: 0;
-  padding: 0.8rem 0.4rem 0.4rem;
-  list-style: none;
-}
-.obj {
-  display: grid;
-  justify-items: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: 0;
+  padding: 0.3rem 0.9rem;
   box-shadow: none;
   cursor: pointer;
 }
+:where(button:not(.obj, .deck, .key, .label):hover:not(:disabled)) { background: var(--ivory); }
+:where(button:not(.obj, .deck, .key, .label):active:not(:disabled)) { background: var(--stone); }
+:where(button:disabled) { color: var(--ink-soft); border-color: var(--steel-d); border-style: dashed; cursor: default; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }
+.status { font-family: var(--sans); font-size: 0.95rem; }
+
+.desk-tag { width: fit-content; margin: 0; padding: 0.2rem 0 0.2rem; font-size: 0.9rem; line-height: 1.4; color: var(--ink); border-bottom: 1px solid var(--ink); }
+
+/* ================================================================ the room, in elevation */
+/* The drawing is 80em by 46em, and its em is chosen to fit the station; below a size
+   where its captions would be too small, it becomes a list. */
+
+.st-desk { container-type: size; display: grid; padding: 0; overflow: hidden; }
+.scene {
+  position: relative;
+  align-self: end;
+  justify-self: center;
+  width: 80em;
+  height: 46em;
+  font-size: min(calc(100cqw / 80), calc(100cqh / 46.5));
+  font-family: var(--sans);
+}
+.scene ul { margin: 0; padding: 0; list-style: none; }
+.scene .obj { padding: 0; font: inherit; color: inherit; background: none; border: 0; border-radius: 0; box-shadow: none; cursor: pointer; }
+.scene .obj:focus-visible { outline: none; }
+
+/* plaster, lit from the upper left; the oak floor along its foot */
+.wall { position: absolute; inset: -100vh -100vw 0; background: linear-gradient(var(--wall) 55%, var(--wall-low)); }
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 1.6em; background: linear-gradient(rgba(60, 40, 20, 0.18) 0 0.12em, var(--floor) 0.12em); }
+
+/* the title, set like the head of a feature */
+.title-box { position: absolute; left: 3.2em; top: 3.6em; width: 38em; }
+.kicker { margin: 0 0 1.2em; padding-bottom: 0.7em; font-size: 0.85em; color: var(--ink-soft); border-bottom: 1px solid var(--ink); width: 14em; }
+.title-box h1 { margin: 0; font: 400 3.1em/1.02 var(--display); letter-spacing: -0.005em; color: var(--ink); }
+.title-sub { margin: 1em 0 0; max-width: 30em; font: 400 1em/1.5 var(--serif); color: var(--ink-soft); }
+
+/* --- the bookshelf: an oak board on two hairline steel rails --- */
+.shelf-unit { position: absolute; left: 46em; top: 5em; width: 30em; height: 12em; }
+.rail { position: absolute; top: 0; bottom: 0; width: 0.9em; border: solid var(--ink); border-width: 0 0.1em; background: repeating-linear-gradient(transparent 0 2.9em, var(--ink) 2.9em 3em); opacity: 0.85; }
+.rail-l { left: 1.2em; }
+.rail-r { right: 1.2em; }
+.plank { position: absolute; z-index: 1; left: 0; right: 0; top: 9.6em; height: 0.6em; background: linear-gradient(var(--oak-l) 0 0.12em, var(--oak) 0.12em); box-shadow: var(--lift-em); }
+.shelf { position: absolute; z-index: 2; left: 4em; bottom: 2.4em; display: flex; align-items: flex-end; gap: 0.12em; }
+/* cloth-bound volumes: a rounded spine (lit from the left), a darker headcap, the title
+   set downward in tracked capitals, the volume number on a paper label at the foot */
+.spine {
+  position: relative;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.1em 0 0.75em !important;
+  border-radius: 0.22em 0.22em 0.06em 0.06em !important;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.14) 28%, rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.22)) !important;
+  box-shadow: inset 0 0.22em 0 rgba(0, 0, 0, 0.16), 0.1em 0 0.25em rgba(30, 22, 14, 0.18) !important;
+  transition: transform 0.2s ease;
+}
+.spine.v1 { width: 3.2em; height: 9.8em; background-color: var(--linen) !important; color: var(--ink) !important; }
+.spine.v2 { width: 2.9em; height: 9.1em; background-color: var(--slate) !important; color: var(--paper) !important; }
+.spine.v3 { width: 3.05em; height: 9.5em; background-color: var(--accent) !important; color: var(--paper) !important; }
+.sp-t { writing-mode: vertical-rl; font: 500 0.78em/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
+.sp-no { order: 2; margin-top: auto; display: grid; place-items: center; width: 1.5em; height: 1.5em; font: 400 1.05em/1 var(--display); color: var(--ink); background: var(--ivory); border-radius: 0.06em; box-shadow: 0 0 0 0.06em rgba(0, 0, 0, 0.18); }
+.spine:hover, .spine:focus-visible { transform: translateY(-0.45em); }
+.spine:focus-visible { outline: 0.12em solid var(--ink) !important; outline-offset: 0.2em !important; }
+.bookend { position: absolute; left: 13.6em; bottom: 2.4em; width: 0.35em; height: 4.2em; background: var(--ink); }
+.bookend::after { content: ""; position: absolute; left: 0; bottom: 0; width: 2.2em; height: 0.18em; background: var(--ink); }
+/* a stoneware bottle, lit from the left */
+.vase { position: absolute; left: 22.5em; bottom: 2.4em; width: 2.6em; height: 4.6em; background: radial-gradient(ellipse at 35% 40%, #ece6da, #c9bfae 70%); border-radius: 46% 46% 30% 30% / 58% 58% 26% 26%; }
+.vase::before { content: ""; position: absolute; left: 1em; top: -1.4em; width: 0.6em; height: 1.7em; background: linear-gradient(to right, #e5ded0, #c6bcaa); border-radius: 0.1em; }
+.shelf-tag { position: absolute; left: 5.2em; top: 13.4em; margin: 0; font: 500 0.78em/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+
+/* --- the desk: a thin walnut top on a slender black trestle --- */
+.desk-body {
+  position: absolute; left: 3em; right: 3em; top: 30em; height: 2em;
+  background: linear-gradient(var(--walnut-l) 0 0.12em, var(--walnut) 0.12em 0.85em, var(--walnut-d) 0.85em 0.95em, transparent 0.95em),
+              linear-gradient(transparent 0.95em, var(--walnut-d) 0.95em) 4em 0 / calc(100% - 8em) 100% no-repeat;
+}
+.desk-body::after { content: ""; position: absolute; left: 0; right: 0; top: 0.85em; height: 2.2em; background: linear-gradient(rgba(30, 22, 14, 0.16), transparent); pointer-events: none; }
+.leg { position: absolute; top: 0.95em; width: 0.32em; height: 13.6em; }
+.leg::before, .leg::after { content: ""; position: absolute; top: 0; width: 0.32em; height: 13.8em; background: var(--ink); transform-origin: top center; }
+.leg::before { transform: rotate(9deg); }
+.leg::after { transform: rotate(-9deg); }
+.leg-l { left: 5.5em; }
+.leg-r { right: 5.5em; }
+/* an architect's lamp: a black arm in two lengths, a small black shade */
+.lamp { position: absolute; left: 4.4em; top: 19.4em; width: 7em; height: 10.6em; }
+.lamp::before { content: ""; position: absolute; left: 1.2em; bottom: 0.3em; width: 0.16em; height: 7em; background: var(--ink); transform: rotate(14deg); transform-origin: bottom; }
+.lamp::after { content: ""; position: absolute; left: 0.3em; bottom: 0; width: 2.4em; height: 0.35em; background: var(--ink); border-radius: 0.2em 0.2em 0 0; }
+.lamp-shade { position: absolute; left: 2.4em; top: 2.6em; width: 4.2em; height: 0.16em; background: var(--ink); transform: rotate(-12deg); transform-origin: left; }
+.lamp-shade::after { content: ""; position: absolute; right: -0.9em; top: -0.2em; width: 1.9em; height: 1.5em; background: var(--ink); border-radius: 1em 1em 0.2em 0.2em; transform: rotate(40deg); }
+
+/* --- the things on the desk; each one's caption on the plaster under the desk, on a leader --- */
+.desk-top { position: absolute; left: 11.5em; right: 4.5em; top: 0; height: 37.6em; display: flex; align-items: flex-end; justify-content: space-between; }
+.desk-top > li { position: relative; }
+.desk-top .obj { display: grid; grid-template-rows: auto 7.6em; justify-items: center; }
 .obj-tag {
-  padding: 0.2rem 0.7rem;
-  font: 1rem/1.3 var(--type);
-  text-align: center;
-  color: var(--ink);
-  background: var(--cream);
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.4);
-}
-.obj:hover .obj-tag { text-decoration: underline; text-underline-offset: 0.2em; }
-.obj:focus-visible { outline: none; }
-.obj:focus-visible .obj-tag { outline: 3px solid var(--focus); outline-offset: 3px; }
-.obj > span:first-child { transition: transform 0.18s ease; }
-.obj:hover > span:first-child, .obj:focus-visible > span:first-child { transform: translate(-2px, -4px); }
-
-/* the manual: oxblood buckram, a gilt-ruled spine, the page block at the edges */
-.book-cover {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: 7.6rem;
-  aspect-ratio: 3 / 4;
-  padding-left: 1rem;
-  background: linear-gradient(to right, rgba(40, 8, 6, 0.5) 0 1rem, rgba(255, 255, 255, 0.1) 1rem 1.1rem, transparent 1.1rem), linear-gradient(rgba(60, 12, 10, 0.18), rgba(60, 12, 10, 0.18)), var(--cloth-tex), var(--oxblood);
-  border-radius: 0.15rem 0.3rem 0.3rem 0.15rem;
-  box-shadow: 2px 2px 0 #efe6cf, 3px 3px 0 #ddd1b2, 4px 4px 0 #efe6cf, 5px 5px 0 #4a1a15, 6px 9px 14px rgba(0, 0, 0, 0.55);
-}
-.book-cover::before {
-  content: "";
-  position: absolute;
-  left: 0.25rem;
-  top: 0;
-  bottom: 0;
-  width: 0.5rem;
-  background: linear-gradient(to bottom, transparent 1rem, var(--gilt) 1rem 1.12rem, transparent 1.12rem 1.3rem, var(--gilt) 1.3rem 1.42rem, transparent 1.42rem calc(100% - 1.42rem), var(--gilt) calc(100% - 1.42rem) calc(100% - 1.3rem), transparent calc(100% - 1.3rem));
-}
-.book-label, .folio-label {
-  display: grid;
-  gap: 0.15rem;
-  padding: 0.45rem 0.45rem 0.5rem;
-  text-align: center;
-  color: var(--ink);
-  background: #f3e9cf;
-  border: 1px solid #8f7a55;
-  box-shadow: inset 0 0 0 2px #f3e9cf, inset 0 0 0 3px rgba(107, 38, 32, 0.6);
-}
-.bl-small { font: 0.75rem/1.2 var(--display); font-variant: small-caps; letter-spacing: 0.05em; }
-.bl-big { font: 1rem/1.1 var(--didone); font-variant: small-caps; letter-spacing: 0.03em; }
-.ribbon {
-  position: absolute;
-  bottom: -1.2rem;
-  left: 62%;
-  width: 0.55rem;
-  height: 1.9rem;
-  background: linear-gradient(to right, #8e2d24, #b6463a 50%, #8e2d24);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
-  z-index: -1;
-}
-
-/* the portfolio: nonpareil boards, leather spine and corners, linen ties */
-.folio-cover {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 8.4rem;
-  aspect-ratio: 4 / 5;
-  background: var(--marble-comb) 0 0 / 260px auto, #6a2721;
-  border-radius: 0.2rem;
-  box-shadow: inset 1.1rem 0 0 #5a1f1a, inset calc(1.1rem + 2px) 0 0 var(--gilt), 3px 3px 0 #d9ccaa, 6px 9px 14px rgba(0, 0, 0, 0.55);
-}
-.folio-cover::before, .folio-cover::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 60%), #5a1f1a;
-}
-.folio-cover::before { top: 0; clip-path: polygon(0 0, 100% 0, 100% 100%); }
-.folio-cover::after { bottom: 0; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
-.folio-label { position: relative; z-index: 1; margin-left: 1rem; }
-.tie { position: absolute; right: -0.8rem; width: 1.5rem; height: 0.4rem; background: #e9dcc0; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4); }
-.tie.t1 { top: 46%; transform: rotate(-8deg); }
-.tie.t2 { top: 52%; transform: rotate(11deg); }
-.stub {
-  position: absolute;
-  top: -0.85rem;
-  left: 2.4rem;
-  padding: 0.1rem 0.45rem;
-  font: 600 0.62rem/1.2 var(--type);
-  letter-spacing: 0.08em;
+  align-self: end;
+  padding-top: 0.4em;
+  font-size: 0.78em;
+  line-height: 1.3;
   white-space: nowrap;
-  color: #3a1d14;
-  background: #e9b9a6;
-  border-left: 2px dashed #8a4a3a;
-  transform: rotate(-4deg);
-  z-index: -1;
+  color: var(--ink);
+}
+/* the leader: a hairline from under the desk to the caption */
+.obj-tag::before { content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px; height: 3.2em; background: var(--ink-soft); }
+.obj:hover .obj-tag, .obj:focus-visible .obj-tag { color: var(--accent); }
+.obj:focus-visible .obj-tag { outline: 0.12em solid var(--ink); outline-offset: 0.3em; }
+.desk-top .obj > span:first-child { transition: transform 0.2s ease; }
+.desk-top .obj:hover > span:first-child, .desk-top .obj:focus-visible > span:first-child { transform: translateY(-0.35em); }
+
+/* the stack: the magazine stood on three folders, the miscellanea's tab at the top */
+.pile { display: flex; align-items: flex-end; gap: 1.2em; width: 12.6em; }
+.o-mag .mini-mag { width: 6.2em; margin-bottom: 2.1em; box-shadow: var(--lift-em); }
+.o-folio .folders { position: absolute; left: 0; bottom: 7.6em; width: 12.6em; height: 2.1em; }
+.o-folio { margin-left: auto; }
+.o-folio .obj-tag { grid-row: 2; }
+.fd { position: absolute; left: 0; right: 0; height: 0.62em; border-radius: 0.05em; box-shadow: 0 0.06em 0 rgba(30, 22, 14, 0.25); }
+.fd1 { bottom: 0; background: var(--stone); }
+.fd2 { bottom: 0.68em; left: 0.4em; right: -0.25em; background: var(--linen); }
+.fd3 { bottom: 1.36em; left: 0.15em; background: #bfae8e; }
+.fd-tab { position: absolute; right: 0.7em; bottom: 0.55em; padding: 0.08em 0.6em 0.12em; font: 500 0.6em/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); background: #bfae8e; border-radius: 0.2em 0.2em 0 0; }
+.o-folio:hover .folders, .o-folio:focus-visible .folders { transform: translateY(-0.25em); }
+
+/* the coding form on a clipboard, stood against the wall */
+.clipboard { position: relative; display: block; width: 6.6em; height: 9em; background: #8c7258; border-radius: 0.3em; box-shadow: var(--lift-em); transform: rotate(1.5deg); }
+.clip { position: absolute; left: 2em; top: -0.3em; width: 2.6em; height: 1.1em; background: linear-gradient(#e2e0dc, #a9a6a0); border-radius: 0.25em 0.25em 0.45em 0.45em; z-index: 1; }
+.sheet-lines {
+  position: absolute; inset: 0.7em 0.45em 0.45em;
+  background:
+    linear-gradient(var(--form-ink) 0 0.35em, transparent 0.35em),
+    linear-gradient(to right, transparent 0 0.9em, rgba(59, 106, 85, 0.5) 0.9em 0.95em, transparent 0.95em 1.15em, rgba(59, 106, 85, 0.5) 1.15em 1.2em, transparent 1.2em),
+    repeating-linear-gradient(transparent 0 0.42em, rgba(59, 106, 85, 0.3) 0.42em 0.46em) 0 0.8em / 100% calc(100% - 0.8em) no-repeat,
+    var(--paper);
 }
 
-/* small views of the other objects, drawn in their own materials */
-.mini { position: relative; display: block; width: 9rem; height: 7rem; box-shadow: 4px 7px 12px rgba(0, 0, 0, 0.5); }
-.mini-pad { height: 8.6rem; width: 7.4rem; background: linear-gradient(#7a3326 0 0.7rem, transparent 0.7rem), repeating-linear-gradient(to bottom, transparent 0 0.6rem, #b9cbbf 0.6rem calc(0.6rem + 1px)) 0 1.3rem / 100% calc(100% - 1.8rem) no-repeat, var(--cream); }
-.mini-pad span { position: absolute; left: 0.5rem; right: 0.5rem; top: 1.1rem; height: 0.2rem; background: var(--form-ink); }
-.mini-print { width: 8.4rem; height: 8rem; background: radial-gradient(circle, var(--leather) 0 2px, transparent 2.5px) 0.15rem 0.3rem / 0.6rem 0.65rem repeat-y, radial-gradient(circle, var(--leather) 0 2px, transparent 2.5px) calc(100% - 0.15rem) 0.3rem / 0.6rem 0.65rem repeat-y, repeating-linear-gradient(to bottom, #fbfaf2 0 0.9rem, #dcebd8 0.9rem 1.8rem); }
-.mini-stack { background: var(--walnut-tex), var(--walnut); background-position: -200px -80px; border-radius: 0.2rem; }
-.mini-out { width: 10rem; height: 8rem; box-shadow: none; }
-.mini-out > span { position: absolute; display: block; box-shadow: 4px 7px 12px rgba(0, 0, 0, 0.5); }
-.mini-out .mini-print { left: 0; top: 0; width: 7.2rem; height: 7.4rem; }
-.mini-out .mini-stack { right: 0; bottom: 0; width: 5.6rem; height: 4rem; }
-.mini-stack span { position: absolute; inset: 0.6rem 0.6rem 0.8rem; background: repeating-linear-gradient(to bottom, #f1e2bb 0 0.55rem, #8f7550 0.55rem calc(0.55rem + 1px)); }
-.mini-tape { width: 10rem; height: 6.4rem; background: radial-gradient(circle at 28% 45%, #5b3a22 0 1.1rem, #bdb7a8 1.15rem 1.9rem, #6f6a5e 1.95rem 2rem, transparent 2.05rem), radial-gradient(circle at 72% 45%, #5b3a22 0 1.1rem, #bdb7a8 1.15rem 1.9rem, #6f6a5e 1.95rem 2rem, transparent 2.05rem), var(--plate-tex) padding-box, var(--teak-tex) border-box, #cfc7b4; border: 0.4rem solid transparent; border-radius: 0.35rem; }
+/* the deck box: walnut, a brass card frame; the index cards stand in it with their tabs */
+.deckbox { position: relative; display: block; width: 9.6em; height: 6.4em; }
+.dcards { position: absolute; left: 0.5em; right: 0.5em; bottom: 3.2em; height: 2.8em; }
+.dcards span { position: absolute; bottom: 0; width: 100%; height: 2em; background: var(--ivory); box-shadow: 0 -0.05em 0 var(--rule); }
+.dcards span::before { content: ""; position: absolute; top: -0.5em; width: 2em; height: 0.55em; border-radius: 0.15em 0.15em 0 0; background: inherit; box-shadow: inherit; }
+.dcards span:nth-child(1) { height: 2.4em; }
+.dcards span:nth-child(1)::before { left: 0.3em; }
+.dcards span:nth-child(2) { height: 2.1em; background: var(--stone); }
+.dcards span:nth-child(2)::before { left: 2.7em; }
+.dcards span:nth-child(3) { height: 1.8em; background: var(--paper); }
+.dcards span:nth-child(3)::before { left: 5.1em; background: var(--accent); }
+.dcards span:nth-child(4) { height: 1.5em; }
+.dfront { position: absolute; left: 0; right: 0; bottom: 0; height: 3.6em; background: linear-gradient(var(--walnut-l) 0 0.1em, var(--walnut) 0.1em); box-shadow: var(--lift-em); }
+.dholder { position: absolute; left: 3.3em; top: 1.15em; width: 3em; height: 1.15em; background: var(--ivory); border: 0.14em solid var(--brass); }
 
-/* ---------- the manual, open: a buckram case round two pages ---------- */
+/* the out tray: a low tray of black steel, fan-fold paper in it */
+.outtray { position: relative; display: block; width: 10.2em; height: 4em; }
+.ot-paper {
+  position: absolute; left: 0.8em; right: 0.8em; bottom: 0.9em; height: 2.6em;
+  background:
+    radial-gradient(circle, var(--steel-d) 0 0.09em, transparent 0.11em) 0.12em 0.2em / 0.42em 0.5em repeat-y,
+    radial-gradient(circle, var(--steel-d) 0 0.09em, transparent 0.11em) calc(100% - 0.12em) 0.2em / 0.42em 0.5em repeat-y,
+    repeating-linear-gradient(var(--paper) 0 0.45em, #dfe9da 0.45em 0.9em);
+  box-shadow: 0 -0.05em 0 var(--rule);
+}
+.ot-front { position: absolute; left: 0; right: 0; bottom: 0; height: 1.3em; background: linear-gradient(#3a3835 0 0.12em, var(--ink) 0.12em); border-radius: 0.08em; box-shadow: var(--lift-em); }
 
-.st-manual, .st-folio { padding: 0.2rem; }
+/* the tape player: a reel-to-reel machine upright in a walnut case */
+.player { position: relative; display: block; width: 14.6em; height: 10.2em; padding: 0.55em; background: linear-gradient(to right, var(--walnut-l), var(--walnut) 12%, var(--walnut) 88%, var(--walnut-d)); border-radius: 0.3em; box-shadow: var(--lift-em); }
+.pl-face { display: flex; justify-content: space-around; align-items: center; height: 6.3em; background: linear-gradient(#e2e0db, var(--steel)); }
+.pl-reel {
+  width: 4.6em; height: 4.6em; border-radius: 50%;
+  background:
+    radial-gradient(circle, #e6e4df 0 0.4em, var(--ink) 0.42em 0.55em, transparent 0.57em),
+    radial-gradient(circle at 50% 22%, #c9c6bf 0 0.5em, transparent 0.52em),
+    radial-gradient(circle at 25% 66%, #c9c6bf 0 0.5em, transparent 0.52em),
+    radial-gradient(circle at 75% 66%, #c9c6bf 0 0.5em, transparent 0.52em),
+    radial-gradient(circle, #2b2a28 0 70%, #1a1918 71%);
+}
+.pl-keys { display: flex; gap: 0.25em; height: 2.75em; padding: 0.7em 0.9em; background: #c4c2bc; }
+.pl-keys span { flex: 1; background: linear-gradient(#f4f3ef, #dad8d2); border-radius: 0.08em; box-shadow: 0 0.08em 0 #8f8c86; }
+.pl-keys span:nth-child(2) { background: linear-gradient(#b05a3e, var(--accent)); }
+
+/* --- below a readable size, the room becomes a list of what is in it --- */
+@container (max-width: 879px), (max-height: 505px) {
+  /* (the station is the query container, so the drawing pads and scrolls itself) */
+  .scene { align-self: stretch; justify-self: stretch; width: auto; height: 100%; overflow: auto; padding: 3.8rem 1.1rem 1.6rem; font-size: 16px; display: grid; align-content: start; gap: 1.6rem; }
+  .wall, .desk-body, .lamp, .rail, .plank, .bookend, .vase { display: none; }
+  .title-box, .shelf-unit, .shelf, .desk-top { position: static; width: auto; height: auto; }
+  .kicker { width: auto; font-size: 0.8rem; margin-bottom: 0.8rem; }
+  .title-box h1 { font-size: 2.3rem; }
+  .title-sub { font-size: 1rem; margin-top: 0.7rem; }
+  .shelf-unit { display: grid; gap: 0; }
+  .shelf-unit::before, .desk-top::before { display: block; padding-bottom: 0.5rem; font: 500 0.8rem/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); border-bottom: 1px solid var(--ink); }
+  .shelf-unit::before { content: "On the bookshelf"; }
+  .desk-top::before { content: "On the desk"; }
+  .shelf-tag { position: static; order: 1; margin: 0.5rem 0 0; font-size: 0.8rem; }
+  .shelf { order: 2; }
+  .shelf, .desk-top { display: grid; grid-template-columns: minmax(0, 1fr); justify-content: stretch; align-items: stretch; gap: 0; }
+  .desk-top > li { width: 100%; }
+  .pile { display: contents; }
+  .scene .obj, .desk-top .obj, .spine { display: grid !important; grid-template-columns: 3.4rem minmax(0, 1fr); grid-template-rows: auto; align-items: center; justify-items: start; gap: 0.9rem; width: 100%; height: auto; min-height: 3.4rem; padding: 0.5rem 0.2rem !important; text-align: left; background: none !important; color: var(--ink) !important; border-bottom: 1px solid var(--rule) !important; border-radius: 0 !important; box-shadow: none !important; transform: none !important; }
+  .spine .sp-no { display: grid; place-items: center; width: 2rem; height: 2.6rem; font-size: 1.2rem; color: var(--paper); background: var(--slate); }
+  .spine.v1 .sp-no { background: var(--linen); color: var(--ink); }
+  .spine.v3 .sp-no { background: var(--accent); }
+  .spine .sp-t { writing-mode: horizontal-tb; margin: 0; font: 400 1.35rem/1.2 var(--display); letter-spacing: 0; text-transform: none; }
+  .spine .sp-no { order: 0; margin: 0; box-shadow: none; border-radius: 0.1rem; }
+  .obj-tag { align-self: center; padding: 0; font-size: 0.85rem; white-space: normal; }
+  .obj-tag::before { display: none; }
+  .desk-top .obj > span:first-child { font-size: 0.22rem; transform: none !important; }
+  .o-folio .folders { position: relative; left: auto; bottom: auto; }
+  .o-folio .obj-tag { grid-row: auto; }
+  .o-mag .mini-mag { margin: 0; }
+  .o-folio { margin: 0; }
+}
+
+/* ================================================================ the manual, open */
+/* a slate linen case round two pages */
+
+.st-manual, .st-folio { padding-left: 1.2rem; padding-right: 1.2rem; }
 .spread {
   display: grid;
-  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   height: 100%;
   max-width: 82rem;
   margin: 0 auto;
   padding: 0.6rem;
-  background: linear-gradient(rgba(60, 12, 10, 0.18), rgba(60, 12, 10, 0.18)), var(--cloth-tex), var(--oxblood);
-  border-radius: 0.4rem;
-  box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
+  background: var(--slate);
+  border-radius: 0.2rem;
+  box-shadow: var(--lift);
 }
-.page { position: relative; min-height: 0; padding: 1.6rem 1.8rem 1.2rem; background: var(--laid-tex), var(--paper); }
-.page-l { overflow: auto; border-radius: 0.2rem 0 0 0.2rem; box-shadow: inset -1.6rem 0 1.4rem -1.4rem rgba(60, 40, 20, 0.35); }
-.page-r { display: flex; flex-direction: column; border-radius: 0 0.2rem 0.2rem 0; padding-left: 2.4rem; box-shadow: inset 1.6rem 0 1.4rem -1.4rem rgba(60, 40, 20, 0.35); }
+.page { position: relative; min-height: 0; padding: 1.8rem 2rem 1.3rem; background: var(--paper); }
+.page-l { overflow: auto; box-shadow: inset -1.4rem 0 1.4rem -1.4rem rgba(30, 22, 14, 0.18); }
+.page-r { display: flex; flex-direction: column; padding-left: 2.6rem; box-shadow: inset 1.4rem 0 1.4rem -1.4rem rgba(30, 22, 14, 0.18); }
 .chapters { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 0.6rem; }
-.page-l h2 { margin: 0 0 1.2rem; font: normal 1.55rem/1.2 var(--display); font-variant: small-caps; letter-spacing: 0.06em; }
-.contents-h { margin: 0 0 0.6rem; font: 700 1rem var(--book); letter-spacing: 0.12em; text-transform: uppercase; }
-.contents { margin: 0; padding-left: 1.6rem; }
-.contents li { margin: 0.2rem 0; }
-.contents button { display: block; padding: 0.1rem 0.2rem; text-align: left; font: inherit; background: none; border: 0; box-shadow: none; text-decoration: underline; text-decoration-color: rgba(42, 33, 24, 0.35); text-underline-offset: 0.2em; }
-.contents button[aria-current="page"] { font-weight: 700; text-decoration-color: currentColor; }
-.bookmark {
-  display: inline-block;
-  margin-top: 1.6rem;
-  padding: 0.25rem 0.7rem;
-  font: 600 0.75rem/1.2 var(--type);
-  letter-spacing: 0.1em;
-  color: #3a1d14;
-  background: #e9b9a6;
-  border-left: 2px dashed #8a4a3a;
-  transform: rotate(-3deg);
-}
+.page-l h2 { margin: 0 0 1.6rem; padding-bottom: 0.9rem; font: 400 2rem/1.05 var(--display); border-bottom: 1px solid var(--ink); }
+.contents-h { margin: 0 0 0.8rem; font-size: 0.8rem; color: var(--ink-soft); }
+.contents { margin: 0; padding: 0; list-style: none; }
+.contents .vol { margin: 0 0 1.1rem; }
+.vol-h { display: block; font: 400 1.15rem/1.3 var(--display); }
+.contents ol { margin: 0.25rem 0 0; padding: 0; list-style: none; }
+.contents ol li { margin: 0; }
+.contents button { display: block; width: 100%; padding: 0.2rem 0; text-align: left; font: 400 0.98rem/1.4 var(--serif); background: none; border: 0; border-radius: 0; border-bottom: 1px solid var(--rule); box-shadow: none; }
+.contents button:hover { color: var(--accent); }
+.contents button[aria-current="page"] { font-weight: 700; }
 .chapter { max-width: 66ch; }
-.running { margin: 0 0 0.3rem; font: italic 1rem var(--book); color: var(--ink-soft); }
-.chapter h3 { margin: 0 0 1rem; font: normal 1.6rem/1.2 var(--display); }
+.running { margin: 0 0 0.6rem; font-size: 0.78rem; color: var(--ink-soft); }
+.chapter h3 { margin: 0 0 1.1rem; font: 400 2.1rem/1.08 var(--display); }
 .chapter table { width: 100%; margin: 1rem 0; border-collapse: collapse; }
-.chapter th, .chapter td { padding: 0.35rem 0.7rem 0.35rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid #cdbf9d; }
-.chapter th { font-weight: 700; border-bottom: 1.5px solid var(--ink); }
-.decklist dt { margin-top: 0.9rem; font-weight: 700; }
+.chapter th, .chapter td { padding: 0.35rem 0.7rem 0.35rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+.chapter th { font: 500 0.85rem var(--sans); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
+.decklist dt { margin-top: 0.9rem; font: 600 1rem var(--serif); }
 .decklist dd { margin: 0.2rem 0 0; }
-.page-turn { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0.5rem 1rem; max-width: 66ch; margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px solid #cdbf9d; }
-.folio-no { margin-left: auto; font: italic 1rem var(--book); }
+.page-turn { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 0.5rem 1rem; max-width: 66ch; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--ink); }
+.folio-no { margin-left: auto; font: 400 0.9rem var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
 
-/* ---------- the portfolio, open: Morris papers lining both boards ---------- */
+/* ================================================================ the miscellanea, open */
+/* a stone-grey folder lying open: its index on the left flap, the sheets on the right */
 
 .folio-inside {
   display: grid;
-  grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
-  gap: 0.6rem;
+  gap: 0.7rem;
   height: 100%;
   max-width: 82rem;
   margin: 0 auto;
-  padding: 0.6rem;
-  background: var(--marble-comb) 0 0 / 320px auto, #6a2721;
-  border-radius: 0.35rem;
-  box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
+  padding: 0.7rem;
+  background: #bfae8e;
+  border-radius: 0.15rem;
+  box-shadow: var(--lift);
 }
-.flap { min-height: 0; padding: 1rem; overflow: auto; background: var(--willow) center / cover no-repeat, #e6dcbc; box-shadow: inset 0 0 0 3px #f3ead2, inset 0 0 0 5px #6a2721; }
-.flap h2 {
-  margin: 0 0 0.9rem;
-  padding: 0.45rem 0.9rem;
-  font: normal 1.4rem/1.2 var(--didone);
-  font-variant: small-caps;
-  letter-spacing: 0.04em;
-  color: #3d1d19;
-  background: #f5ecd6;
-  border: 3px double #6b2f2a;
-}
-.folio-index { display: grid; gap: 0.3rem; margin: 0; padding: 0.6rem; list-style: none; background: var(--laid-tex), var(--paper); box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
-.folio-index button { display: flex; gap: 0.6rem; width: 100%; padding: 0.2rem 0.4rem; text-align: left; font: 1rem/1.3 var(--book); background: none; border: 0; box-shadow: none; }
-.idx-letter { flex: none; display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; font: 700 1rem var(--type); background: #c9d9a8; border: 1px solid #5d6e45; border-radius: 50%; }
-.folio-index button[aria-current="page"] .idx-letter { background: #7fa35a; color: #13200a; }
+.flap { min-height: 0; padding: 1.2rem 1.1rem; overflow: auto; background: var(--ivory); }
+.flap h2 { margin: 0 0 1.2rem; padding-bottom: 0.8rem; font: 400 1.75rem/1.05 var(--display); border-bottom: 1px solid var(--ink); }
+.folio-index { display: grid; margin: 0; padding: 0; list-style: none; }
+.folio-index button { display: flex; align-items: baseline; gap: 0.7rem; width: 100%; padding: 0.3rem 0; text-align: left; font: 400 0.98rem/1.35 var(--serif); background: none; border: 0; border-radius: 0; border-bottom: 1px solid var(--rule); box-shadow: none; }
+.idx-letter { flex: none; width: 1.1rem; font: 400 1.1rem/1 var(--display); color: var(--ink-soft); }
+.folio-index button[aria-current="page"] .idx-letter { color: var(--accent); }
 .folio-index button[aria-current="page"] .idx-title { font-weight: 700; }
-.folio-index button:hover .idx-title { text-decoration: underline; }
-.flap-r { display: flex; flex-direction: column; gap: 0.7rem; min-height: 0; padding: 1rem 1.2rem; background: var(--morris) center / cover no-repeat, #1d2a47; box-shadow: inset 0 0 0 3px #f3ead2, inset 0 0 0 5px #6a2721; }
-.sheets { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0.3rem 0.5rem 0.6rem 0.2rem; }
-.flap-r .page-turn { max-width: none; justify-content: flex-start; margin: 0; padding: 0.5rem 0.9rem; background: var(--laid-tex), var(--paper); border: 0; box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
+.folio-index button:hover .idx-title { color: var(--accent); }
+.flap-r { display: flex; flex-direction: column; gap: 0.7rem; min-height: 0; }
+.sheets { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0 0.6rem 0.6rem 0; }
+.flap-r .page-turn { max-width: none; margin: 0; padding: 0.5rem 0.9rem; background: var(--ivory); border: 0; }
 
-.sheet { display: grid; gap: 1.1rem; padding: 1.1rem clamp(0.9rem, 2.5vw, 1.8rem) 1.4rem; background: var(--laid-tex), #fbf8ee; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5); }
+.sheet { display: grid; gap: 1.1rem; padding: 1.4rem clamp(0.9rem, 2.5vw, 2rem) 1.6rem; background: var(--paper); box-shadow: var(--lift); }
 .sheet[hidden] { display: none; }
 .sheet.two { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
 .sheet-note, .sheet h3 { grid-column: 1 / -1; }
-.sheet-note { margin: 0 0 -0.8rem; font: 1.35rem/1.2 var(--hand); color: #4a3f30; }
-.sheet h3 { margin: 0; font: normal 1.5rem/1.2 var(--didone); font-variant: small-caps; letter-spacing: 0.03em; color: #3d1d19; }
-.sheet-letter { display: inline-grid; place-items: center; width: 2rem; height: 2rem; margin-right: 0.4rem; font: 700 1.1rem var(--type); color: var(--ink); background: #c9d9a8; border-radius: 50%; vertical-align: 0.1em; }
+.sheet-note { margin: 0 0 -0.6rem; font-size: 0.78rem; color: var(--accent); }
+.sheet h3 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0; padding-bottom: 0.7rem; font: 400 2rem/1.08 var(--display); border-bottom: 1px solid var(--ink); }
+.sheet-letter { flex: none; font: 400 1em/1 var(--display); color: var(--ink-soft); }
 .exhibit { margin: 0; min-width: 0; }
 .exhibit .art { margin: 0 0 0.9rem; }
-.exhibit .art svg { display: block; width: 100%; height: auto; max-height: 52vh; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); }
-.exhibit:nth-of-type(odd) .art { transform: rotate(-0.5deg); }
-.exhibit:nth-of-type(even) .art { transform: rotate(0.7deg); }
-.exhibit figcaption { max-width: 66ch; font: 1rem/1.55 var(--book); }
+.exhibit .art svg { display: block; width: 100%; height: auto; max-height: 52vh; box-shadow: 0 0 0 1px var(--rule); }
+.exhibit figcaption { max-width: 66ch; font: 0.95rem/1.6 var(--serif); color: var(--ink-soft); }
+.exhibit figcaption cite { color: var(--ink); }
 .exhibit.printout .art { overflow-x: auto; }
 .exhibit.plan .art { max-width: 30rem; }
 /* a photographic print mounted on the sheet, in its white border */
-.exhibit.photo .art img { display: block; width: auto; max-width: 100%; height: auto; max-height: 50vh; padding: 0.4rem; background: #fdfcf8; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); }
-/* an upright print stays small, with its caption beside it where the sheet is wide enough */
+.exhibit.photo .art img { display: block; width: auto; max-width: 100%; height: auto; max-height: 50vh; padding: 0.4rem; background: #fff; box-shadow: var(--lift); }
 .exhibit.photo.tall { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0 1.6rem; }
 .exhibit.photo.tall .art { flex: none; max-width: 100%; }
 .exhibit.photo.tall .art img { max-height: min(48vh, 30rem); }
@@ -479,154 +430,97 @@ td code { white-space: nowrap; }
 .st {
   margin: 0; padding: 0.4rem 2.2rem; font-size: 16px; line-height: 1.45; color: #15200f; white-space: pre;
   background:
-    radial-gradient(circle at 50% 50%, #c9c0a8 0 0.3rem, transparent 0.34rem) 0.3rem 0.3rem / 1.2rem 1.27rem repeat-y,
-    radial-gradient(circle at 50% 50%, #c9c0a8 0 0.3rem, transparent 0.34rem) calc(100% - 0.3rem) 0.3rem / 1.2rem 1.27rem repeat-y,
-    repeating-linear-gradient(to bottom, #fdfdf8 0 4.35em, #dcebd8 4.35em 8.7em);
+    radial-gradient(circle at 50% 50%, #d4cdbd 0 0.3rem, transparent 0.34rem) 0.3rem 0.3rem / 1.2rem 1.27rem repeat-y,
+    radial-gradient(circle at 50% 50%, #d4cdbd 0 0.3rem, transparent 0.34rem) calc(100% - 0.3rem) 0.3rem / 1.2rem 1.27rem repeat-y,
+    repeating-linear-gradient(to bottom, #fdfdf8 0 4.35em, #dfe9da 4.35em 8.7em);
 }
+/* a book jacket of the period: a stone ground, a slate block, the title in a serif */
 .jacket { justify-self: start; max-width: 24rem; }
 .jacket-art {
-  display: grid; place-items: center; width: min(14rem, 100%); aspect-ratio: 2 / 3; margin: 0 auto;
-  background: var(--marble-spanish) center / cover, #6a2721;
-  box-shadow: inset 0.9rem 0 0 #5a1f1a, inset calc(0.9rem + 2px) 0 0 var(--gilt), 3px 5px 10px rgba(0, 0, 0, 0.5);
+  position: relative; display: grid; place-items: end start; width: min(14rem, 100%); aspect-ratio: 2 / 3; margin: 0 auto; padding: 1.1rem;
+  background: linear-gradient(var(--slate) 0 46%, transparent 46%), radial-gradient(circle at 70% 46%, var(--accent) 0 1.9rem, transparent 1.95rem), var(--stone);
+  box-shadow: var(--lift);
 }
-.jacket-label {
-  padding: 0.8rem 1rem; text-align: center;
-  font: normal 1.35rem/1.15 var(--didone); font-variant: small-caps; letter-spacing: 0.05em;
-  color: #3d1d19; background: #f5ecd6; border: 3px double #6b2f2a;
-}
+.jacket-label { font: 400 1.7rem/1.02 var(--display); text-align: left; color: var(--ink); }
 
-/* ---------- the editing station: the card tray beside the coding form ---------- */
+/* ================================================================ the coding form and the deck box */
 
 .st-form { display: grid; grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 1.4rem; }
 
-.tray {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  padding: 0.8rem 0.8rem 0.9rem;
-  background: var(--oak-tex), #b98b55;
-  border-radius: 0.3rem;
-  box-shadow: inset 0 0 0 0.4rem rgba(0, 0, 0, 0.12), inset 0 0.6rem 1rem rgba(0, 0, 0, 0.25), 3px 6px 12px rgba(0, 0, 0, 0.5);
-}
-/* a brass frame holding a typed label */
-.tray-plate {
-  width: fit-content;
-  margin: 0 auto 0.6rem;
-  padding: 0.2rem 1rem;
-  font: 700 1rem/1.3 var(--type);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: var(--cream);
-  border: 3px solid #b8954f;
-  border-radius: 2px;
-  box-shadow: 0 0 0 1px #6f5320, 1px 2px 3px rgba(0, 0, 0, 0.4);
-}
-.tray-hint, .tray-div {
-  width: fit-content;
-  margin: 0 0 0.6rem;
-  padding: 0.15rem 0.6rem;
-  font: normal 1rem/1.35 var(--type);
-  color: var(--ink);
-  background: var(--cream);
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-.tray-div { margin: 0.4rem 0 0.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-/* the well of the tray, which scrolls if the decks outgrow it */
-.tray-well { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0.5rem 0.6rem 0.6rem; background: rgba(40, 22, 8, 0.28); box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45); }
-.decks { display: grid; gap: 0.75rem; margin: 0 0 0.8rem; padding: 0; list-style: none; }
+/* the deck box from above: a walnut rim round the well, the decks standing in it */
+.tray { display: flex; flex-direction: column; min-height: 0; padding: 0.7rem; background: var(--walnut); border-radius: 0.15rem; box-shadow: var(--lift); }
+.tray-plate { width: fit-content; margin: 0 auto 0.6rem; padding: 0.15rem 0.9rem; font-size: 0.85rem; line-height: 1.4; color: var(--ink); background: var(--ivory); border: 2px solid var(--brass); }
+.tray-hint { margin: 0 0 0.6rem; padding: 0.3rem 0.6rem; font: 400 0.92rem/1.4 var(--serif); color: var(--ink); background: var(--ivory); }
+/* each group behind a divider card with its tab */
+.tray-div { width: fit-content; margin: 0.6rem 0 0.4rem; padding: 0.12rem 0.8rem; font-size: 0.78rem; line-height: 1.5; color: var(--ink); background: var(--stone); border-radius: 0.2rem 0.2rem 0 0; }
+.tray-well h4:nth-of-type(3) { background: var(--accent); color: var(--paper); }
+.tray-well { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0.4rem 0.6rem 0.6rem; background: var(--walnut-d); box-shadow: inset 0 0.3rem 0.6rem rgba(0, 0, 0, 0.35); }
+.decks { display: grid; gap: 0.4rem; margin: 0 0 0.6rem; padding: 0; list-style: none; }
 
-/* each deck: a stack of cards seen from above, held by a rubber band near one end */
+/* each deck: an index card standing in the box */
 .deck {
-  --stock: #efe0b5;
-  --edge: #c9b585;
   position: relative;
   display: grid;
   width: 100%;
-  padding: 0.35rem 2.2rem 0.4rem 0.8rem;
+  padding: 0.4rem 0.8rem 0.45rem 0.9rem;
   text-align: left;
   font: inherit;
   color: var(--ink);
-  background: linear-gradient(135deg, transparent 0.5rem, var(--stock) 0.5rem);
+  background: var(--ivory);
   border: 0;
-  border-radius: 0 2px 2px 2px;
-  /* the thickness of the deck shows along its lower edge only */
-  box-shadow: 0 2px 0 var(--edge), 0 3px 0 var(--stock), 0 4px 0 var(--edge), 0 5px 0 var(--stock), 0 6px 0 var(--edge), 2px 8px 8px rgba(0, 0, 0, 0.35);
+  border-left: 3px solid var(--band, var(--linen));
+  border-radius: 0.1rem;
+  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: transform 0.15s ease;
 }
-/* the band wraps the whole deck, over its lower edge too; each sits a little askew */
-.deck::after {
-  content: "";
-  position: absolute;
-  top: -1px;
-  bottom: -6px;
-  right: var(--band, 0.9rem);
-  width: 5px;
-  background: linear-gradient(to right, #7c3524, #b45a3c 50%, #7c3524);
-  border-radius: 1px;
-  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.3);
-  transform: rotate(var(--band-tilt, 3deg));
-  pointer-events: none;
-}
-.decks li:nth-child(2n) .deck { --band: 1.25rem; --band-tilt: -4deg; }
-.decks li:nth-child(3n) .deck { --band: 0.7rem; --band-tilt: 6deg; }
-.deck-label { font: 1.3rem/1.15 var(--hand); }
-.deck-count { font: 1rem/1.3 var(--type); color: var(--ink-soft); }
+.deck-label { font: 400 1rem/1.3 var(--serif); }
+.deck-count { font: 400 0.82rem/1.3 var(--sans); letter-spacing: 0.06em; color: var(--ink-soft); }
 .deck:hover { transform: translateY(-2px); }
-.deck:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
-.deck.out-of-tray { transform: translate(-2px, -4px); box-shadow: 0 2px 0 var(--edge), 0 3px 0 var(--stock), 0 4px 0 var(--edge), 3px 11px 12px rgba(0, 0, 0, 0.5); }
+.deck:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+.deck.out-of-tray { transform: translateX(0.45rem); background: var(--paper); }
 .deck.out-of-tray .deck-count::after { content: " \00b7  on the form"; }
-/* music decks are on coloured stock, as tabulating shops used for different jobs */
-#deck-tray-music li:nth-child(1) .deck { --stock: #efc9bd; --edge: #c39a8d; }
-#deck-tray-music li:nth-child(2) .deck { --stock: #cdd9e4; --edge: #9eaebc; }
-#deck-tray-music li:nth-child(3) .deck { --stock: #d3dfbf; --edge: #a6b590; }
-#deck-tray-music li:nth-child(4) .deck { --stock: #ecd89e; --edge: #c2ad71; }
-#deck-tray-music li:nth-child(5) .deck { --stock: #dcd0e3; --edge: #afa1b9; }
-#deck-tray-magazine li:nth-child(4n+1) .deck { --stock: #f9d7e6; --edge: #c99aae; }
-#deck-tray-magazine li:nth-child(4n+2) .deck { --stock: #cfeaf2; --edge: #92b6c2; }
-#deck-tray-magazine li:nth-child(4n+3) .deck { --stock: #fbeeb3; --edge: #cdbb73; }
-#deck-tray-magazine li:nth-child(4n+4) .deck { --stock: #fdd9c8; --edge: #cf9f88; }
+#deck-tray-music .deck { --band: var(--slate); }
+#deck-tray-magazine .deck { --band: var(--accent); }
 
-/* the coding form pad: a gummed binding strip, the sheets and chipboard beneath */
-.pad { display: flex; flex-direction: column; gap: 0.9rem; min-height: 0; padding-bottom: 9px; }
+/* the coding form: a pad of green-ruled sheets */
+.pad { display: flex; flex-direction: column; gap: 0.9rem; min-height: 0; padding-bottom: 6px; }
 .pad-sheet {
   display: flex;
   flex-direction: column;
   height: 100%;
   min-height: 0;
-  padding: 1.9rem clamp(0.8rem, 2vw, 1.6rem) 0.9rem;
-  background: linear-gradient(to bottom, #7a3326 0 1rem, rgba(0, 0, 0, 0.25) 1rem calc(1rem + 2px), transparent calc(1rem + 2px)), var(--cream);
-  box-shadow: 0 3px 0 -1px #f1ebda, 0 6px 0 -2px #e8e1cc, 0 9px 0 -3px #9a8a6c, 4px 12px 16px rgba(0, 0, 0, 0.5);
+  padding: 1.6rem clamp(0.8rem, 2vw, 1.7rem) 0.9rem;
+  background: linear-gradient(var(--form-ink) 0 0.4rem, transparent 0.4rem), var(--paper);
+  box-shadow: 0 2px 0 -1px #efece4, 0 4px 0 -2px #e4dfd3, var(--lift);
 }
 .pad-sheet > * { flex: none; }
-.form-head { display: flex; flex-wrap: wrap; align-items: end; gap: 0.5rem 2rem; padding-bottom: 0.5rem; border-bottom: 3px double var(--form-ink); }
-.form-head h2 { margin: 0; font: normal 1.4rem/1.2 var(--display); font-variant: small-caps; letter-spacing: 0.1em; color: var(--form-ink); }
+.form-head { display: flex; flex-wrap: wrap; align-items: end; gap: 0.5rem 2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--form-ink); }
+.form-head h2 { margin: 0; font: 400 1.75rem/1.1 var(--display); color: var(--form-ink); }
 .form-boxes { display: flex; flex-wrap: wrap; margin: 0; border: 1px solid var(--form-ink); }
-.form-boxes > div { padding: 0.1rem 0.6rem 0.2rem; border-left: 1px solid var(--form-ink); }
+.form-boxes > div { padding: 0.15rem 0.6rem 0.25rem; border-left: 1px solid var(--form-ink); }
 .form-boxes > div:first-child { border-left: 0; min-width: 14rem; }
-.form-boxes dt { font: 1rem/1.2 var(--display); font-variant: small-caps; letter-spacing: 0.05em; color: var(--form-ink); }
-.form-boxes dd { margin: 0; font: 700 1rem/1.35 var(--type); color: var(--ink); }
+.form-boxes dt { font-size: 0.72rem; line-height: 1.3; color: var(--form-ink); }
+.form-boxes dd { margin: 0; font: 500 0.98rem/1.35 var(--sans); color: var(--ink); }
 .pad .toolbar { margin: 0.6rem 0 0.4rem; }
-.legend { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; margin: 0 0 0.5rem; font: 1rem var(--display); font-variant: small-caps; color: var(--form-ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; margin: 0 0 0.5rem; font: 400 0.88rem var(--sans); color: var(--form-ink); }
 .legend .key span { display: inline-block; width: 1.4em; height: 0.9em; margin-right: 0.35em; border: 1px solid var(--form-ink); vertical-align: -0.05em; }
 .legend .f1 { background: #e5eadc; }
 .legend .f2 { background: #cfdccb; }
 .legend .f3 { background: #fffdf6; }
-/* the cards on the form scroll inside the form */
 .pad-sheet > .editor { flex: 1 1 auto; min-height: 7rem; overflow: auto; padding: 0.5rem 0.4rem 0.6rem; background: #fffdf6; border: 1px solid var(--form-ink); }
 .editor-inner { display: inline-block; min-width: min-content; }
 .ruler, input.card, .row .num { font-family: var(--mono); font-size: 16px; }
 .ruler { margin: 0 0 2px calc(5ch + 1px); white-space: pre; line-height: 1.15; color: var(--form-ink); }
 .row { display: flex; align-items: center; white-space: nowrap; }
 .row .num { display: inline-block; width: 4ch; margin-right: 1ch; text-align: right; color: var(--form-ink); }
-.row.selected .num { color: #8a2f22; font-weight: 700; }
+.row.selected .num { color: var(--accent); font-weight: 700; }
 input.card {
   box-sizing: content-box;
   width: 80ch;
   margin: 0;
   padding: 0.1rem 0;
-  border: 1px solid #8fa598;
+  border: 1px solid #9fb2a6;
   border-top-width: 0;
   border-radius: 0;
   color: #15130f;
@@ -635,42 +529,29 @@ input.card {
   background-image: linear-gradient(to right, #e5eadc 0 5ch, #cfdccb 5ch 6ch, #fffdf6 6ch 72ch, #e5eadc 72ch 80ch);
 }
 .row:first-child input.card { border-top-width: 1px; }
-input.card:focus-visible { outline: 2px solid #8a2f22; outline-offset: -2px; }
+input.card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .run-line { margin: 0.8rem 0 0; }
-#run-deck {
-  padding: 0.5rem 1.5rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #fff8ec;
-  background: #9c2f1f;
-  border: 2px solid #6e1f14;
-  box-shadow: inset 0 0 0 2px #9c2f1f, inset 0 0 0 3px rgba(255, 248, 236, 0.55), 1px 2px 3px rgba(0, 0, 0, 0.35);
-}
-#run-deck:hover { background: #b0391f; }
-#run-deck:active { background: #87281a; }
+#run-deck { padding: 0.45rem 1.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--paper); background: var(--ink); }
+#run-deck:hover { background: #3a3835; }
 
-/* ---------- the card in hand ---------- */
-
-/* the card in hand: lifted off the form below it, and folded away when room is short */
-.in-hand { flex: none; padding: 0.4rem 0.8rem 0.5rem; background: var(--cream); box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.45); }
-.in-hand summary { cursor: pointer; font: 700 1rem/1.4 var(--type); letter-spacing: 0.12em; text-transform: uppercase; }
+/* the card in hand */
+.in-hand { flex: none; padding: 0.55rem 0.9rem 0.6rem; background: var(--paper); box-shadow: var(--lift); }
+.in-hand summary { cursor: pointer; font-size: 0.82rem; }
 .in-hand .toolbar { margin: 0.4rem 0 0; }
 .cardview { overflow-x: auto; padding: 0.4rem 0.4rem 0.6rem 0.2rem; }
-.cardview svg { --card: #f1e2bb; display: block; width: 100%; min-width: 36rem; height: auto; max-height: 24vh; filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.45)); }
-.run-slip, .tape-status { width: fit-content; max-width: 100%; margin: 0; padding: 0.45rem 0.8rem; background: var(--cream); box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
+.cardview svg { --card: #efe4c6; display: block; width: 100%; min-width: 36rem; height: auto; max-height: 24vh; filter: drop-shadow(0 0.2rem 0.3rem rgba(30, 22, 14, 0.25)); }
+.run-slip, .tape-status { width: fit-content; max-width: 100%; margin: 0; padding: 0.45rem 0.9rem; font: 400 0.95rem/1.45 var(--sans); background: var(--paper); box-shadow: var(--lift); }
 
-/* ---------- the out tray: the printout beside the ticket, the listing and the stacker ---------- */
+/* ================================================================ the out tray */
 
 .st-out { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 1rem; }
-.print-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.2rem; }
-.run-slip { font-family: var(--type); }
+.print-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.4rem; }
+.st-out .desk-tag { padding: 0.35rem 0.9rem; color: var(--paper); background: var(--ink); border: 0; }
 .out-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 23rem); grid-template-rows: minmax(0, 1fr); gap: 1.6rem; min-height: 0; }
 
 /* fan-fold paper: tractor holes in both margins, green bands every three lines */
 .fanfold {
-  --holes: radial-gradient(circle at 50% 50%, var(--leather) 0 0.3rem, rgba(0, 0, 0, 0.2) 0.32rem, transparent 0.38rem);
+  --holes: radial-gradient(circle at 50% 50%, var(--oak-d) 0 0.28rem, transparent 0.3rem);
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -678,293 +559,188 @@ input.card:focus-visible { outline: 2px solid #8a2f22; outline-offset: -2px; }
   background:
     var(--holes) 0.2rem 0.3rem / 1.5rem 1.27rem repeat-y,
     var(--holes) calc(100% - 0.2rem) 0.3rem / 1.5rem 1.27rem repeat-y,
-    linear-gradient(to right, transparent 1.9rem, #d9d3c0 1.9rem calc(1.9rem + 1px), transparent calc(1.9rem + 1px) calc(100% - 1.9rem - 1px), #d9d3c0 calc(100% - 1.9rem - 1px) calc(100% - 1.9rem), transparent calc(100% - 1.9rem)),
-    #fbfaf2;
-  box-shadow: 4px 10px 14px rgba(0, 0, 0, 0.5);
+    linear-gradient(to right, transparent 1.9rem, #ddd7c8 1.9rem calc(1.9rem + 1px), transparent calc(1.9rem + 1px) calc(100% - 1.9rem - 1px), #ddd7c8 calc(100% - 1.9rem - 1px) calc(100% - 1.9rem), transparent calc(100% - 1.9rem)),
+    var(--paper);
+  box-shadow: var(--lift);
 }
-.fanfold h3, .job-ticket h3 { flex: none; margin: 0 0 0.6rem; font: 700 1rem/1.3 var(--type); letter-spacing: 0.12em; text-transform: uppercase; }
+.fanfold h3, .job-ticket h3 { flex: none; margin: 0 0 0.6rem; font-size: 0.8rem; line-height: 1.3; }
 .printer { flex: 1 1 auto; min-height: 0; overflow: auto; }
-.printer pre { width: max-content; min-width: 100%; background: repeating-linear-gradient(to bottom, transparent 0 4.35em, #dcebd8 4.35em 8.7em); }
+.printer pre { width: max-content; min-width: 100%; background: repeating-linear-gradient(to bottom, transparent 0 4.35em, #dfe9da 4.35em 8.7em); }
 .printer pre, .log pre, .listing pre { margin: 0; font-size: 16px; line-height: 1.45; color: #1c2219; }
-.pagebreak { margin: 0.75rem 0; font-family: var(--mono); font-size: 16px; letter-spacing: 0.15em; text-align: center; border-top: 1px dashed #7d8a79; color: #3d4a3a; }
+.pagebreak { margin: 0.75rem 0; font-family: var(--mono); font-size: 16px; letter-spacing: 0.15em; text-align: center; border-top: 1px dashed #8a9686; color: #3d4a3a; }
 .placeholder { margin: 0; color: var(--ink-soft); }
 
-.ticket-col { display: flex; flex-direction: column; gap: 1.2rem; min-height: 0; overflow: auto; padding: 0 0.5rem 0.7rem 0; }
-/* the job ticket: manila card, typed */
-.job-ticket { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 6rem; padding: 0.9rem 1.1rem 1rem; background: var(--manila); border-top: 0.7rem solid #a3402c; box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.45); }
+.ticket-col { display: flex; flex-direction: column; gap: 1.1rem; min-height: 0; overflow: auto; padding: 0 0.6rem 0.8rem 0; }
+/* the job ticket: a buff card with a terracotta band */
+.job-ticket { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 6rem; padding: 0.9rem 1.1rem 1rem; background: #ebe2cf; border-top: 0.35rem solid var(--accent); box-shadow: var(--lift); }
 .log { min-height: 0; overflow: auto; }
-.log pre { font-family: var(--type); white-space: pre-wrap; color: var(--ink); }
-.job-ticket .placeholder { color: #3d3324; }
-.listing { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 3rem; padding: 0.6rem 1rem; background: #f8f5ea; box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.45); }
+.log pre { font-family: var(--mono); white-space: pre-wrap; color: var(--ink); }
+.listing { display: flex; flex-direction: column; flex: 0 1 auto; min-height: 3rem; padding: 0.6rem 1rem; background: var(--paper); box-shadow: var(--lift); }
 .listing[open] { flex: 1 1 auto; }
-.listing summary { flex: none; cursor: pointer; font-family: var(--type); text-decoration: underline; text-underline-offset: 0.2em; }
-.listing[open] summary { padding-bottom: 0.5rem; border-bottom: 1px dashed #b9b09a; }
+.listing summary { flex: none; cursor: pointer; font: 400 0.95rem var(--sans); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.listing[open] summary { padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
 .listing pre { min-height: 5rem; max-height: calc(100dvh - 25rem); margin-top: 0.5rem; overflow: auto; }
 .st-out.fresh .fanfold { animation: feed 0.5s ease-out; }
 @keyframes feed { from { transform: translateY(-0.8rem); } to { transform: none; } }
 
 /* the stacker: a walnut box at the foot of the ticket column, the punched cards in it */
-.stack-box {
-  flex: none; display: flex; flex-direction: column; gap: 0.5rem;
-  padding: 0.7rem 0.8rem 0.8rem;
-  background: linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22)), var(--walnut-tex), var(--walnut);
-  background-position: 0 0, 520px 260px;
-  border: 0.35rem solid #6b4a30; border-radius: 0.25rem;
-  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6), 3px 8px 14px rgba(0, 0, 0, 0.5);
-}
-.stack-box h3 { margin: 0; font: 700 1rem/1.3 var(--type); letter-spacing: 0.12em; text-transform: uppercase; color: #f3ead2; }
-.stack-count { margin: 0; font: 1rem/1.4 var(--type); color: #f3ead2; }
-.stacker { display: flex; flex-wrap: wrap; gap: 0.35rem; max-height: 11.5rem; overflow: auto; }
+.stack-box { flex: none; display: flex; flex-direction: column; gap: 0.5rem; padding: 0.8rem 0.9rem 0.9rem; color: var(--paper); background: var(--walnut); border-radius: 0.15rem; box-shadow: var(--lift); }
+.stack-box h3 { margin: 0; font-size: 0.8rem; line-height: 1.3; }
+.stack-count { margin: 0; font: 400 0.95rem/1.4 var(--sans); }
+.stacker { display: flex; flex-wrap: wrap; gap: 0.35rem; max-height: 11.5rem; overflow: auto; padding: 0.3rem; background: var(--walnut-d); box-shadow: inset 0 0.2rem 0.4rem rgba(0, 0, 0, 0.35); }
 .stacker:empty { display: none; }
-.stacker canvas { display: block; width: 168px; height: 76px; filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.5)); }
-.stack-tools { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-.stack-tools button { padding: 0.25rem 0.6rem; }
-.stack-box .status { margin: 0; color: #f3ead2; }
+.stacker canvas { display: block; width: 168px; height: 76px; }
+.stack-tools { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.stack-tools button { padding: 0.22rem 0.7rem; border-color: var(--paper); }
+.stack-tools button:disabled { color: #cfc5b8; background: transparent; border-color: #a38c7b; }
+.stack-box .status { margin: 0; }
 .stack-box .status:empty { display: none; }
-button.thread { font-weight: 700; background: #f6f2e6; border-color: #5b5246; }
+button.thread { color: var(--paper); background: var(--accent); border-color: var(--accent); }
+.stack-box button:focus-visible { outline-color: var(--paper); }
 
-/* ---------- the tape recorder station ---------- */
+/* ================================================================ the tape player */
+/* a walnut case round a brushed aluminium deck plate; pale keys, the play key terracotta */
 
 .st-tape { display: grid; place-items: center; }
-.recorder {
-  width: min(100%, 62rem);
-  padding: 0.8rem;
-  background: linear-gradient(to right, rgba(60, 25, 5, 0.22), rgba(255, 230, 190, 0.06) 50%, rgba(60, 25, 5, 0.22)), var(--teak-tex), #a2683c;
-  border-radius: 0.6rem;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4), 4px 12px 20px rgba(0, 0, 0, 0.55);
-}
-/* the warm grey top plate, brushed */
+.recorder { width: min(100%, 62rem); padding: 0.8rem; background: linear-gradient(to right, var(--walnut-l), var(--walnut) 6%, var(--walnut) 94%, var(--walnut-d)); border-radius: 0.35rem; box-shadow: var(--lift); }
 .deck-plate {
   display: grid;
   grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
-  grid-template-areas:
-    "maker   maker"
-    "reels   reels"
-    "counter controls"
-    "status  status";
+  grid-template-areas: "maker maker" "reels reels" "counter controls" "status status";
   gap: 0.9rem 1.6rem;
   padding: 0.9rem 1.4rem 1.1rem;
-  background: linear-gradient(rgba(255, 252, 244, 0.34), rgba(255, 252, 244, 0.18) 40%, rgba(255, 252, 244, 0.12)), var(--plate-tex), #cfc7b4;
-  border-radius: 0.3rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 3px), linear-gradient(#e3e1dc, var(--steel));
+  border-radius: 0.15rem;
 }
-.maker { grid-area: maker; display: flex; align-items: center; gap: 0.8rem; margin: 0; font: 600 1.15rem/1.2 var(--plate); letter-spacing: 0.32em; text-transform: uppercase; color: #2b2620; }
+.maker { grid-area: maker; display: flex; align-items: center; gap: 0.8rem; margin: 0; font-size: 0.95rem; letter-spacing: 0.32em; color: var(--ink); }
 /* the run lamp, lit while the tape plays */
-.lamp { width: 0.8rem; height: 0.8rem; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #9b8d6a, #5a5140); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4); }
-.recorder[data-state="playing"] .lamp { background: radial-gradient(circle at 35% 35%, #ffe7a1, #e39a2a); box-shadow: 0 0 0.5rem 0.1rem rgba(240, 170, 60, 0.7); }
+.run-lamp { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--steel-d); }
+.recorder[data-state="playing"] .run-lamp { background: #c9603d; box-shadow: 0 0 0.4rem 0.05rem rgba(201, 96, 61, 0.6); }
 .reels { grid-area: reels; min-width: 0; }
 .reel-svg { display: block; width: 100%; height: auto; max-width: 40rem; max-height: clamp(8rem, 100dvh - 36rem, 18rem); margin: 0 auto; }
 
-.engraved { font: 600 1rem/1.2 var(--plate); letter-spacing: 0.16em; text-transform: uppercase; color: #2b2620; }
+.engraved { font-size: 0.78rem; line-height: 1.3; color: var(--ink); }
 .counter-box { grid-area: counter; display: grid; gap: 0.35rem; align-content: start; }
 .counter { margin: 0; }
-.wheels { display: inline-flex; align-items: center; gap: 2px; padding: 0.3rem 0.4rem; background: #2a2620; border-radius: 0.2rem; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.5); }
-.wheels .w { display: inline-block; width: 1.5rem; padding: 0.15rem 0; text-align: center; font: 600 1.4rem/1.2 var(--mono); color: #f4efe2; background: linear-gradient(#0e0d0b, #3a362f 50%, #0e0d0b); border-radius: 2px; }
-.wheels .sep { padding: 0 0.15rem; font: 600 1.3rem/1 var(--mono); color: #f4efe2; }
-.counter-of { font: 1rem/1.3 var(--type); color: #2b2620; }
+.wheels { display: inline-flex; align-items: center; gap: 2px; padding: 0.3rem 0.4rem; background: var(--ink); border-radius: 0.15rem; }
+.wheels .w { display: inline-block; width: 1.5rem; padding: 0.15rem 0; text-align: center; font: 500 1.35rem/1.2 var(--mono); color: var(--paper); background: #34322f; border-radius: 1px; }
+.wheels .sep { padding: 0 0.15rem; font: 500 1.25rem/1 var(--mono); color: var(--paper); }
+.counter-of { font: 400 0.95rem/1.3 var(--sans); color: var(--ink); }
 
 .controls { grid-area: controls; display: grid; gap: 0.9rem; min-width: 0; }
 .thread-row, .knobs { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem 1.6rem; }
-.switch { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.9rem; margin: 0; padding: 0.3rem 0.7rem 0.4rem; border: 1px solid #7b7262; border-radius: 0.2rem; }
+.switch { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.9rem; margin: 0; padding: 0.3rem 0.8rem 0.45rem; border: 1px solid var(--ink-soft); border-radius: 0.15rem; }
 .switch legend { padding: 0 0.3rem; }
-.switch label { display: inline-flex; align-items: center; gap: 0.35rem; font: 1rem var(--type); color: #2b2620; cursor: pointer; }
-.switch input { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: #8a3a22; }
-/* switched off for tapes with no bare numbers: greyed, but still readable */
+.switch label { display: inline-flex; align-items: center; gap: 0.35rem; font: 400 0.95rem var(--sans); color: var(--ink); cursor: pointer; }
+.switch input { width: 1rem; height: 1rem; margin: 0; accent-color: var(--ink); }
 .switch:disabled { border-style: dashed; }
-.switch:disabled label { color: #5e574b; cursor: default; }
+.switch:disabled label { color: var(--ink-soft); cursor: default; }
 
-/* piano-key transport: the playing key stays down */
-.transport { display: flex; flex-wrap: wrap; gap: 0.35rem; padding-top: 5px; }
+/* the transport: pale keys in a row; the playing key stays down */
+.transport { display: flex; flex-wrap: wrap; gap: 0.3rem; padding-top: 4px; }
 button.key {
   min-width: 6.5rem;
-  padding: 0.7rem 0.9rem 0.8rem;
-  font: 600 1rem/1.1 var(--plate);
-  letter-spacing: 0.12em;
+  padding: 0.7rem 0.9rem 0.75rem;
+  font: 500 0.85rem/1.1 var(--sans);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #2b2620;
-  background: linear-gradient(#fbf7ec, #e7e0cf);
-  border: 1px solid #6f6758;
-  border-radius: 0.15rem 0.15rem 0.35rem 0.35rem;
-  box-shadow: 0 5px 0 #8f8674, 0 6px 6px rgba(0, 0, 0, 0.35);
-  transform: translateY(-5px);
+  color: var(--ink);
+  background: linear-gradient(#f7f6f2, #e1dfd9);
+  border: 1px solid var(--steel-d);
+  border-radius: 0.1rem;
+  box-shadow: 0 4px 0 #a3a09a, 0 5px 6px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
 }
-button.key .glyph { margin-right: 0.3rem; font-family: var(--mono); letter-spacing: -0.1em; }
-button.key:active:not(:disabled), button.key[aria-pressed="true"] { transform: translateY(-1px); box-shadow: 0 1px 0 #8f8674, 0 2px 2px rgba(0, 0, 0, 0.3); background: linear-gradient(#e9e1cc, #ddd4bf); }
-#tape-play[aria-pressed="true"] .glyph { color: #2f6d3a; }
-button.key:disabled { color: #574f42; border-style: solid; background: linear-gradient(#ebe6da, #dad3c3); }
+button.key .glyph { margin-right: 0.35rem; font-family: var(--mono); letter-spacing: -0.1em; }
+button.key:active:not(:disabled), button.key[aria-pressed="true"] { transform: translateY(0); box-shadow: 0 0 0 #a3a09a, 0 1px 2px rgba(0, 0, 0, 0.2); }
+#tape-play { color: var(--paper); background: linear-gradient(#b05a3e, var(--accent)); border-color: #7b3a26; box-shadow: 0 4px 0 #6e3322, 0 5px 6px rgba(0, 0, 0, 0.18); }
+#tape-play[aria-pressed="true"] { box-shadow: 0 0 0 #6e3322; }
+#tape-play:disabled { color: var(--ink-soft); background: linear-gradient(#eadbd3, #dcc8bd); border-color: var(--steel-d); box-shadow: 0 4px 0 #b9a79c; }
+button.key:disabled { color: var(--ink-soft); }
 
 .tempo { display: grid; grid-template-columns: auto minmax(8rem, 14rem); grid-template-areas: "l r" "o o"; align-items: center; gap: 0.2rem 0.8rem; }
 .tempo label { grid-area: l; }
-.tempo output { grid-area: o; font: 1rem var(--type); color: #2b2620; }
-input[type="range"] { -webkit-appearance: none; appearance: none; grid-area: r; width: 100%; height: 1.8rem; margin: 0; background: transparent; accent-color: #8a3a22; cursor: pointer; }
-input[type="range"]::-webkit-slider-runnable-track { height: 0.4rem; background: #3a352c; border-radius: 0.2rem; box-shadow: inset 0 1px 2px #000, 0 1px 0 rgba(255, 255, 255, 0.5); }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 1.2rem; height: 1.6rem; margin-top: -0.6rem; background: linear-gradient(to right, #b9b2a2, #f2eee4 45%, #a39b8a); border: 1px solid #4a443a; border-radius: 0.15rem; }
-input[type="range"]::-moz-range-track { height: 0.4rem; background: #3a352c; border-radius: 0.2rem; }
-input[type="range"]::-moz-range-thumb { width: 1.2rem; height: 1.6rem; background: linear-gradient(to right, #b9b2a2, #f2eee4 45%, #a39b8a); border: 1px solid #4a443a; border-radius: 0.15rem; }
+.tempo output { grid-area: o; font: 400 0.95rem var(--sans); color: var(--ink); }
+input[type="range"] { -webkit-appearance: none; appearance: none; grid-area: r; width: 100%; height: 1.8rem; margin: 0; background: transparent; accent-color: var(--ink); cursor: pointer; }
+input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: var(--ink); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 0.9rem; height: 1.5rem; margin-top: -0.7rem; background: linear-gradient(to right, #c8c5bf, #f4f3ef 45%, #b3b0a9); border: 1px solid var(--ink-soft); border-radius: 0.1rem; }
+input[type="range"]::-moz-range-track { height: 2px; background: var(--ink); }
+input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; background: linear-gradient(to right, #c8c5bf, #f4f3ef 45%, #b3b0a9); border: 1px solid var(--ink-soft); border-radius: 0.1rem; }
 
-.tape-status { grid-area: status; width: auto; font-family: var(--type); box-shadow: inset 0 0 0 1px #b9b09a; }
+.tape-status { grid-area: status; width: auto; box-shadow: none; border: 1px solid var(--ink-soft); }
 
-/* ---------- below a wide desk: the tray lies across the head of the form ---------- */
+/* ================================================================ smaller screens */
 
+/* below a wide desk: the deck box lies across the head of the form */
 @media (max-width: 1359px) {
   .st-form { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 1rem; }
-  .tray { flex-direction: row; align-items: center; gap: 0.8rem; padding: 0.6rem; }
+  .tray { flex-direction: row; align-items: center; gap: 0.8rem; padding: 0.5rem; }
   .tray-head { flex: none; }
   .tray-plate { margin: 0 0 0.4rem; }
   .tray-hint { display: none; }
-  .tray-well { display: flex; align-items: center; gap: 0.8rem; overflow-x: auto; overflow-y: hidden; padding: 0.55rem 0.6rem 0.9rem; }
-  .tray-div { flex: none; margin: 0; }
-  .decks { display: flex; gap: 0.8rem; margin: 0; }
+  .tray-well { display: flex; align-items: center; gap: 0.8rem; overflow-x: auto; overflow-y: hidden; padding: 0.55rem 0.6rem 0.8rem; }
+  .tray-div { flex: none; margin: 0; border-radius: 0.2rem; }
+  .decks { display: flex; gap: 0.5rem; margin: 0; }
   .decks li { flex: none; width: 12.5rem; }
-  .deck-label { font-size: 1.2rem; }
 }
 
 @media (max-width: 1280px) {
   .sheet.two, .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1fr); }
-  /* the fan-fold takes the full width (printer lines run to 132 columns);
-     the job ticket and listing lie in a short row beneath it */
+  /* the fan-fold takes the full width (printer lines run to 132 columns); the job ticket
+     and listing lie in a short row beneath it */
   .out-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 1.2rem; }
   .ticket-col { flex-direction: row; align-items: flex-start; max-height: 12rem; }
   .ticket-col > * { flex: 1 1 0; min-width: 0; max-height: 11.5rem; }
   .listing pre { max-height: 7rem; }
 }
 
-@media (max-width: 1100px) {
-}
-
-/* ---------- short desks ---------- */
-
 @media (max-height: 820px) {
-  .pad-sheet { padding-top: 1.6rem; }
+  .pad-sheet { padding-top: 1.4rem; }
   .pad .toolbar { margin: 0.4rem 0 0.3rem; }
-  .desk { padding-top: 1.9rem; padding-bottom: 1.9rem; }
-  .desk-rim { inset: 0.8rem 1rem; background-size: auto 0.7rem, auto 0.7rem; }
-  .nameplate h1 { padding: 0.45rem 1.2rem 0.5rem; }
-  .st-desk { gap: 1rem; }
-  .overview { gap: 1.2rem 1rem; }
+  .station { padding-top: 3.5rem; padding-bottom: 0.9rem; }
+  .st-desk { padding: 0; }
   .deck-plate { gap: 0.7rem 1.4rem; padding: 0.7rem 1.2rem 0.9rem; }
 }
 
-/* ---------- narrow: the drawer becomes a strip along the top of the desk ---------- */
-
 @media (max-width: 900px) {
-  .desk { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 0.9rem; padding: 1.7rem 0.9rem 1.5rem; }
-  .desk-rim { inset: 0.6rem 0.8rem; background-size: auto 0.6rem, auto 0.6rem; }
-  .drawer { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.6rem; padding: 0.5rem 0.6rem 0.65rem; overflow: visible; }
-  .labels { flex-wrap: wrap; }
-  .back a { white-space: nowrap; }
-  .labels { flex-direction: row; gap: 0.5rem; }
-  .label { width: auto; white-space: nowrap; }
-  .label[aria-current="true"] { transform: translateY(0.25rem); }
-  .label[aria-current="true"]::before { left: 50%; top: -0.75rem; margin: 0 0 0 -0.225rem; }
+  .drawer { top: 0.55rem; right: 0.6rem; }
+  .station { padding: 3.4rem 0.8rem 1rem; }
+  .st-desk { padding: 0; }
   .out-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1rem; }
   .ticket-col { flex-direction: column; align-items: stretch; max-height: none; overflow: auto; padding: 0 0.4rem 0.6rem 0; }
   .ticket-col > * { flex: 0 1 auto; max-height: none; }
   .deck-plate { grid-template-columns: minmax(0, 1fr); grid-template-areas: "maker" "reels" "counter" "controls" "status"; }
   .counter-box { grid-template-columns: auto auto auto; justify-content: start; align-items: center; gap: 0.3rem 0.8rem; }
-  .sheet.two, .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1fr); }
   .spread, .folio-inside { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 0.4rem; padding: 0.4rem; }
   .page-l, .flap { max-height: 30dvh; overflow: auto; }
-  .page-l { border-radius: 0; box-shadow: none; padding: 0.9rem 1rem; }
+  .page-l { box-shadow: none; border-bottom: 1px solid var(--rule); padding: 0.9rem 1rem; }
   .page-r { padding: 1rem 1rem 0.8rem; box-shadow: none; }
-  .page-l h2 { margin-bottom: 0.5rem; font-size: 1.25rem; }
-  .bookmark { display: none; }
-  .flap { padding: 0.6rem; }
-  .flap h2 { margin-bottom: 0.5rem; font-size: 1.2rem; }
-  .flap-r { padding: 0.6rem; }
+  .page-l h2 { margin-bottom: 0.7rem; font-size: 1.5rem; }
+  .flap { padding: 0.7rem; }
+  .flap h2 { margin-bottom: 0.6rem; font-size: 1.4rem; }
+  .chapter h3, .sheet h3 { font-size: 1.7rem; }
 }
 
 @media (max-width: 600px) {
   body { font-size: 16px; }
-  .room { padding: 0.3rem; }
-  .desk { padding: 1.4rem 0.6rem 1.2rem; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0.4rem 1rem rgba(0, 0, 0, 0.5); }
-  .desk::before { inset: 0.3rem; outline: 0; }
-  .desk-rim { inset: 0.45rem 0.6rem; background-size: auto 0.5rem, auto 0.5rem; }
-  .station { padding: 0.3rem 0.3rem 0.7rem 0.2rem; }
-  .nameplate h1 { padding: 0.4rem 0.8rem 0.45rem; letter-spacing: 0.03em; }
   .pad-sheet { padding-left: 0.6rem; padding-right: 0.6rem; }
   .form-boxes > div:first-child { min-width: 0; }
   .legend { display: none; }
   .fanfold { padding-left: 2rem; padding-right: 2rem; }
-  /* the drawer becomes one strip that scrolls sideways */
-  .drawer { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; }
-  .labels { flex-wrap: nowrap; }
-  /* the desk overview turns into a compact list of objects */
-  .st-desk .overview { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; padding: 0.2rem; align-self: start; }
-  .obj { grid-template-columns: 3.4rem minmax(0, 1fr); justify-items: start; align-items: center; gap: 0.5rem; }
-  .obj-tag { text-align: left; }
-  .obj .book-label, .obj .folio-label, .obj .stub, .obj .tie, .obj .ribbon { display: none; }
-  .obj .book-cover { width: 2.1rem; padding: 0; }
-  .obj .folio-cover { width: 2.3rem; }
-  .obj .mini { width: 3.2rem; height: 2.3rem; }
-  .obj .mini-pad { width: 2.2rem; height: 2.8rem; }
-  .obj .mini-tape { border-width: 0.2rem; background: radial-gradient(circle at 28% 50%, #5b3a22 0 0.4rem, #bdb7a8 0.45rem 0.7rem, transparent 0.75rem), radial-gradient(circle at 72% 50%, #5b3a22 0 0.4rem, #bdb7a8 0.45rem 0.7rem, transparent 0.75rem), var(--plate-tex) padding-box, var(--teak-tex) border-box, #cfc7b4; }
-  .obj .mini-stack span { inset: 0.25rem; }
-  .obj .mini-out .mini-print { width: 2.4rem; height: 2.3rem; }
-  .obj .mini-out .mini-stack { width: 1.8rem; height: 1.3rem; }
-  /* the tray strip and the form head are trimmed to leave room for the cards */
   .tray-head { display: none; }
-  .tray { padding: 0.4rem; }
-  .tray-well { padding: 0.45rem 0.5rem 0.75rem; }
+  .tray { padding: 0.35rem; }
   .decks li { width: 11rem; }
   .form-boxes > div + div { display: none; }
-  .form-head h2 { font-size: 1.2rem; }
-  .pad .toolbar button { padding: 0.25rem 0.55rem; }
+  .form-head h2 { font-size: 1.4rem; }
+  .pad .toolbar button { padding: 0.2rem 0.6rem; }
   .recorder { padding: 0.45rem; }
   .deck-plate { padding: 0.7rem; gap: 0.6rem; }
   .reel-svg { max-height: 24dvh; }
-  button.key { min-width: 0; flex: 1 1 5rem; padding: 0.55rem 0.5rem 0.65rem; }
+  button.key { min-width: 0; flex: 1 1 5rem; padding: 0.55rem 0.5rem 0.6rem; }
   .chapter th, .chapter td { padding-right: 0.4rem; }
   td code { white-space: normal; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-}
-
-/* ---------- things left on the desk ----------
-   Cut-out photographs, one consistent shadow from the lamp at the upper left. Each lies
-   on the leather round its station: over it where the station leaves leather free (a
-   narrow gutter is kept for them at the form on wide screens), or under its object,
-   peeking out (.under). Decoration only; shown only where the desk has room for them. */
-
-.props { position: absolute; inset: 0; pointer-events: none; }
-.station { position: relative; z-index: 1; }
-.prop {
-  position: absolute;
-  z-index: 2;
-  display: none;
-  height: auto;
-  filter: drop-shadow(3px 7px 6px rgba(0, 0, 0, 0.5));
-  user-select: none;
-}
-.prop.under { z-index: 0; }
-
-@media (min-width: 1100px) and (min-height: 700px) {
-  .desk[data-at="desk"] .prop[data-on="desk"],
-  .desk[data-at="out"] .prop[data-on="out"],
-  .desk[data-at="recorder"] .prop[data-on="recorder"] { display: block; }
-
-  /* the desk: coffee and a pen in the open leather, clips and a banded deck by the nameplate */
-  .p-coffee { right: 2.5rem; bottom: 1.4rem; width: 9.5rem; transform: rotate(-9deg); }
-  .p-pen { right: 14rem; bottom: 1.2rem; width: 7.5rem; transform: rotate(14deg); }
-  .p-clips { right: 2.5rem; top: 0.6rem; width: 5.6rem; transform: rotate(6deg); }
-  .p-cards { right: 10.5rem; top: 0.9rem; width: 8rem; transform: rotate(-7deg); }
-
-  /* the out tray: pencils and clips by the run slip, in the leather above the ticket column */
-  .p-pencils { right: 10rem; top: -1.2rem; width: 7rem; transform: rotate(-78deg); }
-  .p-clips2 { right: 1.5rem; top: 0.2rem; width: 5.2rem; transform: rotate(-12deg); }
-
-  /* the recorder: its tape box and a cup half under the case */
-  .p-tapebox { left: 0; bottom: 0.5rem; width: 19rem; transform: rotate(-5deg); }
-  .p-coffee2 { right: 0; top: 0.4rem; width: 13rem; transform: rotate(12deg); }
-}
-
-/* the form needs about 900px for a whole card of 80 columns, so its gutter waits for room */
-@media (min-width: 1600px) and (min-height: 700px) {
-  .desk[data-at="form"] .prop[data-on="form"] { display: block; }
-  .st-form { padding-right: 10rem; }
-  .p-ink { right: 1.4rem; top: 1rem; width: 7.2rem; transform: rotate(-4deg); }
-  .p-stamp { right: -0.2rem; bottom: 1.2rem; width: 10rem; transform: rotate(84deg); }
-  .p-loupe { right: 2.6rem; top: 45%; width: 4.6rem; transform: rotate(24deg); }
 }

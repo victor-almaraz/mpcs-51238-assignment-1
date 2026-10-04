@@ -1,11 +1,12 @@
-/* The desk: its stations, one in front at a time, and what every object shares.
+/* The room: its stations, one in front at a time, and what every object shares.
 
    Desk.go(name, focusEl)          brings a station to the front (focus to its heading)
    Desk.onShow(name, fn)           fn(section) each time the station is shown
    Desk.pager(box, items, status, label, buttons)   pages that turn, in a book or a magazine
    Desk.deck(id) / Desk.decks      every deck in the tray, by id
-   Any button with data-go="station" moves there; any with data-deck="id" puts that deck
-   on the coding form (form.js registers Desk.putOnForm). */
+   Any button with data-go="station" moves there (data-chapter="i" opens the manual at
+   that chapter, data-focus="id" focuses that element); any with data-deck="id" puts that
+   deck on the coding form (form.js registers Desk.putOnForm). */
 
 var Desk = (function () {
   'use strict';
@@ -30,13 +31,13 @@ var Desk = (function () {
     if (!stations[name]) return;
     Object.keys(stations).forEach(function (k) { stations[k].hidden = k !== name; });
     $$('.labels [data-go]').forEach(function (b) {
-      if (b.getAttribute('data-go') === name) {
-        b.setAttribute('aria-current', 'true');
-        b.scrollIntoView({ block: 'nearest', inline: 'nearest' });   // keeps it in view in the narrow strip
-      } else b.removeAttribute('aria-current');
+      if (b.getAttribute('data-go') === name) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
     });
+    menu(false);
+    doc.querySelector('.to-room').hidden = name === 'desk';
     current = name;
-    $('desk').setAttribute('data-at', name);    // shows the props left round this station
+    $('desk').setAttribute('data-at', name);    // the room straight on, or the desk from above
     stations[name].scrollTop = 0;
     (shown[name] || []).forEach(function (fn) { fn(stations[name]); });
     (focusEl || heading(name)).focus({ preventScroll: true });
@@ -46,10 +47,34 @@ var Desk = (function () {
   doc.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-go], [data-deck]');
     if (!b || b.disabled) return;
-    if (b.hasAttribute('data-go')) go(b.getAttribute('data-go'));
+    if (b.hasAttribute('data-go')) {
+      var at = b.getAttribute('data-focus');
+      go(b.getAttribute('data-go'), at && $(at));
+      if (b.hasAttribute('data-chapter')) manualPages.show(+b.getAttribute('data-chapter'), true);
+    }
     else if (api.putOnForm) api.putOnForm(b.getAttribute('data-deck'));
   });
-  // Escape puts the object down and returns to the desk, except while typing
+  /* ---------------- the menu in the corner ---------------- */
+  var menuBtn = $('menu-btn'), places = $('places');
+  function menu(open) {
+    if (places.hidden === !open) return;
+    places.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', String(open));
+  }
+  menuBtn.addEventListener('click', function () {
+    menu(places.hidden);
+    if (!places.hidden) places.querySelector('[aria-current="true"]').focus();
+  });
+  // a click elsewhere closes it; so does Escape, which hands the focus back to the button
+  doc.addEventListener('pointerdown', function (e) { if (!places.hidden && !e.target.closest('.drawer')) menu(false); });
+  places.addEventListener('keydown', function (e) {
+    var items = $$('.label, .back a', places), i = items.indexOf(doc.activeElement);
+    if (e.key === 'Escape') { e.preventDefault(); menu(false); menuBtn.focus(); }
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); items[(i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length].focus(); }
+  });
+  places.addEventListener('focusout', function (e) { if (!e.relatedTarget || !e.relatedTarget.closest('.drawer')) menu(false); });
+
+  // Escape puts the object down and returns to the room, except while typing
   doc.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' || current === 'desk' || e.defaultPrevented) return;
     if (e.target.matches('input[type="text"], textarea, select')) return;
@@ -96,15 +121,26 @@ var Desk = (function () {
   }
 
   /* ---------------- the manual and the portfolio ---------------- */
-  (function manual() {
-    var box = $('manual'), chapters = $$('.chapter', box), list = $('contents');
+  // the manual's three volumes share one contents, grouped by volume
+  var VOLUMES = { 1: 'FORTRAN', 2: 'Sieves', 3: 'Music and tape' };
+  var manualPages = (function manual() {
+    var box = $('manual'), chapters = $$('.chapter', box), list = $('contents'), group = null, vol = null;
     var buttons = chapters.map(function (ch) {
+      var v = ch.getAttribute('data-volume');
+      if (v !== vol) {
+        vol = v;
+        var gl = doc.createElement('li'), h = doc.createElement('span');
+        gl.className = 'vol'; gl.setAttribute('data-volume', v);
+        h.className = 'vol-h'; h.textContent = 'Volume ' + v + ': ' + VOLUMES[v];
+        group = doc.createElement('ol');
+        gl.appendChild(h); gl.appendChild(group); list.appendChild(gl);
+      }
       var li = doc.createElement('li'), b = doc.createElement('button');
       b.type = 'button'; b.textContent = ch.querySelector('h3').textContent;
-      li.appendChild(b); list.appendChild(li);
+      li.appendChild(b); group.appendChild(li);
       return b;
     });
-    pager(box, chapters, $('manual-page'), 'Page', buttons);
+    return pager(box, chapters, $('manual-page'), 'Page', buttons);
   })();
   (function portfolio() {
     var box = $('folio'), sheets = $$('.sheet', box);
