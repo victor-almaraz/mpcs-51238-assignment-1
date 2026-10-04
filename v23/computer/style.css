@@ -1,0 +1,815 @@
+/* A workspace on a low-resolution full-colour screen, after the classic Macintosh desktop,
+   shown at a fixed scale: one screen pixel is 2 CSS pixels, and everything (borders, rules,
+   icons, pictures and the type) is a whole number of those pixels on one grid. Every length
+   in this file is even for that reason.
+
+   Colour: the room's palette, 46 colours cut from the room's own drawings (pixels.js), so
+   the screen and the room around it are one picture. Ink and paper for the chrome and the
+   windows; the wallpaper's blue for selection and the cursor; ochre for warnings; terracotta
+   for the column-72 margin, page breaks and the playhead; sage green on ink for the Player's
+   and the Calculator's displays. Tones are flat palette colours, or a two-colour dither
+   where a tone falls between them; the seven steps of difficulty run from sand to walnut
+   (--tone-0 to --tone-6). The desk is a night at Persepolis in the palette; icons are
+   outlined in ink, filled in colour and lit from the upper left. Text always sits on a
+   flat colour.
+
+   Type: two bitmap faces from the Fusion Pixel family (the Latin of Ark Pixel), both on a
+   10-pixel em whose design pixel is 0.1em, so at 20px one design pixel is one screen pixel.
+     Fusion Pixel 10px Proportional, 20px: chrome and prose alike
+     Fusion Pixel 10px Monospaced, 20px: the editor, code, cards and output; 5 pixels a column
+   No bold or italic is ever synthesised; headings stand out by inversion, rules and the
+   large numerals, which are pictures (pixels.js), emphasis by underlining. Line heights
+   are multiples of 4px (24px chrome and code, 28px prose).
+   Layout inside the windows is flush left on a grid of 20px, with sheets in two columns,
+   a side column for the numeral and the difficulty and a main column for the text. */
+
+:root {
+  --sys: "Fusion Pixel 10px Proportional", monospace;
+  --mono: "Fusion Pixel 10px Monospaced", monospace;
+  --t: 20px;
+  /* the room's palette: ink and paper, the wallpaper's blue for selection, terracotta,
+     ochre for warnings, sage green for the displays */
+  --ink: #1e1d1b; --paper: #fbf8f0; --chrome: #efe2c2;
+  --blue: #2b4560; --red: #b5462b; --yellow: #f0c46a; --green: #b0c68c;
+  /* dotted rules as gradients: dots one screen pixel square, one pixel apart */
+  --dots-h: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px);
+  --dots-v: repeating-linear-gradient(var(--ink) 0 2px, transparent 2px 4px);
+  --bar: 40px;
+  --lh: 24px;      /* one line of the buffer */
+  --gut: 56px;     /* the line-number gutter */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  background: var(--paper);
+  -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none; text-rendering: optimizeSpeed;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font: 400 var(--t)/28px var(--sys);
+}
+.sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 2px; }
+em, cite, var, i { font-style: normal; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+b, strong, th, h1, h2, h3, legend, dt { font-weight: 400; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+::selection { color: var(--paper); background: var(--blue); }
+canvas { image-rendering: pixelated; box-sizing: content-box; }
+/* the documents' pictures, kept as PNGs at screen resolution and shown at 2x */
+img.pic, img.paint-c, img.numeral { image-rendering: pixelated; }
+img.pic { max-width: 100%; height: auto; }
+/* Man Ray's poem: a white sheet, a black bar for every word */
+.lg { position: relative; background: var(--paper); }
+.lg-bar { position: absolute; height: 12px; background: var(--ink); }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; }
+code, kbd, pre, samp { font: 400 var(--t)/24px var(--mono); }
+
+/* ---------------- menu bar ---------------- */
+.menubar {
+  position: fixed; left: 0; right: 0; top: 0; z-index: 900;
+  height: var(--bar);
+  display: flex; align-items: flex-start; justify-content: space-between;
+  background: var(--paper); border-bottom: 2px solid var(--ink);
+  font: 400 var(--t)/36px var(--sys);
+}
+.menus { display: flex; margin: 0; padding: 0 0 0 8px; list-style: none; }
+.menus > li { position: relative; display: flex; }
+.m-top {
+  display: flex; align-items: flex-start; gap: 6px;
+  height: 38px; margin: 0; padding: 0 12px; border: 0;
+  line-height: 36px; color: var(--ink); background: var(--paper); cursor: default;
+}
+.m-top[aria-expanded="true"], .m-top:focus-visible { color: var(--paper); background: var(--ink); outline: none; }
+.m-top[aria-expanded="true"] .m-glyph, .m-top:focus-visible .m-glyph { filter: invert(1); }
+.m-glyph { display: block; width: 32px; height: 24px; margin-top: 6px; }
+.clock { padding: 0 14px; line-height: 36px; }
+
+.menu {
+  display: none;
+  position: absolute; left: 0; top: 38px;
+  min-width: 300px; max-width: calc(100vw - 8px);
+  margin: 0; padding: 4px 0; list-style: none;
+  background: var(--paper); border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+}
+.menu.open { display: block; }
+.menu [role^="menuitem"] {
+  display: block; width: 100%;
+  padding: 4px 16px 4px 32px; border: 0;
+  font: 400 var(--t)/24px var(--sys); text-align: left; text-decoration: none; white-space: nowrap;
+  color: var(--ink); background: var(--paper); cursor: default;
+}
+.menu [role^="menuitem"]:focus, .menu [role^="menuitem"]:hover { color: var(--paper); background: var(--ink); outline: none; }
+.menu [role^="menuitem"] { position: relative; }
+.menu [role^="menuitem"].checked::before { content: ""; position: absolute; left: 10px; top: 12px; width: 14px; height: 10px; background: var(--check) 0 0 / 14px 10px; image-rendering: pixelated; }
+.menu [role^="menuitem"].checked:focus::before, .menu [role^="menuitem"].checked:hover::before { background-image: var(--check-on); }
+/* Text is never dithered, masked or clipped to a pattern. A disabled item is set in solid
+   blue (8.6:1 on white), with a dotted rule under it as a second, non-text cue, and it
+   does not highlight. */
+.menu [role^="menuitem"][aria-disabled="true"],
+.menu [role^="menuitem"][aria-disabled="true"]:hover,
+.menu [role^="menuitem"][aria-disabled="true"]:focus {
+  color: var(--blue); background: var(--paper) var(--dots-h) 32px bottom 2px / calc(100% - 48px) 2px no-repeat;
+}
+.menu [role="separator"] { height: 2px; margin: 4px 0; background: var(--dots-h); }
+/* a note at the head of a menu: what its items apply to */
+.m-note { padding: 4px 16px 6px 32px; margin-bottom: 4px; line-height: 24px; white-space: nowrap; border-bottom: 2px solid var(--ink); }
+
+/* ---------------- the desk ---------------- */
+html.js, html.js body { height: 100%; overflow: hidden; }
+/* the room's own commands (link.js), shown only in the room's frame */
+html:not(.in-room) .in-room-only { display: none; }
+.desktop {
+  position: fixed; left: 0; right: 0; top: var(--bar); bottom: 0;
+  /* the desk picture: a photograph of a night at Persepolis, dithered once (Atkinson's error
+     diffusion, in black and white, with the torches in yellow and a laser in green), 800 x 570
+     screen pixels shown at 2x; its edges fade into the night, which runs on past them. The
+     script sets its offset to whole screen pixels. */
+  background: var(--ink) url(../assets/pics/desktop.png) 65% 50% / 1600px 1140px no-repeat;
+  image-rendering: pixelated;
+  overflow: hidden;
+}
+.icons {
+  /* columns fill from the right, as on the old Finder desk; the bottom 128px is the Trash's */
+  position: absolute; top: 12px; right: 8px; bottom: 128px;
+  display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 128px); grid-auto-columns: 124px; gap: 4px 8px;
+  direction: rtl; align-content: start;
+  margin: 0; padding: 0; list-style: none;
+}
+.icons > li { direction: ltr; }
+.trash-slot { position: fixed; right: 8px; bottom: 8px; }
+.icon {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  width: 124px; padding: 4px 0; border: 0;
+  font: 400 var(--t)/24px var(--sys); color: var(--ink); background: transparent; text-decoration: none;
+  cursor: default;
+}
+.ico { display: block; width: 64px; height: 64px; }
+/* the script nudges each label onto the screen grid; lines inside it start flush left */
+.ico-label { position: relative; max-width: 100%; padding: 0 4px; background: var(--paper); text-align: left; }
+.icon.sel .ico { filter: brightness(0.55); }
+.icon.sel .ico-label { color: var(--paper); background: var(--blue); }
+.icon:focus-visible { outline: none; }
+.icon:focus-visible .ico-label { outline: 2px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 2px var(--paper); }
+/* a folder, the disk or the Trash under a dragged icon is selected; so is an open folder's window */
+.icon.drop .ico { filter: brightness(0.55); }
+.icon.drop .ico-label { color: var(--paper); background: var(--blue); }
+.win.drop { box-shadow: 2px 2px 0 var(--ink), inset 0 0 0 4px var(--blue); }
+/* the place an icon dragged among its neighbours will take: a blue bar in the gap before
+   the icon after it (or after the last), between columns in a folder, between rows on the desk */
+.icons > li.ins-before::before, .icons > li.ins-after::after, .folder > li.ins-before::before, .folder > li.ins-after::after {
+  content: ""; position: absolute; z-index: 3; top: 0; bottom: 0; width: 4px; background: var(--blue); pointer-events: none;
+}
+.folder > li.ins-before::before, .icons > li.ins-before::before { left: -6px; }
+.folder > li.ins-after::after, .icons > li.ins-after::after { right: -6px; }
+.icons > li.cols.ins-before::before, .icons > li.cols.ins-after::after { left: 0; right: 0; width: auto; height: 4px; }
+.icons > li.cols.ins-before::before { top: -4px; bottom: auto; }
+.icons > li.cols.ins-after::after { top: auto; bottom: -4px; }
+/* the icon being dragged follows the pointer above everything */
+.icon-ghost { position: fixed; left: 0; top: 0; z-index: 900; pointer-events: none; }
+/* renaming: the name is edited in a field over the label */
+.icons > li:not(.trash-slot), .folder > li { position: relative; }
+.renaming .ico-label { visibility: hidden; }
+.ico-edit {
+  position: absolute; left: 0; top: 72px; width: 124px; height: 28px; margin: 0; padding: 0 4px;
+  font: 400 var(--t)/24px var(--sys); color: var(--ink); background: var(--paper);
+  border: 2px solid var(--ink); border-radius: 0; outline: none; z-index: 2;
+}
+.ico-edit::selection { color: var(--paper); background: var(--blue); }
+
+/* ---------------- windows ---------------- */
+.win {
+  position: absolute;
+  display: none; flex-direction: column;
+  min-width: 240px; min-height: 140px; max-width: 100%; max-height: 100%;
+  background: var(--paper);
+  border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+  overflow: hidden;
+}
+.win.open { display: flex; }
+.win:focus, .win:focus-visible { outline: none; }
+.win:focus-visible .title { color: var(--paper); background: var(--blue); }
+/* The title bar is 19 screen pixels plus its rule. The stripe band is rows 4 to 14, six
+   black lines; the title's capitals sit on rows 6 to 12, centred on it. */
+.titlebar {
+  position: relative; flex: none;
+  height: 40px;
+  border-bottom: 2px solid var(--ink);
+  cursor: default; touch-action: none; user-select: none;
+}
+.win.active .titlebar::before {
+  content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 22px;
+  background: var(--pat-stripes) 0 0 / 2px 4px;
+  pointer-events: none;
+}
+.title {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  max-width: calc(100% - 112px); margin: 0; padding: 0 10px;
+  font: 400 var(--t)/36px var(--sys);
+  background: var(--paper);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+html.js .title { transform: none; }  /* the script centres it on the grid */
+/* Close and zoom boxes: 9 x 9 screen pixels on rows 5 to 13, centred on the stripe band,
+   with a one-pixel white gap on every side that fills the band exactly. */
+.box {
+  position: absolute; top: 0; width: 36px; height: 38px;
+  padding: 0; border: 0; background: transparent; cursor: default;
+}
+.box.close { left: 8px; }
+.box.zoom { right: 8px; }
+.box::before {
+  content: ""; position: absolute; left: 10px; top: 10px; width: 18px; height: 18px;
+  border: 2px solid var(--ink); background: var(--paper); box-shadow: 0 0 0 2px var(--paper);
+}
+/* the zoom box's small square shares the outer box's top and left edges */
+.box.zoom::after { content: ""; position: absolute; left: 10px; top: 10px; width: 10px; height: 10px; border: 2px solid var(--ink); }
+.box:active::before { background: var(--ink); }
+.box.zoom:active::after { border-color: var(--paper); border-width: 0 2px 2px 0; }
+.box:focus-visible { outline: none; }
+.box:focus-visible::before { outline: 2px solid var(--blue); outline-offset: 2px; }
+.win:not(.active) .box::before, .win:not(.active) .box::after { display: none; }
+
+.infobar {
+  flex: none; display: flex; justify-content: space-between; gap: 12px;
+  max-width: none; margin: 0; padding: 2px 12px;
+  font: 400 var(--t)/24px var(--sys);
+  border-bottom: 6px double var(--ink);
+}
+.pane {
+  flex: 1; min-height: 0; overflow: auto;
+  padding: 20px 24px 28px;
+}
+.pane.flush { padding: 0; }
+.pane > :first-child { margin-top: 0; }
+
+/* scroll bars: a dithered lilac track, a white thumb, square arrow boxes */
+.win ::-webkit-scrollbar, .win::-webkit-scrollbar { width: 20px; height: 20px; }
+.win ::-webkit-scrollbar-track:vertical { background: var(--paper) var(--pat-track) 0 0 / 16px 16px; border-left: 2px solid var(--ink); }
+.win ::-webkit-scrollbar-track:horizontal { background: var(--paper) var(--pat-track) 0 0 / 16px 16px; border-top: 2px solid var(--ink); }
+.win ::-webkit-scrollbar-thumb { background: var(--paper); border: 2px solid var(--ink); }
+.win ::-webkit-scrollbar-corner { background: var(--paper); }
+.win ::-webkit-scrollbar-button:single-button { display: block; width: 20px; height: 20px; background: var(--paper) no-repeat center / 10px 10px; border: 2px solid var(--ink); }
+.win ::-webkit-scrollbar-button:single-button:vertical:decrement { border-width: 0 0 2px 2px; background-image: var(--arrow-up); }
+.win ::-webkit-scrollbar-button:single-button:vertical:increment { border-width: 2px 0 0 2px; background-image: var(--arrow-down); }
+.win ::-webkit-scrollbar-button:single-button:horizontal:decrement { border-width: 2px 2px 0 0; background-image: var(--arrow-left); }
+.win ::-webkit-scrollbar-button:single-button:horizontal:increment { border-width: 2px 0 0 2px; background-image: var(--arrow-right); }
+@supports not selector(::-webkit-scrollbar) {
+  .win * { scrollbar-color: var(--ink) var(--paper); }
+}
+/* the size box in the bottom-right corner: drag it to resize the window */
+.grow {
+  position: absolute; right: 0; bottom: 0; z-index: 2; width: 16px; height: 16px;
+  background: var(--paper) var(--grow) 0 0 / 16px 16px;
+  image-rendering: pixelated; cursor: nwse-resize; touch-action: none;
+}
+
+/* the outline that follows the pointer while a window is dragged */
+.ghost {
+  position: absolute; z-index: 800; pointer-events: none;
+  padding: 2px; background: var(--pat-50) 0 0 / 16px 16px; image-rendering: pixelated;
+  -webkit-mask: linear-gradient(var(--ink) 0 0) content-box, linear-gradient(var(--ink) 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(var(--ink) 0 0) content-box exclude, linear-gradient(var(--ink) 0 0);
+}
+
+/* ---------------- type inside windows ---------------- */
+/* headings: the same face, set apart by inversion or a rule, and spaced out */
+h1 { display: inline-block; margin: 0 0 16px; padding: 4px 12px; color: var(--paper); background: var(--ink); font: 400 var(--t)/28px var(--sys); letter-spacing: 2px; }
+h3 { margin: 24px 0 12px; padding-bottom: 2px; border-bottom: 2px solid var(--ink); font: 400 var(--t)/24px var(--sys); letter-spacing: 2px; }
+p, li, dd, figcaption { max-width: 64ch; }
+p { margin: 0 0 20px; }
+.lede { margin: 0 0 20px; }
+kbd { padding: 0 4px; border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.placeholder { margin: 0; }
+
+.pic { display: block; margin: 0 0 16px; border: 2px solid var(--ink); }
+.page { max-width: 66ch; }
+.turns { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin: 24px 0 0; max-width: none; }
+.turns .next { margin-left: auto; }
+
+/* tables keep separate borders, so every rule is a whole pixel */
+table { border-collapse: separate; border-spacing: 0; margin: 12px 0 20px; border-left: 2px solid var(--ink); border-top: 2px solid var(--ink); }
+/* the script fixes each column at an even width once the type has arrived */
+table.snapped { table-layout: fixed; }
+th, td { border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { font: 400 var(--t)/24px var(--sys); color: var(--paper); background: var(--ink); letter-spacing: 2px; }
+td code { white-space: nowrap; }
+
+.decklist dt { margin-top: 16px; letter-spacing: 2px; }
+.decklist dd { margin: 4px 0 0 0; padding-left: 14px; border-left: 4px solid var(--ink); }
+
+/* list view of the disk */
+.listview { width: 100%; margin: 0; border: 0; }
+.listview th, .listview td { border-width: 0 0 2px; padding: 4px 12px; font: 400 var(--t)/24px var(--sys); letter-spacing: 0; }
+.listview th { color: var(--ink); background: var(--paper); }
+.lv {
+  display: inline-block; padding: 2px 6px; margin-left: -6px; border: 0;
+  font: 400 var(--t)/24px var(--sys); color: var(--ink); background: var(--paper); text-decoration: none; cursor: default;
+}
+.lv:hover, .lv:focus-visible { color: var(--paper); background: var(--blue); outline: none; }
+
+/* folders in icon view: fixed columns, so every icon lands on the grid */
+.folder { display: grid; grid-template-columns: repeat(auto-fill, 124px); gap: 16px 8px; margin: 0; padding: 0; list-style: none; }
+.folder .icon { width: 124px; }
+.folder li { max-width: none; }
+h3.group { margin: 20px 0 12px; padding-bottom: 4px; border-bottom: 0; background: var(--dots-h) left bottom / 100% 2px no-repeat; }
+h3.group:first-child { margin-top: 0; }
+
+/* ---------------- controls ---------------- */
+.btn {
+  display: inline-block; padding: 6px 14px; margin: 4px;
+  font: 400 var(--t)/24px var(--sys);
+  color: var(--ink); background: var(--paper);
+  border: 2px solid var(--ink); border-radius: 0;
+  box-shadow: 2px 2px 0 var(--ink);
+  text-decoration: none; cursor: default;
+}
+.btn:active:not(:disabled) { color: var(--paper); background: var(--ink); }
+.btn.default { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink); margin: 6px; }
+.btn:disabled { color: var(--blue); box-shadow: none; border-color: transparent;
+  background: var(--dots-h) left top / 100% 2px no-repeat, var(--dots-h) left bottom / 100% 2px no-repeat,
+    var(--dots-v) left top / 2px 100% no-repeat, var(--dots-v) right top / 2px 100% no-repeat, var(--paper);
+  background-origin: border-box; }   /* solid blue letters in a dotted frame */
+fieldset:disabled label { color: var(--blue); }
+label, legend, output { font: 400 var(--t)/24px var(--sys); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: none; }
+
+/* a status line along the foot of a window */
+.statusline {
+  flex: none; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px;
+  max-width: none; margin: 0; padding: 4px 12px;
+  border-top: 2px solid var(--ink);
+  font: 400 var(--t)/28px var(--sys);
+}
+.statusline > span:empty { display: none; }
+#ed-pos { min-width: 180px; }
+#ed-warn.on { padding: 0 6px; color: var(--ink); background: var(--yellow); }
+
+/* ---------------- the Editor ---------------- */
+.ed-tools, .out-tools {
+  flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+  padding: 6px 10px; border-bottom: 2px solid var(--ink);
+}
+.buffer {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
+  margin: 10px; border: 2px solid var(--ink);
+  background: var(--paper);
+}
+.buffer:focus-within { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* The ruler marks the fixed-form fields above the text, never behind it. One column is
+   10px, five screen pixels, the advance of the monospaced face. */
+.ruler { flex: none; border-bottom: 2px solid var(--ink); user-select: none; }
+.ruler-clip { margin-left: calc(var(--gut) + 2px); overflow: hidden; }
+.ruler-in { position: relative; width: 800px; height: 52px; margin-left: 8px; }
+.fields { display: flex; height: 24px; padding-top: 2px; }
+.fld {
+  flex: none; height: 22px; padding-left: 4px;
+  font: 400 var(--t)/20px var(--sys); text-align: left; white-space: nowrap; overflow: hidden;
+  border: 2px solid var(--ink); border-top: 0;
+}
+.f-label { width: 50px; padding-left: 0; }
+.f-cont { width: 10px; padding: 0; border-left: 0; border-right: 0; background: var(--pat-50) 0 0 / 16px 16px; image-rendering: pixelated; }
+.f-stmt { width: 660px; }
+.f-ign { width: 80px; border: 0; background: var(--dots-h) left bottom / 100% 2px no-repeat, var(--dots-v) right top / 2px 100% no-repeat; }
+.ticks { display: flex; height: 24px; }
+.tk { position: relative; flex: none; width: 10px; }
+.tk::after { content: ""; position: absolute; left: 4px; bottom: 0; width: 2px; height: 4px; background: var(--ink); }
+.tk.t5::after { height: 6px; }
+.tk.tf::after { height: 10px; }
+.tk b { position: absolute; left: 0; bottom: 8px; font: 400 var(--t)/20px var(--mono); }
+.caretcol { position: absolute; left: 0; bottom: 0; width: 10px; height: 4px; background: var(--blue); }
+
+.buf-body { flex: 1; min-height: 0; display: flex; position: relative; }
+.gutter { flex: none; width: var(--gut); overflow: hidden; border-right: 2px solid var(--ink); user-select: none; }
+.gutter-in { padding-top: 6px; }
+.gutter-in span { display: block; height: var(--lh); padding-right: 8px; font: 400 var(--t)/var(--lh) var(--mono); text-align: right; }
+.gutter-in span.cur { color: var(--paper); background: var(--blue); }
+.code { flex: 1; min-width: 0; position: relative; }
+#src {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  margin: 0; padding: 6px 8px; border: 0; border-radius: 0; resize: none;
+  font: 400 var(--t)/var(--lh) var(--mono);
+  white-space: pre; overflow: auto; overflow-wrap: normal;
+  color: var(--ink); background: transparent; caret-color: var(--ink);
+  tab-size: 8;
+}
+#src:focus { outline: none; }
+/* a red dotted margin at column 72 and a black one at 80, between the characters */
+.margins { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.margins-in { position: absolute; top: 0; bottom: 0; left: 8px; width: 820px; }
+.margins-in i { position: absolute; top: 0; bottom: 0; width: 2px; }
+.m72 { left: 720px; background: repeating-linear-gradient(var(--red) 0 2px, transparent 2px 4px); }
+.m80 { left: 800px; background: var(--ink); }
+
+/* ---------------- output windows ---------------- */
+.runstatus { margin: 0 0 12px; }
+/* fan-fold paper: sprocket holes run down green-bar margins, the print sits on plain white */
+.fanfold { display: grid; grid-template-columns: 20px minmax(0, 1fr) 20px; border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.fanfold::before, .fanfold::after { content: ""; grid-row: 1; background: var(--paper) var(--pat-holes) 0 0 / 20px 20px repeat-y; image-rendering: pixelated; }
+.fanfold::before { grid-column: 1; box-shadow: inset -2px 0 var(--ink); }
+.fanfold::after { grid-column: 3; box-shadow: inset 2px 0 var(--ink); }
+.printer { grid-column: 2; grid-row: 1; min-width: 0; overflow-x: auto; padding: 12px 14px 16px; }
+.printer pre, .textdoc pre { margin: 0; }
+.pagebreak { position: relative; margin: 16px -14px; height: 2px; background: repeating-linear-gradient(90deg, var(--red) 0 8px, transparent 8px 14px); }
+.pagebreak span { position: absolute; left: 24px; top: -12px; padding: 0 8px; font: 400 var(--t)/24px var(--sys); background: var(--paper); }
+.textdoc pre { padding: 12px 14px; border: 2px solid var(--ink); white-space: pre-wrap; overflow-x: auto; }
+#listing { white-space: pre; }
+
+.records { margin: 0; padding: 0; list-style: none; counter-reset: rec; font: 400 var(--t)/24px var(--mono); }
+.records li { max-width: none; white-space: pre; counter-increment: rec; }
+.records li::before { content: counter(rec); display: inline-block; width: 50px; margin-right: 20px; padding-right: 10px; text-align: right; border-right: 2px solid var(--ink); }
+.out-tools .btn { padding: 6px 10px; }
+
+/* ---------------- the Player ---------------- */
+.roll-wrap { position: relative; line-height: 0; border: 2px solid var(--ink); background: var(--paper); overflow: hidden; touch-action: none; }
+.roll { display: block; }
+.playhead { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: var(--red); pointer-events: none; }
+.deck-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 14px 0 8px; }
+.lcd { margin: 0; padding: 4px 12px; color: var(--green); background: var(--ink); font: 400 var(--t)/24px var(--mono); letter-spacing: 2px; white-space: nowrap; max-width: none; }
+.transport { display: flex; flex-wrap: wrap; gap: 2px; }
+.tbtn { display: inline-flex; align-items: center; gap: 8px; }
+.tg { display: block; flex: none; }
+.tg-stop { width: 12px; height: 12px; background: currentColor; }
+.tg-pause { width: 12px; height: 12px; border-left: 4px solid currentColor; border-right: 4px solid currentColor; }
+.btn:disabled .tg { color: var(--blue); }
+.pl-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.pl-controls > * { flex: 0 0 auto; width: 244px; }
+.ctl { margin: 0; min-width: 0; }
+.ctl > label { display: block; margin-bottom: 4px; letter-spacing: 2px; }
+.ctl output { display: block; margin-top: 4px; }
+/* the legend floats, so the frame's top rule is not drawn through its middle */
+fieldset { margin: 0; padding: 6px 12px 10px; border: 2px solid var(--ink); }
+legend { float: left; width: 100%; padding: 0; margin: 0 0 4px; letter-spacing: 2px; }
+legend + * { clear: both; }
+.radios label { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.note { margin: 6px 0 0; font: 400 var(--t)/28px var(--sys); }
+.pl-load { margin: 14px 0 0; }
+
+/* radio buttons are pixel circles drawn by the script */
+input[type="radio"] {
+  -webkit-appearance: none; appearance: none; flex: none;
+  width: 16px; height: 16px; margin: 0; border: 0; border-radius: 0;
+  background: var(--radio) 0 0 / 16px 16px no-repeat; image-rendering: pixelated;
+}
+input[type="radio"]:checked { background-image: var(--radio-on); }
+input[type="radio"]:disabled { background-image: var(--radio-off); }
+/* 212px wide with a 12px thumb: each 4-beat step moves the thumb 4px, two screen pixels */
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 212px; height: 24px; margin: 0; background: transparent; }
+input[type="range"]::-webkit-slider-runnable-track { height: 8px; border: 2px solid var(--ink); background: var(--paper); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 20px; margin-top: -8px; border: 2px solid var(--ink); background: var(--paper); box-shadow: 2px 2px 0 var(--ink); }
+input[type="range"]::-moz-range-track { height: 4px; border: 2px solid var(--ink); background: var(--paper); }
+input[type="range"]::-moz-range-thumb { width: 8px; height: 16px; border: 2px solid var(--ink); border-radius: 0; background: var(--paper); }
+
+/* ---------------- miscellanea ---------------- */
+.paint { margin: 0; }
+.paint-scroll { overflow-x: auto; }
+.paint-c { display: block; border: 2px solid var(--ink); }
+.paint figcaption, .caption { margin-top: 14px; }
+pre.st { margin: 0; padding: 12px 14px; overflow-x: auto; border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+
+/* the Dada miscellanea: Karawane in the screen's two faces, inverted, ruled and spaced */
+.kw { margin: 0 0 12px; padding: 16px 20px 8px; border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.kw p { margin: 0 0 8px; max-width: none; }
+.kw-t { width: fit-content; padding: 4px 12px; color: var(--paper); background: var(--ink); letter-spacing: 8px; }
+.kw-1 { font-family: var(--mono); letter-spacing: 4px; }
+.kw-2 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.kw-3 { width: fit-content; padding: 0 8px; color: var(--paper); background: var(--ink); }
+.kw-4 { padding-left: 80px; letter-spacing: 2px; }
+.kw-5 { color: var(--blue); font-family: var(--mono); letter-spacing: 6px; }
+.kw-6 { padding-left: 160px; font-family: var(--mono); }
+.kw p.now { color: var(--ink); background: var(--yellow); }   /* the line whose vowels are sounding */
+.dd-read { margin: 12px 0 0; }
+.dd-recipe { margin: 0 0 16px; padding: 4px 16px; border-left: 8px solid var(--ink); }
+.dd-recipe p { margin: 0; }
+.dd-article {
+  display: block; width: 100%; max-width: 64ch; margin: 0; padding: 6px 8px;
+  font: 400 var(--t)/24px var(--sys); color: var(--ink); background: var(--paper);
+  border: 2px solid var(--ink); border-radius: 0; resize: vertical;
+}
+.dd-article:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+pre.dd-poem { min-height: 76px; white-space: pre-wrap; }
+
+/* ---------------- the Trash ---------------- */
+.trashlist { margin: 12px 0 0; padding: 0; list-style: none; }
+.trashlist li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 6px 0; background: var(--dots-h) left bottom / 100% 2px no-repeat; max-width: none; }
+
+/* ---------------- the Calculator ---------------- */
+/* a green display on black, as the Player's, over the display punched on a short card */
+.win.calc .pane { padding: 16px 20px 20px; }
+.calc-st { margin: 0; min-height: 24px; max-width: none; font: 400 var(--t)/24px var(--mono); text-align: right; white-space: pre; }
+.calc-lcd { display: block; margin: 0 0 12px; padding: 4px 12px; color: var(--green); background: var(--ink); font: 400 var(--t)/32px var(--mono); text-align: right; white-space: nowrap; overflow: hidden; }
+.calc-card { margin: 0 0 16px; }
+.calc-print { min-height: 20px; margin: 0; padding-left: 2px; font: 400 var(--t)/20px var(--mono); white-space: pre; }
+.calc-holes { display: block; }
+.calc-keys { display: grid; grid-template-columns: repeat(4, 64px); gap: 8px; }
+.ck, .ck.default { margin: 0; padding: 6px 0; font-family: var(--mono); text-align: center; }
+.ck.wide { grid-column: span 2; }
+.ck.hit { color: var(--paper); background: var(--ink); }   /* a key typed on the keyboard */
+.calc-mode { margin: 16px 0 0; }
+.calc-mode .btn { margin: 0; }
+.btn[aria-pressed="true"] { color: var(--paper); background: var(--ink); }
+
+/* ---------------- Crible ---------------- */
+/* Two boards of 48 numbers, twelve to a row. The target's members are punched black; on
+   yours, a number in both is black, one missing is yellow with a black ring, and one not in
+   the target is red. The class a press would add is marked by a small blue box. */
+.cr-boards { display: flex; flex-wrap: wrap; gap: 0 32px; }
+.cr-board h3 { margin-top: 0; }
+.cr-board h3 code { margin-left: 12px; letter-spacing: 0; }
+.cr-row { display: grid; grid-template-columns: 40px repeat(12, 26px); }
+.cr-rl, .cr-n { font: 400 var(--t)/24px var(--mono); }
+.cr-rl { padding-right: 8px; text-align: right; }
+.cr-n { padding-left: 4px; }
+.cr-cell {
+  position: relative; display: block; width: 26px; height: 26px; margin: 0; padding: 0;
+  border: 0; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); background: var(--paper); cursor: default;
+}
+.cr-rl + .cr-cell { border-left: 2px solid var(--ink); }
+.cr-ruler + .cr-row .cr-cell { border-top: 2px solid var(--ink); }
+.cr-cell.on, .cr-cell.hit, .cr-sw.hit { background: var(--ink); }
+.cr-cell.extra, .cr-sw.extra { background: var(--red); }
+.cr-cell.miss, .cr-sw.miss { background: var(--yellow); box-shadow: inset 0 0 0 4px var(--yellow), inset 0 0 0 6px var(--ink); }
+.cr-cell.pv::after { content: ""; position: absolute; left: 6px; top: 6px; width: 10px; height: 10px; border: 2px solid var(--blue); background: var(--paper); }
+.cr-cell.now { outline: 4px solid var(--blue); outline-offset: -2px; z-index: 1; }   /* the pulse that is sounding */
+.cr-cell:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 2px var(--paper); z-index: 2; }
+.cr-key { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 16px 0; max-width: none; }
+.cr-k { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.cr-sw { display: inline-block; width: 24px; height: 24px; border: 2px solid var(--ink); }
+.cr-mods { max-width: 560px; }
+.cr-mods label { display: inline-flex; margin: 4px 20px 4px 0; }
+
+/* ---------------- the alert ---------------- */
+.alert-veil { display: none; position: fixed; inset: 0; z-index: 1000; }
+.alert-veil.open { display: block; }
+.alert {
+  position: absolute; left: 0; top: 0;
+  width: min(480px, calc(100% - 24px));
+  display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 18px;
+  padding: 22px 22px 16px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 6px var(--ink), 2px 2px 0 var(--ink);
+}
+.alert-ico { grid-row: 1 / 3; }
+#alert-msg { margin: 0; }
+.alert-ok { grid-column: 2; margin: 10px 0 0; text-align: right; }
+/* the dialog: its fields on the grid of the message */
+.alert.ask { width: min(600px, calc(100% - 24px)); }
+.ask-f { grid-column: 2; display: grid; grid-template-columns: 80px minmax(0, 1fr); align-items: center; gap: 0 12px; margin: 8px 0 0; }
+.ask-f[hidden] { display: none; }
+.ask-f input, .ask-f select { width: 100%; height: 36px; margin: 0; padding: 4px 8px; border: 2px solid var(--ink); border-radius: 0; color: var(--ink); background: var(--paper); }
+.ask-f input:focus-visible, .ask-f select:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.ask-err { grid-column: 2; margin: 8px 0 0; }
+.ask-err:empty { display: none; }
+.ask-err:not(:empty) { padding: 0 6px; background: var(--yellow); justify-self: start; }
+
+/* ---------------- narrow screens: the desk becomes a launcher, windows become sheets ---------------- */
+@media (max-width: 700px) {
+  .menus { padding-left: 0; }
+  .m-top { padding: 0 4px; gap: 0; }   /* seven menus fit 375px */
+  .m-glyph { width: 32px; }
+  .clock { display: none; }
+  /* the desk scrolls inside itself; the page never does */
+  .desktop { overflow-y: auto; overflow-x: hidden; padding: 14px 8px 24px; }
+  .icons { position: static; display: grid; grid-template-columns: repeat(auto-fill, 124px); justify-content: space-between; grid-auto-flow: row; grid-template-rows: none; gap: 12px 4px; direction: ltr; }
+  .trash-slot { position: static; }
+  .win.open {
+    position: fixed; left: 0 !important; right: 0; top: var(--bar) !important; bottom: 0;
+    width: auto !important; height: auto !important; max-height: none;
+    border-width: 0; box-shadow: none;
+  }
+  .box.zoom, .grow { display: none; }
+  .pane { padding: 16px 16px 24px; }
+  .infobar span:last-child { display: none; }
+  .buffer { margin: 6px; }
+  .ed-tools .btn, .out-tools .btn { padding: 6px 8px; }
+  .statusline { padding: 4px 8px; }
+  .cr-row { grid-template-columns: 32px repeat(12, 24px); }
+  .cr-cell { width: 24px; height: 24px; }
+  .kw-4 { padding-left: 40px; }
+  .kw-6 { padding-left: 80px; }
+}
+
+/* ---------------- without the script: every window, one after another ---------------- */
+html:not(.js) canvas, html:not(.js) .menus, html:not(.js) .icons, html:not(.js) .box, html:not(.js) .clock,
+html:not(.js) .ruler, html:not(.js) .margins, html:not(.js) .gutter, html:not(.js) .roll-wrap, html:not(.js) .grow { display: none; }
+html:not(.js) .desktop { position: static; padding: 40px 12px 24px; background: var(--paper); }
+html:not(.js) .win { display: flex; position: static; margin: 0 auto 24px; max-width: 920px; max-height: none; }
+html:not(.js) .buffer { min-height: 440px; }
+html:not(.js) input[type="radio"] { -webkit-appearance: radio; appearance: auto; }
+html:not(.js) .win .titlebar::before {
+  content: ""; position: absolute; left: 4px; right: 4px; top: 8px; height: 22px;
+  background: repeating-linear-gradient(var(--ink) 0 2px, var(--paper) 2px 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+  .playhead { display: none; }
+}
+
+/* ================================================================ the documents' heads */
+/* an outlined numeral, the document's place, and a rule: the Swiss sheet's head on screen */
+.numeral { display: block; }
+.dochead { display: flex; align-items: flex-end; gap: 20px; margin: 0 0 20px; padding-bottom: 8px; border-bottom: 4px solid var(--ink); }
+.kicker { margin: 0 0 4px; letter-spacing: 2px; }
+
+/* ================================================================ the tones */
+/* The seven steps of difficulty, sand to walnut, each a flat colour (pixels.js). They code difficulty
+   and fill swatches, bands and the sorter's stacks, and never sit behind text. */
+.sw, .ix-sw, .sheet-band, .pk-bar { image-rendering: pixelated; background-size: 16px 16px; }
+[data-tone="0"] .sw, [data-tone="0"] .ix-sw, [data-tone="0"] .sheet-band { background-image: var(--tone-0); }
+[data-tone="1"] .sw, [data-tone="1"] .ix-sw, [data-tone="1"] .sheet-band { background-image: var(--tone-1); }
+[data-tone="2"] .sw, [data-tone="2"] .ix-sw, [data-tone="2"] .sheet-band { background-image: var(--tone-2); }
+[data-tone="3"] .sw, [data-tone="3"] .ix-sw, [data-tone="3"] .sheet-band { background-image: var(--tone-3); }
+[data-tone="4"] .sw, [data-tone="4"] .ix-sw, [data-tone="4"] .sheet-band { background-image: var(--tone-4); }
+[data-tone="5"] .sw, [data-tone="5"] .ix-sw, [data-tone="5"] .sheet-band { background-image: var(--tone-5); }
+[data-tone="6"] .sw, [data-tone="6"] .ix-sw, [data-tone="6"] .sheet-band { background: var(--ink); }
+.sw { display: inline-block; flex: none; width: 48px; height: 20px; border: 2px solid var(--ink); vertical-align: -4px; }
+
+/* ================================================================ Eighty Columns */
+.mast { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 24px; margin: 0 0 20px; padding-bottom: 12px; border-bottom: 8px solid var(--ink); }
+.mast-t { flex: 1 1 240px; padding-bottom: 8px; }
+.mast-t h1 { margin: 0 0 8px; }
+.mast-sub { margin: 0; }
+.progress { margin: 4px 0 24px; }
+.progress h3, .win.course h3 { margin-top: 0; }
+.index { display: grid; grid-template-columns: repeat(10, 64px); margin: 0 0 8px; padding: 0; list-style: none; border-left: 2px solid var(--ink); }
+.index li { max-width: none; border-right: 2px solid var(--ink); }
+.ix-sw { display: block; height: 32px; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.ix-n { display: block; padding: 0 8px; font: 400 var(--t)/24px var(--mono); border-bottom: 2px solid var(--ink); }
+.index li.done .ix-n { color: var(--paper); background: var(--ink); }
+#progress-text { margin: 8px 0 4px; }
+.progress .note { margin: 0; }
+
+/* the list of sheets: number, title, difficulty, state; flush left on fixed columns */
+.sheetlist { margin: 0 0 24px; padding: 0; list-style: none; border-top: 2px solid var(--ink); }
+.sheetlist li { max-width: none; }
+.sl {
+  display: grid; grid-template-columns: 40px minmax(0, 1fr) 236px 80px; align-items: center; gap: 0 12px;
+  width: 100%; padding: 4px 8px; border: 0; border-bottom: 2px solid var(--ink);
+  font: 400 var(--t)/24px var(--sys); text-align: left; color: var(--ink); background: var(--paper); cursor: default;
+}
+.sl-n { font-family: var(--mono); }
+.sl-d { display: flex; align-items: center; gap: 10px; }
+.sl:hover .sl-t, .sl:focus-visible .sl-t { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+.sl:focus-visible { outline: 2px solid var(--blue); outline-offset: -4px; }
+/* solved: an inverted state, never only a colour */
+.done .sl-s { justify-self: start; padding: 0 6px; color: var(--paper); background: var(--ink); }
+
+/* ================================================================ a sheet */
+/* the head: a band of the sheet's tone across the top, then the side and main columns */
+.sheet-head { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 0 24px; margin: 0 0 20px; }
+.sheet-head::before { content: ""; grid-column: 1 / -1; height: 20px; margin: 0 0 16px; border: 2px solid var(--ink); background: var(--paper) var(--band) 0 0 / 16px 16px; image-rendering: pixelated; }
+.win.sheet[data-tone="1"] { --band: var(--tone-1); }
+.win.sheet[data-tone="2"] { --band: var(--tone-2); }
+.win.sheet[data-tone="3"] { --band: var(--tone-3); }
+.win.sheet[data-tone="4"] { --band: var(--tone-4); }
+.win.sheet[data-tone="5"] { --band: var(--tone-5); }
+.win.sheet[data-tone="6"] .sheet-head::before { background: var(--ink); }
+.sheet-head .side { min-width: 0; }
+.sheet-head .main { min-width: 0; }
+.sheet-t { margin: 0 0 16px; padding-bottom: 2px; }
+.tone-key { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; }
+.stamp { display: inline-block; margin: 12px 0 0; padding: 2px 10px; color: var(--paper); background: var(--ink); letter-spacing: 2px; }
+.goal { margin-bottom: 16px; }
+.note { padding-top: 8px; background: var(--dots-h) left top / 100% 2px no-repeat; }
+.note strong { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px; }
+h3.part { display: flex; align-items: baseline; gap: 12px; margin: 28px 0 12px; padding: 4px 0 2px; border-top: 4px solid var(--ink); border-bottom: 0; }
+.part-n { padding: 0 8px; color: var(--paper); background: var(--ink); }
+.fieldtable { margin: 12px 0 20px; }
+
+.actions { margin: 16px 0; }
+.answer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 20px 0 0; }
+.mono-in, .kp-in {
+  margin: 0; padding: 4px 6px; border: 2px solid var(--ink); border-radius: 0;
+  font: 400 var(--t)/24px var(--mono); color: var(--ink); background: var(--paper);
+}
+#l1-answer { width: 400px; max-width: 100%; }
+.mono-in:focus-visible, .kp-in:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+select { padding: 4px 8px; border: 2px solid var(--ink); border-radius: 0; color: var(--ink); background: var(--paper); }
+
+/* ---------------- the card ---------------- */
+/* Twelve rows by N columns, 10px a column, so the printing along the top sits over its
+   column. Unpunched positions show their printed digit in blue; a hole is a black slot 3
+   screen pixels wide, as a rectangular hole is narrower than its column. */
+.bench, .deckarea { margin-top: 20px; }
+.cardbox { overflow-x: auto; padding: 12px 0 4px; border-top: 4px solid var(--ink); }
+.card { --lab: 40px; --cw: 10px; --ch: 24px; width: max-content; }
+.cardbox.big .card { --cw: 40px; --ch: 32px; }
+.crow, .cruler, .fieldband { display: grid; grid-template-columns: var(--lab) repeat(var(--cols), var(--cw)); }
+.cardgrid { border: 2px solid var(--ink); background: var(--paper); box-shadow: 2px 2px 0 var(--ink); }
+.crow .corner, .rh { border-right: 2px solid var(--ink); background: var(--paper); }
+.ch { height: 24px; font: 400 var(--t)/24px var(--mono); text-align: center; border-bottom: 2px solid var(--ink); }
+.big .ch { height: 32px; line-height: 32px; border-left: 2px solid var(--ink); }
+.ch.bad { background: var(--paper) var(--tone-3) 0 0 / 16px 16px; image-rendering: pixelated; }   /* holes that make no character */
+.rh { height: var(--ch); padding-right: 6px; font: 400 var(--t)/var(--ch) var(--mono); text-align: right; }
+.cell { position: relative; height: var(--ch); cursor: default; }
+.big .cell { border-left: 2px solid var(--ink); }
+.cell::before { content: attr(data-d); position: absolute; inset: 0; font: 400 var(--t)/var(--ch) var(--mono); text-align: center; color: var(--blue); }
+.cell.p::before { content: ""; inset: 4px 2px; background: var(--ink); }
+.big .cell.p::before { inset: 4px 12px; }
+/* the cursor: its column ruled in blue, its position inverted */
+.cell.cur, .ch.cur { box-shadow: inset 2px 0 var(--blue), inset -2px 0 var(--blue); }
+.cell:focus { outline: none; }
+.cell:focus-visible { background: var(--blue); }
+.cell:focus-visible::before { color: var(--paper); }
+.cell.p:focus-visible::before { background: var(--paper); }
+.cardgrid:not([aria-readonly]) .cell:hover:not(.p)::after { content: ""; position: absolute; inset: 4px 0; border: 2px solid var(--ink); }
+.big .cardgrid:not([aria-readonly]) .cell:hover:not(.p)::after { inset: 4px 10px; }
+.cruler { margin-top: 4px; }
+.cruler span { font: 400 var(--t)/20px var(--mono); white-space: nowrap; }
+.big .cruler span { text-align: center; }
+/* the fields, ruled under the card: label 1-5, continuation 6, statement 7-72, sequence 73-80 */
+.fieldband { margin-top: 2px; }
+.fieldband i { display: block; height: 24px; padding-left: 4px; overflow: hidden; font: 400 var(--t)/20px var(--sys); font-style: normal; text-decoration: none; white-space: nowrap; border: 2px solid var(--ink); border-top: 0; }
+.fb-l { grid-column: 2 / span 5; padding-left: 0 !important; }
+.fb-c { grid-column: span 1; padding: 0 !important; border-left: 0 !important; border-right: 0 !important; background: var(--paper) var(--pat-50) 0 0 / 16px 16px; image-rendering: pixelated; }
+.fb-s { grid-column: span 66; }
+.fb-q { grid-column: span 8; }
+.cardstatus { min-height: 28px; margin: 6px 0 0; }
+
+/* the target character or expression for sheets 2 and 3 */
+.target { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin: 20px 0 0; padding-top: 8px; border-top: 4px solid var(--ink); max-width: none; }
+.tg-big { padding: 4px 16px; font: 400 var(--t)/24px var(--mono); letter-spacing: 8px; white-space: pre; color: var(--paper); background: var(--ink); }
+
+/* ---------------- decks: one card per line ---------------- */
+.decklist-wrap { overflow-x: auto; padding: 8px 0 4px; border-top: 4px solid var(--ink); }
+.deckruler, .kp-ruler, .out-ruler { margin: 0; font: 400 var(--t)/20px var(--mono); white-space: pre; }
+.deckruler { padding-left: 50px; }
+.decklist { min-width: max-content; margin: 4px 0 0; padding: 0; list-style: none; font: 400 var(--t)/24px var(--mono); }
+.decklist li { display: flex; align-items: center; max-width: none; }
+.slot-b { display: flex; align-items: center; padding: 0; border: 0; font: inherit; text-align: left; color: var(--ink); background: none; cursor: default; }
+.decklist .num { flex: none; width: 50px; padding-right: 10px; text-align: right; }
+/* the fields are marked by dotted rules under the characters, never behind them */
+.decklist .line {
+  display: block; width: 800px; padding-bottom: 6px; white-space: pre; font: inherit;
+  background: var(--dots-h) 0 100% / 50px 2px no-repeat, linear-gradient(var(--ink), var(--ink)) 50px 100% / 10px 4px no-repeat, var(--dots-h) 720px 100% / 80px 2px no-repeat;
+}
+.decklist .slot .line { box-shadow: inset 2px 0 var(--ink), inset -2px 0 var(--ink); }
+.decklist .tag { margin-left: 12px; padding: 0 6px; font-family: var(--sys); border: 2px solid var(--ink); }
+.decklist .sel .num { color: var(--paper); background: var(--blue); }
+.decklist .sel .tag { color: var(--paper); background: var(--ink); }
+.slot-b:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.mv-b { margin: 2px 0 2px 10px; padding: 0 8px; }
+.deck-tools { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 0; }
+.keypunch { margin: 16px 0 0; }
+.keypunch label { display: block; margin-bottom: 4px; letter-spacing: 2px; }
+.kp-wrap { overflow-x: auto; padding-bottom: 4px; }
+.kp-ruler { padding-left: 8px; }
+.kp-in { box-sizing: content-box; width: 800px; }
+.kp-in:disabled { color: var(--blue); border-style: dotted; }
+
+/* ---------------- printer, sorter, feedback, hints ---------------- */
+.target-out, .stack-out { margin-top: 24px; }
+.out-h { margin: 0 0 8px; padding-top: 4px; border-top: 4px solid var(--ink); letter-spacing: 2px; max-width: none; }
+.win.sheet .printer { overflow-x: auto; padding: 8px 12px 12px; border: 2px solid var(--ink); background: var(--paper); }
+.win.sheet .printer pre { margin: 0; }
+.printer.small { margin-top: 4px; }
+.sorter { margin-top: 20px; padding-top: 8px; border-top: 4px solid var(--ink); }
+.sorter-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.pockets { display: grid; grid-template-columns: repeat(11, 48px); gap: 0 8px; margin: 12px 0 0; }
+.pockets:empty { display: none; }
+.pk { display: grid; grid-template-rows: 192px auto auto; }
+.pk-well { display: flex; align-items: flex-end; border-bottom: 2px solid var(--ink); }
+.pk-bar { display: block; width: 100%; border: 2px solid var(--ink); border-bottom: 0; background-image: var(--tone-4); }
+.pk-n, .pk-l { font: 400 var(--t)/24px var(--mono); }
+.sorter-st { min-height: 28px; }
+.feedback { margin-top: 24px; padding-top: 8px; border-top: 4px solid var(--ink); }
+.feedback:empty { display: none; }
+.fb-head { display: inline-block; margin: 0 0 12px; padding: 4px 12px; letter-spacing: 2px; border: 2px solid var(--ink); }
+.feedback.ok .fb-head { color: var(--paper); background: var(--ink); }
+.fb-sub { margin: 16px 0 4px; letter-spacing: 2px; }
+.fb-next { margin: 16px 0 0; }
+.diag { margin: 0; padding-left: 24px; font: 400 var(--t)/24px var(--mono); }
+.hints { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: hint; border-top: 2px solid var(--ink); }
+.hints li { counter-increment: hint; display: grid; grid-template-columns: 96px minmax(0, 1fr); padding: 8px 0; background: var(--dots-h) left bottom / 100% 2px no-repeat; max-width: 80ch; }
+.hints li::before { content: "Hint " counter(hint); grid-row: 1 / 3; }
+.hint-pre { grid-column: 2; overflow-x: auto; margin: 8px 0 0; }
+
+/* ---------------- the punch codes ---------------- */
+.charts { overflow-x: auto; margin: 0 0 20px; }
+.chart caption { caption-side: top; padding: 0 0 8px; text-align: left; letter-spacing: 2px; }
+.chart th, .chart td { min-width: 52px; padding: 4px 8px; text-align: center; }
+.chart tbody th { text-align: left; }
+.chart td { font: 400 var(--t)/24px var(--mono); }
+.chart td.na { background: var(--paper) var(--tone-1) 0 0 / 16px 16px; image-rendering: pixelated; }   /* no character there */
+#chart-alone { margin: -8px 0 24px; }
+
+@media (max-width: 700px) {
+  .sheet-head { grid-template-columns: minmax(0, 1fr); }
+  .sheet-head .side { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 20px; margin-bottom: 12px; }
+  .tone-key, .stamp { margin: 0; }
+  .index { grid-template-columns: repeat(5, 64px); }
+  .sl { grid-template-columns: 40px minmax(0, 1fr); }
+  .sl-d, .sl-s { grid-column: 2; }
+  .pockets { grid-template-columns: repeat(11, 24px); gap: 0 4px; }
+  .pk { grid-template-rows: 96px auto auto; }
+}

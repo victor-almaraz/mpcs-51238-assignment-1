@@ -1,0 +1,261 @@
+/* The magazine: a saddle-stitched art-and-computing magazine on the desk, set in the
+   grammar of a 1960s title sequence (Playfair Display italic, Jost, cropped numerals,
+   op-art swatches) and printed in four process colours and a spot orange. Its plates are
+   SVG files (assets/mag/): flat inks that overprint, Ben-Day screens stepped in bands,
+   outlined numerals; headings print in black over their ink, out of register. Body text,
+   buttons and code sit only on flat paper or flat ink. Every rule is scoped to .mag or .mini-mag; the page turns under it are the
+   room's controls and are styled with the room (style.css). */
+
+.mag {
+  --mag-paper: #fffaf0;
+  --mag-ink: #0d0d0d;
+  --mag-magenta: #dc0078;
+  --mag-orange: #ff5a1f;
+  --mag-cyan: #00a6c8;
+  --mag-yellow: #ffd400;
+  --mag-edge: #e4d9c2;
+  --mag-edge-2: #cfc3a8;
+  --mag-display: "Pixelify Sans", "Fusion Pixel 10px Proportional", monospace;
+  --mag-body: "Fusion Pixel 10px Proportional", monospace;
+  --mag-mono: "Fusion Pixel 10px Monospaced", monospace;
+  --mag-tint: var(--mag-magenta);
+  /* every block of colour is printed through a screen at its ink's angle (assets/mag/screen-*.svg,
+     seamless tiles of 96% with pinholes of paper), never as a flat fill */
+  --scr-k: var(--mag-paper) url(assets/st/screen-k.png) 0 0 / 8px 8px;
+  --scr-y: var(--mag-paper) url(assets/st/screen-y.png) 0 0 / 8px 8px;
+  --scr-o: var(--mag-paper) url(assets/st/screen-o.png) 0 0 / 8px 8px;
+  --scr-tint: var(--mag-paper) url(assets/st/screen-m.png) 0 0 / 8px 8px;
+  container: mag / size;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  height: 100%;
+  min-height: 22rem;
+  box-sizing: border-box;
+  padding: 0.3rem 0.4rem 0.2rem;
+  color: var(--mag-ink);
+  font: 400 20px/1.55 var(--mag-body);
+}
+.mag *, .mag *::before, .mag *::after { box-sizing: border-box; }
+.mag-leaf[data-ink="c"] { --mag-tint: var(--mag-cyan); --scr-tint: var(--mag-paper) url(assets/st/screen-c.png) 0 0 / 8px 8px; }
+.mag-leaf[data-ink="o"] { --mag-tint: var(--mag-orange); --scr-tint: var(--mag-paper) url(assets/st/screen-o.png) 0 0 / 8px 8px; }
+.mag-leaf[data-ink="y"] { --mag-tint: var(--mag-yellow); --scr-tint: var(--mag-paper) url(assets/st/screen-y.png) 0 0 / 8px 8px; }
+
+.mag p, .mag li { margin: 0 0 1em; }
+.mag code, .mag var { font-family: var(--mag-mono); font-size: 20px; }
+.mag var { font-style: italic; }
+.mag img.mag-plate { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.mag-vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- without script: every opening in one scroll ---------- */
+
+.mag:not(.mag-js) .mag-book { overflow: auto; }
+.mag:not(.mag-js) .mag-leaf { height: auto; margin-bottom: 1.4rem; }
+.mag:not(.mag-js) .mag-cover { height: 44rem; max-height: none; }
+.mag:not(.mag-js) .mag-turn { display: none; }
+
+/* ---------- the object: pages, gutter, stitching, page edges ---------- */
+
+.mag-book { position: relative; min-width: 0; min-height: 0; }
+.mag-leaf { height: 100%; min-height: 0; }
+.mag-leaf[hidden] { display: none; }
+.mag-page { position: relative; min-width: 0; min-height: 0; background: var(--mag-paper); }
+
+.mag-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  width: 100%;
+  max-width: min(100%, 165cqh, 90rem);
+  margin: 0 auto;
+  /* the stacked edges of the leaves underneath, and the shadow on the desk */
+  box-shadow: -2px 2px 0 var(--mag-edge), 2px 2px 0 var(--mag-edge), -4px 4px 0 var(--mag-edge-2), 4px 4px 0 var(--mag-edge-2), 0 0.9rem 0 rgba(0, 0, 0, 0.5);
+}
+.mag-spread > .mag-page { overflow: hidden auto; scrollbar-width: thin; }
+/* the paper curving into the fold */
+.mag-l { box-shadow: inset -2.4rem 0 0 -2rem rgba(70, 50, 20, 0.3); }
+.mag-r { box-shadow: inset 2.4rem 0 0 -2rem rgba(70, 50, 20, 0.3); }
+/* saddle stitching: two wire staples through the fold */
+.mag-spread::after {
+  content: "";
+  position: absolute; z-index: 2; left: calc(50% - 1px); top: 0; bottom: 0; width: 2px;
+  background:
+    linear-gradient(#9b9a94, #e9e8e2 45%, #8a8984) 0 24% / 2px 1.6rem no-repeat,
+    linear-gradient(#9b9a94, #e9e8e2 45%, #8a8984) 0 76% / 2px 1.6rem no-repeat;
+  pointer-events: none;
+}
+
+/* ---------- the cover ---------- */
+
+.mag-leaf-cover { display: flex; justify-content: center; }
+.mag-cover {
+  container: cover / inline-size;
+  display: flex; flex-direction: column;
+  height: 100%;
+  aspect-ratio: 3 / 4;
+  max-width: 100%;
+  overflow: hidden;
+  box-shadow: 2px 2px 0 var(--mag-edge), 4px 4px 0 var(--mag-edge-2), 0 0.9rem 0 rgba(0, 0, 0, 0.5);
+}
+/* the title band is flat black; the field under it is its plate, an SVG, cut to fit from the foot */
+.mag-cover-top { flex: none; padding: 5cqi 5cqi 7cqi; background: var(--scr-k); color: var(--mag-paper); }
+.mag-cover-field { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 0.6rem; padding: 5cqi; background: var(--mag-orange) url(assets/st/mag-cover-field.png) 50% 0 / cover no-repeat; }
+
+.mag-dateline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1rem; margin: 0 0 3cqi; font: 600 20px/1.3 var(--mag-body); letter-spacing: 0.14em; text-transform: uppercase; }
+.mag-dateline span { padding: 0.15em 0.5em; background: var(--scr-k); color: var(--mag-paper); }
+.mag-cover h2 { margin: 0; font-weight: 400; }
+.mag-cover h2:focus { outline: none; }
+.mag-cover h2:focus-visible { outline: 3px solid var(--mag-yellow); outline-offset: 4px; }
+.mag-big {
+  display: block;
+  margin-left: -0.04em;
+  padding: 0 0.1em 0.04em 0;
+  font: italic 400 19.5cqi/0.92 var(--mag-display);
+  letter-spacing: -0.035em;
+  color: var(--mag-paper);
+  text-shadow: 0.035em 0.025em 0 var(--mag-magenta);
+}
+.mag-sub {
+  display: inline-block;
+  margin: 2.5cqi 0 0 18%;
+  padding: 0.2em 0.6em;
+  font: 700 20px/1.25 var(--mag-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mag-ink);
+  background: var(--scr-y);
+}
+.mag-coverline { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; margin: 0; text-align: right; }
+.mag-cl-big { display: inline-block; max-width: 8.5em; padding: 0.08em 0.35em 0.14em; font: italic 400 clamp(1.6rem, 8cqi, 3.2rem)/1.08 var(--mag-display); letter-spacing: -0.01em; background: var(--mag-paper); }
+.mag-cl-small { display: inline-block; padding: 0.25em 0.6em; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.16em; text-transform: uppercase; background: var(--scr-y); }
+.mag-cover-names { max-width: 30em; margin: 0; padding: 0.4em 0.7em; font: 400 20px/1.4 var(--mag-body); text-align: right; background: var(--mag-paper); }
+
+/* ---------- spreads ---------- */
+
+.mag-l { display: flex; flex-direction: column; }
+.mag-art { position: relative; flex: 1 1 15rem; min-height: 11rem; margin-right: 1.6rem; overflow: hidden; background: var(--scr-tint); }
+.mag-art-short { flex: 0 0 clamp(7rem, 20cqh, 12rem); min-height: 0; }
+.mag-art-wash { flex: none; height: 6rem; margin: 0 0 0 1.6rem; }
+.mag-r { display: flex; flex-direction: column; }
+.mag-r .mag-text { flex: 1 0 auto; }
+
+.mag-head { flex: none; max-width: 40rem; padding: 1.3rem 2.2rem 1.4rem 2rem; }
+.mag-text { max-width: 40rem; padding: 2rem 2rem 1.6rem 2.6rem; }
+.mag-text p, .mag-head p { max-width: 66ch; }
+
+.mag-kicker { margin: 0 0 0.5rem; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.22em; text-transform: uppercase; }
+.mag-kicker::before { content: ""; display: inline-block; width: 0.9em; height: 0.9em; margin-right: 0.55em; border-radius: 0; background: var(--scr-tint); box-shadow: inset 0 0 0 2px var(--mag-ink); vertical-align: -0.08em; }
+.mag-spread h3 {
+  position: relative;
+  width: fit-content;
+  margin: 0 0 1rem -0.03em;
+  padding: 0 0.12em 0.06em 0;
+  font: italic 400 clamp(2.5rem, 4.4cqw, 3.6rem)/1.06 var(--mag-display);
+  letter-spacing: -0.025em;
+  /* until the type is screened: solid black over the leaf's ink out of register */
+  text-shadow: 0.04em 0.03em 0 var(--mag-tint);
+}
+.mag-spread h3:focus { outline: none; }
+.mag-spread h3:focus-visible { outline: 3px solid var(--mag-magenta); outline-offset: 6px; }
+.mag-pull { margin: 0.4rem 0 0; padding-left: 0.9rem; border-left: 6px solid var(--mag-ink); font: italic 400 30px/1.3 var(--mag-display); }
+.mag-label { margin: 0 0 1rem; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.22em; text-transform: uppercase; }
+.mag-colophon { padding-top: 0.8rem; border-top: 2px solid var(--mag-ink); font-style: italic; }
+
+/* the text's first paragraph opens with a drop numeral-sized initial */
+.mag-leaf:not(:nth-child(-n+2)) .mag-text > p:first-child::first-letter {
+  float: left;
+  margin: 0.06em 0.1em 0 -0.02em;
+  font: italic 400 3.4em/0.8 var(--mag-display);
+}
+
+/* contents */
+.mag-contents { margin: 0.8rem 0 0; padding: 0; list-style: none; }
+.mag-contents li { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); align-items: start; margin: 0; padding: 0.7rem 0; border-top: 2px solid var(--mag-ink); }
+.mag-contents li:last-child { border-bottom: 2px solid var(--mag-ink); }
+.mag-n { font: italic 400 30px/1 var(--mag-display); }
+.mag-contents p { margin: 0.15rem 0 0; }
+.mag .mag-link {
+  padding: 0; border: 0; border-radius: 0; background: none;
+  font: 600 20px/1.3 var(--mag-body); text-align: left;
+  text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--mag-tint); text-underline-offset: 0.22em;
+}
+.mag .mag-link:hover { background: none; text-decoration-color: var(--mag-ink); }
+
+/* ---------- buttons ---------- */
+
+.mag-book button {
+  font: 600 20px/1.3 var(--mag-body);
+  color: var(--mag-ink);
+  background: var(--mag-paper);
+  border: 2px solid var(--mag-ink);
+  border-radius: 0;
+  padding: 0.45rem 1.05rem;
+  cursor: pointer;
+}
+.mag-book button:hover { background: var(--scr-y); }
+.mag-book button:disabled { color: #5c5c5c; border-color: #9a9a9a; background: #f2f0ea; cursor: default; }
+.mag-book button:focus-visible { outline: 3px solid var(--mag-magenta); outline-offset: 3px; }
+.mag-book button i { font-style: italic; }
+/* a deck to punch: a flat strip of black ink holding an orange pill */
+.mag-deck, .mag-decks { margin: 0 0 1.2rem; }
+.mag-deck { padding: 0.55rem 0.7rem; background: var(--scr-k); }
+.mag-decks { display: grid; gap: 0.5rem; padding: 0.55rem 0.7rem; list-style: none; background: var(--scr-k); }
+.mag-decks li { margin: 0; }
+.mag-deck button, .mag-decks button, .mag-cat button { text-align: left; background: var(--scr-o); border-color: var(--mag-orange); }
+.mag-deck button:hover, .mag-decks button:hover, .mag-cat button:hover { background: var(--scr-y); border-color: var(--mag-yellow); }
+.mag-deck button:focus-visible, .mag-decks button:focus-visible { outline-color: var(--mag-yellow); }
+
+/* the catalogue */
+.mag-cat { margin: 1rem 0 0; padding: 0; list-style: none; }
+.mag-cat li { margin: 0; padding: 0.8rem 0 0.9rem; border-top: 2px solid var(--mag-ink); }
+.mag-cat h4 { margin: 0 0 0.2rem; font: italic 400 20px/1.2 var(--mag-display); }
+.mag-cat p { margin: 0 0 0.55rem; }
+.mag-r .mag-cat { margin-top: 0; }
+
+/* ---------- turning the pages ----------
+   The controls under the magazine belong to the room, not to the magazine: they take the
+   room's buttons and its page-turn strip (style.css), whatever the magazine's own design. */
+
+/* ---------- small openings: one page under the other, one scroll ---------- */
+
+@container mag (max-width: 760px) {
+  .mag-spread { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-auto-rows: max-content; overflow: hidden auto; }
+  .mag-spread > .mag-page { overflow: visible; box-shadow: none; }
+  .mag-spread::after { display: none; }
+  .mag-art, .mag-art-short { flex: none; height: 8.5rem; min-height: 0; margin-right: 0; }
+  .mag-art-wash { height: 4rem; margin-left: 0; }
+  .mag-head { padding: 1rem 1.1rem 0.6rem; }
+  .mag-text { padding: 0.6rem 1.1rem 1.2rem; }
+  .mag-r .mag-text { flex: none; }
+  .mag-pull { font-size: 20px; }
+}
+@container mag (max-width: 560px) {
+  .mag-index { display: none; }
+  .mag-contents li { grid-template-columns: 2.6rem minmax(0, 1fr); }
+}
+@container mag (max-height: 640px) and (min-width: 761px) {
+  .mag-head { padding: 0.9rem 1.6rem 1rem 1.6rem; }
+  .mag-pull { font-size: 20px; }
+  .mag-text { padding: 1.4rem 1.6rem 1.2rem 2.2rem; }
+}
+
+/* ---------- the magazine as it stands on the shelf ---------- */
+
+.mini-mag {
+  position: relative;
+  display: block;
+  width: 7.6rem;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  /* flat ink and orange under the printed cover, should the plate not be drawn */
+  background: linear-gradient(#0d0d0d 0 42%, #ff5a1f 42%);
+  box-shadow: 1px 1px 0 #e4d9c2, 2px 2px 0 #cfc3a8, 4px 7px 0 rgba(0, 0, 0, 0.5);
+}
+.mini-mag img { display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mag *, .mini-mag { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+.mag, .mag * { image-rendering: pixelated; }

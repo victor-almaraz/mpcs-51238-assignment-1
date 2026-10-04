@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A desk of cards, sieves and code</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="magazine.css">
+</head>
+<body>
+
+<div class="room">
+<main class="desk" id="desk" data-at="desk">
+
+  <!-- the room is the way round; a menu in the corner lists every place in it as well -->
+  <nav class="drawer" aria-label="Places in the room">
+    <button type="button" class="to-room" data-go="desk" hidden>Back to the room</button>
+    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="places">Menu</button>
+    <div class="places" id="places" hidden>
+      <ol class="labels">
+        <li><button type="button" class="label" data-go="desk" aria-current="true"><span class="no" aria-hidden="true">1</span>The room</button></li>
+        <li><button type="button" class="label" data-go="manual"><span class="no" aria-hidden="true">2</span>Reference manual</button></li>
+        <li><button type="button" class="label" data-go="magazine"><span class="no" aria-hidden="true">3</span>Magazine</button></li>
+        <li><button type="button" class="label" data-go="portfolio"><span class="no" aria-hidden="true">4</span>Xenakis miscellanea</button></li>
+        <li><button type="button" class="label" data-go="form"><span class="no" aria-hidden="true">5</span>Coding form and deck box</button></li>
+        <li><button type="button" class="label" data-go="out"><span class="no" aria-hidden="true">6</span>Out tray</button></li>
+        <li><button type="button" class="label" data-go="computer"><span class="no" aria-hidden="true">7</span>Computer</button></li>
+        <li><button type="button" class="label" data-go="recorder"><span class="no" aria-hidden="true">8</span>Tape player</button></li>
+      </ol>
+      <p class="back"><a href="../">Back to the gallery</a></p>
+    </div>
+  </nav>
+
+  <div class="stations">
+
+  <!-- the room seen whole, straight on: the bookshelf on the wall, the desk under it, and
+       everything on them leading to its place. The drawing is set in em, so it scales as one. -->
+  <section class="station st-desk" data-station="desk" aria-labelledby="desk-h">
+    <div class="scene overview">
+      <span class="wall" aria-hidden="true"><span class="floor"></span></span>
+      <h1 id="desk-h" class="vh" tabindex="-1">A desk of cards, sieves and code</h1>
+
+      <div class="shelf-unit">
+        <ul class="shelf" aria-label="On the bookshelf">
+          <li class="sh-vols">
+            <ul class="vols" aria-label="Reference manual, in three volumes">
+            <li><button type="button" class="obj spine v1" data-go="manual" data-chapter="0" aria-label="Reference manual, volume 1: FORTRAN"><img class="sp-pic" src="assets/px-vol-1.png" width="19" height="59" alt=""><span class="sp-no" aria-hidden="true">1</span><span class="sp-t" aria-hidden="true">FORTRAN</span></button></li>
+            <li><button type="button" class="obj spine v2" data-go="manual" data-chapter="5" aria-label="Reference manual, volume 2: Sieves"><img class="sp-pic" src="assets/px-vol-2.png" width="17" height="55" alt=""><span class="sp-no" aria-hidden="true">2</span><span class="sp-t" aria-hidden="true">Sieves</span></button></li>
+            <li><button type="button" class="obj spine v3" data-go="manual" data-chapter="7" aria-label="Reference manual, volume 3: Music and tape"><img class="sp-pic" src="assets/px-vol-3.png" width="18" height="57" alt=""><span class="sp-no" aria-hidden="true">3</span><span class="sp-t" aria-hidden="true">Music</span></button></li>
+            </ul>
+            <p class="shelf-tag" aria-hidden="true">Reference manual</p>
+          </li>
+          <li class="sh-mag"><button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><img src="assets/px-cover.png" width="37" height="50" alt=""></span><img class="ledge ledge-back" src="assets/px-mag-back.png" width="46" height="54" alt=""><img class="ledge ledge-front" src="assets/px-mag-front.png" width="46" height="54" alt=""><span class="obj-tag">Magazine</span></button></li>
+          <li class="sh-folio"><button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><img src="assets/px-file-box.png" width="28" height="44" alt=""></span><span class="obj-tag">Miscellanea</span></button></li>
+          <li class="sh-box"><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><img src="assets/px-deck-box.png" width="58" height="38" alt=""></span><span class="obj-tag">Deck box</span></button></li>
+        </ul>
+      </div>
+      <ul class="desk-top" aria-label="On the desk">
+        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="assets/px-coding-form.png" width="42" height="56" alt=""></span><span class="obj-tag">Coding form</span></button></li>
+        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="assets/px-out-tray.png" width="62" height="26" alt=""></span><span class="obj-tag">Out tray</span></button></li>
+        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/px-computer.png" width="102" height="78" alt=""></span><span class="obj-tag">Computer</span></button></li>
+        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/px-tape.png" width="90" height="64" alt=""></span><span class="obj-tag">Tape player</span></button></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- the manual, open -->
+  <section class="station st-manual" id="manual" data-station="manual" aria-labelledby="manual-title" hidden>
+    <div class="spread">
+      <div class="page page-l">
+        <h2 id="manual-title" tabindex="-1">Reference manual</h2>
+        <nav aria-label="Contents">
+          <h3 class="contents-h">Contents</h3>
+          <ol class="contents" id="contents"></ol>
+        </nav>
+      </div>
+      <div class="page page-r">
+  <div class="chapters" id="chapters">
+      <article class="chapter" data-volume="1" aria-labelledby="ch1">
+        <p class="running" aria-hidden="true">Volume 1 &middot; Chapter 1</p>
+        <h3 id="ch1" tabindex="-1">FORTRAN and the punched card</h3>
+        <p>FORTRAN, short for <em>formula translation</em>, was created at IBM by a team led by John Backus. Its first compiler shipped in 1957 for the IBM 704, and it let scientists and engineers write their calculations as formulas instead of as machine instructions. The language spread quickly. FORTRAN IV followed in 1962, and its 1966 standard, FORTRAN 66, made FORTRAN one of the first programming languages with an official standard. This simulator runs a subset of that language.</p>
+        <p>Programs of that era were not typed onto a screen. Each line of a program was punched onto its own 80-column card on a keypunch such as the IBM 029, which IBM introduced in 1964, and a program was a stack of cards held together with a rubber band. Dropping a deck was a real hazard. That is why programmers punched sequence numbers into the last eight columns: a card sorter could put a scrambled deck back in order.</p>
+        <p>FORTRAN gives each group of columns on a card its own job, and the coding form shades the groups so that you can see them.</p>
+        <table>
+          <tr><th>Columns</th><th>What they hold</th></tr>
+          <tr><td>1</td><td>A <code>C</code> or an asterisk in column 1 turns the whole card into a comment.</td></tr>
+          <tr><td>1&ndash;5</td><td>These columns hold an optional statement label, which is an unsigned number that other statements can refer to.</td></tr>
+          <tr><td>6</td><td>Any character other than a blank or a zero marks the card as a continuation of the previous statement.</td></tr>
+          <tr><td>7&ndash;72</td><td>The statement itself goes here.</td></tr>
+          <tr><td>73&ndash;80</td><td>The compiler ignores these columns, which traditionally held sequence numbers. The simulator warns you if anything is punched in them.</td></tr>
+        </table>
+        <p>FORTRAN ignores blanks outside of text, so <code>G O T O 20</code> means the same thing as <code>GOTO 20</code>. The coding form accepts only the characters that the 029 keypunch could punch, and it turns lowercase letters into capitals, because the keypunch had no lowercase.</p>
+      </article>
+
+      <article class="chapter" data-volume="1" aria-labelledby="ch2" hidden>
+        <p class="running" aria-hidden="true">Volume 1 &middot; Chapter 2</p>
+        <h3 id="ch2" tabindex="-1">The deck</h3>
+        <p>A job is a single deck of cards. The program comes first and finishes with an <code>END</code> card, and every card after the <code>END</code> card is data for the program to read. If the program tries to read past the last data card, the job stops with the message <code>END OF FILE ON UNIT 5</code>, just as it would have on an IBM machine. Blank cards at the end of the deck are not sent to the reader.</p>
+      </article>
+
+      <article class="chapter" data-volume="1" aria-labelledby="ch3" hidden>
+        <p class="running" aria-hidden="true">Volume 1 &middot; Chapter 3</p>
+        <h3 id="ch3" tabindex="-1">Using the simulator</h3>
+        <p>The workspace is a room. This manual stands on the bookshelf in three volumes, beside the magazine in its ledge, the Xenakis miscellanea in a file box and the deck box; on the desk below are the coding form, the out tray, the computer and the tape player. Choose anything in the room to take it up, or choose it from the <em>Menu</em> in the top corner of the page. Pressing <kbd>Escape</kbd>, except while typing on the coding form, puts the object down and returns to the room. In the manual, the contents list and the <em>Previous page</em> and <em>Next page</em> buttons turn the chapters, and so do the left and right arrow keys.</p>
+        <p>The deck box holds every sample deck, each behind a tab with its name: the programs, the music decks, and the decks printed in the magazine, which the magazine&rsquo;s articles can also put on the form. Picking up a deck puts it on the coding form in place of the cards that were there. On the coding form you can also type your own cards. Pressing <kbd>Enter</kbd> adds a new card below the current one, pressing <kbd>Backspace</kbd> on an empty card removes it, and the up and down arrow keys move between cards. If you paste several lines at once, each line becomes a card of its own. When the deck is ready, press <em>Run deck</em>.</p>
+        <p>Under the form lies <em>the card in hand</em>: the card selected on the form, with its holes. The <em>Previous card</em> and <em>Next card</em> buttons step through the deck, and the form&rsquo;s selection follows along.</p>
+        <p>After each run, the out tray comes to the front. It holds the printer output, the job log with any errors and warnings, a listing of the program, and the output stacker, where any cards that the program punched land. From the stacker you can load them onto the coding form as data for another run, copy them, download them as a text file, thread them onto the tape player, or read them into the computer.</p>
+        <p>The computer on the desk has a desktop of its own, with an Editor in place of the coding form, files in place of decks, a Player, a course in punched cards, a calculator, a game and two folders of miscellanea, and its own Read Me. The card punch and the computer share their programs. <em>Type into the computer</em>, under the coding form, opens the deck in the computer&rsquo;s Editor as a text, one line to a card, and <em>Read into the computer</em>, at the stacker, opens the punched cards there. In the computer, <em>Punch on Cards</em> in the File menu sends the Editor&rsquo;s text back to the coding form, one card to a line. <em>Back to the Room</em>, in the computer&rsquo;s first menu, or the <em>Back to the room</em> button in the corner, leaves the computer as it is; it keeps its windows and files until the page is reloaded.</p>
+        <p>The deck is kept only while the page is open, so reloading the page brings back the first sample.</p>
+      </article>
+
+      <article class="chapter" data-volume="1" aria-labelledby="ch4" hidden>
+        <p class="running" aria-hidden="true">Volume 1 &middot; Chapter 4</p>
+        <h3 id="ch4" tabindex="-1">The language</h3>
+        <p>The simulator understands a single main program; subroutines and functions are not supported. A name has up to six letters and digits and must start with a letter. Unless you declare otherwise, names that begin with the letters I through N hold integers, and all other names hold real numbers. Integers are 32 bits wide, and integer division throws away the remainder, so <code>7/2</code> is 3. Real numbers have single precision.</p>
+        <table>
+          <tr><th>Statement</th><th>What it does</th></tr>
+          <tr><td><code>V = expr</code></td><td>This evaluates the expression and stores the result in <code>V</code>, which can be a variable or an array element. Expressions use <code>+ - * /</code> and <code>**</code> for powers, with parentheses for grouping.</td></tr>
+          <tr><td><code>INTEGER</code>, <code>REAL</code></td><td>These declare names as integers or reals, overriding the first-letter rule.</td></tr>
+          <tr><td><code>DIMENSION A(n), B(m,n)</code></td><td>This declares arrays of one or two dimensions, numbered from 1.</td></tr>
+          <tr><td><code>GO TO n</code></td><td>This jumps to the statement labeled <code>n</code>. The computed form <code>GO TO (n1,n2,...), I</code> jumps to the <code>I</code>th label in the list.</td></tr>
+          <tr><td><code>IF (e) n1, n2, n3</code></td><td>This jumps to <code>n1</code>, <code>n2</code>, or <code>n3</code> when <code>e</code> is negative, zero, or positive.</td></tr>
+          <tr><td><code>IF (cond) stmt</code></td><td>This runs <code>stmt</code> only when the condition is true. Conditions compare values with <code>.LT. .LE. .EQ. .NE. .GT. .GE.</code> and combine them with <code>.AND. .OR. .NOT.</code></td></tr>
+          <tr><td><code>DO n I = m1, m2, m3</code></td><td>This repeats the statements through label <code>n</code> while <code>I</code> counts from <code>m1</code> to <code>m2</code> in steps of <code>m3</code>, or in steps of 1 if <code>m3</code> is left out. As in FORTRAN 66, the loop always runs at least once.</td></tr>
+          <tr><td><code>CONTINUE</code></td><td>This does nothing. It usually marks the end of a <code>DO</code> loop.</td></tr>
+          <tr><td><code>READ (5,f) list</code> or <code>READ f, list</code></td><td>This reads the next data card, laid out as <code>FORMAT</code> statement <code>f</code> describes.</td></tr>
+          <tr><td><code>WRITE (6,f) list</code> or <code>PRINT f, list</code></td><td>This prints a line on the line printer.</td></tr>
+          <tr><td><code>PUNCH f, list</code> or <code>WRITE (7,f) list</code></td><td>This punches a new card into the output stacker.</td></tr>
+          <tr><td><code>FORMAT (...)</code></td><td>This describes the layout of a card or a printed line. <code>Iw</code> is an integer <code>w</code> columns wide, <code>Fw.d</code> and <code>Ew.d</code> are real numbers with <code>d</code> digits after the point, <code>nX</code> skips <code>n</code> columns, <code>nHtext</code> and <code>'text'</code> are literal text, and a slash starts a new line or card. Descriptors can be repeated, as in <code>3I5</code>, or grouped, as in <code>2(I3,F6.2)</code>.</td></tr>
+          <tr><td><code>STOP</code>, <code>PAUSE</code>, <code>END</code></td><td><code>STOP</code> ends the job, <code>PAUSE</code> writes a note in the job log and carries on, and <code>END</code> marks the last card of the program.</td></tr>
+        </table>
+        <p>The built-in functions are <code>SQRT</code>, <code>ABS</code>, <code>IABS</code>, <code>FLOAT</code>, <code>INT</code>, <code>IFIX</code>, <code>MOD</code>, <code>AMOD</code>, <code>SIN</code>, <code>COS</code>, <code>ATAN</code>, <code>EXP</code>, <code>ALOG</code>, <code>ALOG10</code>, <code>MAX0</code>, <code>MIN0</code>, <code>AMAX1</code>, <code>AMIN1</code>, and <code>SIGN</code>.</p>
+      </article>
+
+      <article class="chapter" data-volume="1" aria-labelledby="ch5" hidden>
+        <p class="running" aria-hidden="true">Volume 1 &middot; Chapter 5</p>
+        <h3 id="ch5" tabindex="-1">The line printer</h3>
+        <p>Results came back on a line printer such as the IBM 1403, which printed a whole line at a time onto continuous fan-fold paper. A chain of type spun past a row of hammers, and each hammer fired the moment its character went by. The first character of each printed line is never printed. Instead, it tells the printer how far to move the paper. A blank moves it one line, a <code>0</code> leaves a blank line first, a minus sign leaves two blank lines, a <code>1</code> jumps to the top of a new page, and a plus sign prints over the line before. This rule caused famous mistakes. If a <code>FORMAT</code> happens to put a <code>1</code> in the first position, the printer throws a new page, so printing 123 with <code>I3</code> starts a new page and prints only 23.</p>
+      </article>
+
+      <article class="chapter" data-volume="2" aria-labelledby="ch6" hidden>
+        <p class="running" aria-hidden="true">Volume 2 &middot; Chapter 6</p>
+        <h3 id="ch6" tabindex="-1">Iannis Xenakis and the sieve</h3>
+        <p>Iannis Xenakis (1922&ndash;2001) was a Greek-French composer, architect, and engineer, born in Romania to a Greek family. He came to Paris as a political refugee in 1947. He then spent twelve years in Le Corbusier&rsquo;s studio, where he took charge of designing the Philips Pavilion for the 1958 Brussels World&rsquo;s Fair, and he brought an engineer&rsquo;s habits of mind to music. He composed with probability and set theory, and he was one of the first composers to write music with a computer. In 1962 he ran his Free Stochastic Music program on an IBM 7090 at IBM France in Paris. Xenakis designed the program, and M. F. G&eacute;nuys and M. J. Barraud coded it in FORTRAN IV. Its output became the <em>ST</em> pieces, among them <em>ST/10</em> and <em>ST/4</em>, whose titles record the date the data was generated: 8 February 1962. He published the program several times, most completely in his book <em>Formalized Music</em> (1971).</p>
+        <p>During a residency in Berlin in 1963&ndash;64, Xenakis conceived his theory of sieves, a way of building scales and rhythms out of simple arithmetic. A sieve is made from residual classes. The class written here as <code>m@s</code> (Xenakis wrote <var>m</var> with a subscript <var>s</var>) contains every integer <var>x</var> for which <var>x</var>&nbsp;&minus;&nbsp;<var>s</var> is divisible by <var>m</var>, so <code>3@0</code> is the sequence &hellip;, 0, 3, 6, 9, &hellip;. Combining classes by union, intersection, and complement produces patterns that repeat exactly but sound irregular. He first used sieves in <em>Akrata</em> (1964&ndash;65), and in <em>Nomos Alpha</em> (1965&ndash;66) for solo cello they select the pitches from a microtonal scale.</p>
+      </article>
+
+      <article class="chapter" data-volume="2" aria-labelledby="ch7" hidden>
+        <p class="running" aria-hidden="true">Volume 2 &middot; Chapter 7</p>
+        <h3 id="ch7" tabindex="-1">The sieve generator deck</h3>
+        <p>The fifth sample deck is a sieve generator written in the same FORTRAN that the simulator runs, in the spirit of Xenakis&rsquo;s own programs. The first data card after <code>END</code> holds three numbers in 5-column fields. <code>MODE</code> is 1 for the union of the classes, 2 for their intersection, or 3 for the complement of their union. <code>N</code> is the number of classes, from 1 to 10, and <code>LIMIT</code> sets the range, because the program tests every integer from 0 to <code>LIMIT</code>&nbsp;&minus;&nbsp;1. Each of the next <var>N</var> cards describes one class with a modulus <code>M</code> and a shift <code>S</code>, again in 5-column fields.</p>
+        <p>The program prints each member of the sieve along with its distance from the member before it, and it punches each member onto a card of its own, so that you can feed the members to another program as data. The sample data describes the sieve <code>5@2 | 5@3</code> over the integers 0 to 19, which contains 2, 3, 7, 8, 12, 13, 17, and 18. To hear the idea in numbers rather than notes, change the three data cards at the bottom of the deck and run it again. To hear it in notes, thread the punched members onto the tape player.</p>
+      </article>
+
+      <article class="chapter" data-volume="3" aria-labelledby="ch8" hidden>
+        <p class="running" aria-hidden="true">Volume 3 &middot; Chapter 8</p>
+        <h3 id="ch8" tabindex="-1">The music decks</h3>
+        <p>The music decks are the second group in the deck box. Each one is a FORTRAN program that punches a card for every note, in the layout that the tape player reads, and each one follows an idea of Xenakis&rsquo;s. Their data cards come after the <code>END</code> card, and the comment cards at the top of each deck explain what the numbers mean, so you can change them and run the deck again.</p>
+        <dl class="decklist">
+          <dt>Sieve scale (a melody)</dt>
+          <dd>This deck takes the union of several residual classes over the semitones above a base note. The result is a scale that need not repeat at the octave, and a walk by chance on that scale, up to two steps up or down at a time, makes a melody.</dd>
+          <dt>Two rhythm sieves</dt>
+          <dd>Two sieves over a cycle of pulses strike a low drum and a high one, and the stroke is louder where they fall together. Xenakis built the rhythms of <cite>Psappha</cite> (1975), for solo percussion, from sieves.</dd>
+          <dt>Stochastic cloud (after Achorripsis)</dt>
+          <dd>Notes arrive at random at a fixed mean rate, in a band of pitch that rises over the cloud, and the printout sets the counts of notes in each cell of time against the Poisson law. In <cite>Achorripsis</cite> (1956&ndash;57), for 21 instruments, Xenakis used the Poisson law with &lambda; = 0.6 to decide how many events fall in each cell of a matrix of 28 units of time by 7 timbres.</dd>
+          <dt>Markov melody (after Analogique)</dt>
+          <dd>A table of chances decides which of five notes follows each note, which makes the melody a Markov chain. Xenakis used Markov chains in <cite>Analogique A</cite> (1958), for nine strings, and <cite>Analogique B</cite> (1959), for sine tones on tape.</dd>
+          <dt>String glissandi (after Metastaseis)</dt>
+          <dd>Each line slides in semitone steps from a note in a cluster to a note in a wide chord, and all the lines take the same time. In bars 309&ndash;314 of <cite>Metastaseis</cite>, Xenakis drew the string glissandi as straight lines on a graph of pitch against time.</dd>
+        </dl>
+      </article>
+
+      <article class="chapter" data-volume="3" aria-labelledby="ch9" hidden>
+        <p class="running" aria-hidden="true">Volume 3 &middot; Chapter 9</p>
+        <h3 id="ch9" tabindex="-1">The tape player</h3>
+        <p>The tape player plays the cards in the output stacker as sound. A tape card holds four numbers in 5-column fields, as <code>FORMAT (4I5)</code> punches them. <code>TIME</code> is the onset in pulses, counted from 0. <code>NOTE</code> is a MIDI note number from 0 to 127, where 60 is middle C. <code>LEN</code> is the length in pulses, and a blank means 1. <code>LOUD</code> is the loudness from 1 to 9, and a blank means 7. A pulse is a quarter of a beat, so at the starting tempo of 120 beats a minute a pulse lasts an eighth of a second.</p>
+        <p>A card with only its first five columns punched, such as a card from the sieve generator, holds a bare number. With the <em>Rhythm</em> switch, the player plays each bare number as a time, so a sieve sounds as a rhythm on middle C. With the <em>Scale</em> switch, it plays the numbers one per pulse in card order, as semitones above the C an octave below middle C, so a sieve sounds as a scale. The switch matters only for bare numbers: the music decks punch full tape cards that set their own times and notes, so for their tapes the switch is turned off. Cards that are not tape cards, such as cards of text, are skipped, and the player says how many it skipped.</p>
+        <p>Press <em>Thread onto the tape player</em> at the stacker, or <em>Thread tape from the stacker</em> on the tape player, to wind the stacker&rsquo;s cards onto the reels, and then press <em>Play</em>. <em>Pause</em> holds the place, and <em>Stop</em> rewinds the tape to the start. The tempo control sets the beats per minute. The speed switch changes the tape speed from 7&frac12; to 15 inches per second, which, as on a real machine, plays the music twice as fast and an octave higher. The player adds a slow wobble in pitch, a softened treble, and a faint hiss, as a tape recording would have. Sound starts only when you press <em>Play</em>.</p>
+      </article>
+        </div>
+        <nav class="page-turn" aria-label="Pages">
+          <button type="button" data-turn="-1">&lsaquo; Previous page</button>
+          <button type="button" data-turn="1">Next page &rsaquo;</button>
+          <span class="folio-no" id="manual-page" aria-live="polite"></span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- the portfolio, open -->
+  <section class="station st-folio" id="folio" data-station="portfolio" aria-labelledby="folio-title" hidden>
+    <div class="folio-inside">
+      <div class="flap">
+        <h2 id="folio-title" tabindex="-1">Xenakis miscellanea</h2>
+        <nav aria-label="Portfolio sheets">
+          <ol class="folio-index" id="folio-index">
+            <li><button type="button" aria-label="A, Metastaseis, bars 309–314"><span class="idx-letter">A</span> <span class="idx-title">Metastaseis, bars 309–314</span></button></li>
+          <li><button type="button" aria-label="B, Pithoprakta"><span class="idx-letter">B</span> <span class="idx-title">Pithoprakta</span></button></li>
+          <li><button type="button" aria-label="C, Arborescences"><span class="idx-letter">C</span> <span class="idx-title">Arborescences</span></button></li>
+          <li><button type="button" aria-label="D, Nomos Alpha and the cube"><span class="idx-letter">D</span> <span class="idx-title">Nomos Alpha and the cube</span></button></li>
+          <li><button type="button" aria-label="E, Three sieves on a line"><span class="idx-letter">E</span> <span class="idx-title">Three sieves on a line</span></button></li>
+          <li><button type="button" aria-label="F, A UPIC page"><span class="idx-letter">F</span> <span class="idx-title">A UPIC page</span></button></li>
+          <li><button type="button" aria-label="G, Polytope de Montréal"><span class="idx-letter">G</span> <span class="idx-title">Polytope de Montréal</span></button></li>
+          <li><button type="button" aria-label="H, ST and Formalized Music"><span class="idx-letter">H</span> <span class="idx-title">ST and Formalized Music</span></button></li>
+          <li><button type="button" aria-label="I, Achorripsis, the matrix"><span class="idx-letter">I</span> <span class="idx-title"><cite>Achorripsis</cite>, the matrix</span></button></li>
+          <li><button type="button" aria-label="J, Analogique A and B: screens"><span class="idx-letter">J</span> <span class="idx-title"><cite>Analogique A</cite> and <cite>B</cite>: screens</span></button></li>
+          <li><button type="button" aria-label="K, Concret PH"><span class="idx-letter">K</span> <span class="idx-title"><cite>Concret PH</cite></span></button></li>
+          <li><button type="button" aria-label="L, Terretektorh"><span class="idx-letter">L</span> <span class="idx-title"><cite>Terretektorh</cite></span></button></li>
+          <li><button type="button" aria-label="M, Polytope de Cluny"><span class="idx-letter">M</span> <span class="idx-title"><cite>Polytope de Cluny</cite></span></button></li>
+          <li><button type="button" aria-label="N, Polytope de Persépolis"><span class="idx-letter">N</span> <span class="idx-title"><cite>Polytope de Pers&eacute;polis</cite></span></button></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="flap-r">
+  <div class="sheets">
+      <article class="sheet two" aria-labelledby="sheet-a">
+        <p class="sheet-note" aria-hidden="true">glissandi into architecture</p>
+        <h3 id="sheet-a" tabindex="-1"><span class="sheet-letter">A</span> Metastaseis, bars 309–314</h3>
+      <figure class="exhibit graph">
+        <div class="art"><img class="drawing graphpaper" style="--ar: 560 / 360" src="assets/st/misc-a1.png" width="560" height="360" loading="lazy" alt="Graph of straight string glissando lines whose bundles form curved envelopes, bars 309 to 314"></div>
+        <figcaption>After Xenakis&rsquo;s graph of the string glissandi in bars 309&ndash;314 of <cite>Metastaseis</cite> (1953&ndash;54), the sketch reproduced in <cite>Formalized Music</cite>. Each straight line is one string part sliding steadily from one pitch to another, and together the straight lines bend into curved surfaces. The piece is scored for 61 players, 46 of them strings with a part each, and was first played at Donaueschingen on 16 October 1955 under Hans Rosbaud.</figcaption>
+      </figure>
+      <figure class="exhibit postcard">
+        <div class="art"><img class="drawing postcard" style="--ar: 420 / 280" src="assets/st/misc-a2.png" width="420" height="280" loading="lazy" alt="An engraved view of a tent-like pavilion built from ruled, saddle-shaped concrete shells, its shadow cross-hatched on the ground"></div>
+        <figcaption>A homage to the Philips Pavilion at Expo 58 in Brussels. Le Corbusier&rsquo;s office designed it and Xenakis managed much of the project. Its shell is a cluster of hyperbolic paraboloids, surfaces ruled by straight lines, the geometry of the glissandi. Inside, Edgard Var&egrave;se&rsquo;s <cite>Po&egrave;me &eacute;lectronique</cite> played over hundreds of loudspeakers, and Xenakis&rsquo;s <cite>Concret PH</cite> played as visitors came and went. The pavilion was demolished on 30 January 1959.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-b" hidden>
+        <p class="sheet-note" aria-hidden="true">a gas of strings</p>
+        <h3 id="sheet-b" tabindex="-1"><span class="sheet-letter">B</span> Pithoprakta</h3>
+      <figure class="exhibit tracing">
+        <div class="art"><img class="drawing tracing" style="--ar: 560 / 340" src="assets/st/misc-b1.png" width="560" height="340" loading="lazy" alt="A cloud of short sloping glissando strokes and pizzicato dots, denser in the middle"></div>
+        <figcaption>After the graphs of <cite>Pithoprakta</cite> (1955&ndash;56), for 46 strings, two trombones, xylophone and wood block, first performed in Munich in March 1957 under Hermann Scherchen. The title means &ldquo;actions through probability.&rdquo; Xenakis treated the string players like the molecules of a gas: the speeds of their glissandi follow the Maxwell&ndash;Boltzmann distribution, so each part sounds random while the mass moves as a whole. The strokes here come from a seeded random generator, not from the score.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-c" hidden>
+        <p class="sheet-note" aria-hidden="true">one line becomes a tree</p>
+        <h3 id="sheet-c" tabindex="-1"><span class="sheet-letter">C</span> Arborescences</h3>
+      <figure class="exhibit vellum">
+        <div class="art"><img class="drawing vellum" style="--ar: 560 / 320" src="assets/st/misc-c1.png" width="560" height="320" loading="lazy" alt="A single line branching like a tree from left to right, its branch points lettered, with its inversion dotted beneath"></div>
+        <figcaption>After Xenakis&rsquo;s arborescences, the tree-like drawings on the plane of pitch and time that he began in the early 1970s. A single line branches into several; in <cite>Evryali</cite> (1973) for piano, one line grows into as many as six. He also put whole trees through transformations, which the faint red mirror image only gestures at. The technique returns in <cite>Erikhthon</cite> (1974) for piano and orchestra and in <cite>Jonchaies</cite> (1977) for orchestra.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-d" hidden>
+        <p class="sheet-note" aria-hidden="true">24 ways to turn a cube</p>
+        <h3 id="sheet-d" tabindex="-1"><span class="sheet-letter">D</span> Nomos Alpha and the cube</h3>
+      <figure class="exhibit graph">
+        <div class="art"><img class="drawing graphpaper" style="--ar: 440 / 330" src="assets/st/misc-d1.png" width="440" height="330" loading="lazy" alt="A cube with vertices numbered 1 to 8 and three dashed rotation axes: through faces, through a diagonal, through edges"></div>
+        <figcaption><cite>Nomos Alpha</cite> (1965&ndash;66) for solo cello was commissioned by Radio Bremen for Siegfried Palm and dedicated to Aristoxenus, &Eacute;variste Galois and Felix Klein. Its first layer is organised by the 24 rotations of a cube, which carry the numbered corners onto one another, and its pitches come from sieves. The rotations are the identity; turns of 90&deg;, 180&deg; and 270&deg; about the 3 axes through opposite faces (9); turns of 120&deg; and 240&deg; about the 4 diagonals (8); and half-turns about the 6 axes through opposite edges (6). A diagram drawn for this album.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-e" hidden>
+        <p class="sheet-note" aria-hidden="true">sieves, by hand</p>
+        <h3 id="sheet-e" tabindex="-1"><span class="sheet-letter">E</span> Three sieves on a line</h3>
+      <figure class="exhibit manuscript">
+        <div class="art"><img class="drawing manuscript" style="--ar: 600 / 300" src="assets/st/misc-e1.png" width="600" height="300" loading="lazy" alt="Three sieves drawn on lines: a seventeen-semitone scale, a forty-pulse rhythm, and the sample deck&#x27;s sieve 2 3 7 8 12 13 17 18"></div>
+        <figcaption>Top: the scale of the first section of <cite>Jonchaies</cite> (1977). It repeats every 17 semitones, an octave and a fourth, in steps between a minor second and a major third, partly inspired by the Javanese <i>pelog</i>. Middle: the rhythmic sieve of <cite>Psappha</cite> (1975) for solo percussion, as the musicologist Ellen Flint reconstructed it from Xenakis&rsquo;s sketches; it repeats every 40 pulses and is built from classes of moduli 8 and 5. Bottom: <code>5@2 | 5@3</code>, the sieve that the sample deck computes.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-f" hidden>
+        <p class="sheet-note" aria-hidden="true">drawn, then heard</p>
+        <h3 id="sheet-f" tabindex="-1"><span class="sheet-letter">F</span> A UPIC page</h3>
+      <figure class="exhibit upic">
+        <div class="art"><img class="drawing upic" style="--ar: 560 / 320" src="assets/st/misc-f1.png" width="560" height="320" loading="lazy" alt="Bundles of wavy arcs, pitch against time, as white tracings on smoked paper under a row of time marks"></div>
+        <figcaption>In the spirit of a page drawn on the UPIC (Unit&eacute; Polyagogique Informatique du CEMAMu), the drawing computer completed in 1977 at Xenakis&rsquo;s research centre CEMAMu in Paris. The composer drew on a large tablet, with time running across and pitch up the page, and the machine played the drawing. <cite>Myc&egrave;nes Alpha</cite> (1978) was the first piece composed entirely on it, made for the <cite>Polytope de Myc&egrave;nes</cite>, performed on 2&ndash;5 September 1978 in the ruins of Mycenae.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-g" hidden>
+        <p class="sheet-note" aria-hidden="true">cables, flashes, Montréal</p>
+        <h3 id="sheet-g" tabindex="-1"><span class="sheet-letter">G</span> Polytope de Montréal</h3>
+      <figure class="exhibit photo tall">
+        <div class="art"><img src="assets/st/photo-montreal.png" width="957" height="1200" alt="A tall atrium seen from below: three nets of steel cable studded with small white lamps hang across its central void, between dark wooden galleries"></div>
+        <figcaption>After the <cite>Polytope de Montr&eacute;al</cite> (1967) in the French Pavilion at Expo 67: five hyperbolic paraboloids of steel cable hung through the pavilion&rsquo;s central void, carrying about 1,200 electronic flashes, with music on tape for four identical ensembles. The photograph is an imagined rendering made for this portfolio; it is not a photograph of the work.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet two" aria-labelledby="sheet-h" hidden>
+        <p class="sheet-note" aria-hidden="true">the program, and the book</p>
+        <h3 id="sheet-h" tabindex="-1"><span class="sheet-letter">H</span> ST and Formalized Music</h3>
+      <figure class="exhibit printout">
+        <div class="art"><pre class="st" aria-label="Mock printout: columns of sequence number, start time, class, instrument, pitch, glissando, duration and dynamic">  SEQ   START  CLASS  INSTR  PITCH   GLISS   DUR   DYN
+  ---  ------  -----  -----  -----  ------  ----  ---
+    1    0.05      2      1   52.4    -5.4  0.46    F
+    2    0.10      8      4   44.5     0.0  0.86   MF
+    3    0.31      7      3   77.7     0.0  1.02    F
+    4    0.59      3      1   21.9     0.0  1.00    P
+    5    0.73      4      1   22.0    22.3  0.64   MF
+    6    1.62      6      4   43.7    -4.4  0.55  PPP
+    7    2.19      2      4   65.1     8.2  0.36  PPP
+    8    3.90      5      1   39.4     0.0  0.70   MF
+    9    4.37      7      4   46.0     0.0  0.68   FF
+   10    5.73      5      3   51.5     0.0  0.07  PPP
+   11    5.87      6      4   78.1   -21.6  0.89   FF
+   12    6.20      5      4   77.0     0.0  0.36   MF
+   13    6.39      6      4   25.4   -53.1  1.12    P
+   14    6.76      1      3   55.0     0.0  1.51    P</pre></div>
+        <figcaption>A mock printout in the manner of the ST program, which Xenakis ran on the IBM 7090 at IBM France. <cite>ST/10-1,080262</cite>, for ten instruments, is named for its run on 8 February 1962 and was first played at IBM France&rsquo;s headquarters in Paris on 24 May 1962. The columns and numbers here were made for this album and are not Xenakis&rsquo;s output.</figcaption>
+      </figure>
+      <figure class="exhibit jacket">
+        <div class="art"><div class="jacket-art" aria-hidden="true"><span class="jacket-label">Formalized<br>Music</span></div></div>
+        <figcaption><cite>Musiques formelles</cite> appeared in 1963 as a special double issue of <cite>La Revue musicale</cite>. The English <cite>Formalized Music</cite>, with three added chapters, followed from Indiana University Press in 1971, and Pendragon Press issued revised editions in 1992 and 2001. A jacket made up for this album, in the flat printed style of the period.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-i" hidden>
+        <p class="sheet-note" aria-hidden="true">196 cells, by Poisson</p>
+        <h3 id="sheet-i" tabindex="-1"><span class="sheet-letter">I</span> <cite>Achorripsis</cite>, the matrix</h3>
+      <figure class="exhibit graph">
+        <div class="art"><img class="drawing" style="--ar: 640 / 330" src="assets/st/misc-i1.png" width="640" height="330" loading="lazy" alt="A matrix of 28 columns of time by 7 rows of timbre; most of its 196 cells are empty, and the rest hold 1, 2, 3 or, once, 4 events"></div>
+        <figcaption>After the matrix of <cite>Achorripsis</cite> (1956&ndash;57), for 21 instruments, which Xenakis worked out by hand, before he had the use of a computer. Its 28 columns are units of time and its 7 rows are timbres, among them strings played with glissando, pizzicato and the bow, so the matrix has 196 cells. He set the mean number of events per cell at &lambda; = 0.6 and let the Poisson law decide how many cells hold no event, one, two, three or four: 107, 65, 19, 4 and 1. Those counts are his; where they sit in this drawing comes from a seeded random generator, not from the score. Hermann Scherchen conducted the first performance in 1958.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-j" hidden>
+        <p class="sheet-note" aria-hidden="true">grains, chained</p>
+        <h3 id="sheet-j" tabindex="-1"><span class="sheet-letter">J</span> <cite>Analogique A</cite> and <cite>B</cite>: screens</h3>
+      <figure class="exhibit tracing">
+        <div class="art"><img class="drawing" style="--ar: 640 / 344" src="assets/st/misc-j1.png" width="640" height="344" loading="lazy" alt="Eight small figures lettered A to H, each a grid of six pitch regions by three dynamics holding a few short notes"></div>
+        <figcaption>In the spirit of the screens of <cite>Analogique A</cite> (1958), for nine strings, and <cite>Analogique B</cite> (1959), for sine tones on tape, which are played together. Xenakis imagined every sound as a cloud of tiny grains. A screen is a short slice of time, half a bar long, in which grains are scattered over registers of pitch and loudness at a chosen density, and he defined eight of them, lettered A to H. A Markov chain decided which screen followed which, by fixed probabilities of passing from one to another. The tape of <cite>B</cite> was begun in Hermann Scherchen&rsquo;s studio at Gravesano and finished at the Groupe de Recherches Musicales in Paris. The grains drawn here are random.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-k" hidden>
+        <p class="sheet-note" aria-hidden="true">charcoal, crackling</p>
+        <h3 id="sheet-k" tabindex="-1"><span class="sheet-letter">K</span> <cite>Concret PH</cite></h3>
+      <figure class="exhibit photo">
+        <div class="art"><img src="assets/st/photo-concret.png" width="1200" height="854" alt="Glowing charcoal embers with a strip of brown recording tape laid across them, two lengths of it joined by a white splice"></div>
+        <figcaption>A homage to the tape of <cite>Concret PH</cite> (1958), made at the Groupe de Recherches Musicales in Paris for the Philips Pavilion. Its only source is the sound of burning charcoal, cut into fragments about a second long, transposed and laid over one another until the crackle becomes a continuous, grainy sheet of sound some two and a half minutes long. It played as visitors came into and left the pavilion. <i lang="fr">PH</i> stands for <i lang="fr">paraboloïdes hyperboliques</i>, the ruled surfaces of the building. The photograph is an imagined rendering made for this portfolio; it is not a photograph of the work.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-l" hidden>
+        <p class="sheet-note" aria-hidden="true">the orchestra in the audience</p>
+        <h3 id="sheet-l" tabindex="-1"><span class="sheet-letter">L</span> <cite>Terretektorh</cite></h3>
+      <figure class="exhibit plan">
+        <div class="art"><img class="drawing" style="--ar: 520 / 470" src="assets/st/misc-l1.png" width="520" height="470" loading="lazy" alt="Plan of a round hall: 88 players, marked by section, are scattered through rings of audience seats"></div>
+        <figcaption>After the seating of <cite>Terretektorh</cite> (1965&ndash;66), whose 88 musicians are scattered through the audience in a large circle instead of sitting on a stage, so that listeners hear the orchestra from inside and sounds seem to travel around the hall. Besides their own instruments, the players each have a wood block, a whip, maracas and a siren whistle. Hermann Scherchen conducted the first performance, with the Orchestre Philharmonique de l&rsquo;ORTF, at the Royan Festival on 3 April 1966. This plan is a homage: its 60 strings (circles), 12 woodwinds (triangles), 13 brass (squares) and 3 percussionists (diamonds) follow the forces of the score, but their seats were placed at random.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-m" hidden>
+        <p class="sheet-note" aria-hidden="true">flashes in a Roman vault</p>
+        <h3 id="sheet-m" tabindex="-1"><span class="sheet-letter">M</span> <cite>Polytope de Cluny</cite></h3>
+      <figure class="exhibit photo">
+        <div class="art"><img src="assets/st/photo-cluny.png" width="1200" height="964" alt="A dark stone barrel vault lined with rows of small white flashes, crossed by red, green and blue laser beams that bounce between small mirrors on stands"></div>
+        <figcaption>After the <cite>Polytope de Cluny</cite>, which Xenakis made for the first Festival d&rsquo;Automne in Paris, in 1972, in the Roman baths of the Mus&eacute;e de Cluny. Six hundred electronic flashes hung on a regular grid of scaffolding that followed the curve of the vault, and three laser beams, red, green and blue, were bounced by some 300 mirrors into figures. The lighting was computed beforehand and run automatically from digital magnetic tape, with the music on a tape of its own. The photograph is an imagined rendering made for this portfolio; it is not a photograph of the work.</figcaption>
+      </figure>
+      </article>
+      <article class="sheet" aria-labelledby="sheet-n" hidden>
+        <p class="sheet-note" aria-hidden="true">fires on the hill</p>
+        <h3 id="sheet-n" tabindex="-1"><span class="sheet-letter">N</span> <cite>Polytope de Pers&eacute;polis</cite></h3>
+      <figure class="exhibit photo">
+        <div class="art"><img src="assets/st/photo-persepolis.png" width="1200" height="856" alt="A hill at night with a ruined temple of columns on its top, searchlights and two green laser beams in the sky, fires along the hill, a line of torches climbing the slope, and ruined columns in the foreground"></div>
+        <figcaption>After the <cite>Polytope de Pers&eacute;polis</cite>, staged once, on the night of 26 August 1971, among the ruins of Persepolis for the opening of the Shiraz&ndash;Persepolis Festival of Arts. Xenakis&rsquo;s eight-track tape <cite>Persepolis</cite>, about 56 minutes long, played from loudspeakers set among the ruins, while two laser beams and searchlights crossed the sky, fires burned on the hill facing the site, and 150 children carrying torches walked through the ruins. The photograph is an imagined rendering made for this portfolio; it is not a photograph of the event. The ruins it shows are imagined and are not those of Persepolis.</figcaption>
+      </figure>
+      </article>
+        </div>
+        <nav class="page-turn" aria-label="Sheets">
+          <button type="button" data-turn="-1">&lsaquo; Previous sheet</button>
+          <button type="button" data-turn="1">Next sheet &rsaquo;</button>
+          <span class="folio-no" id="folio-page" aria-live="polite"></span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- the magazine, open -->
+  <section class="station st-mag" id="magazine" data-station="magazine" aria-labelledby="mag-title" hidden>
+<!-- The magazine: a saddle-stitched art-and-computing magazine lying on the desk.
+     Each .mag-leaf is one opening (the cover, then two-page spreads); magazine.js shows
+     one at a time; its plates are SVG files in assets/mag/. -->
+<div class="mag" id="mag">
+  <div class="mag-book">
+
+    <section class="mag-leaf mag-leaf-cover" data-ink="o" aria-labelledby="mag-title">
+      <div class="mag-page mag-cover">
+        <div class="mag-cover-top">
+          <p class="mag-dateline"><span>Autumn</span> <span>Art, chance and the computer</span></p>
+          <h2 id="mag-title" class="mag-h" tabindex="-1"><span class="mag-big">Moiré</span> <span class="mag-sub">A magazine of art and computing</span></h2>
+        </div>
+        <div class="mag-cover-field">
+          <p class="mag-coverline"><span class="mag-cl-big">Pictures, chance and rules</span> <span class="mag-cl-small">Thirteen decks to punch</span></p>
+          <p class="mag-cover-names">Nees, Noll and Knowlton &middot; Tzara and Duchamp &middot; Turing, Rad&oacute; and Conway &middot; Collatz and Lucier</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mag-leaf mag-spread" data-ink="m" aria-labelledby="mag-contents-h">
+      <div class="mag-page mag-l">
+        <div class="mag-art mag-art-short"><img class="mag-plate" src="assets/st/mag-contents.png" alt=""></div>
+        <div class="mag-head">
+          <p class="mag-kicker">In this issue</p>
+          <h3 id="mag-contents-h" class="mag-h mag-screen" tabindex="-1">Contents</h3>
+          <ol class="mag-contents">
+            <li><span class="mag-n" aria-hidden="true">01</span><div><button type="button" class="mag-link" data-goto="2">Pictures from programs</button><p>The first exhibitions of computer graphics, and a picture printed in two characters.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">02</span><div><button type="button" class="mag-link" data-goto="3">Chance and instructions</button><p>Poems from a hat, Duchamp&rsquo;s chance operations, and an instruction piece performed by a machine.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">03</span><div><button type="button" class="mag-link" data-goto="4">Machines that follow rules</button><p>Turing&rsquo;s machine, the busy beaver game, and patterns that grow cell by cell.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">04</span><div><button type="button" class="mag-link" data-goto="5">Loops and returns</button><p>A rule nobody can prove, and things that wear away or come back.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">13</span><div><button type="button" class="mag-link" data-goto="6">Thirteen decks to punch</button><p>The catalogue: every deck in the issue, ready for the coding form.</p></div></li>
+          </ol>
+        </div>
+      </div>
+      <div class="mag-page mag-r">
+        <div class="mag-text">
+          <h4 class="mag-label">From the editors</h4>
+          <p>This issue is about the early meeting of art and computing, when a picture, a poem or a score could come out of a deck of punched cards. Its four articles follow pictures made by programs, works left to chance or written as instructions, machines that do nothing but follow rules, and rules that loop and return.</p>
+          <p>Wherever an article discusses a deck, you can put that deck on the coding form, run it, and collect what it makes from the line printer and the card punch: a picture printed in characters, a poem drawn from a hat, a machine writing on its tape, or a pattern that grows by rule. The catalogue at the back lists all thirteen.</p>
+          <p>Every deck is written in the FORTRAN of the rest of the desk. Its data cards come after the <code>END</code> card, and the comment cards at the top say what the numbers mean, so you can change them and run the deck again.</p>
+          <p class="mag-colophon">Printed in cyan, magenta, yellow and black, with a spot orange.</p>
+        </div>
+        <div class="mag-art mag-art-wash"><img class="mag-plate" src="assets/st/mag-wash.png" alt=""></div>
+      </div>
+    </section>
+
+    <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="mag-a1">
+      <div class="mag-page mag-l">
+        <div class="mag-art"><img class="mag-plate" src="assets/st/mag-a1.png" alt=""></div>
+        <div class="mag-head">
+          <p class="mag-kicker">Computer graphics, 1965&ndash;1968</p>
+          <h3 id="mag-a1" class="mag-h mag-screen" tabindex="-1">Pictures from programs</h3>
+          <p class="mag-pull" aria-hidden="true">&ldquo;Not one picture was sold.&rdquo;</p>
+        </div>
+      </div>
+      <div class="mag-page mag-r">
+        <div class="mag-text">
+          <p>Pictures made by computer were first exhibited in 1965. From 5 to 19 February, the Studiengalerie of the Technische Hochschule Stuttgart showed graphics by Georg Nees, generated by a digital computer, under the auspices of a colloquium led by the philosopher Max Bense. In April, the Howard Wise Gallery in New York showed <em>Computer-Generated Pictures</em> by B&eacute;la Julesz and A. Michael Noll of Bell Telephone Laboratories, made on an IBM 7094 with a microfilm plotter. Its invitation was a small deck of four punched cards in different colours, and not one picture was sold. In November, Nees and Frieder Nake showed their work together at the Galerie Wendelin Niedlich in Stuttgart.</p>
+          <p>At Bell Labs, Kenneth Knowlton and Leon Harmon made <em>Studies in Perception I</em>, which collections date to 1966 or 1967. They reduced a photograph of the dancer and choreographer Deborah Hay to a grid of grey squares and replaced each square with a small symbol, taken from mathematics and electronics, whose density matched its grey. The print was about 12 feet long. It was reproduced in <em>The New York Times</em> on 11 October 1967, and the Museum of Modern Art showed it in <em>The Machine as Seen at the End of the Mechanical Age</em> (25 November 1968 to 9 February 1969).</p>
+          <p>The idea is the same as a halftone, in which a picture is printed as dots whose size follows its tone, and <em>Studies in perception</em> carries it out with the two marks this printer has. The deck works out a tone from 0 to 16 for each cell of a picture 64 characters wide and 32 lines deep. It compares each tone with a 4-by-4 screen of thresholds read from a data card, and it inks the cell wherever the tone is higher, a method called ordered dithering. The picture is this page&rsquo;s own: a black disc and a target of rings on a diagonal wash. Change the ring width or the screen on the data cards and run it again. Every row is also punched as 64 digits.</p>
+          <p class="mag-deck"><button type="button" data-deck="studies-in-perception">Put <i>Studies in perception</i> on the coding form</button></p>
+          <p>Three years later, from 2 August to 20 October 1968, <em>Cybernetic Serendipity</em> at the Institute of Contemporary Arts in London, curated by Jasia Reichardt, set out to show computer-aided creative work of every kind: art, music, poetry, dance, sculpture and animation, along with painting machines and works in which chance played a large part. About 60,000 people saw it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mag-leaf mag-spread" data-ink="o" aria-labelledby="mag-a2">
+      <div class="mag-page mag-l">
+        <div class="mag-art"><img class="mag-plate" src="assets/st/mag-a2.png" alt=""></div>
+        <div class="mag-head">
+          <p class="mag-kicker">Dada, Duchamp and Fluxus</p>
+          <h3 id="mag-a2" class="mag-h mag-screen" tabindex="-1">Chance and instructions</h3>
+          <p class="mag-pull" aria-hidden="true">&ldquo;The idea becomes a machine that makes the art.&rdquo;</p>
+        </div>
+      </div>
+      <div class="mag-page mag-r">
+        <div class="mag-text">
+          <p>Long before computers, Dada artists let chance do the composing. <em>Tzara&rsquo;s hat</em> follows Tristan Tzara&rsquo;s 1920 recipe for a Dadaist poem: sixteen words cut from a newspaper item are shaken in a bag and copied out in the order they come, and each word drawn is also punched, so the cuttings pile up in the stacker. <em>Erratum musical</em> repeats what Marcel Duchamp did in Rouen in 1913, when he drew 25 notes, from the F below middle C up to high F, out of a hat, once for each of three voices: his sisters Yvonne and Magdeleine, and himself. <em>3 standard stoppages</em> drops three threads, each one metre long, the way Duchamp did in 1913&ndash;14, and measures the new metre that each curve makes. Every deck starts from the seed on its data card, so a different seed gives a different poem, score, or set of threads, and the same seed always gives the same one.</p>
+          <ul class="mag-decks">
+            <li><button type="button" data-deck="tzara-s-hat">Put <i>Tzara&rsquo;s hat</i> on the coding form</button></li>
+            <li><button type="button" data-deck="erratum-musical">Put <i>Erratum musical</i> on the coding form</button></li>
+            <li><button type="button" data-deck="3-standard-stoppages">Put <i>3 standard stoppages</i> on the coding form</button></li>
+          </ul>
+          <p>In the 1960s, artists around Fluxus wrote works as instructions for someone else to carry out. La Monte Young&rsquo;s <em>Composition 1960 #10</em>, dated October 1960 and dedicated to Robert Morris, reads in full: &ldquo;Draw a straight line and follow it.&rdquo; At the Fluxus festival in Wiesbaden in September 1962, Nam June Paik performed it by dipping his head in ink and drawing a line down a long sheet of paper on the floor. In &ldquo;Paragraphs on Conceptual Art&rdquo; (<em>Artforum</em>, June 1967), Sol LeWitt wrote that &ldquo;the idea becomes a machine that makes the art.&rdquo;</p>
+          <p>A program is an instruction piece performed by a machine, and <em>Euclid, read aloud</em> performs one of the oldest. It is the method for finding the greatest common divisor of two numbers in Book VII of Euclid&rsquo;s <em>Elements</em>, written about 300 BC, which Donald Knuth called &ldquo;the granddaddy of all algorithms.&rdquo; The deck prints each of its own instructions as it carries it out, along with what happened. It also punches a second program: the steps it actually took, with every test already decided and the loop written out in full. Load the stacker in place of the deck and run it, and the new program prints the same answer without making a single decision.</p>
+          <p class="mag-deck"><button type="button" data-deck="euclid-read-aloud">Put <i>Euclid, read aloud</i> on the coding form</button></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mag-leaf mag-spread" data-ink="y" aria-labelledby="mag-a3">
+      <div class="mag-page mag-l">
+        <div class="mag-art"><img class="mag-plate" src="assets/st/mag-a3.png" alt=""></div>
+        <div class="mag-head">
+          <p class="mag-kicker">Computation theory</p>
+          <h3 id="mag-a3" class="mag-h mag-screen" tabindex="-1">Machines that follow rules</h3>
+          <p class="mag-pull" aria-hidden="true">&ldquo;Which one leaves the most 1s behind?&rdquo;</p>
+        </div>
+      </div>
+      <div class="mag-page mag-r">
+        <div class="mag-text">
+          <p>In 1936 Alan Turing described a machine that does nothing but read and write symbols on a tape, one square at a time, following a table of instructions, and he argued that such a machine can carry out any calculation that a person following fixed rules can. His paper &ldquo;On Computable Numbers, with an Application to the Entscheidungsproblem&rdquo; was received by the London Mathematical Society on 28 May 1936 and read on 12 November 1936.</p>
+          <p>In May 1962, Tibor Rad&oacute; asked a question that sounds like a game, in &ldquo;On Non-Computable Functions&rdquo; in the <em>Bell System Technical Journal</em>. Of all the machines with a given number of states that start on a blank tape and eventually halt, which one leaves the most 1s behind? He proved that no program can answer that for every number of states. Shen Lin and Rad&oacute; settled three states in 1965: the most is six 1s, and no three-state machine that halts runs for more than 21 steps. Allen Brady settled four states in 1983, with 13 ones and 107 steps. <em>A busy beaver</em> runs a three-state champion, which halts after 14 steps with six 1s, and prints the tape and the head at every step. The machine itself is data: its table is on the cards after <code>END</code>, and the deck&rsquo;s comments give the four-state champion.</p>
+          <p class="mag-deck"><button type="button" data-deck="a-busy-beaver">Put <i>A busy beaver</i> on the coding form</button></p>
+          <p>A cellular automaton is a row of cells that all change at once, step after step, each by looking only at its neighbours. In a 1983 paper in <em>Reviews of Modern Physics</em>, Stephen Wolfram studied the simplest kind, in which each cell is 0 or 1 and looks at itself and its two neighbours, and numbered the 256 possible rules from 0 to 255. Rule 30 grows from a single cell into a pattern that looks random. Rule 110 was shown to be capable of universal computation by Matthew Cook, in a proof published in 2004. <em>Rule 30</em> prints one generation to a line and punches the last one, so that the punched card can replace the row card and carry the run on. Its comments say how to try Rule 90 or Rule 110.</p>
+          <p class="mag-deck"><button type="button" data-deck="rule-30">Put <i>Rule 30</i> on the coding form</button></p>
+          <p>John Conway&rsquo;s Game of Life is a two-dimensional relative. It reached the public in Martin Gardner&rsquo;s &ldquo;Mathematical Games&rdquo; column in <em>Scientific American</em> in October 1970. Each cell has eight neighbours. A live cell with two or three live neighbours survives, a dead cell with exactly three comes alive, and every other cell is dead in the next generation. <em>Life</em> runs a glider, which crawls one cell diagonally every four generations, beside a blinker and a block, on a grid of 12 by 20 cells whose edges wrap around.</p>
+          <p class="mag-deck"><button type="button" data-deck="life">Put <i>Life</i> on the coding form</button></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mag-leaf mag-spread" data-ink="m" aria-labelledby="mag-a4">
+      <div class="mag-page mag-l">
+        <div class="mag-art"><img class="mag-plate" src="assets/st/mag-a4.png" alt=""></div>
+        <div class="mag-head">
+          <p class="mag-kicker">Iteration</p>
+          <h3 id="mag-a4" class="mag-h mag-screen" tabindex="-1">Loops and returns</h3>
+          <p class="mag-pull" aria-hidden="true">&ldquo;A tail and a loop, like the Greek letter rho.&rdquo;</p>
+        </div>
+      </div>
+      <div class="mag-page mag-r">
+        <div class="mag-text">
+          <p>Some of the simplest rules are still not understood. Lothar Collatz posed this one in 1937: halve an even number, treble an odd one and add one, and repeat. Every number anyone has tried comes down to 1 in the end, but nobody has proved that every number must. <em>The 3x+1 problem</em> follows 27, which takes 111 steps and climbs as high as 9232 before it falls, and prints each value with a bar whose length grows with the value&rsquo;s logarithm.</p>
+          <p class="mag-deck"><button type="button" data-deck="the-3x-1-problem">Put <i>The 3x+1 problem</i> on the coding form</button></p>
+          <p>The four decks that follow are about things that wear away or come back. <em>An echo in an empty room</em> lets a call return more quietly each time, losing letters as it fades. <em>I am sitting in a room</em> follows Alvin Lucier&rsquo;s 1969 piece, in which he recorded his voice, played the tape back into the room, and recorded it again until only the room&rsquo;s resonances were left; here a row of random levels is blurred and re-recorded until one take sounds the same as the last. <em>Erosion</em> wears a ridge of stone down a level at a time, faster where it stands exposed.</p>
+          <ul class="mag-decks">
+            <li><button type="button" data-deck="an-echo-in-an-empty-room">Put <i>An echo in an empty room</i> on the coding form</button></li>
+            <li><button type="button" data-deck="i-am-sitting-in-a-room">Put <i>I am sitting in a room</i> on the coding form</button></li>
+            <li><button type="button" data-deck="erosion">Put <i>Erosion</i> on the coding form</button></li>
+          </ul>
+          <p><em>The corridor</em> walks from room to room, where every room has a single door that always leads to the same next room, given by the rule <var>r</var><sup>2</sup>&nbsp;+&nbsp;<var>c</var> divided by the number of rooms, keeping the remainder. Because there are only so many rooms, the walk must come back to one it has seen, and from then on it goes round the same loop for ever: a tail and a loop, like the Greek letter rho. John Pollard used the same kind of walk in his 1975 method for factoring large numbers.</p>
+          <p class="mag-deck"><button type="button" data-deck="the-corridor">Put <i>The corridor</i> on the coding form</button></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="mag-cat-h">
+      <div class="mag-page mag-l">
+        <div class="mag-art mag-art-short"><img class="mag-plate" src="assets/st/mag-catalogue.png" alt=""></div>
+        <div class="mag-head">
+          <p class="mag-kicker">The catalogue</p>
+          <h3 id="mag-cat-h" class="mag-h mag-screen" tabindex="-1">Thirteen decks to punch</h3>
+          <p>Every deck in this issue, in the order the articles discuss them. Each one runs as it stands, and its comment cards say what its data cards hold.</p>
+          <ul class="mag-cat">
+            <li><h4>Studies in perception</h4><p>A picture 64 characters wide and 32 lines deep, printed in two marks by ordered dithering.</p><button type="button" data-deck="studies-in-perception">Put <i>Studies in perception</i> on the coding form</button></li>
+            <li><h4>Tzara&rsquo;s hat</h4><p>Sixteen words cut from a newspaper item, shaken in a bag and copied out in the order they come.</p><button type="button" data-deck="tzara-s-hat">Put <i>Tzara&rsquo;s hat</i> on the coding form</button></li>
+            <li><h4>Erratum musical</h4><p>Twenty-five notes drawn from a hat, once for each of three voices, as Duchamp did in 1913.</p><button type="button" data-deck="erratum-musical">Put <i>Erratum musical</i> on the coding form</button></li>
+            <li><h4>3 standard stoppages</h4><p>Three threads a metre long, dropped, and the new metre that each curve makes.</p><button type="button" data-deck="3-standard-stoppages">Put <i>3 standard stoppages</i> on the coding form</button></li>
+            <li><h4>Euclid, read aloud</h4><p>Prints each of its own instructions as it runs, and punches a program that makes no decisions.</p><button type="button" data-deck="euclid-read-aloud">Put <i>Euclid, read aloud</i> on the coding form</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mag-page mag-r">
+        <div class="mag-text">
+          <ul class="mag-cat">
+            <li><h4>A busy beaver</h4><p>A three-state Turing machine that halts after 14 steps with six 1s, printing its tape at every step.</p><button type="button" data-deck="a-busy-beaver">Put <i>A busy beaver</i> on the coding form</button></li>
+            <li><h4>Rule 30</h4><p>A row of cells that grows from a single cell into a pattern that looks random.</p><button type="button" data-deck="rule-30">Put <i>Rule 30</i> on the coding form</button></li>
+            <li><h4>Life</h4><p>A glider, a blinker and a block on a grid of 12 by 20 cells whose edges wrap around.</p><button type="button" data-deck="life">Put <i>Life</i> on the coding form</button></li>
+            <li><h4>The 3x+1 problem</h4><p>27 takes 111 steps and climbs as high as 9232 before it falls to 1.</p><button type="button" data-deck="the-3x-1-problem">Put <i>The 3x+1 problem</i> on the coding form</button></li>
+            <li><h4>An echo in an empty room</h4><p>A call returns more quietly each time, losing letters as it fades.</p><button type="button" data-deck="an-echo-in-an-empty-room">Put <i>An echo in an empty room</i> on the coding form</button></li>
+            <li><h4>I am sitting in a room</h4><p>A row of levels blurred and re-recorded until one take sounds the same as the last.</p><button type="button" data-deck="i-am-sitting-in-a-room">Put <i>I am sitting in a room</i> on the coding form</button></li>
+            <li><h4>Erosion</h4><p>A ridge of stone worn down a level at a time, faster where it stands exposed.</p><button type="button" data-deck="erosion">Put <i>Erosion</i> on the coding form</button></li>
+            <li><h4>The corridor</h4><p>A walk from room to room that must fall into a loop: a tail and a loop, like the letter rho.</p><button type="button" data-deck="the-corridor">Put <i>The corridor</i> on the coding form</button></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <div class="mag-turn">
+    <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
+    <nav class="mag-index" aria-label="Magazine pages">
+      <ol>
+        <li><button type="button" data-goto="0"><span class="mag-dot">1</span><span class="mag-vh"> Cover</span></button></li>
+        <li><button type="button" data-goto="1"><span class="mag-dot">2</span><span class="mag-vh"> Contents</span></button></li>
+        <li><button type="button" data-goto="2"><span class="mag-dot">3</span><span class="mag-vh"> Pictures from programs</span></button></li>
+        <li><button type="button" data-goto="3"><span class="mag-dot">4</span><span class="mag-vh"> Chance and instructions</span></button></li>
+        <li><button type="button" data-goto="4"><span class="mag-dot">5</span><span class="mag-vh"> Machines that follow rules</span></button></li>
+        <li><button type="button" data-goto="5"><span class="mag-dot">6</span><span class="mag-vh"> Loops and returns</span></button></li>
+        <li><button type="button" data-goto="6"><span class="mag-dot">7</span><span class="mag-vh"> Thirteen decks to punch</span></button></li>
+      </ol>
+    </nav>
+    <p class="mag-folio" aria-live="polite"></p>
+    <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
+  </div>
+</div>
+  </section>
+
+  <!-- the editing station: the deck box beside the coding form, the card in hand under it -->
+  <section class="station st-form" data-station="form" aria-labelledby="pad-h" hidden>
+    <div class="tray" role="group" aria-labelledby="tray-h">
+      <div class="tray-head">
+        <h3 id="tray-h" class="tray-plate" tabindex="-1">Deck box</h3>
+        <p class="tray-hint">Take out a deck to put it on the coding form.</p>
+      </div>
+      <div class="tray-well">
+        <h4 class="tray-div">Programs</h4>
+        <ul class="decks" id="deck-tray-programs"></ul>
+        <h4 class="tray-div">Music</h4>
+        <ul class="decks" id="deck-tray-music"></ul>
+        <h4 class="tray-div">From the magazine</h4>
+        <ul class="decks" id="deck-tray-magazine"></ul>
+      </div>
+    </div>
+    <div class="pad" id="pad">
+      <div class="pad-sheet">
+        <div class="form-head">
+          <h2 id="pad-h" tabindex="-1">FORTRAN coding form</h2>
+          <dl class="form-boxes">
+            <div><dt>Program</dt><dd id="deck-name">&nbsp;</dd></div>
+            <div><dt>Punching instructions</dt><dd>One card per line</dd></div>
+          </dl>
+        </div>
+        <div class="toolbar">
+          <button type="button" id="add-card">Add card</button>
+          <button type="button" id="delete-card">Delete card</button>
+          <button type="button" id="clear-deck">Clear deck</button>
+        </div>
+        <p class="legend" aria-hidden="true">
+          <span class="key"><span class="f1"></span>label (1&ndash;5)</span>
+          <span class="key"><span class="f2"></span>continuation (6)</span>
+          <span class="key"><span class="f3"></span>statement (7&ndash;72)</span>
+          <span class="key"><span class="f1"></span>sequence (73&ndash;80)</span>
+        </p>
+        <div class="editor">
+          <div class="editor-inner">
+            <pre class="ruler" id="ruler" aria-hidden="true"></pre>
+            <div id="cards"></div>
+          </div>
+        </div>
+        <div class="toolbar run-line">
+          <button type="button" id="run-deck">Run deck</button>
+          <button type="button" id="form-to-computer">Type into the computer</button>
+          <span class="status" id="editor-status" role="status"></span>
+        </div>
+      </div>
+      <details class="in-hand" id="in-hand" open>
+        <summary>The card in hand</summary>
+        <div class="cardview" id="card-svg"></div>
+        <div class="toolbar">
+          <button type="button" id="prev-card">Previous card</button>
+          <button type="button" id="next-card">Next card</button>
+          <span class="status" id="card-caption" aria-live="polite"></span>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- the out tray: the printout, the job ticket and the listing, and the punch's stacker -->
+  <section class="station st-out" data-station="out" id="out" aria-labelledby="out-h" hidden>
+    <div class="print-head">
+      <h2 id="out-h" class="desk-tag" tabindex="-1">Out tray</h2>
+      <p id="run-status" class="run-slip" role="status" tabindex="-1">The deck has not been run yet.</p>
+    </div>
+    <div class="out-grid">
+      <div class="fanfold">
+        <h3>Printer output</h3>
+        <div class="printer" id="printer" tabindex="0" role="region" aria-label="Printer output"><p class="placeholder">Run the deck to see output.</p></div>
+      </div>
+      <div class="ticket-col">
+        <div class="job-ticket">
+          <h3>Job log</h3>
+          <div class="log" id="log" tabindex="0" role="region" aria-label="Job log"><p class="placeholder">Errors, warnings, and the STOP code appear here.</p></div>
+        </div>
+        <details class="listing" id="listing-wrap">
+          <summary>Source listing</summary>
+          <pre id="listing" tabindex="0"></pre>
+        </details>
+        <div class="stack-box">
+          <h3 id="stack-h">Output stacker</h3>
+          <p class="stack-count" id="stack-count" role="status">No cards have been punched yet.</p>
+          <div class="stacker" id="stacker" tabindex="0" role="region" aria-label="Punched cards"></div>
+          <div class="stack-tools">
+            <button type="button" id="stack-tape" class="thread" disabled>Thread onto the tape player</button>
+            <button type="button" id="stack-replace" disabled>Put on the form in place of the deck</button>
+            <button type="button" id="stack-append" disabled>Add to the deck as data</button>
+            <button type="button" id="stack-copy" disabled>Copy as text</button>
+            <button type="button" id="stack-download" disabled>Download as text</button>
+            <button type="button" id="stack-computer" disabled>Read into the computer</button>
+          </div>
+          <p class="status" id="stack-status" role="status"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- the computer: its own desktop, on its own screen, in the style it was made in -->
+  <section class="station st-computer" data-station="computer" aria-labelledby="computer-h" hidden>
+    <div class="monitor">
+      <h2 id="computer-h" class="vh" tabindex="-1">Computer</h2>
+      <div class="glass">
+        <iframe id="screen" title="The computer’s desktop" tabindex="0"></iframe>
+        <p class="screen-off" id="screen-off">The screen warms up&hellip;</p>
+      </div>
+      <p class="badge" aria-hidden="true"><span class="power"></span>Elaboratore</p>
+    </div>
+    <p class="link-status vh" id="link-status" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- the reel-to-reel tape player -->
+  <section class="station st-tape" data-station="recorder" aria-labelledby="tape-h" hidden>
+    <div class="recorder" id="recorder" data-state="empty">
+      <div class="deck-plate">
+        <h2 id="tape-h" class="maker" tabindex="-1">Tape player <span class="run-lamp" aria-hidden="true"></span></h2>
+        <div class="reels" aria-hidden="true">
+          <svg class="reel-svg" viewBox="0 0 520 250">
+            <!-- the plate, the flanges and the head cover are pictures (assets/); the tape packs
+                 and the tape between them are drawn live, as they change while it plays -->
+            <image href="assets/st/deck.png" style="image-rendering: pixelated" width="520" height="250"/>
+            <g transform="translate(120 112)">
+              <circle id="pack-l" r="90" fill="#5b3a22"/>
+              <g id="spokes-l"><image href="assets/st/reel.png" style="image-rendering: pixelated" x="-102" y="-102" width="204" height="204"/></g>
+            </g>
+            <g transform="translate(400 112)">
+              <circle id="pack-r" r="26" fill="#5b3a22"/>
+              <g id="spokes-r"><image href="assets/st/reel.png" style="image-rendering: pixelated" x="-102" y="-102" width="204" height="204"/></g>
+            </g>
+            <!-- tape path past the guides and under the head cover -->
+            <line id="tape-l" x1="120" y1="202" x2="200" y2="232" stroke="#5b3a22" stroke-width="3"/>
+            <line id="tape-r" x1="320" y1="232" x2="400" y2="138" stroke="#5b3a22" stroke-width="3"/>
+            <line id="tape-mid" x1="200" y1="232" x2="320" y2="232" stroke="#5b3a22" stroke-width="3"/>
+            <image href="assets/st/head.png" style="image-rendering: pixelated" width="520" height="250"/>
+          </svg>
+        </div>
+
+        <div class="counter-box">
+          <span class="engraved" id="counter-label">Counter</span>
+          <p class="counter" id="tape-counter" aria-labelledby="counter-label tape-counter-text"><span class="wheels" aria-hidden="true"><span class="w" id="cw0">0</span><span class="w" id="cw1">0</span><span class="sep">:</span><span class="w" id="cw2">0</span><span class="w" id="cw3">0</span></span><span class="vh" id="tape-counter-text">0:00 of 0:00</span></p>
+          <span class="counter-of" id="counter-of" aria-hidden="true">of 0:00</span>
+        </div>
+
+        <div class="controls">
+          <div class="thread-row">
+            <button type="button" id="tape-thread" class="thread" disabled>Thread tape from the stacker</button>
+            <fieldset class="switch" id="bare-switch">
+              <legend class="engraved">Bare numbers</legend>
+              <label><input type="radio" name="bare" value="rhythm" checked> Rhythm</label>
+              <label><input type="radio" name="bare" value="pitch"> Scale</label>
+            </fieldset>
+          </div>
+
+          <div class="transport" role="group" aria-label="Transport">
+            <button type="button" class="key" id="tape-stop" disabled><span class="glyph" aria-hidden="true">&#9632;</span> Stop</button>
+            <button type="button" class="key" id="tape-play" aria-pressed="false" disabled><span class="glyph" aria-hidden="true">&#9654;</span> Play</button>
+            <button type="button" class="key" id="tape-pause" aria-pressed="false" disabled><span class="glyph" aria-hidden="true">&#10074;&#10074;</span> Pause</button>
+          </div>
+
+          <div class="knobs">
+            <div class="tempo">
+              <label class="engraved" for="tape-tempo">Tempo</label>
+              <input type="range" id="tape-tempo" min="40" max="240" step="4" value="120" aria-describedby="tempo-out">
+              <output id="tempo-out" for="tape-tempo">120 beats a minute</output>
+            </div>
+            <fieldset class="switch">
+              <legend class="engraved">Tape speed</legend>
+              <label><input type="radio" name="speed" value="1" checked> 7&frac12; ips</label>
+              <label><input type="radio" name="speed" value="2"> 15 ips</label>
+            </fieldset>
+          </div>
+        </div>
+        <p class="tape-status" id="tape-status" role="status" aria-live="polite">Nothing is threaded yet. Run a deck that punches cards, then thread the tape from the stacker.</p>
+      </div>
+    </div>
+  </section>
+
+
+  </div>
+</main>
+</div>
+
+<script src="../scripts/hollerith.js"></script>
+<script src="../scripts/fortran.js"></script>
+<script src="../scripts/tape.js"></script>
+<script src="decks.js"></script>
+<script src="desk.js"></script>
+<script src="form.js"></script>
+<script src="out.js"></script>
+<script src="recorder.js"></script>
+<script src="magazine.js"></script>
+<script src="computer.js"></script>
+</body>
+</html>
