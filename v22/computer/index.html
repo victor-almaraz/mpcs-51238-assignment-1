@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A FORTRAN workspace, with a sieve generator, a player and a course in punched cards</title>
+<script>document.documentElement.className += ' js';</script>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../../fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="menubar">
+  <ul class="menus" role="menubar" aria-label="Menu bar">
+    <li role="none">
+      <button type="button" class="m-top m-desk" role="menuitem" id="m-desk" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-desk"><svg class="m-glyph" data-icon="glyph" aria-hidden="true"></svg><span class="sr">Workspace</span></button>
+      <ul class="menu" role="menu" id="menu-desk" aria-labelledby="m-desk">
+        <li role="none"><button type="button" role="menuitem" data-act="about-box">About the Workspace&hellip;</button></li>
+        <li role="separator" class="in-room-only"></li>
+        <li role="none" class="in-room-only"><button type="button" role="menuitem" data-act="room">Back to the Room</button></li>
+      </ul>
+    </li>
+    <li role="none">
+      <button type="button" class="m-top" role="menuitem" id="m-file" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-file">File</button>
+      <ul class="menu" role="menu" id="menu-file" aria-labelledby="m-file">
+        <li role="none"><button type="button" role="menuitem" data-act="new">New</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="new-folder">New Folder</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="open-programs">Open Program&hellip;</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="open-selected">Open Selected Icon</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="close-front">Close Window</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="save">Save</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="save-as">Save As&hellip;</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:ed-revert" data-mirror="ed-revert">Revert</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:ed-download">Download</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="rename">Rename</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="move-to">Move To&hellip;</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="trash-selected">Move to Trash</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:ed-run">Run</button></li>
+        <li role="none" class="in-room-only"><button type="button" role="menuitem" data-act="punch">Punch on Cards</button></li>
+      </ul>
+    </li>
+    <li role="none">
+      <button type="button" class="m-top" role="menuitem" id="m-edit" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-edit">Edit</button>
+      <ul class="menu" role="menu" id="menu-edit" aria-labelledby="m-edit">
+        <li role="none"><button type="button" role="menuitem" data-act="select-all">Select All</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:out-replace" data-mirror="out-replace">Output Replaces the Editor&rsquo;s Text</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:out-append" data-mirror="out-append">Output Joins the Text as Data</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:out-copy" data-mirror="out-copy">Copy Output</button></li>
+      </ul>
+    </li>
+    <li role="none">
+      <button type="button" class="m-top" role="menuitem" id="m-view" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-view">View</button>
+      <ul class="menu" role="menu" id="menu-view" aria-labelledby="m-view">
+        <li role="none" class="m-note" id="view-of-l" aria-hidden="true">Icons of <span id="view-of">the desk</span></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="true" aria-describedby="view-of-l" data-act="order:hand">by Hand</button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" aria-describedby="view-of-l" data-act="order:name">by Name</button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" aria-describedby="view-of-l" data-act="order:kind">by Kind</button></li>
+        <li role="none"><button type="button" role="menuitem" aria-describedby="view-of-l" data-act="order:original">Restore Original Order</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="icon-step:-1">Move Icon Earlier</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="icon-step:1">Move Icon Later</button></li>
+      </ul>
+    </li>
+    <li role="none">
+      <button type="button" class="m-top" role="menuitem" id="m-job" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-job">Job</button>
+      <ul class="menu" role="menu" id="menu-job" aria-labelledby="m-job">
+        <li role="none"><button type="button" role="menuitem" data-act="click:ed-run">Run the Editor&rsquo;s Text</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="open:win-printer">Printout</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="open:win-log">Job Log</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="open:win-listing">Listing</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="open:win-records">Output</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:out-play" data-mirror="out-play">Play Output</button></li>
+      </ul>
+    </li>
+    <li role="none">
+      <button type="button" class="m-top" role="menuitem" id="m-window" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-window">Window</button>
+      <ul class="menu" role="menu" id="menu-window" aria-labelledby="m-window">
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-welcome">Read Me</button></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-disk">Workspace HD</button></li>
+        <!-- the folders follow, from the file system (fs.js) -->
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-editor">Editor</button></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-player">Player</button></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-course">Eighty Columns</button></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-codes">Punch Codes</button></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-calc">Calculator</button></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-crible">Crible</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitemcheckbox" aria-checked="false" data-act="open:win-trash">Trash</button></li>
+      </ul>
+    </li>
+    <li role="none">
+      <button type="button" class="m-top" role="menuitem" id="m-special" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-special">Special</button>
+      <ul class="menu" role="menu" id="menu-special" aria-labelledby="m-special">
+        <li role="none"><button type="button" role="menuitem" data-act="clean-up">Clean Up Windows</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="close-all">Close All Windows</button></li>
+        <li role="separator"></li>
+        <li role="none"><button type="button" role="menuitem" data-act="empty-trash">Empty Trash</button></li>
+      </ul>
+    </li>
+  </ul>
+  <span class="clock" id="clock" aria-hidden="true"></span>
+</header>
+
+<main class="desktop" id="desktop">
+
+<!-- the desk's icons are drawn from the file system (fs.js) -->
+<ul class="icons" aria-label="Desktop"></ul>
+<p class="sr" id="icon-hint">Press Enter or double-click to open. Option or Alt with an arrow key moves the icon.</p>
+<p class="sr" id="fs-status" role="status"></p>
+
+<!-- ============ Read Me ============ -->
+<section class="win" id="win-welcome" data-place="40 20 640">
+  <h2 class="title">Read Me</h2>
+  <div class="pane">
+    <!-- Decorative: two fans of glissandi after Metastaseis. -->
+    <img class="pic hero" src="../assets/screen/hero.svg" width="640" height="200" alt="">
+    <h1>A FORTRAN workspace</h1>
+    <p class="lede">This desktop is a working model of a programmer&rsquo;s workspace. Write a FORTRAN program in the Editor, or open one from the Programs folder, then run it and read what it printed and what it wrote to its output in the Results folder. One of the programs generates the number sieves that the composer Iannis Xenakis used to write music, and seven more write music of their own, which the Player can play. <em>Eighty Columns</em> is a course of ten sheets in the punched cards these programs were once written on: reading the holes, punching them, and running decks through a reader, a printer and a punch. The <em>Calculator</em> works in FORTRAN&rsquo;s single precision and punches its display on a card; <em>Crible</em> is a game of rebuilding sieves; and two folders of miscellanea hold pictures and toys after Xenakis and after the Dadaists, who made art by chance more than forty years before he made music with a computer.</p>
+    <p class="actions"><button type="button" class="btn default" data-act="open:win-programs">Open the Programs</button> <button type="button" class="btn" data-act="open:win-editor">Open the Editor</button> <button type="button" class="btn" data-act="open:win-course">Open Eighty Columns</button> <button type="button" class="btn" data-act="open:win-about">Read the documents</button></p>
+  </div>
+</section>
+
+<!-- ============ Workspace HD: a list view of the desktop ============ -->
+<section class="win" id="win-disk" data-place="460 300 460">
+  <h2 class="title">Workspace HD</h2>
+  <p class="infobar" aria-hidden="true"><span id="disk-count"></span><span>kept in memory only</span></p>
+  <div class="pane flush">
+    <table class="listview fill">
+      <thead><tr><th scope="col">Name</th><th scope="col">Kind</th></tr></thead>
+      <tbody id="disk-list"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ The About documents ============ -->
+<section class="win doc" id="win-ch-fortran" data-host="win-about" data-place="120 20 700 0.84">
+  <h2 class="title">A short history of FORTRAN</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">1</span><p class="kicker">About, document 1 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-0.svg" width="720" height="120" alt="">
+      <p>FORTRAN, short for <em>formula translation</em>, was created at IBM by a team led by John Backus. Its first compiler shipped in 1957 for the IBM 704, and it let scientists and engineers write their calculations as formulas instead of as machine instructions. The language spread quickly. FORTRAN IV followed in 1962, and its 1966 standard, FORTRAN 66, made FORTRAN one of the first programming languages with an official standard. This workspace runs a subset of that language.</p>
+      <p>Programs of that era were not typed onto a screen. Each line of a program was punched onto its own 80-column card on a keypunch such as the IBM 029, which IBM introduced in 1964, and a program was a stack of cards held together with a rubber band. Dropping a deck was a real hazard. That is why programmers punched sequence numbers into the last eight columns: a card sorter could put a scrambled deck back in order. <em>Eighty Columns</em>, on the desktop, puts those cards back in your hands.</p>
+      <p>FORTRAN gives each group of columns on a line its own job, and the ruler in the Editor marks the groups so that you can see them.</p>
+      <table>
+        <tr><th>Columns</th><th>What they hold</th></tr>
+        <tr><td>1</td><td>A <code>C</code> or an asterisk in column 1 turns the whole line into a comment.</td></tr>
+        <tr><td>1&ndash;5</td><td>These columns hold an optional statement label, which is an unsigned number that other statements can refer to.</td></tr>
+        <tr><td>6</td><td>Any character other than a blank or a zero marks the line as a continuation of the previous statement.</td></tr>
+        <tr><td>7&ndash;72</td><td>The statement itself goes here.</td></tr>
+        <tr><td>73&ndash;80</td><td>The compiler ignores these columns. The Editor&rsquo;s status line warns you when a program line runs into them, and so does the job log.</td></tr>
+      </table>
+      <p>FORTRAN ignores blanks outside of text, so <code>G O T O 20</code> means the same thing as <code>GOTO 20</code>. FORTRAN of that era had no lowercase letters, so the workspace reads every line in capitals, whatever you type.</p>
+      <p class="turns"><button type="button" class="btn next" data-act="doc:ch-job">Next: The job</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-job" data-host="win-about" data-place="140 40 700 0.84">
+  <h2 class="title">The job</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">2</span><p class="kicker">About, document 2 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-1.svg" width="720" height="120" alt="">
+      <p>A job is the text in the Editor, read one line at a time. The program comes first and finishes with an <code>END</code> line, and every line after it is data for the program to read. If the program tries to read past the last data line, the job stops with the message <code>END OF FILE ON UNIT 5</code>, just as it would have on an IBM machine. Blank lines at the end of the text are left out of the job.</p>
+      <p>A line holds at most 80 columns. Anything past column 80 is cut off when the job runs, and the status line in the Editor tells you when a line is that long.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-fortran">Previous: A short history of FORTRAN</button> <button type="button" class="btn next" data-act="doc:ch-using">Next: Using the workspace</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-using" data-host="win-about" data-place="160 60 700 0.84">
+  <h2 class="title">Using the workspace</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">3</span><p class="kicker">About, document 3 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-2.svg" width="720" height="120" alt="">
+      <p>The icons on the desktop open the parts of the workspace, each in a window of its own. Double-click an icon, or move to it with the <kbd>Tab</kbd> or arrow keys and press <kbd>Enter</kbd>, to open it. Click a window to bring it to the front, drag it by its striped title bar, click the box in its top right corner to make it fill the screen, and click its close box in the top left corner or press <kbd>Escape</kbd> to close it. The menus in the menu bar hold the same commands as the buttons in the windows, and the <em>Window</em> menu brings any window to the front.</p>
+      <h3>Writing a program</h3>
+      <p>The <em>Editor</em> holds one text at a time. Open a program from the <em>Programs</em> folder, or choose <em>Open Program</em> from the <em>File</em> menu, and it replaces the text in the Editor; choose <em>New</em> to start an empty one. The ruler above the text marks the label field, the continuation column, the statement field and the ignored columns, and a dotted line runs down the text at column 72. The status line below the text shows the line and column of the cursor and the field it is in, and it warns you when a line runs past column 72 or past column 80. In a data line, which comes after <code>END</code>, all 80 columns count, so the warning comes only past column 80.</p>
+      <p>The <kbd>Tab</kbd> key moves the cursor to column 7, where statements begin, or on to the next field, and <kbd>Shift</kbd>&nbsp;+&nbsp;<kbd>Tab</kbd> moves it back. Because <kbd>Tab</kbd> works inside the text, press <kbd>Escape</kbd> to leave the text; after that, <kbd>Tab</kbd> moves between the controls again, and a second <kbd>Escape</kbd> closes the window. <kbd>Control</kbd>&nbsp;+&nbsp;<kbd>Enter</kbd>, or <kbd>Command</kbd>&nbsp;+&nbsp;<kbd>Enter</kbd> on a Mac, runs the job.</p>
+      <h3>Running it</h3>
+      <p>Press <em>Run</em> in the Editor, or choose <em>Run</em> from the <em>File</em> menu. The <em>Printout</em> window opens with whatever the program printed, and a perforated rule marks each new page. The <em>Job Log</em>, with any errors and warnings, and the <em>Listing</em> of the program each have a window of their own, and all four are kept in the <em>Results</em> folder. If the job stops with errors, an alert says so and the job log opens.</p>
+      <p>Whatever the program writes with <code>WRITE (7,f)</code> goes to its <em>Output</em>, one record to a line. From its window you can open the records in the Editor, either in place of the text or after it as data for another run. You can also copy them, download them as a text file, or play them in the <em>Player</em>.</p>
+      <h3>The course</h3>
+      <p><em>Eighty Columns</em> is a course in punched cards, ten sheets from easy to hard, each in a window of its own. A card is a grid of 12 rows by 80 columns: click a position to punch it, or move with the arrow keys and press <kbd>Space</kbd>. From sheet 4 on, typing on a card punches a whole character, as a keypunch did. The same interpreter checks every answer, and <em>Open in the Editor</em> takes a sheet&rsquo;s deck to the Editor, one card to a line, to run and change freely. The <em>Punch Codes</em> chart lists the code of every character.</p>
+      <h3>Folders and saved texts</h3>
+      <p>The disk holds everything on the desktop, and its folders can grow while the page is open. <em>New Folder</em> in the <em>File</em> menu makes a folder in the folder at the front, or on the desktop; type its name and press <kbd>Enter</kbd>. <em>Save As</em> keeps the Editor&rsquo;s text as a document in a folder you choose, and <em>Save</em> (<kbd>Control</kbd>&nbsp;+&nbsp;<kbd>S</kbd>, or <kbd>Command</kbd>&nbsp;+&nbsp;<kbd>S</kbd> on a Mac) writes it back there. Drag an icon onto a folder, an open folder&rsquo;s window, the desktop or the Trash to move it, or select it and choose <em>Move To</em> or <em>Move to Trash</em>. <em>Rename</em> renames a folder or a text you made. The workspace&rsquo;s own documents, programs and folders are locked: they can be moved, but not renamed or thrown away.</p>
+      <h3>Putting icons in order</h3>
+      <p>The <em>View</em> menu orders the icons of the folder whose window is at the front, or of the desktop if no folder window is: <em>by Name</em>, <em>by Kind</em> (folders, then applications, documents, pictures, programs and texts), or <em>by Hand</em>, in an order of your own. To place an icon by hand, drag it between two others, onto an icon&rsquo;s name or onto an icon that is not a folder, and it goes before the icon after the pointer; a blue bar shows where. Dropped on a folder&rsquo;s picture, it still goes into the folder. With the keyboard, select an icon and press <kbd>Option</kbd> or <kbd>Alt</kbd> with an arrow key, or choose <em>Move Icon Earlier</em> or <em>Move Icon Later</em> from the <em>View</em> menu. Moving an icon by hand in a sorted folder keeps the sorted order and goes on from there by hand, and <em>Restore Original Order</em> puts the workspace&rsquo;s own order back. In the Programs folder each group keeps its own order.</p>
+      <h3>The Calculator and Crible</h3>
+      <p>The <em>Calculator</em> takes the digits and <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> from the keyboard, <kbd>^</kbd> for a power (FORTRAN&rsquo;s <code>**</code>), and <kbd>Enter</kbd> or <kbd>=</kbd> for the result; <kbd>Backspace</kbd> takes back a digit, <kbd>Delete</kbd> clears the entry, and <kbd>Escape</kbd> clears everything before it closes the window. It works in single precision, as a FORTRAN <code>REAL</code> does, shows a result in E notation if you ask, fills the display with asterisks when a result has no place in a <code>REAL</code>, and punches its display on the card below it. In <em>Crible</em>, choose a modulus and press a number of your sieve, with the mouse or with the arrow keys and <kbd>Enter</kbd>, to add or remove the class of that modulus through it, until your sieve is the target; the keys <kbd>2</kbd> to <kbd>9</kbd> choose the modulus, and either sieve can be played as a rhythm.</p>
+      <h3>Nothing is kept</h3>
+      <p>The disk is a model held in memory, so everything on it, saved texts and new folders included, is gone once the page is closed or reloaded. To keep a program, choose <em>Download</em> from the <em>File</em> menu, which saves the text in the Editor as a file on your own computer. When you open another program or start a new one, an edited text is moved to the <em>Trash</em>, and <em>Put Back</em> in the Trash window brings it back until you empty the Trash. <em>Revert</em> returns the text to the way it was when it was opened or last saved.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-job">Previous: The job</button> <button type="button" class="btn next" data-act="doc:ch-language">Next: The language</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-language" data-host="win-about" data-place="180 80 700 0.84">
+  <h2 class="title">The language</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">4</span><p class="kicker">About, document 4 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-3.svg" width="720" height="120" alt="">
+      <p>The workspace understands a single main program; subroutines and functions are not supported. A name has up to six letters and digits and must start with a letter. Unless you declare otherwise, names that begin with the letters I through N hold integers, and all other names hold real numbers. Integers are 32 bits wide, and integer division throws away the remainder, so <code>7/2</code> is 3. Real numbers have single precision.</p>
+      <table>
+        <tr><th>Statement</th><th>What it does</th></tr>
+        <tr><td><code>V = expr</code></td><td>This evaluates the expression and stores the result in <code>V</code>, which can be a variable or an array element. Expressions use <code>+ - * /</code> and <code>**</code> for powers, with parentheses for grouping.</td></tr>
+        <tr><td><code>INTEGER</code>, <code>REAL</code></td><td>These declare names as integers or reals, overriding the first-letter rule.</td></tr>
+        <tr><td><code>DIMENSION A(n), B(m,n)</code></td><td>This declares arrays of one or two dimensions, numbered from 1.</td></tr>
+        <tr><td><code>GO TO n</code></td><td>This jumps to the statement labeled <code>n</code>. The computed form <code>GO TO (n1,n2,...), I</code> jumps to the <code>I</code>th label in the list.</td></tr>
+        <tr><td><code>IF (e) n1, n2, n3</code></td><td>This jumps to <code>n1</code>, <code>n2</code>, or <code>n3</code> when <code>e</code> is negative, zero, or positive.</td></tr>
+        <tr><td><code>IF (cond) stmt</code></td><td>This runs <code>stmt</code> only when the condition is true. Conditions compare values with <code>.LT. .LE. .EQ. .NE. .GT. .GE.</code> and combine them with <code>.AND. .OR. .NOT.</code></td></tr>
+        <tr><td><code>DO n I = m1, m2, m3</code></td><td>This repeats the statements through label <code>n</code> while <code>I</code> counts from <code>m1</code> to <code>m2</code> in steps of <code>m3</code>, or in steps of 1 if <code>m3</code> is left out. As in FORTRAN 66, the loop always runs at least once.</td></tr>
+        <tr><td><code>CONTINUE</code></td><td>This does nothing. It usually marks the end of a <code>DO</code> loop.</td></tr>
+        <tr><td><code>READ (5,f) list</code> or <code>READ f, list</code></td><td>This reads the next data line, laid out as <code>FORMAT</code> statement <code>f</code> describes.</td></tr>
+        <tr><td><code>WRITE (6,f) list</code> or <code>PRINT f, list</code></td><td>This prints a line on the line printer.</td></tr>
+        <tr><td><code>WRITE (7,f) list</code></td><td>This writes a record to the program&rsquo;s output, which the Player can play. The 7 is simply the code for the output.</td></tr>
+        <tr><td><code>FORMAT (...)</code></td><td>This describes the layout of a data line, an output record or a printed line. <code>Iw</code> is an integer <code>w</code> columns wide, <code>Fw.d</code> and <code>Ew.d</code> are real numbers with <code>d</code> digits after the point, <code>nX</code> skips <code>n</code> columns, <code>nHtext</code> and <code>'text'</code> are literal text, and a slash starts a new line or record. Descriptors can be repeated, as in <code>3I5</code>, or grouped, as in <code>2(I3,F6.2)</code>.</td></tr>
+        <tr><td><code>STOP</code>, <code>PAUSE</code>, <code>END</code></td><td><code>STOP</code> ends the job, <code>PAUSE</code> writes a note in the job log and carries on, and <code>END</code> marks the last line of the program.</td></tr>
+      </table>
+      <p>The built-in functions are <code>SQRT</code>, <code>ABS</code>, <code>IABS</code>, <code>FLOAT</code>, <code>INT</code>, <code>IFIX</code>, <code>MOD</code>, <code>AMOD</code>, <code>SIN</code>, <code>COS</code>, <code>ATAN</code>, <code>EXP</code>, <code>ALOG</code>, <code>ALOG10</code>, <code>MAX0</code>, <code>MIN0</code>, <code>AMAX1</code>, <code>AMIN1</code>, and <code>SIGN</code>.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-using">Previous: Using the workspace</button> <button type="button" class="btn next" data-act="doc:ch-printer">Next: The line printer</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-printer" data-host="win-about" data-place="200 100 700 0.84">
+  <h2 class="title">The line printer</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">5</span><p class="kicker">About, document 5 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-4.svg" width="720" height="120" alt="">
+      <p>Results came back on a line printer such as the IBM 1403, which printed a whole line at a time onto continuous fan-fold paper. A chain of type spun past a row of hammers, and each hammer fired the moment its character went by. The first character of each printed line is never printed. Instead, it tells the printer how far to move the paper. A blank moves it one line, a <code>0</code> leaves a blank line first, a minus sign leaves two blank lines, a <code>1</code> jumps to the top of a new page, and a plus sign prints over the line before. This rule caused famous mistakes. If a <code>FORMAT</code> happens to put a <code>1</code> in the first position, the printer throws a new page, so printing 123 with <code>I3</code> starts a new page and prints only 23.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-language">Previous: The language</button> <button type="button" class="btn next" data-act="doc:ch-xenakis">Next: Iannis Xenakis and the sieve</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-xenakis" data-host="win-about" data-place="220 120 700 0.84">
+  <h2 class="title">Iannis Xenakis and the sieve</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">6</span><p class="kicker">About, document 6 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-5.svg" width="720" height="120" alt="">
+      <p>Iannis Xenakis (1922&ndash;2001) was a Greek-French composer, architect, and engineer, born in Romania to a Greek family. He came to Paris as a political refugee in 1947. He then spent twelve years in Le Corbusier&rsquo;s studio, where he took charge of designing the Philips Pavilion for the 1958 Brussels World&rsquo;s Fair, and he brought an engineer&rsquo;s habits of mind to music. He composed with probability and set theory, and he was one of the first composers to write music with a computer. In 1962 he ran his Free Stochastic Music program on an IBM 7090 at IBM France in Paris. Xenakis designed the program, and M. F. G&eacute;nuys and M. J. Barraud coded it in FORTRAN IV. Its output became the <em>ST</em> pieces, among them <em>ST/10</em> and <em>ST/4</em>, whose titles record the date the data was generated: 8 February 1962. He published the program several times, most completely in his book <em>Formalized Music</em> (1971).</p>
+      <p>During a residency in Berlin in 1963&ndash;64, Xenakis conceived his theory of sieves, a way of building scales and rhythms out of simple arithmetic. A sieve is made from residual classes. The class written here as <code>m@s</code> (Xenakis wrote <var>m</var> with a subscript <var>s</var>) contains every integer <var>x</var> for which <var>x</var>&nbsp;-&nbsp;<var>s</var> is divisible by <var>m</var>, so <code>3@0</code> is the sequence &hellip;, 0, 3, 6, 9, &hellip;. Combining classes by union, intersection, and complement produces patterns that repeat exactly but sound irregular. He first used sieves in <em>Akrata</em> (1964&ndash;65), and in <em>Nomos Alpha</em> (1965&ndash;66) for solo cello they select the pitches from a microtonal scale.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-printer">Previous: The line printer</button> <button type="button" class="btn next" data-act="doc:ch-sieve">Next: The sieve generator</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-sieve" data-host="win-about" data-place="240 140 700 0.84">
+  <h2 class="title">The sieve generator</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">7</span><p class="kicker">About, document 7 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-6.svg" width="720" height="120" alt="">
+      <p>The fifth sample program is a sieve generator written in the same FORTRAN that the workspace runs, in the spirit of Xenakis&rsquo;s own programs. The first data line after <code>END</code> holds three numbers in 5-column fields. <code>MODE</code> is 1 for the union of the classes, 2 for their intersection, or 3 for the complement of their union. <code>N</code> is the number of classes, from 1 to 10, and <code>LIMIT</code> sets the range, because the program tests every integer from 0 to <code>LIMIT</code>&nbsp;-&nbsp;1. Each of the next <var>N</var> lines describes one class with a modulus <code>M</code> and a shift <code>S</code>, again in 5-column fields.</p>
+      <p>The program prints each member of the sieve along with its distance from the member before it, and it writes each member to its output as a record of its own, so that you can feed the members to another program as data. The sample data describes the sieve <code>5@2 | 5@3</code> over the integers 0 to 19, which contains 2, 3, 7, 8, 12, 13, 17, and 18. Change the three data lines at the bottom of the program and run it again to hear the idea in numbers, or play its output in the Player to hear it as a rhythm or a scale.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-xenakis">Previous: Iannis Xenakis and the sieve</button> <button type="button" class="btn next" data-act="doc:ch-music">Next: The music programs</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-music" data-host="win-about" data-place="260 160 700 0.84">
+  <h2 class="title">The music programs</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">8</span><p class="kicker">About, document 8 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-7.svg" width="720" height="120" alt="">
+      <p>The last seven programs in the Programs folder are music programs. Each one is a FORTRAN program that writes a record to its output for every note, in the layout that the Player reads, and each one follows an idea of Xenakis&rsquo;s. Their data lines come after the <code>END</code> line, and the comment lines at the top of each program explain what the numbers mean, so you can change them and run the program again.</p>
+      <dl class="decklist">
+        <dt>Sieve scale (a melody)</dt>
+        <dd>This program takes the union of several residual classes over the semitones above a base note. The result is a scale that need not repeat at the octave, and a walk by chance on that scale, up to two steps up or down at a time, makes a melody.</dd>
+        <dt>Two rhythm sieves</dt>
+        <dd>Two sieves over a cycle of pulses strike a low drum and a high one, and the stroke is louder where they fall together. Xenakis built the rhythms of <cite>Psappha</cite> (1975), for solo percussion, from sieves.</dd>
+        <dt>Stochastic cloud (after Achorripsis)</dt>
+        <dd>Notes arrive at random at a fixed mean rate, in a band of pitch that rises over the cloud, and the printout sets the counts of notes in each cell of time against the Poisson law. In <cite>Achorripsis</cite> (1956&ndash;57), for 21 instruments, Xenakis used the Poisson law with &lambda;&nbsp;=&nbsp;0.6.</dd>
+        <dt>Markov melody (after Analogique)</dt>
+        <dd>A table of chances decides which of five notes follows each note, which makes the melody a Markov chain. Xenakis used Markov chains in <cite>Analogique A</cite> (1958) and <cite>Analogique B</cite> (1959).</dd>
+        <dt>String glissandi (after Metastaseis)</dt>
+        <dd>Each line slides in semitone steps from a note in a cluster to a note in a wide chord, and all the lines take the same time. In bars 309&ndash;314 of <cite>Metastaseis</cite>, Xenakis drew the string glissandi as straight lines.</dd>
+        <dt>Brownian melody (after Mikka)</dt>
+        <dd>A random walk moves the melody up or down by a few semitones at each pulse and bounces it off the edges of a range, and a note is held for as long as the walk stays on it. <cite>Mikka</cite> (1971), for solo violin, is one continuous glissando whose path comes from a random walk, the motion that physicists call Brownian.</dd>
+        <dt>Arborescence (after Evryali)</dt>
+        <dd>A line climbs or falls by one or two semitones at each pulse, bends now and then, and at random splits in two, until as many as six lines sound at once. In <cite>Evryali</cite> (1973), for piano, Xenakis used arborescences, branching lines that let one line proliferate into as many as six.</dd>
+      </dl>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-sieve">Previous: The sieve generator</button> <button type="button" class="btn next" data-act="doc:ch-player">Next: The Player</button></p>
+    </article>
+  </div>
+</section>
+
+<section class="win doc" id="win-ch-player" data-host="win-about" data-place="280 180 700 0.84">
+  <h2 class="title">The Player</h2>
+  <div class="pane">
+    <article class="page">
+      <header class="dochead"><span class="numeral" data-tone="0" aria-hidden="true">9</span><p class="kicker">About, document 9 of 9</p></header>
+      <img class="pic plate" src="../assets/screen/plate-8.svg" width="720" height="120" alt="">
+      <p>The Player plays a program&rsquo;s output as sound. A note record holds four numbers in 5-column fields, as <code>FORMAT (4I5)</code> writes them. <code>TIME</code> is the onset in pulses, counted from 0. <code>NOTE</code> is a MIDI note number from 0 to 127, where 60 is middle C. <code>LEN</code> is the length in pulses, and a blank means 1. <code>LOUD</code> is the loudness from 1 to 9, and a blank means 7. A pulse is a quarter of a beat, so at the starting tempo of 120 beats a minute a pulse lasts an eighth of a second.</p>
+      <p>A record with only its first five columns filled, such as a record from the sieve generator, holds a bare number. With the <em>Rhythm</em> setting, the Player plays each bare number as a time, so a sieve sounds as a rhythm on middle C. With the <em>Scale</em> setting, it plays the numbers one per pulse in the order of the file, as semitones above the C an octave below middle C, so a sieve sounds as a scale. The setting matters only for bare numbers. The music programs write full note records that set their own times and notes, so for their files the setting is turned off. Records that are not notes, such as lines of text, are skipped, and the status line says how many were skipped.</p>
+      <p>Press <em>Play in Player</em> in the Output window, or <em>Load Output</em> in the Player, and then <em>Play</em>. <em>Pause</em> holds the place, and <em>Stop</em> rewinds to the start. The roll shows every note as a bar, with pitch running up and time across, coloured from pale blue for the quietest notes to red for the loudest, and a red line moves across it as the music plays; click the roll, or use the arrow keys on it, to move the place. The tempo control sets the beats per minute, and <em>Double speed</em> plays the music twice as fast and an octave higher, as a tape machine does when its speed is doubled. Sound starts only when you press <em>Play</em>.</p>
+      <p class="turns"><button type="button" class="btn" data-act="doc:ch-music">Previous: The music programs</button></p>
+    </article>
+  </div>
+</section>
+
+<!-- The miscellanea: each picture is the engraved plate from the room's portfolio (v21/assets/misc). -->
+<section class="win pf" id="win-pf-a" data-host="win-portfolio" data-place="160 20 760 0.9">
+  <h2 class="title">Metastaseis, bars 309&ndash;314</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>560 &times; 360, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/a1.svg" width="560" height="360" alt="Graph of straight string glissando lines whose bundles form curved envelopes, bars 309 to 314"></div>
+      <figcaption>After Xenakis&rsquo;s graph of the string glissandi in bars 309&ndash;314 of <cite>Metastaseis</cite> (1953&ndash;54), the sketch reproduced in <cite>Formalized Music</cite>. Each straight line is one string part sliding steadily from one pitch to another, and together the straight lines bend into curved surfaces. The piece is scored for 61 players, 46 of them strings with a part each, and was first played at Donaueschingen on 16 October 1955 under Hans Rosbaud.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn next" data-act="doc:pf-e">Next: Three sieves on a line</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-e" data-host="win-portfolio" data-place="180 40 760 0.9">
+  <h2 class="title">Three sieves on a line</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>600 &times; 300, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/e1.svg" width="600" height="300" alt="Three sieves drawn on lines: a seventeen-semitone scale, a forty-pulse rhythm, and the sample program's sieve 2 3 7 8 12 13 17 18"></div>
+      <figcaption>Top: the scale of the first section of <cite>Jonchaies</cite> (1977). It repeats every 17 semitones, an octave and a fourth, in steps between a minor second and a major third, partly inspired by the Javanese <i>pelog</i>. Middle: the rhythmic sieve of <cite>Psappha</cite> (1975) for solo percussion, as the musicologist Ellen Flint reconstructed it from Xenakis&rsquo;s sketches; it repeats every 40 pulses and is built from classes of moduli 8 and 5. Bottom: <code>5@2 | 5@3</code>, the sieve that the sample program computes.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-a">Previous: Metastaseis</button> <button type="button" class="btn next" data-act="doc:pf-i">Next: Achorripsis, the matrix</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-i" data-host="win-portfolio" data-place="200 60 760 0.9">
+  <h2 class="title">Achorripsis, the matrix</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>640 &times; 330, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/i1.svg" width="640" height="330" alt="A matrix of 28 columns of time by 7 rows of timbre; most of its 196 cells are empty, and the rest hold 1, 2, 3 or, once, 4 events"></div>
+      <figcaption>After the matrix of <cite>Achorripsis</cite> (1956&ndash;57), for 21 instruments, which Xenakis worked out by hand, before he had the use of a computer. Its 28 columns are units of time and its 7 rows are timbres, among them strings played with glissando, pizzicato and the bow, so the matrix has 196 cells. He set the mean number of events per cell at &lambda; = 0.6 and let the Poisson law decide how many cells hold no event, one, two, three or four: 107, 65, 19, 4 and 1. Those counts are his; where they sit in this drawing comes from a seeded random generator, not from the score. Hermann Scherchen conducted the first performance in 1958.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-e">Previous: Three sieves on a line</button> <button type="button" class="btn next" data-act="doc:pf-j">Next: Analogique A and B</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-j" data-host="win-portfolio" data-place="220 80 760 0.9">
+  <h2 class="title">Analogique A and B: screens</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>640 &times; 344, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/j1.svg" width="640" height="344" alt="Eight small panels lettered A to H, each a cloud of short grains of sound placed by pitch and loudness, some dense and some sparse"></div>
+      <figcaption>In the spirit of the screens of <cite>Analogique A</cite> (1958), for nine strings, and <cite>Analogique B</cite> (1959), for sine tones on tape, which are played together. Xenakis imagined every sound as a cloud of tiny grains. A screen is a short slice of time, half a bar long, in which grains are scattered over registers of pitch and loudness at a chosen density, and he defined eight of them, lettered A to H. A Markov chain decided which screen followed which, by fixed probabilities of passing from one to another. The tape of <cite>B</cite> was begun in Hermann Scherchen&rsquo;s studio at Gravesano and finished at the Groupe de Recherches Musicales in Paris. The grains drawn here are random.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-i">Previous: Achorripsis, the matrix</button> <button type="button" class="btn next" data-act="doc:pf-d">Next: Nomos Alpha and the cube</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-d" data-host="win-portfolio" data-place="240 100 760 0.9">
+  <h2 class="title">Nomos Alpha and the cube</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>440 &times; 330, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/d1.svg" width="440" height="330" alt="A cube with vertices numbered 1 to 8 and three dashed rotation axes: through faces, through a diagonal, through edges"></div>
+      <figcaption><cite>Nomos Alpha</cite> (1965&ndash;66) for solo cello was commissioned by Radio Bremen for Siegfried Palm and dedicated to Aristoxenus, &Eacute;variste Galois and Felix Klein. Its first layer is organised by the 24 rotations of a cube, which carry the numbered corners onto one another, and its pitches come from sieves. The rotations are the identity; turns of 90&deg;, 180&deg; and 270&deg; about the 3 axes through opposite faces (9); turns of 120&deg; and 240&deg; about the 4 diagonals (8); and half-turns about the 6 axes through opposite edges (6). A diagram drawn for this portfolio.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-j">Previous: Analogique A and B</button> <button type="button" class="btn next" data-act="doc:pf-h">Next: ST printout</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-h" data-host="win-portfolio" data-place="260 120 760 0.9">
+  <h2 class="title">ST printout</h2>
+  <p class="infobar" aria-hidden="true"><span>text</span><span>16 lines</span></p>
+  <div class="pane">
+    <pre class="st" tabindex="0" aria-label="Mock printout: columns of event number, start time, class, instrument, pitch, glissando, duration and dynamic">  SEQ   START  CLASS  INSTR  PITCH   GLISS   DUR   DYN
+  ---  ------  -----  -----  -----  ------  ----  ---
+    1    0.05      2      1   52.4    -5.4  0.46    F
+    2    0.10      8      4   44.5     0.0  0.86   MF
+    3    0.31      7      3   77.7     0.0  1.02    F
+    4    0.59      3      1   21.9     0.0  1.00    P
+    5    0.73      4      1   22.0    22.3  0.64   MF
+    6    1.62      6      4   43.7    -4.4  0.55  PPP
+    7    2.19      2      4   65.1     8.2  0.36  PPP
+    8    3.90      5      1   39.4     0.0  0.70   MF
+    9    4.37      7      4   46.0     0.0  0.68   FF
+   10    5.73      5      3   51.5     0.0  0.07  PPP
+   11    5.87      6      4   78.1   -21.6  0.89   FF
+   12    6.20      5      4   77.0     0.0  0.36   MF
+   13    6.39      6      4   25.4   -53.1  1.12    P
+   14    6.76      1      3   55.0     0.0  1.51    P</pre>
+    <p class="caption">A mock printout in the manner of the ST program, which Xenakis ran on the IBM 7090 at IBM France. <cite>ST/10-1,080262</cite>, for ten instruments, is named for its run on 8 February 1962 and was first played at IBM France&rsquo;s headquarters in Paris on 24 May 1962. The columns and numbers here were made for this portfolio and are not Xenakis&rsquo;s output.</p>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-d">Previous: Nomos Alpha and the cube</button> <button type="button" class="btn next" data-act="doc:pf-c">Next: Arborescences</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-c" data-host="win-portfolio" data-place="280 140 760 0.9">
+  <h2 class="title">Arborescences</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>560 &times; 320, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/c1.svg" width="560" height="320" alt="A single line branching like a tree from left to right, with a faint mirrored copy"></div>
+      <figcaption>After Xenakis&rsquo;s arborescences, the tree-like drawings on the plane of pitch and time that he began in the early 1970s. A single line branches into several; in <cite>Evryali</cite> (1973) for piano, one line grows into as many as six. He also put whole trees through transformations, which the faint dotted mirror image only gestures at. The technique returns in <cite>Erikhthon</cite> (1974) for piano and orchestra and in <cite>Jonchaies</cite> (1977) for orchestra.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-h">Previous: ST printout</button> <button type="button" class="btn next" data-act="doc:pf-f">Next: A UPIC page</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-pf-f" data-host="win-portfolio" data-place="300 160 760 0.9">
+  <h2 class="title">A UPIC page</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>560 &times; 320, engraved</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c plate-img" src="../../v21/assets/misc/f1.svg" width="560" height="320" alt="A page of pen-drawn wavy arcs in bundles, pitch against time"></div>
+      <figcaption>In the spirit of a page drawn on the UPIC (Unit&eacute; Polyagogique Informatique du CEMAMu), the drawing computer completed in 1977 at Xenakis&rsquo;s research centre CEMAMu in Paris. The composer drew on a large tablet, with time running across and pitch up the page, and the machine played the drawing. <cite>Myc&egrave;nes Alpha</cite> (1978) was the first piece composed entirely on it, made for the <cite>Polytope de Myc&egrave;nes</cite>, performed on 2&ndash;5 September 1978 in the ruins of Mycenae.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:pf-c">Previous: Arborescences</button></p>
+  </div>
+</section>
+
+<!-- The Dada miscellanea: chance as a method, thirty years before the computer's. Their
+     pictures are drawn afresh, as SVG, each time they are opened or let fall again (dada.js). -->
+<section class="win pf" id="win-dd-stoppages" data-host="win-dada" data-place="180 20 680 0.9">
+  <h2 class="title">3 Standard Stoppages</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>3 threads, 1 metre each</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><svg class="paint-c dd-svg" id="dd-stop-c" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="Three threads, each one metre long, lying where they fell on three blue strips"></svg></div>
+      <p class="dd-read" id="dd-stop-read" role="status"></p>
+      <p class="actions"><button type="button" class="btn default" id="dd-stop-drop">Let the threads fall again</button></p>
+      <figcaption>After Marcel Duchamp&rsquo;s <cite>3 Standard Stoppages</cite> (<cite lang="fr">3 stoppages &eacute;talon</cite>, 1913&ndash;14), now in the Museum of Modern Art, New York. Duchamp held a thread one metre long straight and level, one metre above a strip of canvas painted Prussian blue, and let it fall to twist as it would; he fixed each of three threads where it landed, and later had wooden rulers cut to their curves, three new units of length made by chance. The threads here are let fall by a random generator, not traced from Duchamp&rsquo;s: each is one metre long, and only the way it lies, and so the span between its ends, changes from fall to fall.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn next" data-act="doc:dd-karawane">Next: Karawane</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-dd-karawane" data-host="win-dada" data-place="200 40 680 0.9">
+  <h2 class="title">Karawane</h2>
+  <p class="infobar" aria-hidden="true"><span>sound poem, with a picture</span><span>the first nine lines</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><img class="paint-c" src="../assets/screen/ball.svg" width="480" height="400" alt="Hugo Ball at a music stand in his cardboard costume: a tall striped hat, a high white collar, a cape with stiff wings and claws, and legs in banded tubes"></div>
+      <figcaption>Ball as he was photographed reciting at the Cabaret Voltaire in 1916, in a costume of cardboard: a tall hat striped in blue and white, a high collar, a cape with stiff wings gold outside and scarlet within, and his legs in cardboard tubes. A drawing made for this album after the photograph.</figcaption></figure>
+    <div class="kw" lang="und">
+      <p class="kw-t">KARAWANE</p>
+      <p class="kw-1">jolifanto bambla &ocirc; falli bambla</p>
+      <p class="kw-2">grossiga m&rsquo;pfa habla horem</p>
+      <p class="kw-3">&eacute;giga goramen</p>
+      <p class="kw-4">higo bloiko russula huju</p>
+      <p class="kw-5">hollaka hollala</p>
+      <p class="kw-2">anlogo bung</p>
+      <p class="kw-1">blago bung</p>
+      <p class="kw-6">blago bung</p>
+      <p class="kw-3">bosso fataka</p>
+    </div>
+    <p class="actions"><button type="button" class="btn" id="dd-kw-play" aria-describedby="dd-kw-note">Sound the vowels</button></p>
+    <p class="note" id="dd-kw-note">This plays each vowel of these lines as a note, from <i>u</i>, the lowest, up through <i>o</i>, <i>a</i> and <i>e</i> to <i>i</i>, the highest, one syllable to a pulse: a toy for this album, not a reading of the poem.</p>
+    <p class="caption">The opening of Hugo Ball&rsquo;s <cite>Karawane</cite> (1916), one of his <cite lang="de">Verse ohne Worte</cite>, poems without words. Ball and Emmy Hennings opened the Cabaret Voltaire in Z&uuml;rich in February 1916, and there on 23 June 1916 Ball recited his first sound poems, dressed in a costume of cardboard. <cite>Karawane</cite> was printed in Richard Huelsenbeck&rsquo;s <cite lang="de">Dada Almanach</cite> (Berlin, 1920) with its lines set in many different typefaces; here the screen&rsquo;s two faces, inverted, ruled and spaced, stand in for them. The poem goes on for eight more lines.</p>
+    <p class="turns"><button type="button" class="btn" data-act="doc:dd-stoppages">Previous: 3 Standard Stoppages</button> <button type="button" class="btn next" data-act="doc:dd-arp">Next: Squares by chance</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-dd-arp" data-host="win-dada" data-place="220 60 640 0.9">
+  <h2 class="title">Squares by chance</h2>
+  <p class="infobar" aria-hidden="true"><span>picture</span><span>paper squares, dropped</span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><svg class="paint-c dd-svg" id="dd-arp-c" viewBox="0 0 560 400" width="560" height="400" role="img" aria-label="Torn squares and oblongs of paper, black, grey and blue, scattered on a sheet where they fell"></svg></div>
+      <p class="actions"><button type="button" class="btn default" id="dd-arp-drop">Drop the squares again</button></p>
+      <figcaption>After Hans (Jean) Arp&rsquo;s <cite>Untitled (Collage with Squares Arranged according to the Laws of Chance)</cite>, 1916&ndash;17, torn and cut paper on paper, in the Museum of Modern Art, New York. Arp is said to have let squares of paper fall onto a sheet and pasted them where they landed; historians have pointed out how carefully balanced the result is, so chance and his hand both had a part. Here a random generator drops the squares, and no hand puts them right.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:dd-karawane">Previous: Karawane</button> <button type="button" class="btn next" data-act="doc:dd-tzara">Next: To make a Dadaist poem</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-dd-tzara" data-host="win-dada" data-place="240 40 720 0.92">
+  <h2 class="title">To make a Dadaist poem</h2>
+  <p class="infobar" aria-hidden="true"><span>recipe, with a hat</span><span>Tristan Tzara, 1920</span></p>
+  <div class="pane">
+    <article class="page">
+      <blockquote class="dd-recipe" lang="fr">
+        <p>Prenez un journal.<br>Prenez des ciseaux.<br>Choisissez dans ce journal un article ayant la longueur que vous comptez donner &agrave; votre po&egrave;me.<br>D&eacute;coupez l&rsquo;article.</p>
+      </blockquote>
+      <p>Take a newspaper. Take some scissors. Choose an article as long as you mean your poem to be, and cut it out. Then cut out each of its words with care and put them in a bag. Shake it gently. Take the cuttings out one after another, and copy them out conscientiously in the order in which they left the bag. The poem will be like you.</p>
+      <p class="caption">The recipe of Tristan Tzara&rsquo;s <cite lang="fr">Dada manifeste sur l&rsquo;amour faible et l&rsquo;amour amer</cite> (Dada manifesto on feeble love and bitter love), which he read in Paris in December 1920. The French is its first four lines; the English, the whole recipe, is translated for this album.</p>
+      <figure class="paint"><div class="paint-scroll"><img class="paint-c" src="../assets/screen/hat.svg" width="480" height="320" alt="An upturned hat with slips of paper, each one word, rising out of it, a newspaper with a corner cut away, and an open pair of scissors"></div>
+        <figcaption>The newspaper, the scissors, and a hat standing in for the recipe&rsquo;s bag. The words on the slips are cut from the article below. A drawing made for this album.</figcaption></figure>
+      <h3>The bag</h3>
+      <p><label for="dd-article">The article</label></p>
+      <textarea class="dd-article" id="dd-article" rows="6" spellcheck="false">Paris, 25 May. An electronic brain at IBM France has written music. Last night ten musicians played ST/10, which the composer Iannis Xenakis made with an IBM 7090 that worked out every note from the laws of chance. The machine took an hour. The audience, in the company's offices, applauded the computer.</textarea>
+      <p class="note">A mock news item, written for this album. <cite>ST/10</cite> was first played at IBM France&rsquo;s headquarters on 24 May 1962. Write or paste an article of your own, if you like.</p>
+      <p class="actions"><button type="button" class="btn default" id="dd-cut">Cut it up and shake the bag</button> <button type="button" class="btn" id="dd-poem-ed" disabled>Open the poem in the Editor</button></p>
+      <pre class="st dd-poem" id="dd-poem" tabindex="0" aria-label="The poem" aria-live="polite">The poem appears here.</pre>
+      <p class="note" id="dd-poem-note">In the Editor, the poem is a FORTRAN program that prints it, one line of the poem to a printed line, on a new page.</p>
+    </article>
+    <p class="turns"><button type="button" class="btn" data-act="doc:dd-arp">Previous: Squares by chance</button> <button type="button" class="btn next" data-act="doc:dd-lautgedicht">Next: Lautgedicht</button></p>
+  </div>
+</section>
+
+<section class="win pf" id="win-dd-lautgedicht" data-host="win-dada" data-place="260 60 760 0.9">
+  <h2 class="title">Lautgedicht</h2>
+  <p class="infobar" aria-hidden="true"><span>sound poem, blacked out</span><span id="dd-lg-info"></span></p>
+  <div class="pane">
+    <figure class="paint"><div class="paint-scroll"><div class="paint-c lg" id="dd-lg-c" role="img" aria-label="Lines of black bars"></div></div>
+      <p class="actions"><button type="button" class="btn default" id="dd-lg-ed">Black out the Editor&rsquo;s text</button> <button type="button" class="btn" id="dd-lg-poem" disabled>Black out the cut-up poem</button></p>
+      <figcaption>After Man Ray&rsquo;s <cite lang="de">Lautgedicht</cite> (sound poem), 1924: a poem in which every word is a black bar, so that nothing is left to read but the shape of the verse and the length of its words. Here the bars black out a text of the workspace instead: the program in the Editor, whose columns give it a shape of its own, or the poem cut up from Tzara&rsquo;s bag.</figcaption></figure>
+    <p class="turns"><button type="button" class="btn" data-act="doc:dd-tzara">Previous: To make a Dadaist poem</button></p>
+  </div>
+</section>
+
+<!-- ============ Editor ============ -->
+<section class="win" id="win-editor" data-place="20 20 880 0.95">
+  <h2 class="title"><span class="sr">Editor: </span><span id="ed-name">Squares and roots</span></h2>
+  <p class="infobar" aria-hidden="true"><span id="ed-kind">FORTRAN source</span><span id="ed-lines">12 lines</span></p>
+  <div class="ed-tools">
+    <button type="button" class="btn default" id="ed-run">Run</button>
+    <button type="button" class="btn" data-act="open-programs">Open&hellip;</button>
+    <button type="button" class="btn" id="ed-revert" disabled>Revert</button>
+    <button type="button" class="btn" id="ed-download">Download</button>
+  </div>
+  <div class="buffer">
+    <div class="ruler" aria-hidden="true"><div class="ruler-clip"><div class="ruler-in" id="ruler">
+      <div class="fields"><span class="fld f-label">label</span><span class="fld f-cont"></span><span class="fld f-stmt">statement 7&ndash;72</span><span class="fld f-ign">ignored</span></div>
+      <div class="ticks" id="ticks"></div>
+      <div class="caretcol" id="caretcol"></div>
+    </div></div></div>
+    <div class="buf-body">
+      <div class="gutter" aria-hidden="true"><div class="gutter-in" id="gutter"></div></div>
+      <div class="code">
+        <div class="margins" aria-hidden="true"><div class="margins-in" id="margins"><i class="m72"></i><i class="m80"></i></div></div>
+        <textarea id="src" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="FORTRAN source" aria-describedby="src-hint">C     SQUARES AND SQUARE ROOTS
+      WRITE (6,10)
+   10 FORMAT (1H1,5X,1HN,6X,6HSQUARE,5X,4HROOT)
+      DO 20 I = 1, 5
+      X = FLOAT(I)
+      Y = SQRT(X)
+      ISQ = I*I
+      WRITE (6,30) I, ISQ, Y
+   20 CONTINUE
+   30 FORMAT (1X,I6,I12,F9.4)
+      STOP
+      END</textarea>
+      </div>
+    </div>
+  </div>
+  <p class="statusline"><span id="ed-pos">Line 1, Col 1</span><span id="ed-field">comment</span><span id="ed-warn" role="status"></span></p>
+  <p class="sr" id="src-hint">Each line is one record. Tab moves to column 7 or the next field, Shift Tab moves back, Escape leaves the text, and Control Enter runs the job.</p>
+</section>
+
+<!-- ============ The Results documents ============ -->
+<section class="win" id="win-printer" data-host="win-results" data-place="60 20 800 0.9">
+  <h2 class="title">Printout</h2>
+  <p class="infobar" aria-hidden="true"><span id="pr-job">no job yet</span><span id="pr-count"></span></p>
+  <div class="pane">
+    <p class="runstatus" id="run-status" role="status">Nothing has been run yet.</p>
+    <div class="fanfold"><div class="printer" id="printer" tabindex="0" aria-label="Printout"><p class="placeholder">Run a program to see what it prints.</p></div></div>
+  </div>
+</section>
+
+<section class="win" id="win-log" data-host="win-results" data-place="520 220 600">
+  <h2 class="title">Job Log</h2>
+  <div class="pane">
+    <div class="textdoc" id="log"><p class="placeholder">Errors, warnings and the STOP code appear here.</p></div>
+  </div>
+</section>
+
+<section class="win" id="win-listing" data-host="win-results" data-place="460 120 680 0.8">
+  <h2 class="title">Listing</h2>
+  <div class="pane">
+    <div class="textdoc"><pre id="listing" tabindex="0" aria-label="Listing">The listing of the program appears here after a run.</pre></div>
+  </div>
+</section>
+
+<section class="win" id="win-records" data-host="win-results" data-place="600 60 560 0.84">
+  <h2 class="title">Output</h2>
+  <p class="infobar" aria-hidden="true"><span id="out-count">0 records</span><span>one record per line</span></p>
+  <div class="out-tools">
+    <button type="button" class="btn default" id="out-play" disabled>Play in Player</button>
+    <button type="button" class="btn" id="out-replace" disabled>Replace the Editor&rsquo;s text</button>
+    <button type="button" class="btn" id="out-append" disabled>Add to the Editor as data</button>
+    <button type="button" class="btn" id="out-copy" disabled>Copy</button>
+    <button type="button" class="btn" id="out-download" disabled>Download</button>
+  </div>
+  <p class="statusline"><span id="out-status" role="status">Nothing has been written to the output yet.</span></p>
+  <div class="pane">
+    <ol class="records" id="records" aria-label="Output records"></ol>
+  </div>
+</section>
+
+<!-- ============ Player ============ -->
+<section class="win" id="win-player" data-place="380 40 720">
+  <h2 class="title">Player</h2>
+  <p class="infobar" aria-hidden="true"><span id="pl-name">no file loaded</span><span id="pl-len"></span></p>
+  <div class="pane">
+    <div class="roll-wrap" id="roll-wrap" role="slider" tabindex="0" aria-label="Position in the music" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="No notes loaded">
+      <svg class="roll" id="roll" aria-hidden="true" focusable="false"></svg>
+      <div class="playhead" id="playhead" aria-hidden="true"></div>
+    </div>
+    <div class="deck-row">
+      <p class="lcd" aria-hidden="true"><span id="pl-time">0:00.0</span><span class="of"> / </span><span id="pl-dur">0:00.0</span></p>
+      <div class="transport" role="group" aria-label="Transport">
+        <button type="button" class="btn tbtn" id="pl-stop" disabled><span class="tg tg-stop" aria-hidden="true"></span>Stop</button>
+        <button type="button" class="btn tbtn default" id="pl-play" disabled><svg class="tg" width="8" height="16" viewBox="0 0 4 8" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 0h1v1H0zM0 1h2v1H0zM0 2h3v1H0zM0 3h4v1H0zM0 4h4v1H0zM0 5h3v1H0zM0 6h2v1H0zM0 7h1v1H0z"/></svg>Play</button>
+        <button type="button" class="btn tbtn" id="pl-pause" disabled><span class="tg tg-pause" aria-hidden="true"></span>Pause</button>
+      </div>
+    </div>
+    <div class="pl-controls">
+      <div class="ctl">
+        <label for="pl-tempo">Tempo</label>
+        <input type="range" id="pl-tempo" min="40" max="240" step="4" value="120" aria-describedby="pl-tempo-out">
+        <output id="pl-tempo-out" for="pl-tempo">120 beats a minute</output>
+      </div>
+      <fieldset class="ctl radios">
+        <legend>Speed</legend>
+        <label><input type="radio" name="pl-speed" value="1" checked> Normal</label>
+        <label><input type="radio" name="pl-speed" value="2"> Double speed, an octave up</label>
+      </fieldset>
+      <fieldset class="ctl radios" id="pl-bare">
+        <legend>Bare numbers play as</legend>
+        <label><input type="radio" name="pl-bare" value="rhythm" checked> Rhythm</label>
+        <label><input type="radio" name="pl-bare" value="pitch"> Scale</label>
+        <p class="note" id="pl-bare-note">Load an output to choose.</p>
+      </fieldset>
+    </div>
+    <p class="pl-load"><button type="button" class="btn" id="pl-load" disabled>Load Output</button></p>
+  </div>
+  <p class="statusline"><span id="pl-status" role="status">No file is loaded. Run a program that writes notes to its output, then press Load Output.</span></p>
+</section>
+
+<!-- ============ Trash ============ -->
+<section class="win" id="win-trash" data-place="560 360 460">
+  <h2 class="title">Trash</h2>
+  <div class="pane">
+    <p id="trash-note"></p>
+    <ul class="trashlist" id="trash-list"></ul>
+  </div>
+</section>
+
+<!-- ============ Calculator: a desk accessory, in single precision ============ -->
+<section class="win calc" id="win-calc" data-place="640 60 344" aria-describedby="calc-hint">
+  <h2 class="title">Calculator</h2>
+  <div class="pane">
+    <p class="calc-st" id="calc-st" aria-hidden="true">&nbsp;</p>
+    <output class="calc-lcd" id="calc-out" aria-live="polite">0</output>
+    <div class="calc-card" aria-hidden="true">
+      <pre class="calc-print" id="calc-print"></pre>
+      <svg class="calc-holes" id="calc-holes" focusable="false"></svg>
+    </div>
+    <div class="calc-keys" role="group" aria-label="Keys">
+      <button type="button" class="btn ck" data-key="C" aria-label="Clear">C</button>
+      <button type="button" class="btn ck" data-key="E" aria-label="Clear entry">CE</button>
+      <button type="button" class="btn ck" data-key="**" aria-label="To the power">**</button>
+      <button type="button" class="btn ck" data-key="/" aria-label="Divided by">/</button>
+      <button type="button" class="btn ck" data-key="7">7</button>
+      <button type="button" class="btn ck" data-key="8">8</button>
+      <button type="button" class="btn ck" data-key="9">9</button>
+      <button type="button" class="btn ck" data-key="*" aria-label="Times">*</button>
+      <button type="button" class="btn ck" data-key="4">4</button>
+      <button type="button" class="btn ck" data-key="5">5</button>
+      <button type="button" class="btn ck" data-key="6">6</button>
+      <button type="button" class="btn ck" data-key="-" aria-label="Minus">-</button>
+      <button type="button" class="btn ck" data-key="1">1</button>
+      <button type="button" class="btn ck" data-key="2">2</button>
+      <button type="button" class="btn ck" data-key="3">3</button>
+      <button type="button" class="btn ck" data-key="+" aria-label="Plus">+</button>
+      <button type="button" class="btn ck wide" data-key="0">0</button>
+      <button type="button" class="btn ck" data-key="." aria-label="Point">.</button>
+      <button type="button" class="btn ck default" data-key="=" aria-label="Equals">=</button>
+    </div>
+    <p class="calc-mode"><button type="button" class="btn" id="calc-e" aria-pressed="false">E notation</button></p>
+  </div>
+  <p class="statusline"><span id="calc-note" role="status">Single precision, as a FORTRAN REAL.</span></p>
+  <p class="sr" id="calc-hint">Type the digits and + - * / on the keyboard; a caret is a power, Enter or the equals sign gives the result, Backspace takes back a digit and Delete clears the entry. Escape clears everything, and a second Escape closes the Calculator.</p>
+</section>
+
+<!-- ============ Crible: a game of sieves ============ -->
+<section class="win crible" id="win-crible" data-place="300 40 720" aria-describedby="cr-hint">
+  <h2 class="title">Crible</h2>
+  <p class="infobar" aria-hidden="true"><span id="cr-level">sieve 1</span><span id="cr-par"></span></p>
+  <div class="pane">
+    <p class="lede">Xenakis called his sieves <i lang="fr">cribles</i>. The class <code>m@s</code> holds every number that leaves <var>s</var> over when divided by <var>m</var>, and a sieve here is a union of classes. Rebuild the target from as few classes as you can: choose a modulus, then press a number in your sieve, and the class of that modulus through the number joins it, or leaves it if it is already there.</p>
+    <div class="cr-boards">
+      <div class="cr-board">
+        <h3 id="cr-t-h">The target</h3>
+        <div class="cr-grid" id="cr-target" role="img" aria-labelledby="cr-t-h cr-t-list"></div>
+        <p class="sr" id="cr-t-list"></p>
+      </div>
+      <div class="cr-board">
+        <h3 id="cr-m-h">Your sieve <code id="cr-formula">(empty)</code></h3>
+        <div class="cr-grid" id="cr-mine" role="group" aria-labelledby="cr-m-h"></div>
+      </div>
+    </div>
+    <p class="cr-key" aria-hidden="true"><span class="cr-k"><span class="cr-sw hit"></span>in both</span><span class="cr-k"><span class="cr-sw miss"></span>missing</span><span class="cr-k"><span class="cr-sw extra"></span>not in the target</span></p>
+    <fieldset class="ctl radios cr-mods" id="cr-mods"><legend>Modulus</legend></fieldset>
+    <div class="actions">
+      <button type="button" class="btn" id="cr-play-t">Play the target</button>
+      <button type="button" class="btn" id="cr-play-m">Play your sieve</button>
+      <button type="button" class="btn" id="cr-hint-b">Show a class</button>
+      <button type="button" class="btn" id="cr-clear">Clear your sieve</button>
+      <button type="button" class="btn default" id="cr-next">Next sieve</button>
+    </div>
+  </div>
+  <p class="statusline"><span id="cr-status" role="status"></span></p>
+  <p class="sr" id="cr-hint">In your sieve, the arrow keys move between the numbers, Enter or Space adds or removes the class through a number, and the keys 2 to 9 choose the modulus.</p>
+</section>
+
+<!-- ============ Eighty Columns: the course, its chart and its ten sheets ============ -->
+<section class="win course" id="win-course" data-place="180 20 820 0.95">
+  <h2 class="title">Eighty Columns</h2>
+  <p class="infobar" aria-hidden="true"><span>10 sheets</span><span>kept while the page is open</span></p>
+  <div class="pane">
+    <header class="mast">
+      <span class="numeral" data-tone="6" aria-hidden="true">80</span>
+      <div class="mast-t">
+        <h1>Eighty Columns</h1>
+        <p class="mast-sub">Ten exercises in punching FORTRAN on cards</p>
+      </div>
+    </header>
+    <p class="lede">A punched card holds one line of a program, written as holes in 80 columns and 12 rows. These ten sheets teach you to read the holes, punch them, lay out a FORTRAN statement on a card, and run decks through a card reader, a line printer and a card punch. The workspace&rsquo;s own interpreter checks every answer.</p>
+    <div class="progress">
+      <h3>Progress</h3>
+      <ol class="index" id="progress-index" aria-hidden="true">
+      <li data-tone="1"><span class="ix-sw"></span><span class="ix-n">01</span></li>
+      <li data-tone="1"><span class="ix-sw"></span><span class="ix-n">02</span></li>
+      <li data-tone="2"><span class="ix-sw"></span><span class="ix-n">03</span></li>
+      <li data-tone="2"><span class="ix-sw"></span><span class="ix-n">04</span></li>
+      <li data-tone="3"><span class="ix-sw"></span><span class="ix-n">05</span></li>
+      <li data-tone="3"><span class="ix-sw"></span><span class="ix-n">06</span></li>
+      <li data-tone="4"><span class="ix-sw"></span><span class="ix-n">07</span></li>
+      <li data-tone="4"><span class="ix-sw"></span><span class="ix-n">08</span></li>
+      <li data-tone="5"><span class="ix-sw"></span><span class="ix-n">09</span></li>
+      <li data-tone="6"><span class="ix-sw"></span><span class="ix-n">10</span></li>
+      </ol>
+      <p id="progress-text" role="status">None of the ten sheets is solved yet.</p>
+      <p class="note">Progress lasts only while this page is open. Nothing is stored, so reloading the page resets every sheet.</p>
+    </div>
+    <h3>The sheets</h3>
+    <ol class="sheetlist" id="sheet-list" aria-label="Sheets">
+      <li data-sheet="1" data-tone="1"><button type="button" class="sl" data-act="open:win-sheet-1"><span class="sl-n">01</span><span class="sl-t">Read a card</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 1 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="2" data-tone="1"><button type="button" class="sl" data-act="open:win-sheet-2"><span class="sl-n">02</span><span class="sl-t">Punch a character</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 1 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="3" data-tone="2"><button type="button" class="sl" data-act="open:win-sheet-3"><span class="sl-n">03</span><span class="sl-t">Punch a word</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 2 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="4" data-tone="2"><button type="button" class="sl" data-act="open:win-sheet-4"><span class="sl-n">04</span><span class="sl-t">The card&rsquo;s fields</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 2 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="5" data-tone="3"><button type="button" class="sl" data-act="open:win-sheet-5"><span class="sl-n">05</span><span class="sl-t">Continuation</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 3 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="6" data-tone="3"><button type="button" class="sl" data-act="open:win-sheet-6"><span class="sl-n">06</span><span class="sl-t">The dropped deck</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 3 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="7" data-tone="4"><button type="button" class="sl" data-act="open:win-sheet-7"><span class="sl-n">07</span><span class="sl-t">Data cards</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 4 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="8" data-tone="4"><button type="button" class="sl" data-act="open:win-sheet-8"><span class="sl-n">08</span><span class="sl-t">The line printer</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 4 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="9" data-tone="5"><button type="button" class="sl" data-act="open:win-sheet-9"><span class="sl-n">09</span><span class="sl-t">Punch, then feed back</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 5 of 6</span><span class="sl-s"></span></button></li>
+      <li data-sheet="10" data-tone="6"><button type="button" class="sl" data-act="open:win-sheet-10"><span class="sl-n">10</span><span class="sl-t">A deck of your own</span><span class="sl-d"><span class="sw" aria-hidden="true"></span>difficulty 6 of 6</span><span class="sl-s"></span></button></li>
+    </ol>
+    <p>The first three sheets teach the holes themselves: how to read a card, and how to punch digits, letters and signs with the codes of the IBM&nbsp;029 keypunch, which IBM introduced in 1964. The next sheets teach the parts of a FORTRAN card, continuation cards, the order of a deck, data cards, the line printer and the card punch. On the last sheet you punch a whole program. The swatch beside each sheet marks its difficulty, from pale sand to dark walnut.</p>
+    <p>When an answer is wrong, the feedback says why, and it quotes the interpreter&rsquo;s own messages where there are any. Every sheet has hints, and the later sheets can show a correct card if you are stuck. The sheets run from easy to hard, but they can be opened in any order, and a solved sheet offers the next one.</p>
+    <p class="actions"><button type="button" class="btn default" data-act="open:win-sheet-1">Begin with sheet 01</button> <button type="button" class="btn" data-act="open:win-codes">Open the Punch Codes</button></p>
+  </div>
+</section>
+
+<section class="win codes" id="win-codes" data-host="win-course" data-place="240 40 860 0.9">
+  <h2 class="title">Punch Codes</h2>
+  <p class="infobar" aria-hidden="true"><span>chart</span><span>from the interpreter&rsquo;s own table</span></p>
+  <div class="pane">
+    <article class="page">
+      <h3>The card</h3>
+      <p>IBM introduced its 80-column card in 1928. A card has 80 columns and 12 rows, and each column holds one character as a pattern of holes. From top to bottom the rows are 12, 11, 0, and then 1 to 9. A digit is a single hole in its own row. A letter is a <em>zone</em> hole in row 12, 11 or 0 together with one digit hole. Most signs add a hole in row 8 to a digit hole, and some add a zone hole as well. Both tables below are built from the interpreter&rsquo;s own code table.</p>
+    </article>
+    <div class="charts">
+      <table class="chart" id="chart-a"><caption>Single holes, and a zone hole with one digit hole</caption></table>
+      <p id="chart-alone"></p>
+      <table class="chart" id="chart-b"><caption>A hole in row 8 with a digit hole from 2 to 7, and an optional zone hole</caption></table>
+    </div>
+    <article class="page">
+      <h3>Using a card</h3>
+      <p>Click a position on a card to punch a hole there, and click it again to fill the hole in. A real hole could not be filled in, but here it can.</p>
+      <p>With the keyboard, press <kbd>Tab</kbd> to move into the card. The arrow keys move between positions, <kbd>Home</kbd> and <kbd>End</kbd> go to the first and the last column, and <kbd>Page Up</kbd> and <kbd>Page Down</kbd> go to the top and the bottom row. <kbd>Space</kbd> or <kbd>Enter</kbd> punches or clears the hole under the cursor. A screen reader announces the row, the column and whether the position is punched.</p>
+      <p>From sheet 4 on, the keypunch is switched on. Typing a character on the card punches that character&rsquo;s code into the current column and moves on to the next one, as a keypunch did. <kbd>Delete</kbd> clears the current column, <kbd>Backspace</kbd> clears the column before it, and the right arrow key leaves a column blank. Those sheets also have a keypunch line above the card, where you can type the whole card as text.</p>
+    </article>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-1" data-host="win-course" data-place="220 20 1040 0.95" data-tone="1">
+  <h2 class="title">Sheet 01: Read a card</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 1 of 10</span><span>difficulty 1 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="1" aria-hidden="true">01</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 1 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">Read a card</h3>
+      <p class="goal">This card was punched without printing, so nothing is written along its top edge. Read the holes column by column and type the text that the card holds. FORTRAN ignores blanks, and so does this check, so you need not count the empty columns.</p>
+      <p class="note"><strong>On the machine.</strong> The IBM 029 printed each character along the top edge of the card as it punched the column. Cards punched by other machines could come out with no printing at all, and an interpreter such as the IBM 557 read their holes and printed the characters for people to read.</p>
+    </div>
+  </div>
+  <div class="bench" id="l1-card"></div>
+  <div class="answer">
+    <label for="l1-answer">The card reads</label>
+    <input type="text" id="l1-answer" class="mono-in" maxlength="80" spellcheck="false" autocomplete="off" autocapitalize="characters">
+  </div>
+  <div class="actions"><button type="button" class="btn default" data-check="l1">Check</button><button type="button" class="btn" data-hint="l1">Show a hint</button><button type="button" class="btn" id="l1-new">Another card</button></div>
+  <ol class="hints" id="l1-hints" hidden></ol>
+  <div class="feedback" id="l1-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-2" data-host="win-course" data-place="240 30 1040 0.95" data-tone="1">
+  <h2 class="title">Sheet 02: Punch a character</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 2 of 10</span><span>difficulty 1 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="1" aria-hidden="true">02</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 1 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">Punch a character</h3>
+      <p class="goal">Punch five characters, one in each column of this short card: a digit, then a letter from each of the three zones, then a sign. Each character is checked as you go, and the next one appears when it is right. The keypunch is switched off on this sheet, so put in every hole yourself, with a click or with <kbd>Space</kbd> or <kbd>Enter</kbd>.</p>
+      <p class="note"><strong>The zones.</strong> Rows 12, 11 and 0 are the zone rows. A to I take a hole in row 12, J to R a hole in row 11, and S to Z a hole in row 0, each with a digit hole that counts its place in the group. S is the first letter of its group, but its digit is 2, because 0 and 1 together already mean the slash.</p>
+    </div>
+  </div>
+  <p class="target" id="l2-target"></p>
+  <div class="bench" id="l2-card"></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l2">Check</button><button type="button" class="btn" data-hint="l2">Show a hint</button><button type="button" class="btn" id="l2-new">Start again</button></div>
+  <ol class="hints" id="l2-hints" hidden></ol>
+  <div class="feedback" id="l2-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-3" data-host="win-course" data-place="260 40 1040 0.95" data-tone="2">
+  <h2 class="title">Sheet 03: Punch a word</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 3 of 10</span><span>difficulty 2 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="2" aria-hidden="true">03</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 2 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">Punch a word</h3>
+      <p class="goal">Punch the expression shown below, starting in column 1, with one character in each column. A blank is a column with no holes in it. The printing along the top of the card shows what you have punched so far. The keypunch is still switched off.</p>
+      <p class="note"><strong>On the machine.</strong> A hole could not be unpunched, so the only way to correct a mistake was to punch a new card. The operator put the spoiled card in the 029&rsquo;s reading station and held down the DUP key, which copied its columns onto a fresh card up to the mistake.</p>
+    </div>
+  </div>
+  <p class="target" id="l3-target"></p>
+  <div class="bench" id="l3-card"></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l3">Check</button><button type="button" class="btn" data-hint="l3">Show a hint</button><button type="button" class="btn" id="l3-new">Another expression</button><button type="button" class="btn" id="l3-clear">Clear the card</button></div>
+  <ol class="hints" id="l3-hints" hidden></ol>
+  <div class="feedback" id="l3-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-4" data-host="win-course" data-place="280 50 1040 0.95" data-tone="2">
+  <h2 class="title">Sheet 04: The card’s fields</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 4 of 10</span><span>difficulty 2 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="2" aria-hidden="true">04</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 2 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">The card&rsquo;s fields</h3>
+      <p class="goal">This program sets <code>I</code> to 7, jumps over the card that would reset it, and prints <code>I</code> at statement 30. Two of its cards are blank. Punch card 1 as a comment that says what the program does. Punch card 5 with the label <code>30</code> and the statement <code>WRITE (6,40) I</code>. The program has to run and print the target.</p>
+      <table class="fieldtable">
+        <tr><th>Columns</th><th>What they hold</th></tr>
+        <tr><td>1</td><td>A <code>C</code> or an asterisk here makes the whole card a comment.</td></tr>
+        <tr><td>1&ndash;5</td><td>An optional statement label: a number that other statements can jump to.</td></tr>
+        <tr><td>6</td><td>Any character but a blank or a zero marks a continuation card.</td></tr>
+        <tr><td>7&ndash;72</td><td>The statement itself.</td></tr>
+        <tr><td>73&ndash;80</td><td>Ignored by the compiler. These columns held sequence numbers.</td></tr>
+      </table>
+      <p class="note"><strong>On paper first.</strong> Programmers often wrote their programs on coding forms ruled into the same columns, and keypunch operators punched the cards from the forms. The band under each card here is ruled the same way.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l4-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l4-target"></div></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l4">Run and check</button><button type="button" class="btn" data-hint="l4">Show a hint</button><button type="button" class="btn" data-reset="l4">Reset the deck</button><button type="button" class="btn" data-bench="l4">Open in the Editor</button></div>
+  <ol class="hints" id="l4-hints" hidden></ol>
+  <div class="feedback" id="l4-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-5" data-host="win-course" data-place="300 60 1040 0.95" data-tone="3">
+  <h2 class="title">Sheet 05: Continuation cards</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 5 of 10</span><span>difficulty 3 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="3" aria-hidden="true">05</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 3 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">Continuation cards</h3>
+      <p class="goal">The line that this program prints is too long for the 66 statement columns of one card. Card 3 holds the start of its <code>FORMAT</code> statement and ends with a comma. Punch card 4 as a continuation card that finishes the statement, so that the printer prints exactly the target line.</p>
+      <p>A statement continues onto the next card when that card has any character other than a blank or a zero in column 6. Columns 1 to 5 of a continuation card stay blank, and its columns 7 to 72 are joined onto the end of the statement. Blanks outside quoted text are ignored, so the empty columns at the end of card 3 do no harm. Inside quotes, every blank is printed.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l5-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l5-target"></div></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l5">Run and check</button><button type="button" class="btn" data-hint="l5">Show a hint</button><button type="button" class="btn" data-reset="l5">Reset the deck</button><button type="button" class="btn" data-bench="l5">Open in the Editor</button></div>
+  <ol class="hints" id="l5-hints" hidden></ol>
+  <div class="feedback" id="l5-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-6" data-host="win-course" data-place="320 70 1040 0.95" data-tone="3">
+  <h2 class="title">Sheet 06: The dropped deck</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 6 of 10</span><span>difficulty 3 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="3" aria-hidden="true">06</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 3 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">The dropped deck</h3>
+      <p class="goal">Someone dropped this deck. Every card still carries its sequence number in columns 73 to 80, so the order can be restored. Put the cards back in order, either with the card sorter or by moving them one at a time, and then run the deck to check it.</p>
+      <p>The sorter reads one column of every card and drops each card into the pocket for the digit punched there. Cards with no digit in that column go to the reject pocket. The pockets are then picked up in order, from 0 to 9 with the rejects last, and the cards inside each pocket keep the order in which they arrived.</p>
+      <p class="note"><strong>On the machine.</strong> IBM&rsquo;s 083 sorter read one column per pass at 1,000 cards a minute and had 13 pockets, one for each row and one for blanks and rejects. A key several columns wide took one pass per column.</p>
+    </div>
+  </div>
+  <div class="sorter">
+    <div class="sorter-ctl">
+      <label for="l6-col">Sort on column</label>
+      <select id="l6-col"></select>
+      <button type="button" class="btn" id="l6-sort">Run the sorter</button>
+      <button type="button" class="btn" id="l6-shuffle">Drop the deck again</button>
+    </div>
+    <div class="pockets" id="l6-pockets" aria-hidden="true"></div>
+    <p class="sorter-st" id="l6-sort-st" role="status"></p>
+  </div>
+  <div class="deckarea" id="l6-deck"></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l6">Run and check</button><button type="button" class="btn" data-hint="l6">Show a hint</button><button type="button" class="btn" data-bench="l6">Open in the Editor</button></div>
+  <ol class="hints" id="l6-hints" hidden></ol>
+  <div class="feedback" id="l6-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-7" data-host="win-course" data-place="340 80 1040 0.95" data-tone="4">
+  <h2 class="title">Sheet 07: Data cards</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 7 of 10</span><span>difficulty 4 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="4" aria-hidden="true">07</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 4 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">Data cards</h3>
+      <p class="goal">This program reads a count from its first data card, then reads that many numbers, one to a card, and prints the count and the sum. Punch data cards after the <code>END</code> card so that the printer prints the target line. Any numbers that give the target will do.</p>
+      <p>Every card after <code>END</code> is data. <code>FORMAT (I5)</code> reads an integer from columns 1 to 5 of a card and ignores the rest of it. If the program asks for a card after the last one, the job stops with <code>END OF FILE ON UNIT 5</code>.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l7-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l7-target"></div></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l7">Run and check</button><button type="button" class="btn" data-hint="l7">Show a hint</button><button type="button" class="btn" data-reset="l7">Reset the deck</button><button type="button" class="btn" data-bench="l7">Open in the Editor</button></div>
+  <ol class="hints" id="l7-hints" hidden></ol>
+  <div class="feedback" id="l7-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-8" data-host="win-course" data-place="360 90 1040 0.95" data-tone="4">
+  <h2 class="title">Sheet 08: FORMAT and the line printer</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 8 of 10</span><span>difficulty 4 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="4" aria-hidden="true">08</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 4 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">FORMAT and the line printer</h3>
+      <p class="goal">Card 5 is blank. Punch <code>FORMAT</code> statement 10 so that the printer output matches the target exactly, character for character. Note that the target begins on a new page.</p>
+      <p>A <code>FORMAT</code> lays out a printed line. <code>Iw</code> prints an integer right-justified in <var>w</var> positions, <code>Fw.d</code> a real number with <var>d</var> digits after the point, <code>nX</code> skips <var>n</var> positions, and <code>nHtext</code> or <code>'text'</code> prints text.</p>
+      <table class="fieldtable">
+        <tr><th>First character</th><th>What the printer does</th></tr>
+        <tr><td>blank</td><td>Moves the paper up one line.</td></tr>
+        <tr><td><code>0</code></td><td>Leaves one blank line first.</td></tr>
+        <tr><td><code>-</code></td><td>Leaves two blank lines first.</td></tr>
+        <tr><td><code>1</code></td><td>Starts a new page.</td></tr>
+        <tr><td><code>+</code></td><td>Prints over the line before.</td></tr>
+      </table>
+      <p>The first character of every printed record is this carriage control character, and it is never printed.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l8-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l8-target"></div></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l8">Run and check</button><button type="button" class="btn" data-hint="l8">Show a hint</button><button type="button" class="btn" data-reset="l8">Reset the deck</button><button type="button" class="btn" data-bench="l8">Open in the Editor</button></div>
+  <ol class="hints" id="l8-hints" hidden></ol>
+  <div class="feedback" id="l8-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-9" data-host="win-course" data-place="380 100 1040 0.95" data-tone="5">
+  <h2 class="title">Sheet 09: Punch, then feed back</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 9 of 10</span><span>difficulty 5 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="5" aria-hidden="true">09</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 5 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">Punch, then feed back</h3>
+      <p class="goal">Program A reads a number <var>N</var> from its data card. It punches a card holding <var>N</var>, and then one card for each square 1, 4, 9 and so on, up to <var>N</var> squared. Program B reads cards like these and prints their total. Choose <var>N</var>, punch it on program A&rsquo;s data card, run program A, and feed the cards it punches to program B, so that program B prints the target line.</p>
+      <p>The cards a program punches land in the output stacker. They are ordinary cards, so they can be carried back to the reader as data for the next job. A program cannot read the cards it punches during the same run.</p>
+    </div>
+  </div>
+  <h3 class="part"><span class="part-n" aria-hidden="true">A</span>Program A, the punch</h3>
+  <div class="deckarea" id="l9-deck-a"></div>
+  <div class="actions"><button type="button" class="btn default" id="l9-run-a">Run program A</button><button type="button" class="btn" data-reset="l9">Reset both decks</button></div>
+  <div class="stack-out">
+    <p class="out-h">Output stacker</p>
+    <p id="l9-stack-st" role="status">Program A has not been run yet.</p>
+    <div class="decklist-wrap"><ol class="decklist" id="l9-stack"></ol></div>
+    <div class="actions"><button type="button" class="btn" id="l9-feed" disabled>Feed the stacker to program B</button></div>
+  </div>
+  <h3 class="part"><span class="part-n" aria-hidden="true">B</span>Program B, the reader</h3>
+  <div class="deckarea" id="l9-deck-b"></div>
+  <div class="target-out"><p class="out-h">Target printer output for program B</p><div class="printer" id="l9-target"></div></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l9">Run program B and check</button><button type="button" class="btn" data-hint="l9">Show a hint</button></div>
+  <ol class="hints" id="l9-hints" hidden></ol>
+  <div class="feedback" id="l9-fb" role="status"></div>
+  </div>
+</section>
+
+<section class="win sheet" id="win-sheet-10" data-host="win-course" data-place="400 110 1040 0.95" data-tone="6">
+  <h2 class="title">Sheet 10: A deck of your own</h2>
+  <p class="infobar" aria-hidden="true"><span>sheet 10 of 10</span><span>difficulty 6 of 6</span></p>
+  <div class="pane">
+
+  <div class="sheet-head">
+    <div class="side"><span class="numeral" data-tone="6" aria-hidden="true">10</span><p class="tone-key"><span class="sw" aria-hidden="true"></span>Difficulty 6 of 6</p><p class="stamp" hidden>Solved</p></div>
+    <div class="main">
+      <h3 class="sheet-t">A deck of your own</h3>
+      <p class="goal">Punch a complete program, from its first card to its <code>END</code> card, that prints the target output exactly. Any program that does it counts. Add cards with the buttons under the deck, and use everything the earlier sheets taught: the fields, <code>FORMAT</code>, and the carriage control character.</p>
+      <p>The About document <em>The language</em> lists the statements the interpreter understands, and the Programs folder holds sample programs to borrow from. A loop is written <code>DO 10 I = 1, 5</code>, and it repeats every card down to the one labelled 10, which is usually a <code>CONTINUE</code>.</p>
+    </div>
+  </div>
+  <div class="deckarea" id="l10-deck"></div>
+  <div class="target-out"><p class="out-h">Target printer output</p><div class="printer" id="l10-target"></div></div>
+  <div class="actions"><button type="button" class="btn default" data-check="l10">Run and check</button><button type="button" class="btn" data-hint="l10">Show a hint</button><button type="button" class="btn" data-reset="l10">Clear the deck</button><button type="button" class="btn" data-bench="l10">Open in the Editor</button></div>
+  <ol class="hints" id="l10-hints" hidden></ol>
+  <div class="feedback" id="l10-fb" role="status"></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Alert ============ -->
+<div class="alert-veil" id="alert-veil">
+  <div class="alert" id="alert" role="alertdialog" aria-modal="true" aria-labelledby="alert-msg" tabindex="-1">
+    <svg class="ico alert-ico" id="alert-ico" data-icon="note" aria-hidden="true"></svg>
+    <p id="alert-msg"></p>
+    <p class="alert-ok"><button type="button" class="btn default" id="alert-ok">OK</button></p>
+  </div>
+</div>
+<!-- the dialog for Save As and Move To: a name, a folder, or both -->
+<div class="alert-veil" id="ask-veil">
+  <form class="alert ask" id="ask" role="dialog" aria-modal="true" aria-labelledby="ask-msg" aria-describedby="ask-err">
+    <svg class="ico alert-ico" data-icon="folder" aria-hidden="true"></svg>
+    <p id="ask-msg"></p>
+    <p class="ask-f"><label for="ask-name">Name</label><input type="text" id="ask-name" maxlength="31" spellcheck="false" autocomplete="off"></p>
+    <p class="ask-f"><label for="ask-where">Folder</label><select id="ask-where"></select></p>
+    <p class="ask-err" id="ask-err" role="alert"></p>
+    <p class="alert-ok"><button type="button" class="btn" id="ask-cancel">Cancel</button> <button type="submit" class="btn default" id="ask-ok">Save</button></p>
+  </form>
+</div>
+
+<script src="../../scripts/hollerith.js"></script>
+<script src="../../scripts/fortran.js"></script>
+<script src="../../scripts/tape.js"></script>
+<script src="programs.js"></script>
+<script src="icons.js"></script>
+<script src="wm.js"></script>
+<script src="fs.js"></script>
+<script src="workspace.js"></script>
+<script src="card.js"></script>
+<script src="course.js"></script>
+<script src="apps.js"></script>
+<script src="dada.js"></script>
+<script src="link.js"></script>
+<script>Desk.open('win-welcome', { focus: false });</script>
+</body>
+</html>

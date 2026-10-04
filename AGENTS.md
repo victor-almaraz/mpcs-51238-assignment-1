@@ -104,6 +104,12 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 #### Version 22
 
+*Version 22* builds on *Version 21* and removes the separation of styles between the desk and computer. This version moves the computer style to a more modern UI, using vector graphics instead of dithered pixel art.
+
+#### Version 23
+
+*Version 23* builds on *Version 21* and removes the separation of styles between the desk and computer. This version moves the room style to pixel art. It also revises the computer UI from 3-bit dithering to full color pixel art.
+
 ### Gallery
 
 ### Genealogy
