@@ -27,8 +27,55 @@ var Desk = (function () {
   var stations = {}, shown = {}, current = 'desk';
   $$('[data-station]').forEach(function (s) { stations[s.getAttribute('data-station')] = s; });
   function heading(name) { return stations[name].querySelector('[tabindex="-1"]'); }
-  function go(name, focusEl) {
+
+  // Each thing in the room grows into its station and shrinks back into its place: the
+  // thing and the station's main object share one view-transition name for the change.
+  // MORPH[station] is [the open object, the thing in the room].
+  var MORPH = {
+    manual: ['.spread', '.spine.v1'], magazine: ['#mag', '.o-mag .mini-mag'], portfolio: ['.folio-inside', '.o-folio .folders'],
+    form: ['.pad-sheet', '.o-form .clipboard'], out: ['.fanfold', '.o-out .outtray'], recorder: ['.recorder', '.o-tape .player']
+  };
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LIST = window.matchMedia('(max-width: 879px), (max-height: 560px)');   // the room drawn as a list: nothing to grow from
+  var openedFrom = {};                 // the thing in the room each station was last opened from
+  function smallOf(name) {
+    var b = openedFrom[name];
+    if (b) return b.matches('.spine') ? b : b.querySelector('span');
+    return MORPH[name] ? doc.querySelector(MORPH[name][1]) : null;
+  }
+  function bigOf(name) {
+    var b = openedFrom[name];
+    if (b && b.matches('.o-box')) return stations[name].querySelector('.tray');
+    return MORPH[name] ? stations[name].querySelector(MORPH[name][0]) : null;
+  }
+  function seen(e) { return !!e && e.getClientRects().length > 0; }
+
+  // go(name, focusEl, after, src): after() runs once the station is in front; src is the
+  // button that asked, so a thing in the room is remembered as the station's way in
+  function go(name, focusEl, after, src) {
     if (!stations[name]) return;
+    var from = current;
+    if (src && src.closest('.scene') && name !== 'desk') openedFrom[name] = src;
+    // back in the room, the focus returns to the thing the station was opened from
+    if (name === 'desk' && !focusEl) focusEl = openedFrom[from] || doc.querySelector('.overview [data-go="' + from + '"]');
+    function apply() { show(name, focusEl); if (after) after(); }
+    if (!doc.startViewTransition || REDUCED || from === name || LIST.matches) { apply(); return; }
+    var opening = name !== 'desk', st = opening ? name : from;
+    var a = opening ? smallOf(st) : bigOf(st), b = null;
+    if (!MORPH[st] || !seen(a)) { apply(); return; }
+    a.style.viewTransitionName = 'thing';
+    var t = doc.startViewTransition(function () {
+      a.style.viewTransitionName = '';
+      apply();
+      b = opening ? bigOf(st) : smallOf(st);
+      if (seen(b)) b.style.viewTransitionName = 'thing';
+    });
+    // a transition the browser skips (a hidden tab, a second one begun) still makes the change
+    t.ready.catch(function () {});
+    if (t.updateCallbackDone) t.updateCallbackDone.catch(function () {});
+    t.finished.then(function () { a.style.viewTransitionName = ''; if (b) b.style.viewTransitionName = ''; }, function () {});
+  }
+  function show(name, focusEl) {
     Object.keys(stations).forEach(function (k) { stations[k].hidden = k !== name; });
     $$('.labels [data-go]').forEach(function (b) {
       if (b.getAttribute('data-go') === name) b.setAttribute('aria-current', 'true');
@@ -48,9 +95,8 @@ var Desk = (function () {
     var b = e.target.closest && e.target.closest('[data-go], [data-deck]');
     if (!b || b.disabled) return;
     if (b.hasAttribute('data-go')) {
-      var at = b.getAttribute('data-focus');
-      go(b.getAttribute('data-go'), at && $(at));
-      if (b.hasAttribute('data-chapter')) manualPages.show(+b.getAttribute('data-chapter'), true);
+      var at = b.getAttribute('data-focus'), ch = b.getAttribute('data-chapter');
+      go(b.getAttribute('data-go'), at && $(at), ch === null ? null : function () { manualPages.show(+ch, true); }, b);
     }
     else if (api.putOnForm) api.putOnForm(b.getAttribute('data-deck'));
   });
@@ -78,9 +124,8 @@ var Desk = (function () {
   doc.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape' || current === 'desk' || e.defaultPrevented) return;
     if (e.target.matches('input[type="text"], textarea, select')) return;
-    var from = current;
     e.preventDefault();
-    go('desk', doc.querySelector('.overview [data-go="' + from + '"]'));
+    go('desk');
   });
 
   /* ---------------- pages that turn ---------------- */

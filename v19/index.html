@@ -19,13 +19,13 @@
     <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="places">Menu</button>
     <div class="places" id="places" hidden>
       <ol class="labels">
-        <li><button type="button" class="label" data-go="desk" aria-current="true">The room</button></li>
-        <li><button type="button" class="label" data-go="manual">Reference manual</button></li>
-        <li><button type="button" class="label" data-go="magazine">Magazine</button></li>
-        <li><button type="button" class="label" data-go="portfolio">Xenakis miscellanea</button></li>
-        <li><button type="button" class="label" data-go="form">Coding form and deck box</button></li>
-        <li><button type="button" class="label" data-go="out">Out tray</button></li>
-        <li><button type="button" class="label" data-go="recorder">Tape player</button></li>
+        <li><button type="button" class="label" data-go="desk" aria-current="true"><span class="no" aria-hidden="true">1</span>The room</button></li>
+        <li><button type="button" class="label" data-go="manual"><span class="no" aria-hidden="true">2</span>Reference manual</button></li>
+        <li><button type="button" class="label" data-go="magazine"><span class="no" aria-hidden="true">3</span>Magazine</button></li>
+        <li><button type="button" class="label" data-go="portfolio"><span class="no" aria-hidden="true">4</span>Xenakis miscellanea</button></li>
+        <li><button type="button" class="label" data-go="form"><span class="no" aria-hidden="true">5</span>Coding form and deck box</button></li>
+        <li><button type="button" class="label" data-go="out"><span class="no" aria-hidden="true">6</span>Out tray</button></li>
+        <li><button type="button" class="label" data-go="recorder"><span class="no" aria-hidden="true">7</span>Tape player</button></li>
       </ol>
       <p class="back"><a href="../">Back to the gallery</a></p>
     </div>
@@ -41,30 +41,28 @@
       <div class="title-box"><p class="kicker" aria-hidden="true">The workroom</p><h1 id="desk-h" tabindex="-1">A desk of cards, sieves and code</h1><p class="title-sub">A FORTRAN card reader, a sieve generator after Xenakis, the decks of a magazine of art and computing, and a tape player for what they punch.</p></div>
 
       <div class="shelf-unit">
-        <span class="rail rail-l" aria-hidden="true"></span><span class="rail rail-r" aria-hidden="true"></span>
+        <img class="shelf-pic" src="assets/shelf.webp" width="1500" height="760" alt="">
         <ul class="shelf" aria-label="On the bookshelf">
-          <li><button type="button" class="obj spine v1" data-go="manual" data-chapter="0" aria-label="Reference manual, volume 1: FORTRAN"><span class="sp-no" aria-hidden="true">1</span><span class="sp-t" aria-hidden="true">FORTRAN</span></button></li>
-          <li><button type="button" class="obj spine v2" data-go="manual" data-chapter="5" aria-label="Reference manual, volume 2: Sieves"><span class="sp-no" aria-hidden="true">2</span><span class="sp-t" aria-hidden="true">Sieves</span></button></li>
-          <li><button type="button" class="obj spine v3" data-go="manual" data-chapter="7" aria-label="Reference manual, volume 3: Music and tape"><span class="sp-no" aria-hidden="true">3</span><span class="sp-t" aria-hidden="true">Music</span></button></li>
+          <li><button type="button" class="obj spine v1" data-go="manual" data-chapter="0" aria-label="Reference manual, volume 1: FORTRAN"><img class="sp-pic" src="assets/vol-1.webp" width="160" height="490" alt=""><span class="sp-no" aria-hidden="true">1</span><span class="sp-t" aria-hidden="true">FORTRAN</span></button></li>
+          <li><button type="button" class="obj spine v2" data-go="manual" data-chapter="5" aria-label="Reference manual, volume 2: Sieves"><img class="sp-pic" src="assets/vol-2.webp" width="145" height="455" alt=""><span class="sp-no" aria-hidden="true">2</span><span class="sp-t" aria-hidden="true">Sieves</span></button></li>
+          <li><button type="button" class="obj spine v3" data-go="manual" data-chapter="7" aria-label="Reference manual, volume 3: Music and tape"><img class="sp-pic" src="assets/vol-3.webp" width="152" height="475" alt=""><span class="sp-no" aria-hidden="true">3</span><span class="sp-t" aria-hidden="true">Music</span></button></li>
         </ul>
-        <span class="bookend" aria-hidden="true"></span>
-        <span class="vase" aria-hidden="true"></span>
-        <span class="plank" aria-hidden="true"></span>
-        <p class="shelf-tag" aria-hidden="true">Reference manual, in three volumes</p>
+        <p class="shelf-tag" aria-hidden="true"><span class="no">1</span>Reference manual, in three volumes</p>
       </div>
 
       <span class="desk-body" aria-hidden="true"><span class="leg leg-l"></span><span class="leg leg-r"></span></span>
-      <span class="lamp" aria-hidden="true"><span class="lamp-shade"></span></span>
+      <span class="lamp" aria-hidden="true"><img src="assets/lamp.webp" width="350" height="530" alt=""></span>
       <ul class="desk-top" aria-label="On the desk">
         <li class="pile">
-          <button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><canvas id="mag-thumb"></canvas></span><span class="obj-tag">Magazine</span></button>
-          <button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><span class="fd fd1"></span><span class="fd fd2"></span><span class="fd fd3"><span class="fd-tab">Xenakis</span></span></span><span class="obj-tag">Miscellanea</span></button>
+          <button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><canvas id="mag-thumb"></canvas></span><span class="obj-tag"><span class="no" aria-hidden="true">2</span>Magazine</span></button>
+          <button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><img src="assets/folders.webp" width="630" height="140" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">3</span>Miscellanea</span></button>
         </li>
-        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><span class="clip"></span><span class="sheet-lines"></span></span><span class="obj-tag">Coding form</span></button></li>
-        <li><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><span class="dcards"><span></span><span></span><span></span><span></span></span><span class="dfront"><span class="dholder"></span></span></span><span class="obj-tag">Deck box</span></button></li>
-        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><span class="ot-paper"></span><span class="ot-front"></span></span><span class="obj-tag">Out tray</span></button></li>
-        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><span class="pl-face"><span class="pl-reel"></span><span class="pl-reel"></span></span><span class="pl-keys"><span></span><span></span><span></span><span></span></span></span><span class="obj-tag">Tape player</span></button></li>
+        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="assets/coding-form.webp" width="350" height="470" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">4</span>Coding form</span></button></li>
+        <li><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><img src="assets/deck-box.webp" width="480" height="320" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">5</span>Deck box</span></button></li>
+        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="assets/out-tray.webp" width="520" height="220" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">6</span>Out tray</span></button></li>
+        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/tape-room.webp" width="750" height="530" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">7</span>Tape player</span></button></li>
       </ul>
+      <p class="plate-cap" aria-hidden="true"><b>Plate 1</b> The workroom in elevation, daylight from the left</p>
     </div>
   </section>
 
@@ -536,7 +534,7 @@
 
   </div>
   <div class="mag-turn">
-    <button type="button" class="mag-pill" data-turn="-1">Previous page</button>
+    <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
     <nav class="mag-index" aria-label="Magazine pages">
       <ol>
         <li><button type="button" data-goto="0"><span class="mag-dot">1</span><span class="mag-vh"> Cover</span></button></li>
@@ -549,7 +547,7 @@
       </ol>
     </nav>
     <p class="mag-folio" aria-live="polite"></p>
-    <button type="button" class="mag-pill mag-next" data-turn="1">Next page</button>
+    <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
   </div>
 </div>
   </section>
@@ -657,41 +655,22 @@
         <h2 id="tape-h" class="maker" tabindex="-1">Tape player <span class="run-lamp" aria-hidden="true"></span></h2>
         <div class="reels" aria-hidden="true">
           <svg class="reel-svg" viewBox="0 0 520 250">
-            <defs>
-              <radialGradient id="flange" cx="50%" cy="45%" r="60%">
-                <stop offset="0" stop-color="#e9e6dc"/><stop offset=".7" stop-color="#bdb7a8"/><stop offset="1" stop-color="#8f897b"/>
-              </radialGradient>
-            </defs>
-            <g id="reel-l" transform="translate(120 112)">
-              <circle r="104" fill="#1d1a16" opacity=".22" cx="3" cy="5"/>
-              <circle r="100" fill="#a69e8c"/>
+            <!-- the plate, the flanges and the head cover are pictures (assets/); the tape packs
+                 and the tape between them are drawn live, as they change while it plays -->
+            <image href="assets/deck.webp" width="520" height="250"/>
+            <g transform="translate(120 112)">
               <circle id="pack-l" r="90" fill="#5b3a22"/>
-              <g id="spokes-l">
-                <path d="M-102,0 A102,102 0 1 0 102,0 A102,102 0 1 0 -102,0 Z M31.5,-86.5 A92,92 0 0 1 90.6,16.0 L33.5,5.9 A34,34 0 0 0 11.6,-31.9 Z M59.1,70.5 A92,92 0 0 1 -59.1,70.5 L-21.9,26.0 A34,34 0 0 0 21.9,26.0 Z M-90.6,16.0 A92,92 0 0 1 -31.5,-86.5 L-11.6,-31.9 A34,34 0 0 0 -33.5,5.9 Z" fill="url(#flange)" fill-rule="evenodd" stroke="#6f6a5e" stroke-width="1.2"/>
-                <circle r="24" fill="#d9d4c6" stroke="#6f6a5e"/>
-                <circle r="8" fill="#3a352c"/>
-                <rect x="-2" y="-22" width="4" height="10" fill="#6f6a5e"/>
-              </g>
+              <g id="spokes-l"><image href="assets/reel.webp" x="-102" y="-102" width="204" height="204"/></g>
             </g>
-            <g id="reel-r" transform="translate(400 112)">
-              <circle r="104" fill="#1d1a16" opacity=".22" cx="3" cy="5"/>
-              <circle r="100" fill="#a69e8c"/>
+            <g transform="translate(400 112)">
               <circle id="pack-r" r="26" fill="#5b3a22"/>
-              <g id="spokes-r">
-                <path d="M-102,0 A102,102 0 1 0 102,0 A102,102 0 1 0 -102,0 Z M31.5,-86.5 A92,92 0 0 1 90.6,16.0 L33.5,5.9 A34,34 0 0 0 11.6,-31.9 Z M59.1,70.5 A92,92 0 0 1 -59.1,70.5 L-21.9,26.0 A34,34 0 0 0 21.9,26.0 Z M-90.6,16.0 A92,92 0 0 1 -31.5,-86.5 L-11.6,-31.9 A34,34 0 0 0 -33.5,5.9 Z" fill="url(#flange)" fill-rule="evenodd" stroke="#6f6a5e" stroke-width="1.2"/>
-                <circle r="24" fill="#d9d4c6" stroke="#6f6a5e"/>
-                <circle r="8" fill="#3a352c"/>
-                <rect x="-2" y="-22" width="4" height="10" fill="#6f6a5e"/>
-              </g>
+              <g id="spokes-r"><image href="assets/reel.webp" x="-102" y="-102" width="204" height="204"/></g>
             </g>
-            <!-- tape path past the guides and the head cover -->
+            <!-- tape path past the guides and under the head cover -->
             <line id="tape-l" x1="120" y1="202" x2="200" y2="232" stroke="#5b3a22" stroke-width="3"/>
             <line id="tape-r" x1="320" y1="232" x2="400" y2="138" stroke="#5b3a22" stroke-width="3"/>
             <line id="tape-mid" x1="200" y1="232" x2="320" y2="232" stroke="#5b3a22" stroke-width="3"/>
-            <circle cx="200" cy="232" r="7" fill="#cfc9bb" stroke="#6f6a5e"/>
-            <circle cx="320" cy="232" r="7" fill="#cfc9bb" stroke="#6f6a5e"/>
-            <rect x="226" y="218" width="68" height="28" rx="5" fill="#3b362e"/>
-            <rect x="232" y="222" width="56" height="5" rx="2" fill="#8c8576"/>
+            <image href="assets/head.webp" width="520" height="250"/>
           </svg>
         </div>
 

@@ -9,29 +9,31 @@
      the stack        the magazine (magazine.css) on the folders, among them the miscellanea
      the deck box     the decks, beside the coding form and the card in hand
      the out tray     printout, job ticket, listing and the punch's stacker
-     the tape player  a reel-to-reel machine in a walnut case
+     the tape player  a reel-to-reel machine in a teak case
    Inside a station the desk is seen from above, its oak under the papers. Text always
-   sits on paper or plaster, never on the wood. Type: Instrument Serif for display, Jost
-   in small tracked capitals for labels, Source Serif 4 for reading, IBM Plex Mono for
-   cards and code. */
+   sits on paper or plaster, never on the wood. Type, after Neue Grafik, Knoll and IBM's manuals: Work
+   Sans (a grotesque) for display, Jost in small tracked capitals for labels and plate
+   numbers, Charis SIL for reading, Arvo on the manuals' spines, IBM Plex Mono for cards
+   and code. */
 
 :root {
-  --wall: #eeebe5;
+  --wall: #ece8df;
   --wall-low: #e4dfd5;
-  --oak: #c9ae8b;
+  --oak: #c8a97e;
   --oak-d: #a98b68;
   --oak-l: #dcc6a7;
-  --walnut: #5b4131;
+  --walnut: #4e3727;
   --walnut-d: #3d2b20;
   --walnut-l: #7a5a45;
   --floor: #b9a184;
-  --paper: #fbfaf6;
+  --paper: #f7f4ec;
   --ivory: #f4f0e7;
   --stone: #d8d1c3;
-  --ink: #1f1e1c;
+  --ink: #1e1d1b;
   --ink-soft: #5d5851;
   --rule: #d6cfc2;
-  --accent: #9a4a31;     /* terracotta, used sparingly */
+  --accent: #b5462b;     /* the vermilion-terracotta of Knoll and Arts & Architecture, used sparingly */
+  --ochre: #c99a2e;      /* the ochre of the period's flat colour fields */
   --sage: #7d8a78;
   --slate: #49555a;
   --linen: #c7bba5;
@@ -40,12 +42,20 @@
   --steel-d: #8f8c86;
   --form-ink: #3b6a55;
   /* soft contact shadows: a lift for what lies on the desk, a fall for what stands */
-  --lift: 0 0.15rem 0.3rem rgba(30, 22, 14, 0.14), 0 0.7rem 1.4rem -0.6rem rgba(30, 22, 14, 0.38);
-  --lift-em: 0 0.12em 0.25em rgba(30, 22, 14, 0.14), 0 0.6em 1.1em -0.5em rgba(30, 22, 14, 0.4);
+  --lift: 0.1rem 0.15rem 0.3rem rgba(30, 22, 14, 0.14), 0.6rem 0.9rem 1.6rem -0.6rem rgba(30, 22, 14, 0.4);
+  --lift-em: 0.08em 0.12em 0.25em rgba(30, 22, 14, 0.14), 0.5em 0.7em 1.2em -0.5em rgba(30, 22, 14, 0.4);
+  /* what stands against the wall casts a soft shadow on it, down and to the right */
+  --cast: drop-shadow(0.55em 0.35em 0.55em rgba(40, 28, 18, 0.24));
+  /* a fine grain, for plaster, paper and wood: fractal noise, very faint */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .24 0 0 0 0 .18 0 0 0 .22 -.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
-  --display: "Instrument Serif", "Libre Caslon Text", Georgia, serif;
+  /* a grotesque after the early Stephenson Blake and Bauer cuts (Akzidenz-Grotesk's family), as in
+     Neue Grafik and Knoll's advertising; Futura's cousin for labels, as Arts & Architecture set them;
+     a Charter-like text face for the Century of IBM's manuals; a slab for the manuals' spines */
+  --display: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  --slab: "Arvo", "Rockwell", "Clarendon", serif;
   --sans: "Jost", "Futura", "Avenir Next", "Helvetica Neue", sans-serif;
-  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --serif: "Charis SIL", "Source Serif 4", Georgia, "Times New Roman", serif;
   --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
 
   /* the desk seen from above: pale oak, a faint grain running across */
@@ -86,7 +96,7 @@ td code { white-space: nowrap; }
 /* ---------- the room: always exactly one screen tall ---------- */
 
 .room { height: 100vh; height: 100dvh; }
-.desk { position: relative; height: 100%; display: grid; grid-template-rows: minmax(0, 1fr); background: var(--oak-top); }
+.desk { position: relative; height: 100%; display: grid; grid-template-rows: minmax(0, 1fr); background: radial-gradient(ellipse 80% 70% at 0 0, rgba(255, 248, 232, 0.4), transparent 70%), radial-gradient(ellipse 90% 80% at 100% 100%, rgba(40, 25, 10, 0.16), transparent 70%), var(--grain), var(--oak-top); }
 .desk[data-at="desk"] { background: var(--wall); }
 .desk > * { min-width: 0; min-height: 0; }
 
@@ -153,47 +163,49 @@ td code { white-space: nowrap; }
 .scene .obj:focus-visible { outline: none; }
 
 /* plaster, lit from the upper left; the oak floor along its foot */
-.wall { position: absolute; inset: -100vh -100vw 0; background: linear-gradient(var(--wall) 55%, var(--wall-low)); }
-.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 1.6em; background: linear-gradient(rgba(60, 40, 20, 0.18) 0 0.12em, var(--floor) 0.12em); }
+.wall { position: absolute; inset: -100vh -100vw 0; background: var(--grain), linear-gradient(var(--wall) 55%, var(--wall-low)); }
+/* the light from the window, a soft parallelogram across the wall, over the scene only */
+.wall::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(112deg, rgba(255, 252, 244, 0) 4%, rgba(255, 252, 244, 0.6) 14%, rgba(255, 252, 244, 0.45) 30%, rgba(255, 252, 244, 0) 42%),
+    radial-gradient(ellipse 40% 55% at 0 30%, rgba(255, 250, 238, 0.5), transparent 70%);
+  background-attachment: fixed;   /* laid out on the screen, so the light falls the same whatever the wall's size */
+  pointer-events: none;
+}
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 1.6em; background: linear-gradient(rgba(60, 40, 20, 0.3) 0 0.12em, transparent 0.12em), repeating-linear-gradient(90deg, transparent 0 11em, rgba(70, 48, 26, 0.3) 11em 11.06em), var(--grain), linear-gradient(var(--floor), #a88f72); }
 
 /* the title, set like the head of a feature */
 .title-box { position: absolute; left: 3.2em; top: 3.6em; width: 38em; }
 .kicker { margin: 0 0 1.2em; padding-bottom: 0.7em; font-size: 0.85em; color: var(--ink-soft); border-bottom: 1px solid var(--ink); width: 14em; }
-.title-box h1 { margin: 0; font: 400 3.1em/1.02 var(--display); letter-spacing: -0.005em; color: var(--ink); }
+.title-box h1 { margin: 0; font: 600 2.9em/1.04 var(--display); letter-spacing: -0.02em; color: var(--ink); }
 .title-sub { margin: 1em 0 0; max-width: 30em; font: 400 1em/1.5 var(--serif); color: var(--ink-soft); }
 
-/* --- the bookshelf: an oak board on two hairline steel rails --- */
+/* one flat field of colour on the wall, as the period's magazines set a panel against a photograph */
+/* the plate's own line, under the captions, as a magazine numbers its photographs */
+.plate-cap { position: absolute; right: 19.5em; top: 56.4em; margin: 0; font: 400 0.74em/1.3 var(--sans); letter-spacing: 0.06em; color: var(--ink-soft); }
+.plate-cap b { margin-right: 0.8em; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+/* numbered callouts: the caption's numeral in the accent */
+.obj-tag .no, .shelf-tag .no, .label .no { margin-right: 0.6em; font-weight: 600; color: var(--accent); }
+.label .no { display: inline-block; width: 1.2em; }
+
+/* --- the bookshelf, a picture (assets/shelf.webp): a String-style shelf, one oak board on two
+   wire ladders, under a screen print of ruled surfaces; a steel bookend, three books lying
+   flat, a sculpture of sounding brass rods and a stoneware bottle. The three volumes of the
+   manual are pictures too, one to a button, stood on the board --- */
 .shelf-unit { position: absolute; left: 46em; top: 5em; width: 30em; height: 12em; }
-.rail { position: absolute; top: 0; bottom: 0; width: 0.9em; border: solid var(--ink); border-width: 0 0.1em; background: repeating-linear-gradient(transparent 0 2.9em, var(--ink) 2.9em 3em); opacity: 0.85; }
-.rail-l { left: 1.2em; }
-.rail-r { right: 1.2em; }
-.plank { position: absolute; z-index: 1; left: 0; right: 0; top: 9.6em; height: 0.6em; background: linear-gradient(var(--oak-l) 0 0.12em, var(--oak) 0.12em); box-shadow: var(--lift-em); }
-.shelf { position: absolute; z-index: 2; left: 4em; bottom: 2.4em; display: flex; align-items: flex-end; gap: 0.12em; }
-/* cloth-bound volumes: a rounded spine (lit from the left), a darker headcap, the title
-   set downward in tracked capitals, the volume number on a paper label at the foot */
-.spine {
-  position: relative;
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.1em 0 0.75em !important;
-  border-radius: 0.22em 0.22em 0.06em 0.06em !important;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.14) 28%, rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.22)) !important;
-  box-shadow: inset 0 0.22em 0 rgba(0, 0, 0, 0.16), 0.1em 0 0.25em rgba(30, 22, 14, 0.18) !important;
-  transition: transform 0.2s ease;
-}
-.spine.v1 { width: 3.2em; height: 9.8em; background-color: var(--linen) !important; color: var(--ink) !important; }
-.spine.v2 { width: 2.9em; height: 9.1em; background-color: var(--slate) !important; color: var(--paper) !important; }
-.spine.v3 { width: 3.05em; height: 9.5em; background-color: var(--accent) !important; color: var(--paper) !important; }
-.sp-t { writing-mode: vertical-rl; font: 500 0.78em/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
-.sp-no { order: 2; margin-top: auto; display: grid; place-items: center; width: 1.5em; height: 1.5em; font: 400 1.05em/1 var(--display); color: var(--ink); background: var(--ivory); border-radius: 0.06em; box-shadow: 0 0 0 0.06em rgba(0, 0, 0, 0.18); }
+.shelf-pic { position: absolute; left: 0; top: -3.2em; width: 30em; height: 15.2em; pointer-events: none; }
+.shelf { position: absolute; z-index: 2; left: 4em; bottom: 2.4em; filter: var(--cast); display: flex; align-items: flex-end; gap: 0.12em; }
+/* cloth-bound volumes (assets/vol-1..3.webp): the round of the spine in two flat bands and a
+   halftone, the stamping a hair out of register, the number on a pasted paper label */
+.spine { position: relative; display: block !important; padding: 0 !important; transition: transform 0.2s ease; }
+.spine.v1 { width: 3.2em; height: 9.8em; }
+.spine.v2 { width: 2.9em; height: 9.1em; }
+.spine.v3 { width: 3.05em; height: 9.5em; }
+.sp-pic { display: block; width: 100%; height: 100%; }
+.spine .sp-no, .spine .sp-t { display: none; }
 .spine:hover, .spine:focus-visible { transform: translateY(-0.45em); }
 .spine:focus-visible { outline: 0.12em solid var(--ink) !important; outline-offset: 0.2em !important; }
-.bookend { position: absolute; left: 13.6em; bottom: 2.4em; width: 0.35em; height: 4.2em; background: var(--ink); }
-.bookend::after { content: ""; position: absolute; left: 0; bottom: 0; width: 2.2em; height: 0.18em; background: var(--ink); }
-/* a stoneware bottle, lit from the left */
-.vase { position: absolute; left: 22.5em; bottom: 2.4em; width: 2.6em; height: 4.6em; background: radial-gradient(ellipse at 35% 40%, #ece6da, #c9bfae 70%); border-radius: 46% 46% 30% 30% / 58% 58% 26% 26%; }
-.vase::before { content: ""; position: absolute; left: 1em; top: -1.4em; width: 0.6em; height: 1.7em; background: linear-gradient(to right, #e5ded0, #c6bcaa); border-radius: 0.1em; }
 .shelf-tag { position: absolute; left: 5.2em; top: 13.4em; margin: 0; font: 500 0.78em/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
 
 /* --- the desk: a thin walnut top on a slender black trestle --- */
@@ -203,18 +215,22 @@ td code { white-space: nowrap; }
               linear-gradient(transparent 0.95em, var(--walnut-d) 0.95em) 4em 0 / calc(100% - 8em) 100% no-repeat;
 }
 .desk-body::after { content: ""; position: absolute; left: 0; right: 0; top: 0.85em; height: 2.2em; background: linear-gradient(rgba(30, 22, 14, 0.16), transparent); pointer-events: none; }
+/* the grain along the walnut's front edge */
+.desk-body::before { content: ""; position: absolute; left: 0; right: 0; top: 0.12em; height: 0.73em; background: repeating-linear-gradient(90.6deg, transparent 0 2.4em, rgba(255, 225, 190, 0.08) 2.4em 2.7em, transparent 2.7em 5.6em), repeating-linear-gradient(89.4deg, transparent 0 3.9em, rgba(0, 0, 0, 0.12) 3.9em 4em, transparent 4em 7.3em), var(--grain); pointer-events: none; }
+/* the desk's shadow on the floor, thrown to the right */
+.floor::after { content: ""; position: absolute; left: 6em; right: 0; top: -0.4em; height: 1.6em; background: radial-gradient(closest-side, rgba(40, 26, 14, 0.32), transparent); }
 .leg { position: absolute; top: 0.95em; width: 0.32em; height: 13.6em; }
 .leg::before, .leg::after { content: ""; position: absolute; top: 0; width: 0.32em; height: 13.8em; background: var(--ink); transform-origin: top center; }
 .leg::before { transform: rotate(9deg); }
 .leg::after { transform: rotate(-9deg); }
 .leg-l { left: 5.5em; }
 .leg-r { right: 5.5em; }
-/* an architect's lamp: a black arm in two lengths, a small black shade */
-.lamp { position: absolute; left: 4.4em; top: 19.4em; width: 7em; height: 10.6em; }
-.lamp::before { content: ""; position: absolute; left: 1.2em; bottom: 0.3em; width: 0.16em; height: 7em; background: var(--ink); transform: rotate(14deg); transform-origin: bottom; }
-.lamp::after { content: ""; position: absolute; left: 0.3em; bottom: 0; width: 2.4em; height: 0.35em; background: var(--ink); border-radius: 0.2em 0.2em 0 0; }
-.lamp-shade { position: absolute; left: 2.4em; top: 2.6em; width: 4.2em; height: 0.16em; background: var(--ink); transform: rotate(-12deg); transform-origin: left; }
-.lamp-shade::after { content: ""; position: absolute; right: -0.9em; top: -0.2em; width: 1.9em; height: 1.5em; background: var(--ink); border-radius: 1em 1em 0.2em 0.2em; transform: rotate(40deg); }
+/* the lamp, a picture (assets/lamp.webp): a thin black stem and arm and a slant-cut shade,
+   after Serge Mouille's lamps of the 1950s; the pool of warm light it throws on the desk and
+   the wall stays a gradient */
+.lamp { position: absolute; left: 4.4em; top: 19.4em; width: 7em; height: 10.6em; filter: var(--cast); }
+.lamp img { position: relative; display: block; width: 100%; height: 100%; }
+.lamp::before { content: ""; position: absolute; left: 3.6em; top: 1.4em; width: 18em; height: 15em; background: radial-gradient(ellipse 50% 45% at 30% 72%, rgba(255, 226, 170, 0.42), rgba(255, 226, 170, 0.12) 55%, transparent 75%); transform: rotate(12deg); transform-origin: 0 0; pointer-events: none; mix-blend-mode: multiply; filter: saturate(0.8); }
 
 /* --- the things on the desk; each one's caption on the plaster under the desk, on a leader --- */
 .desk-top { position: absolute; left: 11.5em; right: 4.5em; top: 0; height: 37.6em; display: flex; align-items: flex-end; justify-content: space-between; }
@@ -233,82 +249,39 @@ td code { white-space: nowrap; }
 .obj-tag::before { content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px; height: 3.2em; background: var(--ink-soft); }
 .obj:hover .obj-tag, .obj:focus-visible .obj-tag { color: var(--accent); }
 .obj:focus-visible .obj-tag { outline: 0.12em solid var(--ink); outline-offset: 0.3em; }
-.desk-top .obj > span:first-child { transition: transform 0.2s ease; }
-.desk-top .obj:hover > span:first-child, .desk-top .obj:focus-visible > span:first-child { transform: translateY(-0.35em); }
+.desk-top .obj > span:first-child { filter: var(--cast); transition: transform 0.25s ease, filter 0.25s ease; }
+.desk-top .obj:hover > span:first-child, .desk-top .obj:focus-visible > span:first-child { transform: translateY(-0.35em); filter: drop-shadow(0.75em 0.6em 0.7em rgba(40, 28, 18, 0.22)); }
+/* where each thing meets the desk, a short soft shadow */
+.desk-top > li::after { content: ""; position: absolute; left: 4%; right: -6%; bottom: 7.35em; height: 0.55em; background: radial-gradient(closest-side, rgba(25, 15, 8, 0.38), transparent); pointer-events: none; }
 
-/* the stack: the magazine stood on three folders, the miscellanea's tab at the top */
-.pile { display: flex; align-items: flex-end; gap: 1.2em; width: 12.6em; }
-.o-mag .mini-mag { width: 6.2em; margin-bottom: 2.1em; box-shadow: var(--lift-em); }
-.o-folio .folders { position: absolute; left: 0; bottom: 7.6em; width: 12.6em; height: 2.1em; }
+/* the stack: the magazine stood on three folders (assets/folders.webp), the miscellanea's tab at the top */
+.pile { display: flex; align-items: flex-end; gap: 1.6em; width: 15.6em; }
+.o-mag .mini-mag { width: 6.2em; margin-bottom: 1.95em; box-shadow: var(--lift-em); }
+.o-folio .folders { position: absolute; left: 0; bottom: 7.6em; width: 12.6em; height: 2.8em; }
+.folders img, .clipboard img, .deckbox img, .outtray img { display: block; width: 100%; height: 100%; }
 .o-folio { margin-left: auto; }
 .o-folio .obj-tag { grid-row: 2; }
-.fd { position: absolute; left: 0; right: 0; height: 0.62em; border-radius: 0.05em; box-shadow: 0 0.06em 0 rgba(30, 22, 14, 0.25); }
-.fd1 { bottom: 0; background: var(--stone); }
-.fd2 { bottom: 0.68em; left: 0.4em; right: -0.25em; background: var(--linen); }
-.fd3 { bottom: 1.36em; left: 0.15em; background: #bfae8e; }
-.fd-tab { position: absolute; right: 0.7em; bottom: 0.55em; padding: 0.08em 0.6em 0.12em; font: 500 0.6em/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); background: #bfae8e; border-radius: 0.2em 0.2em 0 0; }
 .o-folio:hover .folders, .o-folio:focus-visible .folders { transform: translateY(-0.25em); }
 
-/* the coding form on a clipboard, stood against the wall */
-.clipboard { position: relative; display: block; width: 6.6em; height: 9em; background: #8c7258; border-radius: 0.3em; box-shadow: var(--lift-em); transform: rotate(1.5deg); }
-.clip { position: absolute; left: 2em; top: -0.3em; width: 2.6em; height: 1.1em; background: linear-gradient(#e2e0dc, #a9a6a0); border-radius: 0.25em 0.25em 0.45em 0.45em; z-index: 1; }
-.sheet-lines {
-  position: absolute; inset: 0.7em 0.45em 0.45em;
-  background:
-    linear-gradient(var(--form-ink) 0 0.35em, transparent 0.35em),
-    linear-gradient(to right, transparent 0 0.9em, rgba(59, 106, 85, 0.5) 0.9em 0.95em, transparent 0.95em 1.15em, rgba(59, 106, 85, 0.5) 1.15em 1.2em, transparent 1.2em),
-    repeating-linear-gradient(transparent 0 0.42em, rgba(59, 106, 85, 0.3) 0.42em 0.46em) 0 0.8em / 100% calc(100% - 0.8em) no-repeat,
-    var(--paper);
-}
-
-/* the deck box: walnut, a brass card frame; the index cards stand in it with their tabs */
+/* the coding form on its clipboard, stood against the wall; the deck box, walnut, the cards
+   upright in it with their guide tabs; the out tray, graphite, fan-fold printout and two
+   cards in it. All three are pictures (assets/coding-form, deck-box, out-tray.webp) */
+.clipboard { position: relative; display: block; width: 7em; height: 9.4em; transform: rotate(1.5deg); }
 .deckbox { position: relative; display: block; width: 9.6em; height: 6.4em; }
-.dcards { position: absolute; left: 0.5em; right: 0.5em; bottom: 3.2em; height: 2.8em; }
-.dcards span { position: absolute; bottom: 0; width: 100%; height: 2em; background: var(--ivory); box-shadow: 0 -0.05em 0 var(--rule); }
-.dcards span::before { content: ""; position: absolute; top: -0.5em; width: 2em; height: 0.55em; border-radius: 0.15em 0.15em 0 0; background: inherit; box-shadow: inherit; }
-.dcards span:nth-child(1) { height: 2.4em; }
-.dcards span:nth-child(1)::before { left: 0.3em; }
-.dcards span:nth-child(2) { height: 2.1em; background: var(--stone); }
-.dcards span:nth-child(2)::before { left: 2.7em; }
-.dcards span:nth-child(3) { height: 1.8em; background: var(--paper); }
-.dcards span:nth-child(3)::before { left: 5.1em; background: var(--accent); }
-.dcards span:nth-child(4) { height: 1.5em; }
-.dfront { position: absolute; left: 0; right: 0; bottom: 0; height: 3.6em; background: linear-gradient(var(--walnut-l) 0 0.1em, var(--walnut) 0.1em); box-shadow: var(--lift-em); }
-.dholder { position: absolute; left: 3.3em; top: 1.15em; width: 3em; height: 1.15em; background: var(--ivory); border: 0.14em solid var(--brass); }
+.outtray { position: relative; display: block; width: 10.4em; height: 4.4em; }
 
-/* the out tray: a low tray of black steel, fan-fold paper in it */
-.outtray { position: relative; display: block; width: 10.2em; height: 4em; }
-.ot-paper {
-  position: absolute; left: 0.8em; right: 0.8em; bottom: 0.9em; height: 2.6em;
-  background:
-    radial-gradient(circle, var(--steel-d) 0 0.09em, transparent 0.11em) 0.12em 0.2em / 0.42em 0.5em repeat-y,
-    radial-gradient(circle, var(--steel-d) 0 0.09em, transparent 0.11em) calc(100% - 0.12em) 0.2em / 0.42em 0.5em repeat-y,
-    repeating-linear-gradient(var(--paper) 0 0.45em, #dfe9da 0.45em 0.9em);
-  box-shadow: 0 -0.05em 0 var(--rule);
-}
-.ot-front { position: absolute; left: 0; right: 0; bottom: 0; height: 1.3em; background: linear-gradient(#3a3835 0 0.12em, var(--ink) 0.12em); border-radius: 0.08em; box-shadow: var(--lift-em); }
-
-/* the tape player: a reel-to-reel machine upright in a walnut case */
-.player { position: relative; display: block; width: 14.6em; height: 10.2em; padding: 0.55em; background: linear-gradient(to right, var(--walnut-l), var(--walnut) 12%, var(--walnut) 88%, var(--walnut-d)); border-radius: 0.3em; box-shadow: var(--lift-em); }
-.pl-face { display: flex; justify-content: space-around; align-items: center; height: 6.3em; background: linear-gradient(#e2e0db, var(--steel)); }
-.pl-reel {
-  width: 4.6em; height: 4.6em; border-radius: 50%;
-  background:
-    radial-gradient(circle, #e6e4df 0 0.4em, var(--ink) 0.42em 0.55em, transparent 0.57em),
-    radial-gradient(circle at 50% 22%, #c9c6bf 0 0.5em, transparent 0.52em),
-    radial-gradient(circle at 25% 66%, #c9c6bf 0 0.5em, transparent 0.52em),
-    radial-gradient(circle at 75% 66%, #c9c6bf 0 0.5em, transparent 0.52em),
-    radial-gradient(circle, #2b2a28 0 70%, #1a1918 71%);
-}
-.pl-keys { display: flex; gap: 0.25em; height: 2.75em; padding: 0.7em 0.9em; background: #c4c2bc; }
-.pl-keys span { flex: 1; background: linear-gradient(#f4f3ef, #dad8d2); border-radius: 0.08em; box-shadow: 0 0.08em 0 #8f8c86; }
-.pl-keys span:nth-child(2) { background: linear-gradient(#b05a3e, var(--accent)); }
+/* the tape player, a picture (assets/tape-room.webp): a reel-to-reel machine in a teak case,
+   its brushed aluminium deck over a graphite strip of keys, knobs and a level meter */
+.player { position: relative; display: block; width: 15em; height: 10.6em; }
+.player img { display: block; width: 100%; height: 100%; }
 
 /* --- below a readable size, the room becomes a list of what is in it --- */
 @container (max-width: 879px), (max-height: 505px) {
   /* (the station is the query container, so the drawing pads and scrolls itself) */
   .scene { align-self: stretch; justify-self: stretch; width: auto; height: 100%; overflow: auto; padding: 3.8rem 1.1rem 1.6rem; font-size: 16px; display: grid; align-content: start; gap: 1.6rem; }
-  .wall, .desk-body, .lamp, .rail, .plank, .bookend, .vase { display: none; }
+  .wall, .desk-body, .lamp, .shelf-pic, .plate-cap { display: none; }
+  .desk-top > li::after { display: none; }
+  .shelf, .desk-top .obj > span:first-child { filter: none; }
   .title-box, .shelf-unit, .shelf, .desk-top { position: static; width: auto; height: auto; }
   .kicker { width: auto; font-size: 0.8rem; margin-bottom: 0.8rem; }
   .title-box h1 { font-size: 2.3rem; }
@@ -323,10 +296,11 @@ td code { white-space: nowrap; }
   .desk-top > li { width: 100%; }
   .pile { display: contents; }
   .scene .obj, .desk-top .obj, .spine { display: grid !important; grid-template-columns: 3.4rem minmax(0, 1fr); grid-template-rows: auto; align-items: center; justify-items: start; gap: 0.9rem; width: 100%; height: auto; min-height: 3.4rem; padding: 0.5rem 0.2rem !important; text-align: left; background: none !important; color: var(--ink) !important; border-bottom: 1px solid var(--rule) !important; border-radius: 0 !important; box-shadow: none !important; transform: none !important; }
+  .spine .sp-pic { display: none; }
   .spine .sp-no { display: grid; place-items: center; width: 2rem; height: 2.6rem; font-size: 1.2rem; color: var(--paper); background: var(--slate); }
   .spine.v1 .sp-no { background: var(--linen); color: var(--ink); }
   .spine.v3 .sp-no { background: var(--accent); }
-  .spine .sp-t { writing-mode: horizontal-tb; margin: 0; font: 400 1.35rem/1.2 var(--display); letter-spacing: 0; text-transform: none; }
+  .spine .sp-t { display: block; writing-mode: horizontal-tb; margin: 0; font: 600 1.15rem/1.2 var(--display); letter-spacing: 0; text-transform: none; }
   .spine .sp-no { order: 0; margin: 0; box-shadow: none; border-radius: 0.1rem; }
   .obj-tag { align-self: center; padding: 0; font-size: 0.85rem; white-space: normal; }
   .obj-tag::before { display: none; }
@@ -343,25 +317,26 @@ td code { white-space: nowrap; }
 .st-manual, .st-folio { padding-left: 1.2rem; padding-right: 1.2rem; }
 .spread {
   display: grid;
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 2px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 2px);
   grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   height: 100%;
   max-width: 82rem;
   margin: 0 auto;
   padding: 0.6rem;
-  background: var(--slate);
+  background-color: var(--slate);
   border-radius: 0.2rem;
   box-shadow: var(--lift);
 }
-.page { position: relative; min-height: 0; padding: 1.8rem 2rem 1.3rem; background: var(--paper); }
+.page { position: relative; min-height: 0; padding: 1.8rem 2rem 1.3rem; background: var(--grain), var(--paper); }
 .page-l { overflow: auto; box-shadow: inset -1.4rem 0 1.4rem -1.4rem rgba(30, 22, 14, 0.18); }
 .page-r { display: flex; flex-direction: column; padding-left: 2.6rem; box-shadow: inset 1.4rem 0 1.4rem -1.4rem rgba(30, 22, 14, 0.18); }
 .chapters { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 0.6rem; }
-.page-l h2 { margin: 0 0 1.6rem; padding-bottom: 0.9rem; font: 400 2rem/1.05 var(--display); border-bottom: 1px solid var(--ink); }
+.page-l h2 { margin: 0 0 1.6rem; padding-bottom: 0.9rem; font: 600 1.55rem/1.1 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
 .contents-h { margin: 0 0 0.8rem; font-size: 0.8rem; color: var(--ink-soft); }
 .contents { margin: 0; padding: 0; list-style: none; }
 .contents .vol { margin: 0 0 1.1rem; }
-.vol-h { display: block; font: 400 1.15rem/1.3 var(--display); }
+.vol-h { display: block; font: 600 0.95rem/1.35 var(--display); }
 .contents ol { margin: 0.25rem 0 0; padding: 0; list-style: none; }
 .contents ol li { margin: 0; }
 .contents button { display: block; width: 100%; padding: 0.2rem 0; text-align: left; font: 400 0.98rem/1.4 var(--serif); background: none; border: 0; border-radius: 0; border-bottom: 1px solid var(--rule); box-shadow: none; }
@@ -369,7 +344,7 @@ td code { white-space: nowrap; }
 .contents button[aria-current="page"] { font-weight: 700; }
 .chapter { max-width: 66ch; }
 .running { margin: 0 0 0.6rem; font-size: 0.78rem; color: var(--ink-soft); }
-.chapter h3 { margin: 0 0 1.1rem; font: 400 2.1rem/1.08 var(--display); }
+.chapter h3 { margin: 0 0 1.1rem; font: 600 1.85rem/1.12 var(--display); letter-spacing: -0.015em; }
 .chapter table { width: 100%; margin: 1rem 0; border-collapse: collapse; }
 .chapter th, .chapter td { padding: 0.35rem 0.7rem 0.35rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
 .chapter th { font: 500 0.85rem var(--sans); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); }
@@ -394,11 +369,11 @@ td code { white-space: nowrap; }
   border-radius: 0.15rem;
   box-shadow: var(--lift);
 }
-.flap { min-height: 0; padding: 1.2rem 1.1rem; overflow: auto; background: var(--ivory); }
-.flap h2 { margin: 0 0 1.2rem; padding-bottom: 0.8rem; font: 400 1.75rem/1.05 var(--display); border-bottom: 1px solid var(--ink); }
+.flap { min-height: 0; padding: 1.2rem 1.1rem; overflow: auto; background: var(--grain), var(--ivory); }
+.flap h2 { margin: 0 0 1.2rem; padding-bottom: 0.8rem; font: 600 1.45rem/1.1 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
 .folio-index { display: grid; margin: 0; padding: 0; list-style: none; }
 .folio-index button { display: flex; align-items: baseline; gap: 0.7rem; width: 100%; padding: 0.3rem 0; text-align: left; font: 400 0.98rem/1.35 var(--serif); background: none; border: 0; border-radius: 0; border-bottom: 1px solid var(--rule); box-shadow: none; }
-.idx-letter { flex: none; width: 1.1rem; font: 400 1.1rem/1 var(--display); color: var(--ink-soft); }
+.idx-letter { flex: none; width: 1.1rem; font: 700 0.95rem/1 var(--slab); color: var(--ink-soft); }
 .folio-index button[aria-current="page"] .idx-letter { color: var(--accent); }
 .folio-index button[aria-current="page"] .idx-title { font-weight: 700; }
 .folio-index button:hover .idx-title { color: var(--accent); }
@@ -406,14 +381,14 @@ td code { white-space: nowrap; }
 .sheets { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0 0.6rem 0.6rem 0; }
 .flap-r .page-turn { max-width: none; margin: 0; padding: 0.5rem 0.9rem; background: var(--ivory); border: 0; }
 
-.sheet { display: grid; gap: 1.1rem; padding: 1.4rem clamp(0.9rem, 2.5vw, 2rem) 1.6rem; background: var(--paper); box-shadow: var(--lift); }
+.sheet { display: grid; gap: 1.1rem; padding: 1.4rem clamp(0.9rem, 2.5vw, 2rem) 1.6rem; background: var(--grain), var(--paper); box-shadow: var(--lift); }
 .sheet[hidden] { display: none; }
 .sheet.two { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
 .sheet-note, .sheet h3 { grid-column: 1 / -1; }
 .sheet-note { margin: 0 0 -0.6rem; font-size: 0.78rem; color: var(--accent); }
-.sheet h3 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0; padding-bottom: 0.7rem; font: 400 2rem/1.08 var(--display); border-bottom: 1px solid var(--ink); }
-.sheet-letter { flex: none; font: 400 1em/1 var(--display); color: var(--ink-soft); }
+.sheet h3 { display: flex; align-items: baseline; gap: 0.7rem; margin: 0; padding-bottom: 0.7rem; font: 600 1.6rem/1.12 var(--display); letter-spacing: -0.015em; border-bottom: 1px solid var(--ink); }
+.sheet-letter { flex: none; font: 700 0.9em/1 var(--slab); color: var(--ink-soft); }
 .exhibit { margin: 0; min-width: 0; }
 .exhibit .art { margin: 0 0 0.9rem; }
 .exhibit .art svg { display: block; width: 100%; height: auto; max-height: 52vh; box-shadow: 0 0 0 1px var(--rule); }
@@ -441,7 +416,21 @@ td code { white-space: nowrap; }
   background: linear-gradient(var(--slate) 0 46%, transparent 46%), radial-gradient(circle at 70% 46%, var(--accent) 0 1.9rem, transparent 1.95rem), var(--stone);
   box-shadow: var(--lift);
 }
-.jacket-label { font: 400 1.7rem/1.02 var(--display); text-align: left; color: var(--ink); }
+.jacket-label { font: 600 1.45rem/1.05 var(--display); letter-spacing: -0.015em; text-align: left; color: var(--ink); }
+
+/* ================================================================ the magazine's page turns */
+/* the same strip and buttons as the manual's and the folder's page turns */
+.mag-turn { justify-self: stretch; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; max-width: 58rem; width: 100%; margin: 0 auto; padding: 0.5rem 0.9rem; background: var(--grain), var(--ivory); box-shadow: var(--lift); }
+.mag-index ol { display: flex; gap: 0.25rem; margin: 0; padding: 0; list-style: none; }
+.mag-index li { margin: 0; }
+.mag-index button { min-width: 2rem; padding: 0.3rem 0.5rem; font-variant-numeric: tabular-nums; }
+.mag-index button[aria-current="page"] { color: var(--paper); background: var(--ink); }
+.mag-dot { font: inherit; }
+.mag-turn > [data-turn="-1"] { order: 1; }
+.mag-turn > .mag-next { order: 2; }
+.mag-index { order: 3; }
+.mag-folio { order: 4; }
+.mag-folio { margin: 0 0 0 auto; font: 400 0.9rem var(--sans); letter-spacing: 0.08em; color: var(--ink-soft); }
 
 /* ================================================================ the coding form and the deck box */
 
@@ -496,7 +485,7 @@ td code { white-space: nowrap; }
 }
 .pad-sheet > * { flex: none; }
 .form-head { display: flex; flex-wrap: wrap; align-items: end; gap: 0.5rem 2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--form-ink); }
-.form-head h2 { margin: 0; font: 400 1.75rem/1.1 var(--display); color: var(--form-ink); }
+.form-head h2 { margin: 0; font: 600 1.45rem/1.15 var(--display); letter-spacing: -0.01em; color: var(--form-ink); }
 .form-boxes { display: flex; flex-wrap: wrap; margin: 0; border: 1px solid var(--form-ink); }
 .form-boxes > div { padding: 0.15rem 0.6rem 0.25rem; border-left: 1px solid var(--form-ink); }
 .form-boxes > div:first-child { border-left: 0; min-width: 14rem; }
@@ -599,10 +588,10 @@ button.thread { color: var(--paper); background: var(--accent); border-color: va
 .stack-box button:focus-visible { outline-color: var(--paper); }
 
 /* ================================================================ the tape player */
-/* a walnut case round a brushed aluminium deck plate; pale keys, the play key terracotta */
+/* a teak case round a brushed aluminium deck plate; pale keys, the play key terracotta */
 
 .st-tape { display: grid; place-items: center; }
-.recorder { width: min(100%, 62rem); padding: 0.8rem; background: linear-gradient(to right, var(--walnut-l), var(--walnut) 6%, var(--walnut) 94%, var(--walnut-d)); border-radius: 0.35rem; box-shadow: var(--lift); }
+.recorder { width: min(100%, 62rem); padding: 0.8rem; background: linear-gradient(#b98a5e 0 0.25rem, transparent 0.25rem), var(--grain), linear-gradient(to right, #a87850, #9a6a43 6%, #9a6a43 94%, #7d5334); border-radius: 0.35rem; box-shadow: var(--lift); }
 .deck-plate {
   display: grid;
   grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
@@ -668,6 +657,19 @@ input[type="range"]::-moz-range-track { height: 2px; background: var(--ink); }
 input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; background: linear-gradient(to right, #c8c5bf, #f4f3ef 45%, #b3b0a9); border: 1px solid var(--ink-soft); border-radius: 0.1rem; }
 
 .tape-status { grid-area: status; width: auto; box-shadow: none; border: 1px solid var(--ink-soft); }
+
+/* ================================================================ flow */
+/* A thing in the room grows into its station and shrinks back (desk.js names the pair for
+   the change); everything else fades across. Where there is no view transition, a station
+   arrives with a short rise. */
+::view-transition-group(thing) { animation-duration: 0.55s; animation-timing-function: cubic-bezier(0.22, 0.75, 0.2, 1); }
+::view-transition-old(thing), ::view-transition-new(thing) { height: 100%; animation-duration: 0.55s; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.4s; }
+.drawer { view-transition-name: corner; }
+@supports not (view-transition-name: none) {
+  .station:not(.st-desk) > * { animation: arrive 0.35s ease-out; }
+}
+@keyframes arrive { from { opacity: 0; transform: translateY(0.6rem); } to { opacity: 1; transform: none; } }
 
 /* ================================================================ smaller screens */
 
@@ -743,4 +745,5 @@ input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; backgroun
 
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }

@@ -2,7 +2,8 @@
    grammar of a 1960s title sequence (Playfair Display italic, Jost, cropped numerals,
    op-art swatches) and printed in four process colours and a spot orange. Body text,
    buttons and code sit only on flat paper or flat ink; only display type of 40px and up
-   is screened. Every rule is scoped to .mag or .mini-mag. */
+   is screened. Every rule is scoped to .mag or .mini-mag; the page turns under it are the
+   room's controls and are styled with the room (style.css). */
 
 .mag {
   --mag-paper: #fffaf0;
@@ -187,7 +188,7 @@
 
 /* ---------- buttons ---------- */
 
-.mag button {
+.mag-book button {
   font: 600 16px/1.3 var(--mag-body);
   color: var(--mag-ink);
   background: var(--mag-paper);
@@ -196,10 +197,10 @@
   padding: 0.45rem 1.05rem;
   cursor: pointer;
 }
-.mag button:hover { background: var(--mag-yellow); }
-.mag button:disabled { color: #5c5c5c; border-color: #9a9a9a; background: #f2f0ea; cursor: default; }
-.mag button:focus-visible { outline: 3px solid var(--mag-magenta); outline-offset: 3px; }
-.mag button i { font-style: italic; }
+.mag-book button:hover { background: var(--mag-yellow); }
+.mag-book button:disabled { color: #5c5c5c; border-color: #9a9a9a; background: #f2f0ea; cursor: default; }
+.mag-book button:focus-visible { outline: 3px solid var(--mag-magenta); outline-offset: 3px; }
+.mag-book button i { font-style: italic; }
 /* a deck to punch: a flat strip of black ink holding an orange pill */
 .mag-deck, .mag-decks { margin: 0 0 1.2rem; }
 .mag-deck { padding: 0.55rem 0.7rem; background: var(--mag-ink); }
@@ -216,28 +217,9 @@
 .mag-cat p { margin: 0 0 0.55rem; }
 .mag-r .mag-cat { margin-top: 0; }
 
-/* ---------- turning the pages: a slip of flat ink under the magazine ---------- */
-
-.mag-turn {
-  justify-self: center;
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: 0.4rem 0.9rem;
-  max-width: 100%;
-  padding: 0.4rem 0.6rem;
-  background: var(--mag-ink);
-  color: var(--mag-paper);
-  box-shadow: 0 0.3rem 0.7rem rgba(0, 0, 0, 0.45);
-}
-.mag-turn button { border-color: var(--mag-paper); }
-.mag-turn button:focus-visible { outline-color: var(--mag-yellow); }
-.mag-turn .mag-next:not(:disabled) { background: var(--mag-orange); border-color: var(--mag-orange); }
-.mag-turn .mag-next:not(:disabled):hover { background: var(--mag-yellow); border-color: var(--mag-yellow); }
-.mag-turn button:disabled { border-color: #9a9a9a; }
-.mag-index ol { display: flex; gap: 0.3rem; margin: 0; padding: 0; list-style: none; }
-.mag-index li { margin: 0; }
-.mag-index button { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; padding: 0; font: italic 700 1.05rem/1 var(--mag-display); }
-.mag-index button[aria-current="page"] { background: var(--mag-yellow); border-color: var(--mag-yellow); }
-.mag-folio { margin: 0; min-width: 7.5em; font: italic 400 1.15rem/1.3 var(--mag-display); text-align: center; }
+/* ---------- turning the pages ----------
+   The controls under the magazine belong to the room, not to the magazine: they take the
+   room's buttons and its page-turn strip (style.css), whatever the magazine's own design. */
 
 /* ---------- small openings: one page under the other, one scroll ---------- */
 
@@ -254,9 +236,6 @@
 }
 @container mag (max-width: 560px) {
   .mag-index { display: none; }
-  .mag-turn { gap: 0.4rem 0.5rem; padding: 0.35rem 0.4rem; }
-  .mag-turn .mag-pill { padding: 0.4rem 0.7rem; }
-  .mag-folio { min-width: 0; font-size: 1rem; }
   .mag-contents li { grid-template-columns: 2.6rem minmax(0, 1fr); }
 }
 @container mag (max-height: 640px) and (min-width: 761px) {
