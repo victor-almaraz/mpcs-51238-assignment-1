@@ -38,14 +38,22 @@
 | **v15** | A skeuomorph of a physical working space, warm and tactile like v04 and v06; breaks with v03's layout; organizes materials in books, notebooks, decks; keeps and expands v06's miscellanea; adds music decks and a reel-to-reel player | A **walnut desk with a green leather top**; no tabs. Each object holds part of the site:
 - **Brass nameplate:** "A desk for cards and sieves", the page's only title, with no introduction.
 - **Red cloth reference manual:** the About text, 9 chapters on a two-page spread, including new chapters on the music decks and the tape recorder.
-- **Marbled portfolio:** the Xenakis miscellanea A–N, v06's eight plus six new: the *Achorripsis* matrix, *Analogique A* and *B* screens, *Concret PH*, *Terretektorh*, *Polytope de Cluny*, *Polytope de Persépolis*.
+- **Marbled portfolio:** the Xenakis miscellanea A–N, v06's eight plus six new: the *Achorripsis* matrix, *Analogique A* and *B* screens, *Concret PH*, *Terretektorh*, *Polytope de Cluny*, *Polytope de Persépolis*. The four atmospheric sheets (G, K, M, N: Montréal, *Concret PH*, Cluny, Persépolis) are imagined photographs in `v15/assets/`, mounted as prints and captioned as imagined renderings, not photographs of the works; the rest are drawings.
 - **Oak card tray:** all 10 decks as banded stacks, in Programs and Music sections; picking one loads it.
 - **Coding-form pad:** the editor.
 - **Card on the desk:** the card viewer.
 - **Out tray:** green-bar printout, job ticket, folded listing and a wooden stacker box.
 - **Teak reel-to-reel recorder:** built on the shared `scripts/tape.js`. It threads the stacker, plays bare sieve members as rhythm or scale, and has turning reels, a counter, transport keys, tempo and a 7½/15 ips speed switch.
 
-The manual and portfolio open as modal dialogs, with focus managed and Escape to close. The page uses images from `../v06/assets/`. **Page-only music decks:** *Sieve scale*, *Two rhythm sieves*, *Stochastic cloud* (after *Achorripsis*), *Markov melody* (after *Analogique*), *String glissandi* (after *Metastaseis*), punched as tape cards. Fonts: Gelasio, Libre Caslon Text, Bodoni Moda, Courier Prime, IBM Plex Mono, Caveat, Barlow Condensed. |
+The manual and portfolio open as modal dialogs, with focus managed and Escape to close. The page uses images from `../v06/assets/` and its own photographed materials in `v15/assets/`: walnut, green leather, oak, teak, red book cloth, brushed plate and laid paper. Each is a seamless tile with its baked-in shading flattened. **Things on the desk:** cut-out photographs (WebP with transparency, the backdrop's own shadows removed, one CSS shadow from the upper left), placed round each station on wide screens only (at least 1100 × 700) and hidden from assistive technology:
+- the overview: coffee, a pen, paper clips and a banded stack of punched cards;
+- the coding form: an inkwell and a stamp pad, in a gutter that appears only from 1600 px, so the form keeps all 80 columns in view;
+- the card viewer: a loupe and a banded stack of punched cards;
+- the printout: pencils and clips, under the ticket column;
+- the stacker: a pen, under the note;
+- the recorder: the tape box and a cup, under the case.
+
+**Page-only music decks:** *Sieve scale*, *Two rhythm sieves*, *Stochastic cloud* (after *Achorripsis*), *Markov melody* (after *Analogique*), *String glissandi* (after *Metastaseis*), punched as tape cards. Fonts: Gelasio, Libre Caslon Text, Bodoni Moda, Courier Prime, IBM Plex Mono, Caveat, Barlow Condensed. |
 | **v16** | A skeuomorph of a digital working space, drawn from v08's desktop and organized like it; adds music programs, a player program and some of v15's miscellanea as digital documents; punched cards are dropped for a traditional buffer editor; the language stays FORTRAN | v08's classic Mac desktop and window manager, grown into a **fully digital** workspace on a **3-bit colour screen**.
 - **Palette:** eight colours (R, G and B each 0 or 255); every tone comes from dithering each channel separately against the same 8×8 Bayer matrix.
 - **One screen pixel (2 CSS px) for everything:**
@@ -125,3 +133,4 @@ Every answer is checked with the real engine (`decodeCard`, `punches`, `run`), w
   - *Euclid, read aloud*: prints its own instructions and punches a 16-card program that runs
 
 Fonts: Playfair Display, Jost, IBM Plex Mono. |
+

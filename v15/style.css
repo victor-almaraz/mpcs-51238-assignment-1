@@ -3,7 +3,8 @@
    and coding form pad, the card in hand, the printout, the stacker and a reel-to-reel
    recorder) are stations, one in front at a time, reached from a drawer of labels.
    The desk is one screen tall; long things scroll inside their own object.
-   Text always sits on plain paper; the textures stay on wood, leather, cloth and boards. */
+   Text always sits on paper; the photographed textures (assets/) are the desk's materials,
+   each a seamless tile. */
 
 :root {
   --walnut: #3f2718;
@@ -32,10 +33,14 @@
   --marble-comb: url("../v06/assets/marble-nonpareil-tile.jpg");
   --marble-spanish: url("../v06/assets/marble-spanish.jpeg");
 
-  /* fine grain for leather, stretched grain for wood, a weave for book cloth */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
-  --woodgrain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .09' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .05 0 0 0 0 .02 0 0 0 .55 -.12'/%3E%3C/filter%3E%3Crect width='600' height='300' filter='url(%23w)'/%3E%3C/svg%3E");
-  --weave: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.09) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 3px);
+  /* the desk's materials, seamless tiles */
+  --walnut-tex: url("assets/walnut.jpeg") 0 0 / 900px auto;
+  --leather-tex: url("assets/leather-green.jpeg") 0 0 / 820px auto;
+  --oak-tex: url("assets/oak.jpeg") 0 0 / 600px auto;
+  --teak-tex: url("assets/teak.jpeg") 0 0 / 700px auto;
+  --cloth-tex: url("assets/bookcloth-red.jpeg") 0 0 / 600px auto;
+  --plate-tex: url("assets/brushed-plate.jpeg") 0 0 / 800px auto;
+  --laid-tex: url("assets/laid-paper.jpeg") 0 0 / 760px auto;
 }
 
 
@@ -45,7 +50,7 @@
 
 * { box-sizing: border-box; }
 
-html { height: 100%; background: var(--woodgrain), linear-gradient(100deg, #4a2e1c, #3a2316 40%, #4d301d); background-color: var(--walnut); }
+html { height: 100%; background: var(--walnut-tex), var(--walnut); }
 
 body {
   height: 100%;
@@ -79,15 +84,21 @@ td code { white-space: nowrap; }
   grid-template-columns: 9.6rem minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   gap: 1.4rem;
-  background: var(--grain), radial-gradient(ellipse at 40% 30%, #34463a, var(--leather) 70%, #223022);
+  /* a lamp over the desk, then the leather */
+  background: radial-gradient(ellipse at 40% 30%, rgba(255, 240, 200, 0.06), transparent 55%, rgba(0, 0, 0, 0.3)), var(--leather-tex), var(--leather);
   border-radius: 0.4rem;
-  /* the gilt fillet tooled round the leather, and the walnut lip of the desk */
-  box-shadow:
-    inset 0 0 0 0.55rem var(--leather),
-    inset 0 0 0 calc(0.55rem + 1.5px) var(--gilt),
-    inset 0 0 0 calc(0.55rem + 4px) var(--leather),
-    inset 0 0 0 calc(0.55rem + 5px) rgba(201, 165, 90, 0.7),
-    0 0.6rem 1.6rem rgba(0, 0, 0, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0.6rem 1.6rem rgba(0, 0, 0, 0.55);
+}
+/* the gilt fillet tooled round the leather: a line and a fainter line inside it */
+.desk::before {
+  content: "";
+  position: absolute;
+  inset: 0.55rem;
+  border: 1.5px solid var(--gilt);
+  border-radius: 0.15rem;
+  outline: 1px solid rgba(201, 165, 90, 0.7);
+  outline-offset: -5px;
+  pointer-events: none;
 }
 /* a tooled acanthus frieze along the head and foot of the leather */
 .desk-rim {
@@ -106,7 +117,8 @@ td code { white-space: nowrap; }
   flex-direction: column;
   gap: 1rem;
   padding: 0.8rem 0.6rem;
-  background: var(--woodgrain), linear-gradient(to right, #5a3824, #6d4429 60%, #5a3824);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.12), rgba(255, 230, 200, 0.05) 60%, rgba(0, 0, 0, 0.12)), var(--walnut-tex), var(--walnut);
+  background-position: 0 0, 310px 140px;
   border-radius: 0.3rem;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.45), inset 0 2px 6px rgba(0, 0, 0, 0.35), 2px 4px 10px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
@@ -206,7 +218,8 @@ td code { white-space: nowrap; }
   justify-self: start;
   max-width: 100%;
   padding: 0.35rem;
-  background: linear-gradient(#5a3a22, #3b2414);
+  background: linear-gradient(rgba(255, 230, 200, 0.06), rgba(0, 0, 0, 0.25)), var(--walnut-tex), var(--walnut);
+  background-position: 0 0, 120px 420px;
   border-radius: 0.2rem;
   box-shadow: 0 2px 0 #24160c, 3px 8px 12px rgba(0, 0, 0, 0.5);
 }
@@ -267,7 +280,7 @@ td code { white-space: nowrap; }
   width: 7.6rem;
   aspect-ratio: 3 / 4;
   padding-left: 1rem;
-  background: linear-gradient(to right, #3f1612 0 1rem, rgba(255, 255, 255, 0.08) 1rem 1.1rem, transparent 1.1rem), var(--weave), var(--oxblood);
+  background: linear-gradient(to right, rgba(40, 8, 6, 0.5) 0 1rem, rgba(255, 255, 255, 0.1) 1rem 1.1rem, transparent 1.1rem), linear-gradient(rgba(60, 12, 10, 0.18), rgba(60, 12, 10, 0.18)), var(--cloth-tex), var(--oxblood);
   border-radius: 0.15rem 0.3rem 0.3rem 0.15rem;
   box-shadow: 2px 2px 0 #efe6cf, 3px 3px 0 #ddd1b2, 4px 4px 0 #efe6cf, 5px 5px 0 #4a1a15, 6px 9px 14px rgba(0, 0, 0, 0.55);
 }
@@ -349,9 +362,9 @@ td code { white-space: nowrap; }
 .mini-pad span { position: absolute; left: 0.5rem; right: 0.5rem; top: 1.1rem; height: 0.2rem; background: var(--form-ink); }
 .mini-card { height: 4.1rem; background: radial-gradient(circle, #2a2118 0 1px, transparent 1.5px) 0.4rem 0.6rem / 0.45rem 0.42rem, #f1e2bb; clip-path: polygon(0.6rem 0, 100% 0, 100% 100%, 0 100%, 0 0.6rem); box-shadow: none; filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.5)); }
 .mini-print { width: 8.4rem; height: 8rem; background: radial-gradient(circle, var(--leather) 0 2px, transparent 2.5px) 0.15rem 0.3rem / 0.6rem 0.65rem repeat-y, radial-gradient(circle, var(--leather) 0 2px, transparent 2.5px) calc(100% - 0.15rem) 0.3rem / 0.6rem 0.65rem repeat-y, repeating-linear-gradient(to bottom, #fbfaf2 0 0.9rem, #dcebd8 0.9rem 1.8rem); }
-.mini-stack { background: var(--woodgrain), linear-gradient(#4a3121, #3a2618); border-radius: 0.2rem; }
+.mini-stack { background: var(--walnut-tex), var(--walnut); background-position: -200px -80px; border-radius: 0.2rem; }
 .mini-stack span { position: absolute; inset: 0.6rem 0.6rem 0.8rem; background: repeating-linear-gradient(to bottom, #f1e2bb 0 0.55rem, #8f7550 0.55rem calc(0.55rem + 1px)); }
-.mini-tape { width: 10rem; height: 6.4rem; background: radial-gradient(circle at 28% 45%, #5b3a22 0 1.1rem, #bdb7a8 1.15rem 1.9rem, #6f6a5e 1.95rem 2rem, transparent 2.05rem), radial-gradient(circle at 72% 45%, #5b3a22 0 1.1rem, #bdb7a8 1.15rem 1.9rem, #6f6a5e 1.95rem 2rem, transparent 2.05rem), linear-gradient(#ddd6c6, #cfc7b4); border: 0.4rem solid #94592f; border-radius: 0.35rem; }
+.mini-tape { width: 10rem; height: 6.4rem; background: radial-gradient(circle at 28% 45%, #5b3a22 0 1.1rem, #bdb7a8 1.15rem 1.9rem, #6f6a5e 1.95rem 2rem, transparent 2.05rem), radial-gradient(circle at 72% 45%, #5b3a22 0 1.1rem, #bdb7a8 1.15rem 1.9rem, #6f6a5e 1.95rem 2rem, transparent 2.05rem), var(--plate-tex) padding-box, var(--teak-tex) border-box, #cfc7b4; border: 0.4rem solid transparent; border-radius: 0.35rem; }
 
 /* ---------- the manual, open: a buckram case round two pages ---------- */
 
@@ -364,11 +377,11 @@ td code { white-space: nowrap; }
   max-width: 82rem;
   margin: 0 auto;
   padding: 0.6rem;
-  background: var(--weave), var(--oxblood);
+  background: linear-gradient(rgba(60, 12, 10, 0.18), rgba(60, 12, 10, 0.18)), var(--cloth-tex), var(--oxblood);
   border-radius: 0.4rem;
   box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.55);
 }
-.page { position: relative; min-height: 0; padding: 1.6rem 1.8rem 1.2rem; background: var(--paper); }
+.page { position: relative; min-height: 0; padding: 1.6rem 1.8rem 1.2rem; background: var(--laid-tex), var(--paper); }
 .page-l { overflow: auto; border-radius: 0.2rem 0 0 0.2rem; box-shadow: inset -1.6rem 0 1.4rem -1.4rem rgba(60, 40, 20, 0.35); }
 .page-r { display: flex; flex-direction: column; border-radius: 0 0.2rem 0.2rem 0; padding-left: 2.4rem; box-shadow: inset 1.6rem 0 1.4rem -1.4rem rgba(60, 40, 20, 0.35); }
 .chapters { flex: 1 1 auto; min-height: 0; overflow: auto; padding-right: 0.6rem; }
@@ -426,7 +439,7 @@ td code { white-space: nowrap; }
   background: #f5ecd6;
   border: 3px double #6b2f2a;
 }
-.folio-index { display: grid; gap: 0.3rem; margin: 0; padding: 0.6rem; list-style: none; background: var(--paper); box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
+.folio-index { display: grid; gap: 0.3rem; margin: 0; padding: 0.6rem; list-style: none; background: var(--laid-tex), var(--paper); box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
 .folio-index button { display: flex; gap: 0.6rem; width: 100%; padding: 0.2rem 0.4rem; text-align: left; font: 1rem/1.3 var(--book); background: none; border: 0; box-shadow: none; }
 .idx-letter { flex: none; display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; font: 700 1rem var(--type); background: #c9d9a8; border: 1px solid #5d6e45; border-radius: 50%; }
 .folio-index button[aria-current="page"] .idx-letter { background: #7fa35a; color: #13200a; }
@@ -434,9 +447,9 @@ td code { white-space: nowrap; }
 .folio-index button:hover .idx-title { text-decoration: underline; }
 .flap-r { display: flex; flex-direction: column; gap: 0.7rem; min-height: 0; padding: 1rem 1.2rem; background: var(--morris) center / cover no-repeat, #1d2a47; box-shadow: inset 0 0 0 3px #f3ead2, inset 0 0 0 5px #6a2721; }
 .sheets { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 0.3rem 0.5rem 0.6rem 0.2rem; }
-.flap-r .page-turn { max-width: none; justify-content: flex-start; margin: 0; padding: 0.5rem 0.9rem; background: var(--paper); border: 0; box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
+.flap-r .page-turn { max-width: none; justify-content: flex-start; margin: 0; padding: 0.5rem 0.9rem; background: var(--laid-tex), var(--paper); border: 0; box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4); }
 
-.sheet { display: grid; gap: 1.1rem; padding: 1.1rem clamp(0.9rem, 2.5vw, 1.8rem) 1.4rem; background: #fbf8ee; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5); }
+.sheet { display: grid; gap: 1.1rem; padding: 1.1rem clamp(0.9rem, 2.5vw, 1.8rem) 1.4rem; background: var(--laid-tex), #fbf8ee; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5); }
 .sheet[hidden] { display: none; }
 .sheet.two { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
 .sheet.two:has(.printout) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
@@ -452,6 +465,13 @@ td code { white-space: nowrap; }
 .exhibit figcaption { max-width: 66ch; font: 1rem/1.55 var(--book); }
 .exhibit.printout .art { overflow-x: auto; }
 .exhibit.plan .art { max-width: 30rem; }
+/* a photographic print mounted on the sheet, in its white border */
+.exhibit.photo .art img { display: block; width: auto; max-width: 100%; height: auto; max-height: 50vh; padding: 0.4rem; background: #fdfcf8; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); }
+/* an upright print stays small, with its caption beside it where the sheet is wide enough */
+.exhibit.photo.tall { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0 1.6rem; }
+.exhibit.photo.tall .art { flex: none; max-width: 100%; }
+.exhibit.photo.tall .art img { max-height: min(48vh, 30rem); }
+.exhibit.photo.tall figcaption { flex: 1 1 16rem; }
 .st {
   margin: 0; padding: 0.4rem 2.2rem; font-size: 16px; line-height: 1.45; color: #15200f; white-space: pre;
   background:
@@ -480,7 +500,7 @@ td code { white-space: nowrap; }
   flex-direction: column;
   min-height: 0;
   padding: 0.8rem 0.8rem 0.9rem;
-  background: var(--woodgrain), linear-gradient(to bottom, #b98b55, #a97b47);
+  background: var(--oak-tex), #b98b55;
   border-radius: 0.3rem;
   box-shadow: inset 0 0 0 0.4rem rgba(0, 0, 0, 0.12), inset 0 0.6rem 1rem rgba(0, 0, 0, 0.25), 3px 6px 12px rgba(0, 0, 0, 0.5);
 }
@@ -675,7 +695,7 @@ input.card:focus-visible { outline: 2px solid #8a2f22; outline-offset: -2px; }
 /* ---------- the stacker station ---------- */
 
 .st-stack { display: grid; grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 1.6rem; }
-.stack-slip { align-self: start; max-height: 100%; overflow: auto; padding: 1rem 1.2rem 0.6rem; background: var(--cream); box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.45); }
+.stack-slip { align-self: start; max-height: 100%; overflow: auto; padding: 1rem 1.2rem 0.6rem; background: var(--laid-tex), var(--cream); box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.45); }
 .stack-slip h2 { margin: 0 0 0.6rem; font: 700 1rem/1.3 var(--type); letter-spacing: 0.12em; text-transform: uppercase; }
 .stack-slip p { margin: 0; max-width: 60ch; }
 .stack-slip .toolbar button { text-align: left; }
@@ -690,7 +710,8 @@ button.thread { font-weight: 700; background: #f6f2e6; border-color: #5b5246; }
   min-height: 0;
   overflow: auto;
   padding: 0.9rem 1rem 1rem;
-  background: var(--woodgrain), linear-gradient(#4a3121, #3a2618);
+  background: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)), var(--walnut-tex), var(--walnut);
+  background-position: 0 0, 520px 260px;
   border: 0.35rem solid #6b4a30;
   border-radius: 0.25rem;
   box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.6), 3px 8px 14px rgba(0, 0, 0, 0.5);
@@ -707,7 +728,7 @@ button.thread { font-weight: 700; background: #f6f2e6; border-color: #5b5246; }
 .recorder {
   width: min(100%, 62rem);
   padding: 0.8rem;
-  background: var(--woodgrain), linear-gradient(to right, #8b5631, #a2683c 50%, #8b5631);
+  background: linear-gradient(to right, rgba(60, 25, 5, 0.22), rgba(255, 230, 190, 0.06) 50%, rgba(60, 25, 5, 0.22)), var(--teak-tex), #a2683c;
   border-radius: 0.6rem;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4), 4px 12px 20px rgba(0, 0, 0, 0.55);
 }
@@ -722,7 +743,7 @@ button.thread { font-weight: 700; background: #f6f2e6; border-color: #5b5246; }
     "status  status";
   gap: 0.9rem 1.6rem;
   padding: 0.9rem 1.4rem 1.1rem;
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 3px), linear-gradient(#ddd6c6, #cfc7b4);
+  background: linear-gradient(rgba(255, 252, 244, 0.34), rgba(255, 252, 244, 0.18) 40%, rgba(255, 252, 244, 0.12)), var(--plate-tex), #cfc7b4;
   border-radius: 0.3rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
@@ -859,7 +880,8 @@ input[type="range"]::-moz-range-thumb { width: 1.2rem; height: 1.6rem; backgroun
 @media (max-width: 600px) {
   body { font-size: 16px; }
   .room { padding: 0.3rem; }
-  .desk { padding: 1.4rem 0.6rem 1.2rem; box-shadow: inset 0 0 0 0.3rem var(--leather), inset 0 0 0 calc(0.3rem + 1.5px) var(--gilt), 0 0.4rem 1rem rgba(0, 0, 0, 0.5); }
+  .desk { padding: 1.4rem 0.6rem 1.2rem; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5), 0 0.4rem 1rem rgba(0, 0, 0, 0.5); }
+  .desk::before { inset: 0.3rem; outline: 0; }
   .desk-rim { inset: 0.45rem 0.6rem; background-size: auto 0.5rem, auto 0.5rem; }
   .station { padding: 0.3rem 0.3rem 0.7rem 0.2rem; }
   .nameplate h1 { padding: 0.4rem 0.8rem 0.45rem; letter-spacing: 0.03em; }
@@ -882,7 +904,7 @@ input[type="range"]::-moz-range-thumb { width: 1.2rem; height: 1.6rem; backgroun
   .obj .mini { width: 3.2rem; height: 2.3rem; }
   .obj .mini-pad { width: 2.2rem; height: 2.8rem; }
   .obj .mini-card { height: 1.7rem; }
-  .obj .mini-tape { border-width: 0.2rem; background: radial-gradient(circle at 28% 50%, #5b3a22 0 0.4rem, #bdb7a8 0.45rem 0.7rem, transparent 0.75rem), radial-gradient(circle at 72% 50%, #5b3a22 0 0.4rem, #bdb7a8 0.45rem 0.7rem, transparent 0.75rem), linear-gradient(#ddd6c6, #cfc7b4); }
+  .obj .mini-tape { border-width: 0.2rem; background: radial-gradient(circle at 28% 50%, #5b3a22 0 0.4rem, #bdb7a8 0.45rem 0.7rem, transparent 0.75rem), radial-gradient(circle at 72% 50%, #5b3a22 0 0.4rem, #bdb7a8 0.45rem 0.7rem, transparent 0.75rem), var(--plate-tex) padding-box, var(--teak-tex) border-box, #cfc7b4; }
   .obj .mini-stack span { inset: 0.25rem; }
   /* the tray strip and the form head are trimmed to leave room for the cards */
   .tray-head { display: none; }
@@ -902,4 +924,59 @@ input[type="range"]::-moz-range-thumb { width: 1.2rem; height: 1.6rem; backgroun
 
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
+
+/* ---------- things left on the desk ----------
+   Cut-out photographs, one consistent shadow from the lamp at the upper left. Each lies
+   on the leather round its station: over it where the station leaves leather free (a
+   narrow gutter is kept for them at the form on wide screens), or under its object,
+   peeking out (.under). Decoration only; shown only where the desk has room for them. */
+
+.props { position: absolute; inset: 0; pointer-events: none; }
+.station { position: relative; z-index: 1; }
+.prop {
+  position: absolute;
+  z-index: 2;
+  display: none;
+  height: auto;
+  filter: drop-shadow(3px 7px 6px rgba(0, 0, 0, 0.5));
+  user-select: none;
+}
+.prop.under { z-index: 0; }
+
+@media (min-width: 1100px) and (min-height: 700px) {
+  .desk[data-at="desk"] .prop[data-on="desk"],
+  .desk[data-at="card"] .prop[data-on="card"],
+  .desk[data-at="printout"] .prop[data-on="printout"],
+  .desk[data-at="stacker"] .prop[data-on="stacker"],
+  .desk[data-at="recorder"] .prop[data-on="recorder"] { display: block; }
+
+  /* the desk: coffee and a pen in the open leather, clips and a banded deck by the nameplate */
+  .p-coffee { right: 2.5rem; bottom: 1.4rem; width: 9.5rem; transform: rotate(-9deg); }
+  .p-pen { right: 14rem; bottom: 1.2rem; width: 7.5rem; transform: rotate(14deg); }
+  .p-clips { right: 2.5rem; top: 0.6rem; width: 5.6rem; transform: rotate(6deg); }
+  .p-cards { right: 10.5rem; top: 0.9rem; width: 8rem; transform: rotate(-7deg); }
+
+  /* the card viewer: the loupe set down beside the card, a banded deck below the buttons */
+  .p-loupe { right: 3rem; bottom: 1.5rem; width: 5.6rem; transform: rotate(32deg); }
+  .p-cards2 { left: 3rem; bottom: 2rem; width: 10.5rem; transform: rotate(4deg); }
+
+  /* the printout: pencils and clips under the ticket column, covered when the listing opens */
+  .p-pencils { right: 9rem; bottom: 2rem; width: 9.5rem; transform: rotate(-58deg); }
+  .p-clips2 { right: 1.5rem; bottom: 2.4rem; width: 6.4rem; transform: rotate(-12deg); }
+
+  /* the stacker: a pen under the slip */
+  .p-pen2 { left: 4rem; top: 22rem; width: 11rem; transform: rotate(-6deg); }
+
+  /* the recorder: its tape box and a cup half under the case */
+  .p-tapebox { left: 0; bottom: 0.5rem; width: 19rem; transform: rotate(-5deg); }
+  .p-coffee2 { right: 0; top: 0.4rem; width: 13rem; transform: rotate(12deg); }
+}
+
+/* the form needs about 900px for a whole card of 80 columns, so its gutter waits for room */
+@media (min-width: 1600px) and (min-height: 700px) {
+  .desk[data-at="form"] .prop[data-on="form"] { display: block; }
+  .st-form { padding-right: 10rem; }
+  .p-ink { right: 1.4rem; top: 1rem; width: 7.2rem; transform: rotate(-4deg); }
+  .p-stamp { right: -0.2rem; bottom: 1.2rem; width: 10rem; transform: rotate(84deg); }
 }
