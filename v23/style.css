@@ -866,18 +866,15 @@ img, .st-form, .st-out, .st-manual, .st-magazine, .st-portfolio, .st-tape, .st-c
 
 /* ================================================================ the object views at evening
    Taken up, a thing lies on the desk under the lamp, as the room is lit (after NORCO): the
-   lamp's pool falls warm from the top left and grades in a dithered six steps to the cool
-   violet dark that runs on past it (assets/st/lamplight.png, a multiplier at 2x, anchored to
-   the corner, so its pixels are the room's size at any size of window). The papers, the
-   manual, the magazine, the plates and the printouts all lie in it. The computer's glass lights
-   itself, so the lamp's dark falls only on the desk round the display. */
-.desk:not([data-at="desk"]):not([data-at="computer"])::after,
-.st-computer::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: url(assets/st/lamplight.png) 0 0 / 1280px 800px no-repeat, rgb(156, 146, 184);
+   lamp's pool falls warm across the desk from the top left and grades in six dithered steps to
+   the cool violet dark that runs on past it (assets/st/lamplight.png, a multiplier at 2x,
+   anchored to the corner). It falls on the desk round the papers, not on them: text always
+   sits on flat colour, so the papers take one flat lamplit tone (the tokens below) and stay
+   legible to their last line. */
+.desk:not([data-at="desk"])::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: url(assets/st/lamplight.png) 0 0 / 1280px 800px no-repeat, rgb(144, 135, 180);
   image-rendering: pixelated; mix-blend-mode: multiply;
 }
-.desk:not([data-at="desk"]):not([data-at="computer"])::after { z-index: 4; }
-.st-computer { position: relative; }
-.st-computer::before { z-index: 0; }
-.st-computer .monitor { z-index: 1; }
+.desk > .stations { position: relative; z-index: 1; }
+.desk { --paper: #f1e7d5; --ivory: #ede2ce; --stone: #d5cab8; }

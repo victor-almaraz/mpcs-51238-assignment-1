@@ -349,7 +349,7 @@ var Workspace = (function () {
   // blue to terracotta (the palette's nearest), at screen resolution and shown at 2x. Notes
   // not yet played (with reduced motion) are paper. A dotted line at every C, a tick every beat.
   var rollGeom = null;
-  var INK = [59, 54, 75], PAPER = [215, 216, 219], DOTS = [120, 146, 174], QUIET = [150, 180, 205], LOUD = [181, 70, 43];
+  var INK = [52, 46, 71], PAPER = [219, 220, 224], DOTS = [105, 137, 171], QUIET = [150, 180, 205], LOUD = [181, 70, 43];
   function drawRoll(progress) {
     var w = Math.max(50, Math.floor(rollWrap.clientWidth / 2)), h = Desk.narrowMQ.matches ? 75 : 95;
     roll.width = w; roll.height = h; roll.style.width = 2 * w + 'px'; roll.style.height = 2 * h + 'px';

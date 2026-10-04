@@ -21,6 +21,8 @@
   --mag-tint: var(--mag-magenta);
   /* every block of colour is printed through a screen at its ink's angle (assets/mag/screen-*.svg,
      seamless tiles of 96% with pinholes of paper), never as a flat fill */
+  /* text never sits on a screen: behind type, each ink is a flat tint of itself */
+  --flat-k: #2c2a35; --flat-y: #f4e6a6; --flat-o: #f6c8ac;
   --scr-k: var(--mag-paper) url(assets/st/screen-k.png) 0 0 / 8px 8px;
   --scr-y: var(--mag-paper) url(assets/st/screen-y.png) 0 0 / 8px 8px;
   --scr-o: var(--mag-paper) url(assets/st/screen-o.png) 0 0 / 8px 8px;
@@ -100,11 +102,11 @@
   box-shadow: 2px 2px 0 var(--mag-edge), 4px 4px 0 var(--mag-edge-2), 0 0.9rem 0 rgba(0, 0, 0, 0.5);
 }
 /* the title band is flat black; the field under it is its plate, an SVG, cut to fit from the foot */
-.mag-cover-top { flex: none; padding: 5cqi 5cqi 7cqi; background: var(--scr-k); color: var(--mag-paper); }
+.mag-cover-top { flex: none; padding: 5cqi 5cqi 7cqi; background: var(--flat-k); color: var(--mag-paper); }
 .mag-cover-field { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 0.6rem; padding: 5cqi; background: var(--mag-orange) url(assets/st/mag-cover-field.png) 50% 0 / 600px 450px no-repeat; }
 
 .mag-dateline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1rem; margin: 0 0 3cqi; font: 600 20px/1.3 var(--mag-body); letter-spacing: 0.14em; text-transform: uppercase; }
-.mag-dateline span { padding: 0.15em 0.5em; background: var(--scr-k); color: var(--mag-paper); }
+.mag-dateline span { padding: 0.15em 0.5em; background: var(--flat-k); color: var(--mag-paper); }
 .mag-cover h2 { margin: 0; font-weight: 400; }
 .mag-cover h2:focus { outline: none; }
 .mag-cover h2:focus-visible { outline: 3px solid var(--mag-yellow); outline-offset: 4px; }
@@ -125,11 +127,11 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--mag-ink);
-  background: var(--scr-y);
+  background: var(--flat-y);
 }
 .mag-coverline { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; margin: 0; text-align: right; }
 .mag-cl-big { display: inline-block; max-width: 8.5em; padding: 0.08em 0.35em 0.14em; font: italic 400 clamp(1.6rem, 8cqi, 3.2rem)/1.08 var(--mag-display); letter-spacing: -0.01em; background: var(--mag-paper); }
-.mag-cl-small { display: inline-block; padding: 0.25em 0.6em; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.16em; text-transform: uppercase; background: var(--scr-y); }
+.mag-cl-small { display: inline-block; padding: 0.25em 0.6em; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.16em; text-transform: uppercase; background: var(--flat-y); }
 .mag-cover-names { max-width: 30em; margin: 0; padding: 0.4em 0.7em; font: 400 20px/1.4 var(--mag-body); text-align: right; background: var(--mag-paper); }
 
 /* ---------- spreads ---------- */
@@ -194,17 +196,17 @@
   padding: 0.45rem 1.05rem;
   cursor: pointer;
 }
-.mag-book button:hover { background: var(--scr-y); }
+.mag-book button:hover { background: var(--flat-y); }
 .mag-book button:disabled { color: #5c5c5c; border-color: #9a9a9a; background: #f2f0ea; cursor: default; }
 .mag-book button:focus-visible { outline: 3px solid var(--mag-magenta); outline-offset: 3px; }
 .mag-book button i { font-style: italic; }
 /* a deck to punch: a flat strip of black ink holding an orange pill */
 .mag-deck, .mag-decks { margin: 0 0 1.2rem; }
-.mag-deck { padding: 0.55rem 0.7rem; background: var(--scr-k); }
-.mag-decks { display: grid; gap: 0.5rem; padding: 0.55rem 0.7rem; list-style: none; background: var(--scr-k); }
+.mag-deck { padding: 0.55rem 0.7rem; background: var(--flat-k); }
+.mag-decks { display: grid; gap: 0.5rem; padding: 0.55rem 0.7rem; list-style: none; background: var(--flat-k); }
 .mag-decks li { margin: 0; }
-.mag-deck button, .mag-decks button, .mag-cat button { text-align: left; background: var(--scr-o); border-color: var(--mag-orange); }
-.mag-deck button:hover, .mag-decks button:hover, .mag-cat button:hover { background: var(--scr-y); border-color: var(--mag-yellow); }
+.mag-deck button, .mag-decks button, .mag-cat button { text-align: left; background: var(--flat-o); border-color: var(--mag-orange); }
+.mag-deck button:hover, .mag-decks button:hover, .mag-cat button:hover { background: var(--flat-y); border-color: var(--mag-yellow); }
 .mag-deck button:focus-visible, .mag-decks button:focus-visible { outline-color: var(--mag-yellow); }
 
 /* the catalogue */

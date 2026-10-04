@@ -106,17 +106,17 @@ var Calculator = (function () {
     var c = $('calc-holes'), W = 2 + 5 * COLS + 4, H = 2 + 12 * 4 + 2;
     c.width = W; c.height = H; c.style.width = 2 * W + 'px'; c.style.height = 2 * H + 'px';
     var ctx = c.getContext('2d');
-    ctx.fillStyle = '#3b364b'; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#d0ccc0'; ctx.fillRect(1, 1, W - 2, H - 2);
+    ctx.fillStyle = '#342e47'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#d6d1c5'; ctx.fillRect(1, 1, W - 2, H - 2);
     // the corner cut, at 45 degrees
-    ctx.fillStyle = '#3b364b';
+    ctx.fillStyle = '#342e47';
     for (var k = 0; k < 5; k++) { if (k < 4) ctx.clearRect(W - 4 + k, k, 4 - k, 1); ctx.fillRect(W - 5 + k, k, 1, 1); }
     for (var col = 0; col < COLS; col++) {
       var rows = col < s.length ? Fortran.punches(s.charAt(col)) : [];
       ROWS.forEach(function (r, j) {
         var x = 1 + 5 * col + 2, y = 2 + 4 * j;
-        if (rows.indexOf(r) >= 0) { ctx.fillStyle = '#3b364b'; ctx.fillRect(x, y, 2, 3); }
-        else if (j >= 2) { ctx.fillStyle = '#587698'; ctx.fillRect(x, y + 1, 1, 1); }
+        if (rows.indexOf(r) >= 0) { ctx.fillStyle = '#342e47'; ctx.fillRect(x, y, 2, 3); }
+        else if (j >= 2) { ctx.fillStyle = '#496c96'; ctx.fillRect(x, y + 1, 1, 1); }
       });
     }
     $('calc-print').textContent = s.slice(0, COLS);
