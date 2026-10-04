@@ -98,6 +98,12 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 *Version 20* combines *Version 16* and *Version 17*, where the puzzles now exist within the fantasy computer desktop. *Version 20* refines the graphics of *Version 16* by implementing some of the design language from *Version 17*. This version also takes the efficiency of the code into consideration, taking care to clean up and refactor the code that gets imported into its implementation from past versions.
 
+#### Version 21
+
+*Version 21* combines *Version 19* and *Version 20* into an unified workspace. Namely, a computer is added to the desk, enabling use of the simulated computer desktop. This iteration allows each half of the workspace to have its own style established in previous versions. This version also takes the efficiency of the code into consideration, taking care to clean up and refactor the code that gets imported into its implementation from past versions.
+
+#### Version 22
+
 ### Gallery
 
 ### Genealogy
