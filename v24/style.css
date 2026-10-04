@@ -911,6 +911,57 @@ img, .st-form, .st-out, .st-manual, .st-magazine, .st-portfolio, .st-tape, .st-c
 .sw-desk-plant { left: calc(114em * 92 / 640); top: calc(152em * 92 / 640); width: calc(70em * 92 / 640); height: calc(81em * 92 / 640); }
 .sw-mug { left: calc(232em * 92 / 640); top: calc(188em * 92 / 640); width: calc(22em * 92 / 640); height: calc(21em * 92 / 640); }
 
+/* ================================================================ the room alive
+   Small loops, stepped a whole frame (or a whole art pixel) at a time, as a point-and-click
+   game keeps its scene alive (life.js and decor.js set what changes with the light):
+   the mug steams; the plants' top leaves stir a pixel now and then; the Editor's cursor
+   blinks on the room's computer; motes of dust drift down the window's light. And the room
+   answers what is done in it: while the tape plays its reels turn (four frames to a third of
+   a turn, their spokes repeating) and its meter jumps; after a deck has run, the room's
+   computer scrolls its output for a moment; switched on, the lamp flickers before it holds. */
+.scene .anim { position: absolute; display: block; pointer-events: none; background-repeat: no-repeat; image-rendering: pixelated; }
+.scene .reel { width: calc(32em * 92 / 640); height: calc(32em * 92 / 640); background-size: 400% 100%; animation: reel 0.5s steps(4) infinite paused; }
+.reel-l { left: calc(9em * 92 / 640); top: calc(8em * 92 / 640); background-image: url(assets/anim/reel-l.png); }
+.reel-r { left: calc(63em * 92 / 640); top: calc(9em * 92 / 640); background-image: url(assets/anim/reel-r.png); animation-duration: 0.36s !important; }
+@keyframes reel { from { background-position: 0 0; } to { background-position: 133.333% 0; } }
+.scene.tape-on .reel { animation-play-state: running; }
+/* the meter: eight lamps in the window over the reels, lit to the level, the last one red */
+.scene .meter { left: calc(43em * 92 / 640); top: calc(8em * 92 / 640); width: calc(16em * 92 / 640); height: calc(2em * 92 / 640); background: repeating-linear-gradient(90deg, #a9b6a0 0 calc(1em * 92 / 640), transparent 0 calc(2em * 92 / 640)); visibility: hidden; }
+.scene .meter::after { content: ""; position: absolute; right: 0; top: 0; width: calc(1em * 92 / 640); height: 100%; background: #c38669; visibility: hidden; }
+.scene.tape-on .meter { visibility: visible; animation: level 1.3s steps(1) infinite; }
+.scene.tape-on .meter::after { animation: peak 1.3s steps(1) infinite; }
+@keyframes level { 0% { clip-path: inset(0 50% 0 0); } 12% { clip-path: inset(0 25% 0 0); } 24% { clip-path: inset(0 62% 0 0); } 36% { clip-path: inset(0 12% 0 0); } 48% { clip-path: inset(0 37% 0 0); } 60% { clip-path: inset(0 0 0 0); } 72% { clip-path: inset(0 50% 0 0); } 84% { clip-path: inset(0 25% 0 0); } }
+@keyframes peak { 0%, 59% { visibility: hidden; } 60%, 71% { visibility: visible; } 72%, 100% { visibility: hidden; } }
+/* the room's computer: the Editor's output scrolling, and its cursor */
+.scene .run-out { left: calc(43em * 92 / 640); top: calc(32em * 92 / 640); width: calc(25em * 92 / 640); height: calc(17em * 92 / 640); background: url(assets/anim/screen.png) 0 0 / 800% 100%; visibility: hidden; }
+.scene.computing .run-out { visibility: visible; animation: run-out 1.2s steps(8) infinite; }
+@keyframes run-out { to { background-position: 114.2857% 0; } }
+.scene .caret { left: calc(61em * 92 / 640); top: calc(43em * 92 / 640); width: calc(1em * 92 / 640); height: calc(2em * 92 / 640); background: #353356; animation: caret 1.06s steps(1) infinite; }
+.scene.computing .caret { display: none; }
+@keyframes caret { 50% { visibility: hidden; } }
+/* the mug's steam, in the light there is (decor.js sets --steam) */
+.scene .steam { left: calc(235em * 92 / 640); top: calc(172em * 92 / 640); width: calc(14em * 92 / 640); height: calc(18em * 92 / 640); background: var(--steam) 0 0 / 600% 100%; animation: steam 1.8s steps(6) infinite; }
+@keyframes steam { to { background-position: 120% 0; } }
+/* the plants: their second frame (decor.js sets --sway) shows for a moment now and then */
+.scene .swap.sways::after { content: ""; position: absolute; inset: 0; background: var(--sway) 0 0 / 100% 100%; image-rendering: pixelated; opacity: 0; animation: sway-b 7s steps(1) infinite; }
+.scene .swap.sways img { animation: sway-a 7s steps(1) infinite; }
+.sw-floor-r.sways::after, .sw-floor-r.sways img { animation-duration: 9s; animation-delay: -3s; }
+.sw-desk-plant.sways::after, .sw-desk-plant.sways img { animation-duration: 8s; animation-delay: -5s; }
+@keyframes sway-b { 0%, 62% { opacity: 0; } 63%, 78% { opacity: 1; } 79%, 100% { opacity: 0; } }
+@keyframes sway-a { 0%, 62% { opacity: 1; } 63%, 78% { opacity: 0; } 79%, 100% { opacity: 1; } }
+/* dust in the window's light: each mote a pixel, drifting down six pixels and gone */
+.scene .motes { inset: 0; }
+.motes i { position: absolute; width: calc(1em * 92 / 640); height: calc(1em * 92 / 640); background: #f0e3cf; opacity: 0; animation: mote-fall 12s steps(6) infinite, mote-show 12s steps(1) infinite; }
+.motes i:nth-child(1) { left: calc(60em * 92 / 640); top: calc(40em * 92 / 640); }
+.motes i:nth-child(2) { left: calc(90em * 92 / 640); top: calc(70em * 92 / 640); animation-delay: -4s; background: #e7cebf; }
+.motes i:nth-child(3) { left: calc(95em * 92 / 640); top: calc(95em * 92 / 640); animation-delay: -8s; }
+.motes i:nth-child(4) { left: calc(110em * 92 / 640); top: calc(60em * 92 / 640); animation-delay: -2s; animation-duration: 15s; background: #e7cebf; }
+.motes i:nth-child(5) { left: calc(45em * 92 / 640); top: calc(20em * 92 / 640); animation-delay: -6s; animation-duration: 10s; }
+.motes i:nth-child(6) { left: calc(130em * 92 / 640); top: calc(100em * 92 / 640); animation-delay: -10s; animation-duration: 14s; }
+@keyframes mote-fall { from { transform: translateY(0); } to { transform: translateY(calc(6em * 92 / 640)); } }
+@keyframes mote-show { 0%, 14% { opacity: 0; } 15%, 80% { opacity: 1; } 81%, 100% { opacity: 0; } }
+@container (max-width: 1011px), (max-height: 505px) { .scene .anim { display: none; } .scene .swap.sways::after { display: none; } }
+
 /* below a readable size the room is a list (above): the pixel room's places and sizes give way */
 @container (max-width: 1011px), (max-height: 505px) {
   .shelf-unit, .desk-top { width: auto; height: auto; }

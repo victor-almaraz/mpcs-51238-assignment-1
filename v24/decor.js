@@ -62,8 +62,9 @@
     'print-dada', 'print-pavilion', 'print-polytope', 'print-sieve', 'print-taeuber', 'px-coding-form', 'px-computer',
     'px-out-tray', 'px-vol-1', 'switch-on', 'switch-off'];
   var room = doc.getElementById('desk'), scene = doc.querySelector('.overview');
-  var lampOn = true, swaps = [];
-  function light() { return lampOn ? lampKind() : 'off'; }
+  var lampOn = true, flicker = false, swaps = [], SWAYS = { 'floor-l': 1, 'floor-r': 1, 'desk-plant': 1 };
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function light() { return lampOn && !flicker ? lampKind() : 'off'; }
   function src(name, at) { return A + (LIT.indexOf(name) >= 0 ? 'lit/' + (at || light()) + '/' : '') + name + '.png'; }
   function lampKind() { var b = scene.querySelector('[data-swap="lamp"]'); return b.swapItem().split('-')[1]; }
 
@@ -74,6 +75,10 @@
     b.show = function () {
       var item = kind.items[at];
       img.src = src(item[0]);
+      if (SWAYS[b.getAttribute('data-swap')]) {
+        b.classList.add('sways');
+        b.style.setProperty('--sway', 'url(' + src(item[0]).replace(A, A + 'anim/').replace('.png', '-sway.png') + ')');
+      }
       b.setAttribute('aria-label', 'Change ' + kind.what + ': now ' + item[1] + (b.getAttribute('data-swap') === 'lamp' && !lampOn ? ', switched off' : '') + ', ' + (at + 1) + ' of ' + kind.items.length);
       return item;
     };
@@ -105,6 +110,12 @@
   sw.addEventListener('click', function () {
     lampOn = !lampOn;
     relight();
+    // switched on, the lamp catches, drops out and holds, as an old one does
+    if (lampOn && !REDUCED.matches) {
+      [[60, true], [130, false], [210, true], [260, false]].forEach(function (f) {
+        setTimeout(function () { if (lampOn) { flicker = f[1]; relight(); } }, f[0]);
+      });
+    }
     say(lampOn ? 'The lamp is on.' : 'The lamp is off; the room is lit by the screen and the dusk.');
   });
 
@@ -114,6 +125,7 @@
     if (p === 'ogee') room.removeAttribute('data-paper'); else room.setAttribute('data-paper', p);
     room.setAttribute('data-light', light());
     room.style.setProperty('--back-l', 'url(' + A + 'lit/' + light() + '/room-' + p + '.png)');
+    room.style.setProperty('--steam', 'url(' + A + 'anim/lit/' + light() + '/steam.png)');
     swaps.forEach(function (b) { b.show(); });
     Array.prototype.forEach.call(scene.querySelectorAll('img[data-lit]'), function (img) { img.src = src(img.getAttribute('data-lit').replace('.png', '')); });
     sw.querySelector('img').src = src(lampOn ? 'switch-on' : 'switch-off');
@@ -127,8 +139,13 @@
     var lights = ['task', 'dome', 'angle', 'ceramic', 'off'], seen = {};
     function get(u) { if (!seen[u]) { seen[u] = 1; new Image().src = u; } }
     swaps.forEach(function (b) {
-      KINDS[b.getAttribute('data-swap')].items.forEach(function (it) { get(src(it[0])); });
+      KINDS[b.getAttribute('data-swap')].items.forEach(function (it) {
+        // a lamp is drawn only in its own light and switched off
+        if (b.getAttribute('data-swap') === 'lamp') { get(src(it[0], it[0].split('-')[1])); get(src(it[0], 'off')); }
+        else get(src(it[0]));
+      });
     });
+    lights.forEach(function (l) { get(A + 'anim/lit/' + l + '/steam.png'); });
     PAPERS.forEach(function (p) { get(A + 'room-' + p[0] + '-r.png'); get(A + 'tile-' + p[0] + '.png'); get(A + 'lit/' + light() + '/room-' + p[0] + '.png'); });
     lights.forEach(function (l) {
       get(A + 'lit/' + l + '/room-' + PAPERS[paper][0] + '.png');

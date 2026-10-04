@@ -49,6 +49,8 @@
       <button type="button" class="swap sw-lamp" data-swap="lamp"><img src="assets/lit/task/lamp-task.png" width="49" height="74" alt=""></button>
       <button type="button" class="swap sw-desk-plant" data-swap="desk-plant"><img src="assets/lit/task/desk-pothos.png" width="70" height="81" alt=""></button>
       <button type="button" class="swap sw-mug" data-swap="mug"><img src="assets/lit/task/mug-dipped.png" width="22" height="21" alt=""></button>
+      <span class="anim steam" aria-hidden="true"></span>
+      <span class="anim motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <button type="button" class="swap sw-switch lamp-switch" aria-pressed="true" aria-label="The lamp’s switch"><img src="assets/lit/task/switch-on.png" width="10" height="16" alt=""></button>
       <p class="vh" id="swap-status" role="status"></p>
 
@@ -70,8 +72,8 @@
       <ul class="desk-top" aria-label="On the desk">
         <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="assets/lit/task/px-coding-form.png" data-lit="px-coding-form.png" width="42" height="56" alt=""></span><span class="obj-tag">Coding form</span></button></li>
         <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="assets/lit/task/px-out-tray.png" data-lit="px-out-tray.png" width="62" height="26" alt=""></span><span class="obj-tag">Out tray</span></button></li>
-        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/lit/task/px-computer.png" data-lit="px-computer.png" width="102" height="78" alt=""></span><span class="obj-tag">Computer</span></button></li>
-        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/px-tape.png" width="90" height="64" alt=""></span><span class="obj-tag">Tape player</span></button></li>
+        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/lit/task/px-computer.png" data-lit="px-computer.png" width="102" height="78" alt=""><span class="anim run-out"></span><span class="anim caret"></span></span><span class="obj-tag">Computer</span></button></li>
+        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/px-tape.png" width="90" height="64" alt=""><span class="anim reel reel-l"></span><span class="anim reel reel-r"></span><span class="anim meter"></span></span><span class="obj-tag">Tape player</span></button></li>
       </ul>
     </div>
   </section>
@@ -755,6 +757,7 @@
 <script src="magazine.js"></script>
 <script src="computer.js"></script>
 <script src="decor.js"></script>
+<script src="life.js"></script>
 <script src="hotspots.js"></script>
 </body>
 </html>
