@@ -19,6 +19,7 @@
     if (room.getAttribute('data-at') !== 'desk' || !ran) return;
     ran = false;
     scene.classList.add('computing');
+    scene.dispatchEvent(new CustomEvent('room:computing'));
     clearTimeout(timer);
     timer = setTimeout(function () { scene.classList.remove('computing'); }, 3600);
   }).observe(room, { attributes: true, attributeFilter: ['data-at'] });

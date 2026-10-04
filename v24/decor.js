@@ -54,6 +54,8 @@
   var status = doc.getElementById('swap-status');
   function say(msg) { status.textContent = ''; setTimeout(function () { status.textContent = msg; }, 30); }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  // what happens in the room is told as events on the scene, for the sounds (sounds.js)
+  function tell(what, detail) { scene.dispatchEvent(new CustomEvent('room:' + what, { detail: detail })); }
 
   // the light: the lamp on the desk, or 'off'. What the lamp's light reaches is drawn for each
   // (assets/lit/<light>/); everything else once (assets/)
@@ -86,6 +88,7 @@
       at = (at + 1) % kind.items.length;
       var item = kind.items[at];
       if (b.getAttribute('data-swap') === 'lamp') relight(); else b.show();
+      tell('swap', { place: b.getAttribute('data-swap'), item: item[0] });
       say(cap(kind.what) + ' is now ' + item[1] + '.');
     });
     swaps.push(b);
@@ -101,6 +104,7 @@
   function next() {
     paper = (paper + 1) % PAPERS.length;
     relight();
+    tell('paper', { paper: PAPERS[paper][0] });
     say('The wall is now hung with ' + PAPERS[paper][1] + '.');
   }
   doc.getElementById('paper-btn').addEventListener('click', next);
@@ -110,10 +114,11 @@
   sw.addEventListener('click', function () {
     lampOn = !lampOn;
     relight();
+    tell('switch', { on: lampOn });
     // switched on, the lamp catches, drops out and holds, as an old one does
     if (lampOn && !REDUCED.matches) {
       [[60, true], [130, false], [210, true], [260, false]].forEach(function (f) {
-        setTimeout(function () { if (lampOn) { flicker = f[1]; relight(); } }, f[0]);
+        setTimeout(function () { if (lampOn) { flicker = f[1]; relight(); tell('flicker', { lit: !f[1] }); } }, f[0]);
       });
     }
     say(lampOn ? 'The lamp is on.' : 'The lamp is off; the room is lit by the screen and the dusk.');
@@ -171,5 +176,7 @@
   scene.addEventListener('click', function (e) {
     if (bare(e.target) && wallAt(e.clientX, e.clientY)) next();
   });
-  window.Decor = { wallAt: function (e) { return bare(e.target) && wallAt(e.clientX, e.clientY); }, lampOn: function () { return lampOn; } };
+  window.Decor = { wallAt: function (e) { return bare(e.target) && wallAt(e.clientX, e.clientY); }, lampOn: function () { return lampOn; },
+    item: function (place) { var b = scene.querySelector('[data-swap="' + place + '"]'); return b && b.swapItem(); },
+    paper: function () { return PAPERS[paper][0]; } };
 })();

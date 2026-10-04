@@ -29,6 +29,7 @@
         <li><button type="button" class="label" data-go="recorder"><span class="no" aria-hidden="true">8</span>Tape player</button></li>
       </ol>
       <p class="back"><button type="button" class="paper-btn" id="paper-btn">Change the wallpaper</button></p>
+      <p class="back"><button type="button" class="paper-btn" id="sound-btn" aria-pressed="true">Room sounds: on</button></p>
       <p class="back"><a href="../">Back to the gallery</a></p>
     </div>
   </nav>
@@ -116,7 +117,7 @@
       <article class="chapter" data-volume="1" aria-labelledby="ch3" hidden>
         <p class="running" aria-hidden="true">Volume 1 &middot; Chapter 3</p>
         <h3 id="ch3" tabindex="-1">Using the simulator</h3>
-        <p>The workspace is a room. This manual stands on the bookshelf in three volumes, beside the magazine in its ledge, the Xenakis miscellanea in a file box and the deck box; on the desk below are the coding form, the out tray, the computer and the tape player. Choose anything in the room to take it up, or choose it from the <em>Menu</em> in the top corner of the page. Whatever can be taken up is outlined in white under the pointer, with a caption that says what pressing it does; the arrow keys move from one thing to the nearest in that direction, <kbd>Enter</kbd> takes it up, and <kbd>H</kbd> outlines everything in the room that can be taken up. The prints, the plants, the lamp and the mug are outlined too: pressing one puts another of its kind in its place, and pressing the bare wall (or <em>Change the wallpaper</em> in the menu) hangs another paper. The switch on the wall by the lamp turns the lamp off and on. The room is furnished afresh by chance each time the page is opened. Pressing <kbd>Escape</kbd>, except while typing on the coding form, puts the object down and returns to the room. In the manual, the contents list and the <em>Previous page</em> and <em>Next page</em> buttons turn the chapters, and so do the left and right arrow keys.</p>
+        <p>The workspace is a room. This manual stands on the bookshelf in three volumes, beside the magazine in its ledge, the Xenakis miscellanea in a file box and the deck box; on the desk below are the coding form, the out tray, the computer and the tape player. Choose anything in the room to take it up, or choose it from the <em>Menu</em> in the top corner of the page. Whatever can be taken up is outlined in white under the pointer, with a caption that says what pressing it does; the arrow keys move from one thing to the nearest in that direction, <kbd>Enter</kbd> takes it up, and <kbd>H</kbd> outlines everything in the room that can be taken up. The prints, the plants, the lamp and the mug are outlined too: pressing one puts another of its kind in its place, and pressing the bare wall (or <em>Change the wallpaper</em> in the menu) hangs another paper. The switch on the wall by the lamp turns the lamp off and on. To look at something instead, press it with the right button (or press <kbd>L</kbd> with it under the pointer or focused): a line along the foot of the room says what it is, and each print offers the deck it calls to mind. The room has its own small sounds, which <em>Room sounds</em> in the menu turns off. The room is furnished afresh by chance each time the page is opened. Pressing <kbd>Escape</kbd>, except while typing on the coding form, puts the object down and returns to the room. In the manual, the contents list and the <em>Previous page</em> and <em>Next page</em> buttons turn the chapters, and so do the left and right arrow keys.</p>
         <p>The deck box holds every sample deck, each behind a tab with its name: the programs, the music decks, and the decks printed in the magazine, which the magazine&rsquo;s articles can also put on the form. Picking up a deck puts it on the coding form in place of the cards that were there. On the coding form you can also type your own cards. Pressing <kbd>Enter</kbd> adds a new card below the current one, pressing <kbd>Backspace</kbd> on an empty card removes it, and the up and down arrow keys move between cards. If you paste several lines at once, each line becomes a card of its own. When the deck is ready, press <em>Run deck</em>.</p>
         <p>Under the form lies <em>the card in hand</em>: the card selected on the form, with its holes. The <em>Previous card</em> and <em>Next card</em> buttons step through the deck, and the form&rsquo;s selection follows along.</p>
         <p>After each run, the out tray comes to the front. It holds the printer output, the job log with any errors and warnings, a listing of the program, and the output stacker, where any cards that the program punched land. From the stacker you can load them onto the coding form as data for another run, copy them, download them as a text file, thread them onto the tape player, or read them into the computer.</p>
@@ -758,6 +759,8 @@
 <script src="computer.js"></script>
 <script src="decor.js"></script>
 <script src="life.js"></script>
+<script src="look.js"></script>
+<script src="sounds.js"></script>
 <script src="hotspots.js"></script>
 </body>
 </html>
