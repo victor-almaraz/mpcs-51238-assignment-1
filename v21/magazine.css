@@ -1,8 +1,9 @@
 /* The magazine: a saddle-stitched art-and-computing magazine on the desk, set in the
    grammar of a 1960s title sequence (Playfair Display italic, Jost, cropped numerals,
-   op-art swatches) and printed in four process colours and a spot orange. Body text,
-   buttons and code sit only on flat paper or flat ink; only display type of 40px and up
-   is screened. Every rule is scoped to .mag or .mini-mag; the page turns under it are the
+   op-art swatches) and printed in four process colours and a spot orange. Its plates are
+   SVG files (assets/mag/): flat inks that overprint, Ben-Day screens stepped in bands,
+   outlined numerals; headings print in black over their ink, out of register. Body text,
+   buttons and code sit only on flat paper or flat ink. Every rule is scoped to .mag or .mini-mag; the page turns under it are the
    room's controls and are styled with the room (style.css). */
 
 .mag {
@@ -38,14 +39,7 @@
 .mag p, .mag li { margin: 0 0 1em; }
 .mag code, .mag var { font-family: var(--mag-mono); font-size: 16px; }
 .mag var { font-style: italic; }
-.mag canvas { display: block; pointer-events: none; }
-.mag canvas.mag-plate { position: absolute; left: 0; top: 0; }
-.mag .ht-on { position: relative; color: transparent !important; -webkit-text-fill-color: transparent; text-shadow: none !important; }
-.mag canvas.ht-type { z-index: 1; }
-@media (forced-colors: active) {
-  .mag .ht-on { color: CanvasText !important; -webkit-text-fill-color: CanvasText; }
-  .mag canvas.ht-type { display: none; }
-}
+.mag img.mag-plate { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 .mag-vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ---------- without script: every opening in one scroll ---------- */
@@ -99,11 +93,9 @@
   overflow: hidden;
   box-shadow: 2px 2px 0 var(--mag-edge), 4px 4px 0 var(--mag-edge-2), 0 0.9rem 1.8rem rgba(0, 0, 0, 0.5);
 }
-.mag-cover > :not(canvas) { position: relative; z-index: 1; }
-/* flat ink and flat orange until the plate is printed over them */
+/* the title band is flat black; the field under it is its plate, an SVG, cut to fit from the foot */
 .mag-cover-top { flex: none; padding: 5cqi 5cqi 7cqi; background: var(--mag-ink); color: var(--mag-paper); }
-.mag-cover-field { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 0.6rem; padding: 5cqi; background: var(--mag-orange); }
-.mag-js .mag-cover-top, .mag-js .mag-cover-field { background: transparent; }
+.mag-cover-field { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; gap: 0.6rem; padding: 5cqi; background: var(--mag-orange) url(assets/mag/cover-field.svg) 50% 0 / cover no-repeat; }
 
 .mag-dateline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1rem; margin: 0 0 3cqi; font: 600 16px/1.3 var(--mag-body); letter-spacing: 0.14em; text-transform: uppercase; }
 .mag-dateline span { padding: 0.15em 0.5em; background: var(--mag-ink); color: var(--mag-paper); }
@@ -138,7 +130,6 @@
 
 .mag-l { display: flex; flex-direction: column; }
 .mag-art { position: relative; flex: 1 1 15rem; min-height: 11rem; margin-right: 1.6rem; overflow: hidden; background: var(--mag-tint); }
-.mag-js .mag-art { background: transparent; }
 .mag-art-short { flex: 0 0 clamp(7rem, 20cqh, 12rem); min-height: 0; }
 .mag-art-wash { flex: none; height: 6rem; margin: 0 0 0 1.6rem; }
 .mag-r { display: flex; flex-direction: column; }
@@ -244,7 +235,7 @@
   .mag-text { padding: 1.4rem 1.6rem 1.2rem 2.2rem; }
 }
 
-/* ---------- the magazine as it lies on the desk ---------- */
+/* ---------- the magazine as it stands on the shelf ---------- */
 
 .mini-mag {
   position: relative;
@@ -256,7 +247,7 @@
   background: linear-gradient(#0d0d0d 0 42%, #ff5a1f 42%);
   box-shadow: 1px 1px 0 #e4d9c2, 2px 2px 0 #cfc3a8, 4px 7px 12px rgba(0, 0, 0, 0.5);
 }
-.mini-mag canvas { display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.mini-mag img { display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .mag *, .mini-mag { transition: none !important; animation: none !important; scroll-behavior: auto !important; }

@@ -37,7 +37,7 @@ var Desk = (function () {
     computer: ['.monitor', '.o-computer .computer']
   };
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var LIST = window.matchMedia('(max-width: 945px), (max-height: 505px)');   // the room drawn as a list: nothing to grow from
+  var LIST = window.matchMedia('(max-width: 1011px), (max-height: 505px)');   // the room drawn as a list: nothing to grow from
   var openedFrom = {};                 // the thing in the room each station was last opened from
   function smallOf(name) {
     var b = openedFrom[name];

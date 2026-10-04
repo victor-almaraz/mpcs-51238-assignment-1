@@ -120,8 +120,8 @@ code, kbd, pre, samp { font: 400 var(--t)/24px var(--mono); }
 
 /* ---------------- the desk ---------------- */
 html.js, html.js body { height: 100%; overflow: hidden; }
-/* in the room's frame (link.js) the computer goes back to the room; alone, to the gallery */
-html:not(.in-room) .in-room-only, html.in-room .alone-only { display: none; }
+/* the room's own commands (link.js), shown only in the room's frame */
+html:not(.in-room) .in-room-only { display: none; }
 .desktop {
   position: fixed; left: 0; right: 0; top: var(--bar); bottom: 0;
   /* the desk picture: a photograph of a night at Persepolis, dithered once (Atkinson's error

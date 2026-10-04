@@ -39,7 +39,8 @@
   <section class="station st-desk" data-station="desk" aria-labelledby="desk-h">
     <div class="scene overview">
       <span class="wall" aria-hidden="true"><span class="floor"></span></span>
-      <div class="title-box"><p class="kicker" aria-hidden="true">The workroom</p><h1 id="desk-h" tabindex="-1">A desk of cards, sieves and code</h1><p class="title-sub">A FORTRAN card reader, a sieve generator after Xenakis, the decks of a magazine of art and computing, a tape player for what they punch, and a computer with a desktop of its own.</p></div>
+      <h1 id="desk-h" class="vh" tabindex="-1">A desk of cards, sieves and code</h1>
+      <img class="wall-print" src="assets/print-sieve.webp" width="1070" height="840" alt="">
 
       <div class="shelf-unit">
         <img class="shelf-pic" src="assets/shelf.webp" width="2000" height="760" alt="">
@@ -50,23 +51,27 @@
             <li><button type="button" class="obj spine v2" data-go="manual" data-chapter="5" aria-label="Reference manual, volume 2: Sieves"><img class="sp-pic" src="../v19/assets/vol-2.webp" width="145" height="455" alt=""><span class="sp-no" aria-hidden="true">2</span><span class="sp-t" aria-hidden="true">Sieves</span></button></li>
             <li><button type="button" class="obj spine v3" data-go="manual" data-chapter="7" aria-label="Reference manual, volume 3: Music and tape"><img class="sp-pic" src="../v19/assets/vol-3.webp" width="152" height="475" alt=""><span class="sp-no" aria-hidden="true">3</span><span class="sp-t" aria-hidden="true">Music</span></button></li>
             </ul>
-            <p class="shelf-tag" aria-hidden="true"><span class="no">1</span>Reference manual</p>
+            <p class="shelf-tag" aria-hidden="true">Reference manual</p>
           </li>
-          <li class="sh-mag"><button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><canvas id="mag-thumb"></canvas></span><img class="ledge ledge-back" src="assets/mag-back.webp" width="380" height="450" alt=""><img class="ledge ledge-front" src="assets/mag-front.webp" width="380" height="450" alt=""><span class="obj-tag"><span class="no" aria-hidden="true">2</span>Magazine</span></button></li>
-          <li class="sh-folio"><button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><img src="assets/file-box.webp" width="230" height="370" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">3</span>Miscellanea</span></button></li>
-          <li class="sh-box"><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><img src="../v19/assets/deck-box.webp" width="480" height="320" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">4</span>Deck box</span></button></li>
+          <li class="sh-mag"><button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><img src="assets/mag/cover-thumb.svg" width="600" height="800" alt=""></span><img class="ledge ledge-back" src="assets/mag-back.webp" width="380" height="450" alt=""><img class="ledge ledge-front" src="assets/mag-front.webp" width="380" height="450" alt=""><span class="obj-tag">Magazine</span></button></li>
+          <li class="sh-folio"><button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><img src="assets/file-box.webp" width="230" height="370" alt=""></span><span class="obj-tag">Miscellanea</span></button></li>
+          <li class="sh-box"><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><img src="../v19/assets/deck-box.webp" width="480" height="320" alt=""></span><span class="obj-tag">Deck box</span></button></li>
         </ul>
       </div>
 
       <span class="desk-body" aria-hidden="true"><span class="leg leg-l"></span><span class="leg leg-r"></span></span>
+      <span class="plant plant-l" aria-hidden="true"><img src="assets/plant-fig.webp" width="550" height="1050" alt=""></span>
+      <span class="plant plant-r" aria-hidden="true"><img src="assets/plant-monstera.webp" width="700" height="800" alt=""></span>
       <span class="lamp" aria-hidden="true"><img src="../v19/assets/lamp.webp" width="350" height="530" alt=""></span>
+      <span class="pothos" aria-hidden="true"><img src="assets/pothos.webp" width="500" height="580" alt=""></span>
+      <span class="mug" aria-hidden="true"><img src="assets/mug.webp" width="150" height="150" alt=""></span>
+      <span class="chair" aria-hidden="true"><img src="assets/chair.webp" width="480" height="720" alt=""></span>
       <ul class="desk-top" aria-label="On the desk">
-        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="../v19/assets/coding-form.webp" width="350" height="470" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">5</span>Coding form</span></button></li>
-        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="../v19/assets/out-tray.webp" width="520" height="220" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">6</span>Out tray</span></button></li>
-        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/computer-room.webp" width="850" height="650" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">7</span>Computer</span></button></li>
-        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="../v19/assets/tape-room.webp" width="750" height="530" alt=""></span><span class="obj-tag"><span class="no" aria-hidden="true">8</span>Tape player</span></button></li>
+        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="../v19/assets/coding-form.webp" width="350" height="470" alt=""></span><span class="obj-tag">Coding form</span></button></li>
+        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="../v19/assets/out-tray.webp" width="520" height="220" alt=""></span><span class="obj-tag">Out tray</span></button></li>
+        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/computer-room.webp" width="850" height="650" alt=""></span><span class="obj-tag">Computer</span></button></li>
+        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="../v19/assets/tape-room.webp" width="750" height="530" alt=""></span><span class="obj-tag">Tape player</span></button></li>
       </ul>
-      <p class="plate-cap" aria-hidden="true"><b>Plate 1</b> The workroom in elevation, daylight from the left</p>
     </div>
   </section>
 
@@ -369,13 +374,12 @@
   <section class="station st-mag" id="magazine" data-station="magazine" aria-labelledby="mag-title" hidden>
 <!-- The magazine: a saddle-stitched art-and-computing magazine lying on the desk.
      Each .mag-leaf is one opening (the cover, then two-page spreads); magazine.js shows
-     one at a time and prints the halftone plates into the canvases. -->
+     one at a time; its plates are SVG files in assets/mag/. -->
 <div class="mag" id="mag">
   <div class="mag-book">
 
     <section class="mag-leaf mag-leaf-cover" data-ink="o" aria-labelledby="mag-title">
       <div class="mag-page mag-cover">
-        <canvas class="mag-plate" data-plate="cover" aria-hidden="true"></canvas>
         <div class="mag-cover-top">
           <p class="mag-dateline"><span>Autumn</span> <span>Art, chance and the computer</span></p>
           <h2 id="mag-title" class="mag-h" tabindex="-1"><span class="mag-big">FORTRAN</span> <span class="mag-sub">A magazine of art and computing</span></h2>
@@ -389,7 +393,7 @@
 
     <section class="mag-leaf mag-spread" data-ink="m" aria-labelledby="mag-contents-h">
       <div class="mag-page mag-l">
-        <div class="mag-art mag-art-short"><canvas class="mag-plate" data-plate="shot" data-op="6" aria-hidden="true"></canvas></div>
+        <div class="mag-art mag-art-short"><img class="mag-plate" src="assets/mag/contents.svg" alt=""></div>
         <div class="mag-head">
           <p class="mag-kicker">In this issue</p>
           <h3 id="mag-contents-h" class="mag-h mag-screen" tabindex="-1">Contents</h3>
@@ -410,13 +414,13 @@
           <p>Every deck is written in the FORTRAN of the rest of the desk. Its data cards come after the <code>END</code> card, and the comment cards at the top say what the numbers mean, so you can change them and run the deck again.</p>
           <p class="mag-colophon">Printed in cyan, magenta, yellow and black, with a spot orange.</p>
         </div>
-        <div class="mag-art mag-art-wash"><canvas class="mag-plate" data-plate="wash" aria-hidden="true"></canvas></div>
+        <div class="mag-art mag-art-wash"><img class="mag-plate" src="assets/mag/wash.svg" alt=""></div>
       </div>
     </section>
 
     <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="mag-a1">
       <div class="mag-page mag-l">
-        <div class="mag-art"><canvas class="mag-plate" data-plate="shot" data-op="5" data-num="01" aria-hidden="true"></canvas></div>
+        <div class="mag-art"><img class="mag-plate" src="assets/mag/a1.svg" alt=""></div>
         <div class="mag-head">
           <p class="mag-kicker">Computer graphics, 1965&ndash;1968</p>
           <h3 id="mag-a1" class="mag-h mag-screen" tabindex="-1">Pictures from programs</h3>
@@ -436,7 +440,7 @@
 
     <section class="mag-leaf mag-spread" data-ink="o" aria-labelledby="mag-a2">
       <div class="mag-page mag-l">
-        <div class="mag-art"><canvas class="mag-plate" data-plate="shot" data-op="4" data-num="02" aria-hidden="true"></canvas></div>
+        <div class="mag-art"><img class="mag-plate" src="assets/mag/a2.svg" alt=""></div>
         <div class="mag-head">
           <p class="mag-kicker">Dada, Duchamp and Fluxus</p>
           <h3 id="mag-a2" class="mag-h mag-screen" tabindex="-1">Chance and instructions</h3>
@@ -460,7 +464,7 @@
 
     <section class="mag-leaf mag-spread" data-ink="y" aria-labelledby="mag-a3">
       <div class="mag-page mag-l">
-        <div class="mag-art"><canvas class="mag-plate" data-plate="shot" data-op="7" data-num="03" aria-hidden="true"></canvas></div>
+        <div class="mag-art"><img class="mag-plate" src="assets/mag/a3.svg" alt=""></div>
         <div class="mag-head">
           <p class="mag-kicker">Computation theory</p>
           <h3 id="mag-a3" class="mag-h mag-screen" tabindex="-1">Machines that follow rules</h3>
@@ -482,7 +486,7 @@
 
     <section class="mag-leaf mag-spread" data-ink="m" aria-labelledby="mag-a4">
       <div class="mag-page mag-l">
-        <div class="mag-art"><canvas class="mag-plate" data-plate="shot" data-op="8" data-num="04" aria-hidden="true"></canvas></div>
+        <div class="mag-art"><img class="mag-plate" src="assets/mag/a4.svg" alt=""></div>
         <div class="mag-head">
           <p class="mag-kicker">Iteration</p>
           <h3 id="mag-a4" class="mag-h mag-screen" tabindex="-1">Loops and returns</h3>
@@ -507,7 +511,7 @@
 
     <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="mag-cat-h">
       <div class="mag-page mag-l">
-        <div class="mag-art mag-art-short"><canvas class="mag-plate" data-plate="shot" data-op="1" data-num="13" aria-hidden="true"></canvas></div>
+        <div class="mag-art mag-art-short"><img class="mag-plate" src="assets/mag/catalogue.svg" alt=""></div>
         <div class="mag-head">
           <p class="mag-kicker">The catalogue</p>
           <h3 id="mag-cat-h" class="mag-h mag-screen" tabindex="-1">Thirteen decks to punch</h3>
@@ -748,7 +752,6 @@
 <script src="form.js"></script>
 <script src="out.js"></script>
 <script src="recorder.js"></script>
-<script src="halftone.js"></script>
 <script src="magazine.js"></script>
 <script src="computer.js"></script>
 </body>

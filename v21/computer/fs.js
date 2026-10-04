@@ -12,7 +12,6 @@
      folder     opens its own window, made here
      trash      the Trash, a list with Put Back
      document   opens a window of the page; application, the same
-     alias      a link (the gallery)
      program, text   opened by workspace.js (Files.opener); a text is the Editor's, saved
    The workspace's own items are locked, as the Finder could lock a file: they can be moved
    into other folders but not renamed or thrown away. Folders made and texts saved during
@@ -98,8 +97,7 @@ var Files = (function () {
     { kind: 'application', name: 'Player', win: 'win-player', icon: 'player' },
     { kind: 'application', name: 'Eighty Columns', win: 'win-course', icon: 'course', kindText: 'application, 10 sheets' },
     { kind: 'application', name: 'Calculator', win: 'win-calc', icon: 'calc', kindText: 'desk accessory' },
-    { kind: 'application', name: 'Crible', win: 'win-crible', icon: 'crible', kindText: 'application, a game of sieves' },
-    { kind: 'alias', name: 'Gallery', href: '../../', icon: 'gallery', kindText: 'alias of the gallery' }
+    { kind: 'application', name: 'Crible', win: 'win-crible', icon: 'crible', kindText: 'application, a game of sieves' }
   ].forEach(function (s) { make(s, root); });
   var trash = make({ kind: 'trash', name: 'Trash', win: 'win-trash', icon: 'trash' });
   trash.parent = null;
@@ -114,7 +112,7 @@ var Files = (function () {
   }
 
   /* ---------------- the order of a folder's icons ---------------- */
-  var KINDS = ['folder', 'application', 'document', 'picture', 'program', 'text', 'alias'];
+  var KINDS = ['folder', 'application', 'document', 'picture', 'program', 'text'];
   function kindRank(n) { var k = KINDS.indexOf(n.icon === 'picture' ? 'picture' : n.kind); return k < 0 ? KINDS.length : k; }
   function byName(a, b) { return a.name.localeCompare(b.name, 'en', { numeric: true, sensitivity: 'base' }) || a.seq - b.seq; }
   var SORTS = {
@@ -159,9 +157,8 @@ var Files = (function () {
 
   /* ---------------- drawing the tree ---------------- */
   function iconEl(n) {
-    var li = el('li'), b = n.kind === 'alias' ? el('a', 'icon') : el('button', 'icon'), c = el('canvas', 'ico');
-    if (n.kind === 'alias') { b.href = n.href; b.target = '_top'; b.setAttribute('aria-label', 'Back to the gallery'); b.draggable = false; }
-    else { b.type = 'button'; b.setAttribute('aria-describedby', 'icon-hint'); }
+    var li = el('li'), b = el('button', 'icon'), c = el('canvas', 'ico');
+    b.type = 'button'; b.setAttribute('aria-describedby', 'icon-hint');
     b.setAttribute('data-node', n.id);
     if (n.win) b.setAttribute('data-win', n.win);
     if (n === trash) b.id = 'icon-trash';
@@ -227,8 +224,7 @@ var Files = (function () {
     var body = $('disk-list'), frag = doc.createDocumentFragment();
     shown(root).concat([trash]).forEach(function (n) {
       var tr = el('tr'), td = el('td'), b;
-      if (n.kind === 'alias') { b = el('a', 'lv', 'Back to the gallery'); b.href = n.href; b.target = '_top'; }
-      else { b = el('button', 'lv', n.name); b.type = 'button'; b.setAttribute('data-act', 'node:' + n.id); }
+      b = el('button', 'lv', n.name); b.type = 'button'; b.setAttribute('data-act', 'node:' + n.id);
       td.appendChild(b); tr.appendChild(td); tr.appendChild(el('td', '', describe(n)));
       frag.appendChild(tr);
     });
@@ -435,8 +431,6 @@ var Files = (function () {
   Desk.action('put-back', function (id) { putBack(nodes[id]); });
   Desk.action('empty-trash', empty);
   function openNode(n) {
-    // the gallery is left for in the whole window, not in the room's frame
-    if (n.kind === 'alias') { window.open(n.href, '_top'); return; }
     if (n.win) { Desk.open(n.win); return; }
     if (openers[n.kind]) openers[n.kind](n);
   }

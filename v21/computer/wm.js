@@ -280,7 +280,7 @@ var Desk = (function () {
   }
   doc.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('.icon');
-    if (!b || b.tagName === 'A') return;   // the gallery alias is a plain link
+    if (!b) return;
     selectIcon(b);
     var now = Date.now(), twice = lastClick.b === b && now - lastClick.t < 500;
     lastClick = twice ? { b: null, t: 0 } : { b: b, t: now };

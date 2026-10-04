@@ -295,12 +295,6 @@ var Px = (function () {
       [[3, 3], [6, 6], [9, 9]].forEach(function (o) { O(g, o[0], o[1], 19, 21); });
       for (var j = 0; j < 5; j++) { var y = 13 + 3 * j; line(g, 12, y, 14, y); line(g, 18, y, 23, y); }
     },
-    // the gallery alias: a framed painting, its tones a ramp of the hatch scale, and the alias arrow
-    gallery: function (g) {
-      O(g, 3, 3, 26, 22); O(g, 5, 5, 22, 18);
-      for (var x = 6; x < 26; x++) R(g, x, 6, 1, 16, { d: TONES[Math.min(5, Math.floor((x - 6) / 20 * 6))] });
-      O(g, 1, 21, 10, 10); line(g, 3, 28, 7, 24); line(g, 4, 24, 7, 24); line(g, 7, 24, 7, 27);
-    },
     // the Trash: the can seen straight on; full, its lid lifted on the papers inside
     trash: function (g, full) {
       var lift = full ? 3 : 0;
