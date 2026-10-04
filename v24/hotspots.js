@@ -16,7 +16,7 @@
     'print-wide': 'Change the print', 'print-narrow': 'Change the print', 'print-shelf': 'Change the print', 'floor-l': 'Change the plant',
     'floor-r': 'Change the plant', 'desk-plant': 'Change the plant', lamp: 'Change the lamp', mug: 'Change the mug' };
   var spots = Array.prototype.slice.call(scene.querySelectorAll('.obj, .swap'));
-  function sayOf(b) { var sw = b.getAttribute('data-swap'); if (sw) return SAY[sw]; for (var k in SAY) if (b.classList.contains(k)) return SAY[k]; return b.getAttribute('aria-label') || b.textContent.trim(); }
+  function sayOf(b) { if (b.classList.contains('lamp-switch')) return Decor.lampOn() ? 'Turn the lamp off' : 'Turn the lamp on'; var sw = b.getAttribute('data-swap'); if (sw) return SAY[sw]; for (var k in SAY) if (b.classList.contains(k)) return SAY[k]; return b.getAttribute('aria-label') || b.textContent.trim(); }
   var hint = doc.createElement('div');
   hint.className = 'hint'; hint.setAttribute('aria-hidden', 'true'); hint.hidden = true;
   doc.body.appendChild(hint);
@@ -36,7 +36,7 @@
       show(b, r.left + r.width / 2 - 60, r.top - 34);
     });
     b.addEventListener('blur', hide);
-    b.addEventListener('click', hide);
+    b.addEventListener('click', function () { if (b.classList.contains('lamp-switch') && !hint.hidden) hint.textContent = sayOf(b); else hide(); });
   });
   // the bare wall: its caption, and the hand, say it can be changed
   scene.addEventListener('pointermove', function (e) {

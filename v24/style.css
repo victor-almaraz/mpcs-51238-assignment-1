@@ -812,13 +812,15 @@ input[type="range"]::-moz-range-thumb { width: 0.8rem; height: 1.4rem; backgroun
 .scene img, .wall, .floor { image-rendering: pixelated; }
 /* past the picture the paper and the floor run on, their tiles set from the room's corner */
 .wall { background: var(--tile) 100vw 100vh / calc(var(--tw) * 1em * 92 / 640) calc(var(--th) * 1em * 92 / 640), var(--paper-blue); }
-.wall::after { content: ""; position: absolute; left: 100vw; top: 100vh; width: 92em; height: 46em; background: var(--backdrop) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
+.wall::after { content: ""; position: absolute; left: 100vw; top: 100vh; width: 92em; height: 46em; background: var(--back-l) 0 0 / calc(100% * 368 / 640) 100% no-repeat, var(--back-r) 100% 0 / calc(100% * 272 / 640) 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
 /* the papers (decor.js hangs one by setting data-paper on the room): each its own picture of
-   the room and its own tile for the wall past it, all lit and coloured as one */
-.desk { --paper-blue: #273765; --tile: url(assets/tile-ogee.png); --tw: 42; --th: 63; --backdrop: url(assets/room-ogee.png); }
-.desk[data-paper="atomic"] { --paper-blue: #3e4261; --tile: url(assets/tile-atomic.png); --tw: 42; --th: 42; --backdrop: url(assets/room-atomic.png); }
-.desk[data-paper="trellis"] { --paper-blue: #473043; --tile: url(assets/tile-trellis.png); --tw: 28; --th: 42; --backdrop: url(assets/room-trellis.png); }
-.desk[data-paper="grass"] { --paper-blue: #87818f; --tile: url(assets/tile-grass.png); --tw: 34; --th: 12; --backdrop: url(assets/room-grass.png); }
+   the room and its own tile for the wall past it, all lit and coloured as one. The room's left
+   part, as far as the lamp's light reaches, is drawn for every lamp and for the lamp switched
+   off (assets/lit/<lamp>/); decor.js sets it as --back-l. */
+.desk { --back-l: url(assets/lit/task/room-ogee.png); --paper-blue: #273765; --tile: url(assets/tile-ogee.png); --tw: 42; --th: 63; --back-r: url(assets/room-ogee-r.png); }
+.desk[data-paper="atomic"] { --paper-blue: #3e4261; --tile: url(assets/tile-atomic.png); --tw: 42; --th: 42; --back-r: url(assets/room-atomic-r.png); }
+.desk[data-paper="trellis"] { --paper-blue: #473043; --tile: url(assets/tile-trellis.png); --tw: 28; --th: 42; --back-r: url(assets/room-trellis-r.png); }
+.desk[data-paper="grass"] { --paper-blue: #87818f; --tile: url(assets/tile-grass.png); --tw: 34; --th: 12; --back-r: url(assets/room-grass-r.png); }
 .floor { height: calc(11em * 92 / 640); background: url(assets/floor-tile.png) 100vw 0 / calc(77em * 92 / 640) 100% repeat-x; }
 .floor::after { display: none; }
 .shelf-unit { left: calc(327em * 92 / 640); top: calc(17em * 92 / 640); width: calc(278em * 92 / 640); height: calc(66em * 92 / 640); }
@@ -891,6 +893,9 @@ img, .st-form, .st-out, .st-manual, .st-magazine, .st-portfolio, .st-tape, .st-c
    at once, as a scene changes in a point-and-click game. The bare wall changes its paper. */
 .scene .swap { position: absolute; margin: 0; padding: 0; font: inherit; background: none; border: 0; border-radius: 0; box-shadow: none; }
 .scene .swap img { display: block; width: 100%; height: 100%; }
+/* the shelf's and the desk's lists span the wall; only the things on them take the pointer */
+.scene .desk-top, .scene .shelf-unit, .scene .shelf { pointer-events: none; }
+.scene .desk-top > li, .scene .shelf > li { pointer-events: auto; }
 .scene .swap:is(:hover, :focus-visible), .scene.reveal .swap { filter: var(--hl); outline: none !important; }
 .sw-lamp { filter: drop-shadow(calc(2em * 92 / 640) calc(2em * 92 / 640) 0 rgba(16, 12, 36, 0.3)); }
 .scene.on-wall { cursor: url(assets/cursor-hand.png) 9 1, pointer; }
@@ -901,6 +906,7 @@ img, .st-form, .st-out, .st-manual, .st-magazine, .st-portfolio, .st-tape, .st-c
 .sw-print-shelf { left: calc(444em * 92 / 640); top: calc(1em * 92 / 640); width: calc(137em * 92 / 640); height: calc(70em * 92 / 640); }
 .sw-floor-l { left: calc(4em * 92 / 640); top: calc(167em * 92 / 640); width: calc(77em * 92 / 640); height: calc(146em * 92 / 640); }
 .sw-floor-r { left: calc(540em * 92 / 640); top: calc(202em * 92 / 640); width: calc(97em * 92 / 640); height: calc(111em * 92 / 640); }
+.sw-switch { left: calc(40em * 92 / 640); top: calc(128em * 92 / 640); width: calc(10em * 92 / 640); height: calc(16em * 92 / 640); }
 .sw-lamp { left: calc(74em * 92 / 640); top: calc(135em * 92 / 640); width: calc(49em * 92 / 640); height: calc(74em * 92 / 640); }
 .sw-desk-plant { left: calc(114em * 92 / 640); top: calc(152em * 92 / 640); width: calc(70em * 92 / 640); height: calc(81em * 92 / 640); }
 .sw-mug { left: calc(232em * 92 / 640); top: calc(188em * 92 / 640); width: calc(22em * 92 / 640); height: calc(21em * 92 / 640); }

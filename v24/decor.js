@@ -3,7 +3,9 @@
    and the mug. Each is a button; pressing it puts the next of its kind in its place at once.
    Every kind is drawn in pixels in the same box as the first, lit where it stands, so each
    takes the same place in the same light. The wallpaper changes too, from the menu or by
-   pressing the bare wall: each paper is a picture of the room of its own (style.css).
+   pressing the bare wall: each paper is a picture of the room of its own (style.css). The
+   switch on the wall turns the lamp off and on, and the room is drawn in the light there is:
+   each lamp's own light, or, with it off, only the screen's and the dusk's.
    Each time the page opens, every place and the wall take a kind chosen by chance; nothing
    is kept from one opening to the next. Decor.wallAt tells hotspots.js where the bare wall is. */
 
@@ -53,44 +55,87 @@
   function say(msg) { status.textContent = ''; setTimeout(function () { status.textContent = msg; }, 30); }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
+  // the light: the lamp on the desk, or 'off'. What the lamp's light reaches is drawn for each
+  // (assets/lit/<light>/); everything else once (assets/)
+  var LIT = ['desk-cacti', 'desk-jade', 'desk-pothos', 'lamp-angle', 'lamp-ceramic', 'lamp-dome', 'lamp-task', 'mug-black', 'mug-cup',
+    'mug-dipped', 'mug-enamel', 'mug-sage', 'mug-sieve', 'mug-striped', 'plant-fig', 'plant-palm', 'plant-snake', 'print-arp',
+    'print-dada', 'print-pavilion', 'print-polytope', 'print-sieve', 'print-taeuber', 'px-coding-form', 'px-computer',
+    'px-out-tray', 'px-vol-1', 'switch-on', 'switch-off'];
+  var room = doc.getElementById('desk'), scene = doc.querySelector('.overview');
+  var lampOn = true, swaps = [];
+  function light() { return lampOn ? lampKind() : 'off'; }
+  function src(name, at) { return A + (LIT.indexOf(name) >= 0 ? 'lit/' + (at || light()) + '/' : '') + name + '.png'; }
+  function lampKind() { var b = scene.querySelector('[data-swap="lamp"]'); return b.swapItem().split('-')[1]; }
+
   Array.prototype.forEach.call(doc.querySelectorAll('[data-swap]'), function (b) {
     var kind = KINDS[b.getAttribute('data-swap')], img = b.querySelector('img');
     var at = Math.floor(Math.random() * kind.items.length);
-    function put() {
+    b.swapItem = function () { return kind.items[at][0]; };
+    b.show = function () {
       var item = kind.items[at];
-      img.src = A + item[0] + '.png';
-      b.setAttribute('aria-label', 'Change ' + kind.what + ': now ' + item[1] + ', ' + (at + 1) + ' of ' + kind.items.length);
+      img.src = src(item[0]);
+      b.setAttribute('aria-label', 'Change ' + kind.what + ': now ' + item[1] + (b.getAttribute('data-swap') === 'lamp' && !lampOn ? ', switched off' : '') + ', ' + (at + 1) + ' of ' + kind.items.length);
       return item;
-    }
-    put();
+    };
     b.addEventListener('click', function () {
       at = (at + 1) % kind.items.length;
-      say(cap(kind.what) + ' is now ' + put()[1] + '.');
+      var item = kind.items[at];
+      if (b.getAttribute('data-swap') === 'lamp') relight(); else b.show();
+      say(cap(kind.what) + ' is now ' + item[1] + '.');
     });
-    // the others are fetched once the room is up, so a swap shows at once
-    window.addEventListener('load', function () {
-      kind.items.forEach(function (it) { new Image().src = A + it[0] + '.png'; });
-    });
+    swaps.push(b);
   });
 
   /* ---------------- the wallpaper ---------------- */
   var PAPERS = [
-    ['', 'a deep blue paper under an ogee trellis with cream seed pods'],
+    ['ogee', 'a deep blue paper under an ogee trellis with cream seed pods'],
     ['atomic', 'a sage paper with cream starbursts and ochre boomerangs'],
     ['trellis', 'a burnt umber paper with a diamond trellis and cream buds'],
     ['grass', 'an ivory grasscloth in fine vertical stripes']];
-  var room = doc.getElementById('desk'), scene = doc.querySelector('.overview');
   var paper = Math.floor(Math.random() * PAPERS.length);
-  function hangPaper() { var p = PAPERS[paper]; if (p[0]) room.setAttribute('data-paper', p[0]); else room.removeAttribute('data-paper'); return p; }
-  hangPaper();
   function next() {
     paper = (paper + 1) % PAPERS.length;
-    say('The wall is now hung with ' + hangPaper()[1] + '.');
+    relight();
+    say('The wall is now hung with ' + PAPERS[paper][1] + '.');
   }
-  window.addEventListener('load', function () {
-    PAPERS.forEach(function (p) { var n = p[0] || 'ogee'; new Image().src = A + 'room-' + n + '.png'; new Image().src = A + 'tile-' + n + '.png'; });
-  });
   doc.getElementById('paper-btn').addEventListener('click', next);
+
+  /* ---------------- the lamp's switch ---------------- */
+  var sw = scene.querySelector('.lamp-switch');
+  sw.addEventListener('click', function () {
+    lampOn = !lampOn;
+    relight();
+    say(lampOn ? 'The lamp is on.' : 'The lamp is off; the room is lit by the screen and the dusk.');
+  });
+
+  // everything drawn for the light, in the light there is now
+  function relight() {
+    var p = PAPERS[paper][0];
+    if (p === 'ogee') room.removeAttribute('data-paper'); else room.setAttribute('data-paper', p);
+    room.setAttribute('data-light', light());
+    room.style.setProperty('--back-l', 'url(' + A + 'lit/' + light() + '/room-' + p + '.png)');
+    swaps.forEach(function (b) { b.show(); });
+    Array.prototype.forEach.call(scene.querySelectorAll('img[data-lit]'), function (img) { img.src = src(img.getAttribute('data-lit').replace('.png', '')); });
+    sw.querySelector('img').src = src(lampOn ? 'switch-on' : 'switch-off');
+    sw.setAttribute('aria-pressed', String(lampOn));
+    sw.setAttribute('aria-label', 'The lamp’s switch: ' + (lampOn ? 'on' : 'off'));
+  }
+  relight();
+
+  // once the room is up, the pictures for every other choice are fetched, so a change shows at once
+  window.addEventListener('load', function () {
+    var lights = ['task', 'dome', 'angle', 'ceramic', 'off'], seen = {};
+    function get(u) { if (!seen[u]) { seen[u] = 1; new Image().src = u; } }
+    swaps.forEach(function (b) {
+      KINDS[b.getAttribute('data-swap')].items.forEach(function (it) { get(src(it[0])); });
+    });
+    PAPERS.forEach(function (p) { get(A + 'room-' + p[0] + '-r.png'); get(A + 'tile-' + p[0] + '.png'); get(A + 'lit/' + light() + '/room-' + p[0] + '.png'); });
+    lights.forEach(function (l) {
+      get(A + 'lit/' + l + '/room-' + PAPERS[paper][0] + '.png');
+      Array.prototype.forEach.call(scene.querySelectorAll('img[data-lit]'), function (img) { get(src(img.getAttribute('data-lit').replace('.png', ''), l)); });
+    });
+    get(src('switch-off', 'off'));
+  });
 
   // the bare wall, in the room's pixels (640 x 320): all of it above the floor but the desk's
   // top, its trestles, the shelf's board and the stool; past the picture the paper runs on
@@ -109,5 +154,5 @@
   scene.addEventListener('click', function (e) {
     if (bare(e.target) && wallAt(e.clientX, e.clientY)) next();
   });
-  window.Decor = { wallAt: function (e) { return bare(e.target) && wallAt(e.clientX, e.clientY); } };
+  window.Decor = { wallAt: function (e) { return bare(e.target) && wallAt(e.clientX, e.clientY); }, lampOn: function () { return lampOn; } };
 })();
