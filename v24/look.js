@@ -68,7 +68,7 @@
   }
   function lineOf(k) {
     if (k === 'wall') return [PAPER[Decor.paper()] + ' Press the bare wall to hang another.'];
-    if (k === 'lamp-switch') return [Decor.lampOn() ? 'A toggle switch, up. The lamp is on.' : 'A toggle switch, down. The lamp is off, and the room is lit by the screen and the dusk.'];
+    if (k === 'lamp-switch') return [Decor.lampOn() ? 'A toggle switch, up. The lamp is on.' : 'A toggle switch, down. The lamp is off, and the room is lit by the screen and ' + { morning: 'the morning', evening: 'the dusk', night: 'the moon' }[Decor.time()] + '.'];
     return LOOK[k];
   }
 
@@ -96,9 +96,9 @@
   offer.addEventListener('click', close);
 
   function spotOf(t) { return t.closest && t.closest('.overview .obj, .overview .swap'); }
+  // what is under the pointer, for L
   var hovered = null;
-  scene.addEventListener('pointerover', function (e) { hovered = spotOf(e.target) || (window.Decor && Decor.wallAt(e) ? 'wall' : null); });
-  scene.addEventListener('pointermove', function (e) { if (!spotOf(e.target)) hovered = Decor.wallAt(e) ? 'wall' : null; });
+  scene.addEventListener('pointermove', function (e) { hovered = spotOf(e.target) || (Decor.wallAt(e) ? 'wall' : null); });
   scene.addEventListener('pointerleave', function () { hovered = null; });
   // the right button looks
   scene.addEventListener('contextmenu', function (e) {
@@ -119,5 +119,6 @@
     var s = spotOf(t) || hovered;
     if (s) { e.preventDefault(); look(s); }
   }, true);
-  Desk.onShow && ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder'].forEach(function (n) { Desk.onShow(n, close); });
+  // taking a thing up puts the narration away
+  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder'].forEach(function (n) { Desk.onShow(n, close); });
 })();

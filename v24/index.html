@@ -28,8 +28,10 @@
         <li><button type="button" class="label" data-go="computer"><span class="no" aria-hidden="true">7</span>Computer</button></li>
         <li><button type="button" class="label" data-go="recorder"><span class="no" aria-hidden="true">8</span>Tape player</button></li>
       </ol>
-      <p class="back"><button type="button" class="paper-btn" id="paper-btn">Change the wallpaper</button></p>
-      <p class="back"><button type="button" class="paper-btn" id="sound-btn" aria-pressed="true">Room sounds: on</button></p>
+      <p class="back"><button type="button" class="menu-act" id="paper-btn">Change the wallpaper</button></p>
+      <p class="back"><button type="button" class="menu-act" id="light-btn">Light: by the clock</button></p>
+      <p class="back"><button type="button" class="menu-act" id="copy-room">Copy a link to this room</button></p>
+      <p class="back"><button type="button" class="menu-act" id="sound-btn" aria-pressed="true">Room sounds: on</button></p>
       <p class="back"><a href="../">Back to the gallery</a></p>
     </div>
   </nav>
@@ -42,39 +44,39 @@
     <div class="scene overview">
       <span class="wall" aria-hidden="true"><span class="floor"></span></span>
       <h1 id="desk-h" class="vh" tabindex="-1">A desk of cards, sieves and code</h1>
-      <button type="button" class="swap sw-print-wide" data-swap="print-wide"><img src="assets/lit/task/print-sieve.png" width="132" height="103" alt=""></button>
-      <button type="button" class="swap sw-print-narrow" data-swap="print-narrow"><img src="assets/lit/task/print-dada.png" width="79" height="100" alt=""></button>
-      <button type="button" class="swap sw-print-shelf" data-swap="print-shelf"><img src="assets/shelf-print-paraboloids.png" width="137" height="70" alt=""></button>
-      <button type="button" class="swap sw-floor-l" data-swap="floor-l"><img src="assets/lit/task/plant-fig.png" width="77" height="146" alt=""></button>
-      <button type="button" class="swap sw-floor-r" data-swap="floor-r"><img src="assets/plant-monstera.png" width="97" height="111" alt=""></button>
-      <button type="button" class="swap sw-lamp" data-swap="lamp"><img src="assets/lit/task/lamp-task.png" width="49" height="74" alt=""></button>
-      <button type="button" class="swap sw-desk-plant" data-swap="desk-plant"><img src="assets/lit/task/desk-pothos.png" width="70" height="81" alt=""></button>
-      <button type="button" class="swap sw-mug" data-swap="mug"><img src="assets/lit/task/mug-dipped.png" width="22" height="21" alt=""></button>
+      <button type="button" class="swap sw-print-wide" data-swap="print-wide"><img src="assets/evening/lit/task/print-sieve.png" width="132" height="103" alt=""></button>
+      <button type="button" class="swap sw-print-narrow" data-swap="print-narrow"><img src="assets/evening/lit/task/print-dada.png" width="79" height="100" alt=""></button>
+      <button type="button" class="swap sw-print-shelf" data-swap="print-shelf"><img src="assets/evening/shelf-print-paraboloids.png" width="137" height="70" alt=""></button>
+      <button type="button" class="swap sw-floor-l" data-swap="floor-l"><img src="assets/evening/lit/task/plant-fig.png" width="77" height="146" alt=""></button>
+      <button type="button" class="swap sw-floor-r" data-swap="floor-r"><img src="assets/evening/plant-monstera.png" width="97" height="111" alt=""></button>
+      <button type="button" class="swap sw-lamp" data-swap="lamp"><img src="assets/evening/lit/task/lamp-task.png" width="49" height="74" alt=""></button>
+      <button type="button" class="swap sw-desk-plant" data-swap="desk-plant"><img src="assets/evening/lit/task/desk-pothos.png" width="70" height="81" alt=""></button>
+      <button type="button" class="swap sw-mug" data-swap="mug"><img src="assets/evening/lit/task/mug-dipped.png" width="22" height="21" alt=""></button>
       <span class="anim steam" aria-hidden="true"></span>
       <span class="anim motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      <button type="button" class="swap sw-switch lamp-switch" aria-pressed="true" aria-label="The lamp’s switch"><img src="assets/lit/task/switch-on.png" width="10" height="16" alt=""></button>
+      <button type="button" class="swap sw-switch lamp-switch" aria-pressed="true" aria-label="The lamp’s switch"><img src="assets/evening/lit/task/switch-on.png" width="10" height="16" alt=""></button>
       <p class="vh" id="swap-status" role="status"></p>
 
       <div class="shelf-unit">
         <ul class="shelf" aria-label="On the bookshelf">
           <li class="sh-vols">
             <ul class="vols" aria-label="Reference manual, in three volumes">
-            <li><button type="button" class="obj spine v1" data-go="manual" data-chapter="0" aria-label="Reference manual, volume 1: FORTRAN"><img class="sp-pic" src="assets/lit/task/px-vol-1.png" data-lit="px-vol-1.png" width="19" height="59" alt=""><span class="sp-no" aria-hidden="true">1</span><span class="sp-t" aria-hidden="true">FORTRAN</span></button></li>
-            <li><button type="button" class="obj spine v2" data-go="manual" data-chapter="5" aria-label="Reference manual, volume 2: Sieves"><img class="sp-pic" src="assets/px-vol-2.png" width="17" height="55" alt=""><span class="sp-no" aria-hidden="true">2</span><span class="sp-t" aria-hidden="true">Sieves</span></button></li>
-            <li><button type="button" class="obj spine v3" data-go="manual" data-chapter="7" aria-label="Reference manual, volume 3: Music and tape"><img class="sp-pic" src="assets/px-vol-3.png" width="18" height="57" alt=""><span class="sp-no" aria-hidden="true">3</span><span class="sp-t" aria-hidden="true">Music</span></button></li>
+            <li><button type="button" class="obj spine v1" data-go="manual" data-chapter="0" aria-label="Reference manual, volume 1: FORTRAN"><img class="sp-pic" src="assets/evening/lit/task/px-vol-1.png" data-px="px-vol-1" width="19" height="59" alt=""><span class="sp-no" aria-hidden="true">1</span><span class="sp-t" aria-hidden="true">FORTRAN</span></button></li>
+            <li><button type="button" class="obj spine v2" data-go="manual" data-chapter="5" aria-label="Reference manual, volume 2: Sieves"><img class="sp-pic" src="assets/evening/px-vol-2.png" data-px="px-vol-2" width="17" height="55" alt=""><span class="sp-no" aria-hidden="true">2</span><span class="sp-t" aria-hidden="true">Sieves</span></button></li>
+            <li><button type="button" class="obj spine v3" data-go="manual" data-chapter="7" aria-label="Reference manual, volume 3: Music and tape"><img class="sp-pic" src="assets/evening/px-vol-3.png" data-px="px-vol-3" width="18" height="57" alt=""><span class="sp-no" aria-hidden="true">3</span><span class="sp-t" aria-hidden="true">Music</span></button></li>
             </ul>
             <p class="shelf-tag" aria-hidden="true">Reference manual</p>
           </li>
-          <li class="sh-mag"><button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><img src="assets/px-cover.png" width="37" height="50" alt=""></span><img class="ledge ledge-back" src="assets/px-mag-back.png" width="46" height="54" alt=""><img class="ledge ledge-front" src="assets/px-mag-front.png" width="46" height="54" alt=""><span class="obj-tag">Magazine</span></button></li>
-          <li class="sh-folio"><button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><img src="assets/px-file-box.png" width="28" height="44" alt=""></span><span class="obj-tag">Miscellanea</span></button></li>
-          <li class="sh-box"><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><img src="assets/px-deck-box.png" width="58" height="38" alt=""></span><span class="obj-tag">Deck box</span></button></li>
+          <li class="sh-mag"><button type="button" class="obj o-mag" data-go="magazine"><span class="mini mini-mag" aria-hidden="true"><img src="assets/evening/px-cover.png" data-px="px-cover" width="37" height="50" alt=""></span><img class="ledge ledge-back" src="assets/evening/px-mag-back.png" data-px="px-mag-back" width="46" height="54" alt=""><img class="ledge ledge-front" src="assets/evening/px-mag-front.png" data-px="px-mag-front" width="46" height="54" alt=""><span class="obj-tag">Magazine</span></button></li>
+          <li class="sh-folio"><button type="button" class="obj o-folio" data-go="portfolio"><span class="folders" aria-hidden="true"><img src="assets/evening/px-file-box.png" data-px="px-file-box" width="28" height="44" alt=""></span><span class="obj-tag">Miscellanea</span></button></li>
+          <li class="sh-box"><button type="button" class="obj o-box" data-go="form" data-focus="tray-h"><span class="deckbox" aria-hidden="true"><img src="assets/evening/px-deck-box.png" data-px="px-deck-box" width="58" height="38" alt=""></span><span class="obj-tag">Deck box</span></button></li>
         </ul>
       </div>
       <ul class="desk-top" aria-label="On the desk">
-        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="assets/lit/task/px-coding-form.png" data-lit="px-coding-form.png" width="42" height="56" alt=""></span><span class="obj-tag">Coding form</span></button></li>
-        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="assets/lit/task/px-out-tray.png" data-lit="px-out-tray.png" width="62" height="26" alt=""></span><span class="obj-tag">Out tray</span></button></li>
-        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/lit/task/px-computer.png" data-lit="px-computer.png" width="102" height="78" alt=""><span class="anim run-out"></span><span class="anim caret"></span></span><span class="obj-tag">Computer</span></button></li>
-        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/px-tape.png" width="90" height="64" alt=""><span class="anim reel reel-l"></span><span class="anim reel reel-r"></span><span class="anim meter"></span></span><span class="obj-tag">Tape player</span></button></li>
+        <li><button type="button" class="obj o-form" data-go="form"><span class="clipboard" aria-hidden="true"><img src="assets/evening/lit/task/px-coding-form.png" data-px="px-coding-form" width="42" height="56" alt=""></span><span class="obj-tag">Coding form</span></button></li>
+        <li><button type="button" class="obj o-out" data-go="out"><span class="outtray" aria-hidden="true"><img src="assets/evening/lit/task/px-out-tray.png" data-px="px-out-tray" width="62" height="26" alt=""></span><span class="obj-tag">Out tray</span></button></li>
+        <li><button type="button" class="obj o-computer" data-go="computer"><span class="computer" aria-hidden="true"><img src="assets/evening/lit/task/px-computer.png" data-px="px-computer" width="102" height="78" alt=""><span class="anim run-out"></span><span class="anim caret"></span></span><span class="obj-tag">Computer</span></button></li>
+        <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/evening/px-tape.png" data-px="px-tape" width="90" height="64" alt=""><span class="anim reel reel-l"></span><span class="anim reel reel-r"></span><span class="anim meter"></span></span><span class="obj-tag">Tape player</span></button></li>
       </ul>
     </div>
   </section>
