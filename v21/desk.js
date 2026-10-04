@@ -189,14 +189,8 @@ var Desk = (function () {
     return pager(box, chapters, $('manual-page'), 'Page', buttons);
   })();
   (function portfolio() {
-    var box = $('folio'), sheets = $$('.sheet', box);
-    // a sheet's drawings are set in the first time it is shown, from drawings.js
-    function fill(i, sheet) {
-      $$('.drawing-slot[data-drawing]', sheet).forEach(function (slot) {
-        slot.outerHTML = DRAWINGS[slot.getAttribute('data-drawing')];
-      });
-    }
-    pager(box, sheets, $('folio-page'), 'Sheet', $$('button', $('folio-index')), fill);
+    var box = $('folio');
+    pager(box, $$('.sheet', box), $('folio-page'), 'Sheet', $$('button', $('folio-index')));
   })();
 
   var api = {

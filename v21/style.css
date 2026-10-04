@@ -1,6 +1,6 @@
 /* A composer's workroom at a computing centre, lived in: a blue papered wall with two
    prints, one oak shelf on wire ladders, a walnut desk on a slender black trestle with a
-   plywood chair pulled up to it, plants on the floor at either end, a pothos and a mug on it,
+   birch stool under it, plants on the floor at either end, a pothos and a mug on it,
    and on the desk a computer with a desktop of its own. The room is drawn straight on, as
    an elevation, in quiet materials (plaster, oak, walnut, linen, aluminium) with soft
    contact shadows and one muted accent, a terracotta. Nothing in the room is captioned:
@@ -20,7 +20,7 @@
 
 :root {
   --wall: #ede4d4;
-  --paper-blue: #56768f;   /* the room's wallpaper, a soft blue */
+  --paper-blue: #2b4560;   /* the room's wallpaper, a deep blue */
   --wall-low: #e3d8c6;
   --oak: #c8a97e;
   --oak-d: #a98b68;
@@ -165,10 +165,11 @@ td code { white-space: nowrap; }
 .scene .obj { padding: 0; font: inherit; color: inherit; background: none; border: 0; border-radius: 0; box-shadow: none; cursor: pointer; }
 .scene .obj:focus-visible { outline: none; }
 
-/* plaster, lit from the upper left; the oak floor along its foot */
-/* wallpaper: a soft blue with a half-drop of seed pods in a cream hairline (assets/wallpaper.svg),
-   hung to the em so it scales with the room, a little darker toward the floor */
-.wall { position: absolute; inset: -100vh -100vw 0; background: var(--grain), linear-gradient(transparent 55%, rgba(18, 28, 42, 0.2)), url(assets/wallpaper.svg) 0 0 / 4em 6em, var(--paper-blue); }
+/* wallpaper (assets/wallpaper.svg): a deep blue under a half-drop ogee trellis in a paler
+   hairline, a cream seed pod with leaves and an ochre crown in each cell, small flowers at
+   the crossings; hung to the em so it scales with the room, a little darker toward the floor;
+   the oak floor along its foot */
+.wall { position: absolute; inset: -100vh -100vw 0; background: var(--grain), linear-gradient(transparent 55%, rgba(18, 28, 42, 0.2)), url(assets/wallpaper.svg) 0 0 / 6em 9em, var(--paper-blue); }
 /* the light from the window, a soft parallelogram across the wall, over the scene only */
 .wall::after {
   content: ""; position: absolute; inset: 0;
@@ -182,6 +183,8 @@ td code { white-space: nowrap; }
 
 /* in the title's place, a print: a sieve as rows of dots, framed in oak over a wide mat */
 .wall-print { position: absolute; left: 9.4em; top: 3em; width: 19em; height: auto; filter: drop-shadow(0.4em 0.3em 0.5em rgba(40, 28, 18, 0.18)); pointer-events: none; }
+/* beside it, a Dada print: Ball's sound poem in mixed faces, red and black, in a black frame */
+.wall-dada { left: 31.2em; top: 4.2em; width: 11.4em; }
 /* the menu's places, numbered, the numeral in the accent */
 .label .no { margin-right: 0.6em; font-weight: 600; color: var(--accent); }
 .label .no { display: inline-block; width: 1.2em; }
@@ -264,12 +267,12 @@ td code { white-space: nowrap; }
 .desk-top .obj > span:first-child { display: block; filter: var(--cast); transition: transform 0.25s ease, filter 0.25s ease; }
 .desk-top .obj:hover > span:first-child, .desk-top .obj:focus-visible > span:first-child { transform: translateY(-0.35em); filter: drop-shadow(0.75em 0.6em 0.7em rgba(40, 28, 18, 0.22)); }
 /* what makes it lived in: a pothos trailing over the desk's edge, a mug by the form, a
-   molded-plywood chair pulled up to the computer */
-.pothos, .mug, .chair, .plant { position: absolute; pointer-events: none; }
-.pothos img, .mug img, .chair img, .plant img { display: block; width: 100%; height: 100%; }
+   birch stool, after Aalto's, under the computer */
+.pothos, .mug, .stool, .plant { position: absolute; pointer-events: none; }
+.pothos img, .mug img, .stool img, .plant img { display: block; width: 100%; height: 100%; }
 .pothos { left: 16.4em; top: 21.8em; width: 10em; height: 11.6em; z-index: 1; filter: var(--cast); }
-.mug { left: 33.4em; top: 27em; width: 3em; height: 3em; filter: var(--cast); }
-.chair { left: 52.3em; top: 30.6em; width: 9.6em; height: 14.4em; z-index: 1; filter: drop-shadow(0.5em 0.2em 0.5em rgba(40, 28, 18, 0.3)); }
+.mug { left: 33.4em; top: 27em; width: 3.2em; height: 3em; filter: var(--cast); }
+.stool { left: 53.1em; top: 35.8em; width: 8.4em; height: 9.2em; z-index: 1; filter: drop-shadow(0.5em 0.2em 0.5em rgba(20, 24, 34, 0.3)); }
 /* a plant on the floor at each end of the desk: a fiddle-leaf fig on a teak stand, a
    monstera on brass hairpin legs */
 .plant { bottom: 1em; z-index: 1; filter: drop-shadow(0.5em 0.2em 0.6em rgba(20, 24, 34, 0.32)); }
@@ -299,7 +302,7 @@ td code { white-space: nowrap; }
 @container (max-width: 1011px), (max-height: 505px) {
   /* (the station is the query container, so the drawing pads and scrolls itself) */
   .scene { align-self: stretch; justify-self: stretch; width: auto; height: 100%; overflow: auto; padding: 3.8rem 1.1rem 1.6rem; font-size: 16px; display: grid; align-content: start; gap: 1.6rem; }
-  .wall, .desk-body, .lamp, .shelf-pic, .wall-print, .pothos, .mug, .chair, .plant { display: none; }
+  .wall, .desk-body, .lamp, .shelf-pic, .wall-print, .pothos, .mug, .stool, .plant { display: none; }
   .scene .obj-tag, .scene .shelf-tag { position: static !important; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
   .desk-top > li { position: static; }
   .desk-top > li::after { display: none; }
@@ -412,7 +415,10 @@ td code { white-space: nowrap; }
 .sheet-letter { flex: none; font: 700 0.9em/1 var(--slab); color: var(--ink-soft); }
 .exhibit { margin: 0; min-width: 0; }
 .exhibit .art { margin: 0 0 0.9rem; }
-.exhibit .art svg { display: block; width: 100%; height: auto; max-height: 52vh; box-shadow: 0 0 0 1px var(--rule); }
+.exhibit .art svg, .exhibit .art img.drawing { display: block; width: 100%; height: auto; max-height: 52vh; box-shadow: 0 0 0 1px var(--rule); }
+/* the drawings are SVG files (assets/misc/), their lines merged and their type in outline */
+/* each drawing as wide as the sheet allows, or as 52% of the window's height lets it be */
+.exhibit .art img.drawing { width: min(100%, 52vh * var(--ar)); max-width: 100%; margin: 0 auto; }
 .exhibit figcaption { max-width: 66ch; font: 0.95rem/1.6 var(--serif); color: var(--ink-soft); }
 .exhibit figcaption cite { color: var(--ink); }
 .exhibit.printout .art { overflow-x: auto; }
