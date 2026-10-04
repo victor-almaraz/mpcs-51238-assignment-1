@@ -1,5 +1,5 @@
 /* The room's things that can be swapped: the three prints on the wall (one pinned up behind
-   the shelf), the plant at each end
+   the shelf), the lamp, the plant at each end
    of the floor, the plant on the desk and the mug. Each is a button; pressing it puts the
    next of its kind in its place, the picture fading out and the next fading in once it has
    loaded. Every kind is drawn in the same box as the first, so each takes the same place.
@@ -35,6 +35,11 @@
       [V21 + 'pothos.webp', 'a pothos trailing over the desk'],
       [OWN + 'desk-jade.webp', 'a jade plant in a celadon bowl'],
       [OWN + 'desk-cacti.webp', 'three cacti in a terracotta pot']] },
+    'lamp': { what: 'the lamp', items: [
+      [V21 + 'lamp.webp', 'a black task lamp on a curved arm, its shade turned to the desk'],
+      [OWN + 'lamp-dome.webp', 'a white dome lamp on a flared stem'],
+      [OWN + 'lamp-angle.webp', 'a terracotta balanced-arm lamp on springs'],
+      [OWN + 'lamp-ceramic.webp', 'an ochre ceramic lamp with a linen drum shade']] },
     'mug': { what: 'the mug', items: [
       [V21 + 'mug.webp', 'a cream mug dipped in terracotta'],
       [OWN + 'mug-sage.webp', 'a sage mug'],
@@ -56,6 +61,7 @@
     var kind = KINDS[b.getAttribute('data-swap')], img = b.querySelector('img'), busy = false;
     var at = Math.floor(Math.random() * kind.items.length);
     if (at) img.src = kind.items[at][0];
+    b.setAttribute('data-v', at);
     label(b, at);
     b.addEventListener('click', function () {
       if (busy) return;
@@ -67,6 +73,7 @@
       var ready = next.decode ? next.decode().catch(function () {}) : Promise.resolve();
       Promise.all([fade, ready]).then(function () {
         img.src = item[0];
+        b.setAttribute('data-v', at);
         b.classList.remove('fading');
         label(b, at);
         status.textContent = '';

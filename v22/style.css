@@ -265,6 +265,11 @@ td code { white-space: nowrap; }
 .lamp { position: absolute; left: 10.6em; top: 19.4em; width: 7em; height: 10.6em; filter: var(--cast); }
 .lamp img { position: relative; display: block; width: 100%; height: 100%; }
 .lamp::before { content: ""; position: absolute; left: 3.6em; top: 1.4em; width: 16em; height: 9.6em; background: radial-gradient(ellipse 50% 45% at 30% 72%, rgba(255, 214, 150, 0.55), rgba(255, 220, 160, 0.16) 55%, transparent 75%); transform: rotate(12deg); transform-origin: 0 0; pointer-events: none; mix-blend-mode: multiply; filter: saturate(0.8); }
+/* each lamp casts its own light: the dome and the drum light all round them, the
+   balanced-arm lamp, like the first, down and across the desk */
+.lamp[data-v="1"]::before { left: -2.4em; top: 3.4em; width: 11em; height: 8em; transform: none; background: radial-gradient(ellipse 50% 50% at 48% 62%, rgba(255, 214, 150, 0.5), rgba(255, 220, 160, 0.14) 55%, transparent 75%); }
+.lamp[data-v="2"]::before { left: 3.2em; top: 2.4em; transform: rotate(8deg); }
+.lamp[data-v="3"]::before { left: -3.4em; top: 0.2em; width: 12em; height: 10em; transform: none; background: radial-gradient(ellipse 50% 50% at 46% 38%, rgba(255, 214, 150, 0.5), rgba(255, 220, 160, 0.14) 55%, transparent 75%); }
 
 /* --- the things on the desk, set by hand in loose groups: the lamp, the pothos, the coding
    form and a mug at the left; the out tray by the computer; the tape player at the end. The
