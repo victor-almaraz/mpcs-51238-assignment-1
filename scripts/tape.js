@@ -4,6 +4,7 @@
    Tape.parseCards(cards, opts)  -> { events, skipped, length, bare } pure
    Tape.schedule(events, opts)   -> [{ t, dur, hz, gain }] in seconds  pure
    Tape.midiToHz(note)           -> frequency in Hz                    pure
+   Tape.harmonics(samples, n)    -> { real, imag } the first n harmonics of one drawn cycle  pure
    Tape.createPlayer(opts)       -> player (needs Web Audio; built lazily on first play)
 
    An event card holds I5 fields, as a FORTRAN PUNCH 10, ... with 10 FORMAT (4I5) makes them:
@@ -77,11 +78,25 @@ var Tape = (function () {
     });
   }
 
+  // the first n harmonics of one cycle of a wave (samples from -1 to 1, evenly spaced over the
+  // cycle), as the real and imaginary parts Web Audio's createPeriodicWave takes
+  function harmonics(samples, n) {
+    n = n || 32;
+    var N = samples.length, re = new Float32Array(n + 1), im = new Float32Array(n + 1);
+    for (var k = 1; k <= n; k++) {
+      for (var i = 0; i < N; i++) { var a = 2 * Math.PI * k * i / N; re[k] += samples[i] * Math.cos(a); im[k] += samples[i] * Math.sin(a); }
+      re[k] *= 2 / N; im[k] *= 2 / N;
+    }
+    return { real: re, imag: im };
+  }
+
   /* ---------------------------------------------------------------- player */
 
   // opts: { bpm, speed, hiss (0-1), onTick(state) }
   // player: load(events), play(), pause(), stop(), seek(seconds), setTempo(bpm), setSpeed(s),
-  //         state() -> { playing, position, duration, bpm, speed }, close()
+  //         setWave(samples or null), state() -> { playing, position, duration, bpm, speed }, close()
+  // Each note sounds as a triangle with a soft octave over it, unless setWave gives it one drawn
+  // cycle to sound in instead (setWave(null) goes back to the triangle).
   function createPlayer(opts) {
     opts = opts || {};
     var bpm = opts.bpm > 0 ? opts.bpm : 120, speed = opts.speed > 0 ? opts.speed : 1;
@@ -90,6 +105,7 @@ var Tape = (function () {
     var events = [], plan = [], duration = 0;
     var playing = false, startAt = 0, offset = 0, next = 0, timer = null, raf = null;
     var live = [];
+    var waveSpec = null, waveObj = null;     // the drawn wave's harmonics, and its PeriodicWave once built
 
     function build() {
       if (ctx) return;
@@ -130,10 +146,12 @@ var Tape = (function () {
 
     function voice(ev, when) {
       var g = ctx.createGain(), a = ctx.createOscillator(), b = ctx.createOscillator();
-      a.type = 'triangle'; b.type = 'sine';
+      if (waveSpec && !waveObj) waveObj = ctx.createPeriodicWave(waveSpec.real, waveSpec.imag);
+      if (waveObj) a.setPeriodicWave(waveObj); else a.type = 'triangle';
+      b.type = 'sine';
       a.frequency.value = ev.hz; b.frequency.value = ev.hz * 2;
       wow.depth.connect(a.detune); wow.depth.connect(b.detune);
-      var bg = ctx.createGain(); bg.gain.value = 0.25;
+      var bg = ctx.createGain(); bg.gain.value = waveObj ? 0 : 0.25;    // a drawn wave sounds alone
       a.connect(g); b.connect(bg).connect(g); g.connect(master);
       var peak = 0.6 * ev.gain, end = when + Math.max(ev.dur, 0.06);
       g.gain.setValueAtTime(0, when);
@@ -260,6 +278,7 @@ var Tape = (function () {
       seek: seek,
       setTempo: function (v) { if (v > 0) retime(function () { bpm = v; }); },
       setSpeed: function (v) { if (v > 0) retime(function () { speed = v; }); },
+      setWave: function (samples) { waveSpec = samples ? harmonics(samples) : null; waveObj = null; },
       state: state,
       close: function () { stop(); if (ctx) ctx.close(); ctx = null; }
     };
@@ -270,6 +289,7 @@ var Tape = (function () {
     schedule: schedule,
     midiToHz: midiToHz,
     pulseSeconds: pulseSeconds,
+    harmonics: harmonics,
     createPlayer: createPlayer
   };
 })();

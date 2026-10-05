@@ -68,3 +68,13 @@ test('tape: a pulse is a quarter beat, and double speed halves time and doubles 
   equal(Tape.schedule(ev, { bpm: 120 }), [{ t: 1, dur: 0.5, hz: 220, gain: 7 / 9 }]);
   equal(Tape.schedule(ev, { bpm: 120, speed: 2 }), [{ t: 0.5, dur: 0.25, hz: 440, gain: 7 / 9 }]);
 });
+
+test('tape: harmonics of one drawn cycle find a sine in its first harmonic alone', function () {
+  var N = 96, s = [];
+  for (var i = 0; i < N; i++) s.push(Math.sin(2 * Math.PI * i / N));
+  var h = Tape.harmonics(s, 4);
+  equal(Math.round(h.imag[1] * 1000) / 1000, 1);
+  equal(Math.round(Math.abs(h.real[1]) * 1000) / 1000, 0);
+  equal(Math.round(Math.abs(h.imag[2]) * 1000) / 1000, 0);
+  equal(h.real.length, 5);
+});
