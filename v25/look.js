@@ -1,7 +1,7 @@
 /* Looking, the point-and-click game's other verb. Pressing a thing uses it (takes it up, or
    changes it); looking at it (the right button, or L with the thing under the pointer or
    focused) has the narrator say what it is, in a line along the foot of the room. Every print
-   leads to a deck: the narrator offers to put the deck it calls to mind on the coding form.
+   leads to a deck, and so does every book that can be taken down: the narrator offers to put the deck it calls to mind on the coding form.
    The narration is read out as well (a live region), and goes on a press elsewhere, on
    Escape, or after a while. Needs Desk (desk.js) and Decor (decor.js). */
 
@@ -45,7 +45,7 @@
     v1: ['The reference manual, volume 1: FORTRAN, card by card.'],
     v2: ['The reference manual, volume 2: sieves, and how to compute them.'],
     v3: ['The reference manual, volume 3: music, and the tape player.'],
-    'o-mag': ['A magazine of code and art, open at its cover. Its articles print decks you can run.'],
+    'o-mag': ['Three magazines in their ledge: Moiré, of art and computing; Event, a Fluxus newspaper; and Gesso, of painting by rule and chance. Their articles print decks you can run.'],
     'o-folio': ['A file box of Xenakis miscellanea: drawings, photographs, notes.'],
     'o-box': ['The deck box: every sample deck, each behind its tab.'],
     'o-form': ['A coding form on a clipboard, eighty columns to a line, ready for cards.'],
@@ -54,6 +54,19 @@
     'o-tape': ['A reel-to-reel tape player. It plays the cards a program punches.'],
     'o-reader': ['A card reader and a line printer in one steel cabinet. Every deck that is run passes through the reader, and the printer prints what it says.'],
     'o-upic': ['The UPIC’s tablet. Xenakis had it built in Paris in the 1970s, so that music could be drawn: time across the page, pitch up it, every line a voice.'],
+    'print-kelly': ['After Ellsworth Kelly’s Spectrum Colors Arranged by Chance, 1951: a grid of squares, each one’s colour drawn by chance from numbered slips.', 'spectrum-colors-by-chance', 'Spectrum colors arranged by chance'],
+    'print-fluxus': ['A poster for a Fluxus concert, 1962: the evening’s events listed in boxes of type, black on newsprint, one box in yellow.', 'event-cards', 'Event cards'],
+    'print-molnar': ['After Vera Molnár’s (Des)Ordres, 1974: squares inside squares, drawn by a plotter, their corners moved by chance, a little more in each.', 'order-and-disorder', 'Order and disorder'],
+    'book-xenakis': ['Iannis Xenakis, Formalized Music, 1971: the English edition of Musiques formelles, with the sieves, Achorripsis, and the stochastic program written in FORTRAN for an IBM 7090.', 'sieve-generator', 'Sieve generator'],
+    'book-hiller': ['Lejaren Hiller and Leonard Isaacson, Experimental Music, 1959: how they programmed the ILLIAC I at Illinois to compose the Illiac Suite for string quartet. Its fourth movement is made with Markov chains.', 'markov-melody', 'Markov melody'],
+    'book-cage': ['John Cage, Silence, 1961. In it he tells of entering the anechoic chamber at Harvard and hearing two sounds, one high and one low: his nervous system and his blood.', 'an-echo-in-an-empty-room', 'An echo in an empty room'],
+    'book-mccracken': ['Daniel D. McCracken, A Guide to FORTRAN Programming, 1961: one of the first books to teach the language, statement by statement.', 'squares-and-roots', 'Squares and roots'],
+    'book-knuth': ['Donald Knuth, The Art of Computer Programming, volume 2: Seminumerical Algorithms, 1969. Its first chapter is on random numbers: how a machine that only follows rules makes numbers that pass for chance, and how to test them.', 'stochastic-cloud', 'Stochastic cloud'],
+    'book-reichardt': ['Cybernetic Serendipity: the computer and the arts, 1968, edited by Jasia Reichardt: Studio International’s special issue for her show at the ICA in London, Knowlton and Harmon’s pictures among its pages.', 'studies-in-perception', 'Studies in perception'],
+    metronome: ['A wooden metronome. György Ligeti’s Poème symphonique, 1962, is for a hundred of them, wound, set going at once and left to run down.', 'poeme-symphonique', 'Poème symphonique'],
+    tank: ['A planted tank: a school of neon tetras, an angelfish, and a corydoras that keeps to the gravel, among vallisneria, a sword plant and a piece of driftwood. Press it to feed them.'],
+    clock: [null],
+    turn: [null],
     'lamp-switch': [null],
     wall: [null]
   };
@@ -70,6 +83,8 @@
   }
   function lineOf(k) {
     if (k === 'wall') return [PAPER[Decor.paper()] + ' Press the bare wall to hang another.'];
+    if (k === 'clock') return ['A teak wall clock, keeping the visitor’s own time. ' + Corner.time()];
+    if (k === 'turn') return null;
     if (k === 'lamp-switch') return [Decor.lampOn() ? 'A toggle switch, up. The lamp is on.' : 'A toggle switch, down. The lamp is off, and the room is lit by the screen and ' + { morning: 'the morning', evening: 'the dusk', night: 'the moon' }[Decor.time()] + '.'];
     return LOOK[k];
   }
@@ -94,7 +109,11 @@
     clearTimeout(timer);
     timer = setTimeout(close, line[1] ? 14000 : 9000);
   }
-  function close() { box.hidden = true; clearTimeout(timer); }
+  function close() {
+    box.hidden = true; clearTimeout(timer);
+    // a book taken down to be read about goes back on its shelf
+    Array.prototype.forEach.call(scene.querySelectorAll('.book.taken'), function (b) { b.classList.remove('taken'); });
+  }
   offer.addEventListener('click', close);
 
   function spotOf(t) { return t.closest && t.closest('.overview .obj, .overview .swap'); }
@@ -122,5 +141,7 @@
     if (s) { e.preventDefault(); look(s); }
   }, true);
   // taking a thing up puts the narration away
-  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder'].forEach(function (n) { Desk.onShow(n, close); });
+  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder', 'reader', 'upic'].forEach(function (n) { Desk.onShow(n, close); });
+  scene.addEventListener('room:turn', close);
+  window.Look = { look: look };
 })();

@@ -1,17 +1,20 @@
 /* A wave pad: one cycle of a wave, drawn on a small canvas in pixels and changed by drawing
    on it, or chosen from the buttons beside it (each button's data-wave names a shape). The
-   UPIC sounds its voices in one, and the tape player its notes. A pad given no shape at the
-   start shows the "tape" shape, which stands for the player's own sound (a triangle with a
-   soft octave over it) and gives no samples, so the player keeps it.
+   UPIC sounds its voices in one, and the tape player and the computer's Player their notes.
+   A pad given no shape at the start shows the "tape" shape, which stands for the player's own
+   sound (a triangle with a soft octave over it) and gives no samples, so the player keeps it.
 
-   WavePad(canvas, buttons, onChange) -> { samples() (null for the tape's own), name() }
+   WavePad(canvas, buttons, onChange, first, colours) -> { samples() (null for the tape's own), name() }
+   first is the shape to begin with (the tape's own if none); colours ({ paper, rule, ink }) are
+   the pad's, if it is drawn in another palette (the computer's).
    onChange(name, samples) is called whenever the wave changes; name is the shape's, or
    "drawn" for a wave drawn by hand. */
 
-var WavePad = function (canvas, buttons, onChange, first) {
+var WavePad = function (canvas, buttons, onChange, first, colours) {
   'use strict';
   var N = 96, wave = new Float32Array(N), name = null;
-  var PAPER = '#f1e7d5', RULE = '#cbb991', INK = '#1e1d1b';
+  colours = colours || {};
+  var PAPER = colours.paper || '#f1e7d5', RULE = colours.rule || '#cbb991', INK = colours.ink || '#1e1d1b';
   var SHAPES = {
     sine: function (t) { return Math.sin(2 * Math.PI * t); },
     triangle: function (t) { return 1 - 4 * Math.abs(Math.round(t - 0.25) - (t - 0.25)); },

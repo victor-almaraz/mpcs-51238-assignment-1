@@ -58,6 +58,7 @@
       <span class="anim motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <button type="button" class="swap sw-switch lamp-switch" aria-pressed="true" aria-label="The lamp’s switch"><img src="assets/evening/lit/task/switch-on.png" width="10" height="16" alt=""></button>
       <p class="vh" id="swap-status" role="status"></p>
+      <button type="button" class="swap turn turn-r" data-turn-to="1" data-say="Turn to the bookcase" aria-label="Turn to the reading corner: the bookcase and the fish tank"><img src="assets/turn-r.png" width="12" height="22" alt=""></button>
 
       <div class="shelf-unit">
         <ul class="shelf" aria-label="On the bookshelf">
@@ -82,6 +83,30 @@
         <li><button type="button" class="obj o-reader" data-go="reader"><span class="reader" aria-hidden="true"><img src="assets/evening/lit/task/px-reader.png" data-px="px-reader" width="130" height="62" alt=""></span><span class="obj-tag">Card reader and printer</span></button></li>
         <li><button type="button" class="obj o-upic" data-go="upic"><span class="tablet" aria-hidden="true"><img src="assets/evening/px-upic.png" data-px="px-upic" width="66" height="80" alt=""></span><span class="obj-tag">UPIC</span></button></li>
       </ul>
+      <!-- round the corner, the reading corner (pan.js turns to it): a bookcase whose books can
+           be taken down, a metronome on its second shelf, a lounge chair under a wall clock, a
+           planted fish tank on a teak cabinet under a print. Set in the wall's own pixels. -->
+      <div class="part2" id="corner">
+        <h2 id="corner-h" class="vh" tabindex="-1">The reading corner</h2>
+        <button type="button" class="swap turn turn-l" data-turn-to="0" data-say="Turn to the desk" aria-label="Turn back to the desk"><img src="assets/turn-l.png" width="12" height="22" alt=""></button>
+        <button type="button" class="swap sw-print-tank" data-swap="print-tank"><img src="assets/evening/print-kelly.png" width="128" height="86" alt=""></button>
+        <button type="button" class="swap clock" data-say="Read the clock" aria-label="The clock"><img src="assets/evening/px-clock.png" data-px="px-clock" width="29" height="29" alt=""><canvas class="clock-hands" width="29" height="29" aria-hidden="true"></canvas></button>
+        <ul class="books" aria-label="On the bookcase">
+          <li><button type="button" class="swap book book-xenakis" data-say="Take down Formalized Music" aria-label="Formalized Music, by Iannis Xenakis"><img src="assets/evening/px-book-xenakis.png" data-px="px-book-xenakis" width="11" height="41" alt=""></button></li>
+          <li><button type="button" class="swap book book-hiller" data-say="Take down Experimental Music" aria-label="Experimental Music, by Lejaren Hiller and Leonard Isaacson"><img src="assets/evening/px-book-hiller.png" data-px="px-book-hiller" width="10" height="43" alt=""></button></li>
+          <li><button type="button" class="swap book book-cage" data-say="Take down Silence" aria-label="Silence, by John Cage"><img src="assets/evening/px-book-cage.png" data-px="px-book-cage" width="9" height="37" alt=""></button></li>
+          <li><button type="button" class="swap metronome" data-say="Start the metronome" aria-pressed="false" aria-label="A metronome"><img src="assets/evening/px-metronome.png" data-px="px-metronome" width="21" height="33" alt=""><span class="anim pendulum"></span></button></li>
+          <li><button type="button" class="swap book book-mccracken" data-say="Take down A Guide to FORTRAN Programming" aria-label="A Guide to FORTRAN Programming, by Daniel D. McCracken"><img src="assets/evening/px-book-mccracken.png" data-px="px-book-mccracken" width="10" height="39" alt=""></button></li>
+          <li><button type="button" class="swap book book-knuth" data-say="Take down Seminumerical Algorithms" aria-label="The Art of Computer Programming, volume 2: Seminumerical Algorithms, by Donald Knuth"><img src="assets/evening/px-book-knuth.png" data-px="px-book-knuth" width="13" height="42" alt=""></button></li>
+          <li><button type="button" class="swap book book-reichardt" data-say="Take down Cybernetic Serendipity" aria-label="Cybernetic Serendipity: the computer and the arts, edited by Jasia Reichardt"><img src="assets/evening/px-book-reichardt.png" data-px="px-book-reichardt" width="31" height="40" alt=""></button></li>
+        </ul>
+        <button type="button" class="swap tank" data-say="Feed the fish" aria-label="The fish tank: feed the fish"><img src="assets/evening/px-tank.png" data-px="px-tank" width="184" height="94" alt=""></button>
+        <span class="anim fish tetras" aria-hidden="true"></span>
+        <span class="anim fish angel" aria-hidden="true"></span>
+        <span class="anim fish cory" aria-hidden="true"></span>
+        <span class="anim bubbles" aria-hidden="true"></span>
+        <span class="anim flakes" aria-hidden="true"></span>
+      </div>
     </div>
   </section>
 
@@ -538,11 +563,19 @@
 
   <!-- the magazine, open -->
   <section class="station st-mag" id="magazine" data-station="magazine" aria-labelledby="mag-title" hidden>
-<!-- The magazine: a saddle-stitched art-and-computing magazine lying on the desk. After its
-     cover, each .mag-leaf is an article whose text flows in page-wide columns over as many
-     spreads as it needs (magazine.js turns them a spread at a time); its plates are pixel
-     pictures in assets/st/. -->
-<div class="mag" id="mag">
+<!-- The magazines on the shelf: Moiré (art and computing), Event (a Fluxus newspaper) and Gesso
+     (painting by rule and chance), the rack above them choosing one. After its cover, each
+     issue's .mag-leaf is an article whose text flows in columns over as many spreads as it
+     needs (magazine.js turns them a spread at a time); its plates are pixel pictures in
+     assets/st/. -->
+<nav class="mag-rack" aria-label="The magazines on the shelf">
+  <ul>
+    <li><button type="button" data-issue="moire" aria-pressed="true">Moiré</button></li>
+    <li><button type="button" data-issue="event" aria-pressed="false">Event</button></li>
+    <li><button type="button" data-issue="gesso" aria-pressed="false">Gesso</button></li>
+  </ul>
+</nav>
+<div class="mag" id="mag" data-issue="moire" data-cols="1">
   <div class="mag-book">
 
     <section class="mag-leaf mag-leaf-cover" data-ink="o" aria-labelledby="mag-title">
@@ -557,7 +590,6 @@
         </div>
       </div>
     </section>
-
     <section class="mag-leaf mag-spread mag-leaf-contents" data-ink="m" aria-labelledby="mag-contents-h">
       <div class="mag-flow">
         <div class="mag-opener">
@@ -581,7 +613,6 @@
         <p class="mag-colophon">Printed in cyan, magenta, yellow and black, with a spot orange.</p>
       </div>
     </section>
-
     <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="mag-a1">
       <div class="mag-flow">
         <div class="mag-opener">
@@ -609,7 +640,6 @@
         <p>From 2 August to 20 October 1968, <i>Cybernetic Serendipity</i> at the Institute of Contemporary Arts in London, curated by Jasia Reichardt, set out to show computer-aided creative work of every kind: graphics, music, poetry, dance, sculpture and film, along with painting machines, robots and works in which chance played a large part. It had more than 130 contributors, from composers and engineers to poets, and was seen by some 60,000 visitors. The record issued with it included an excerpt of Iannis Xenakis’s <i>Stratégie</i> (1962), alongside Lejaren Hiller and Leonard Isaacson’s <i>Illiac Suite</i> and John Cage’s <i>Cartridge Music</i>. In three years, pictures from programs had gone from a university seminar room to a public that queued to see them.</p>
       </div>
     </section>
-
     <section class="mag-leaf mag-spread" data-ink="m" aria-labelledby="mag-a2">
       <div class="mag-flow">
         <div class="mag-opener">
@@ -640,7 +670,6 @@
         <p class="mag-deck"><button type="button" data-deck="euclid-read-aloud">Put <i>Euclid, read aloud</i> on the coding form</button></p>
       </div>
     </section>
-
     <section class="mag-leaf mag-spread" data-ink="y" aria-labelledby="mag-a3">
       <div class="mag-flow">
         <div class="mag-opener">
@@ -669,7 +698,6 @@
         <p class="mag-deck"><button type="button" data-deck="life">Put <i>Life</i> on the coding form</button></p>
       </div>
     </section>
-
     <section class="mag-leaf mag-spread" data-ink="o" aria-labelledby="mag-a4">
       <div class="mag-flow">
         <div class="mag-opener">
@@ -701,7 +729,6 @@
         <p class="mag-deck"><button type="button" data-deck="the-corridor">Put <i>The corridor</i> on the coding form</button></p>
       </div>
     </section>
-
     <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="mag-cat-h">
       <div class="mag-flow">
         <div class="mag-opener">
@@ -731,7 +758,7 @@
   </div>
   <div class="mag-turn">
     <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
-    <nav class="mag-index" aria-label="Magazine pages">
+    <nav class="mag-index" aria-label="Pages of Moiré">
       <ol>
         <li><button type="button" data-goto="0"><span class="mag-dot">C</span><span class="mag-vh"> Cover</span></button></li>
         <li><button type="button" data-goto="1"><span class="mag-dot">00</span><span class="mag-vh"> Contents</span></button></li>
@@ -740,6 +767,324 @@
         <li><button type="button" data-goto="4"><span class="mag-dot">03</span><span class="mag-vh"> Machines that follow rules</span></button></li>
         <li><button type="button" data-goto="5"><span class="mag-dot">04</span><span class="mag-vh"> Loops and returns</span></button></li>
         <li><button type="button" data-goto="6"><span class="mag-dot">13</span><span class="mag-vh"> Thirteen decks to punch</span></button></li>
+      </ol>
+    </nav>
+    <p class="mag-folio" aria-live="polite"></p>
+    <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
+  </div>
+</div>
+<div class="mag" id="mag-event" data-issue="event" data-cols="2" hidden>
+  <div class="mag-book">
+
+    <section class="mag-leaf mag-leaf-cover" data-ink="r" aria-labelledby="ev-title">
+      <div class="mag-page mag-cover">
+        <div class="mag-cover-top">
+          <p class="mag-dateline"><span>Scores</span> <span>Boxes</span> <span>Games</span> <span>Computers</span></p>
+          <h2 id="ev-title" class="mag-h" tabindex="-1"><span class="mag-big">Event</span> <span class="mag-sub">A Fluxus newspaper of scores, games and boxes</span></h2>
+        </div>
+        <div class="mag-cover-field">
+          <p class="mag-coverline"><span class="mag-cl-big">Do it yourself</span> <span class="mag-cl-small">Five decks to punch, perform and post on</span></p>
+          <p class="mag-cover-names">Brecht, Young and Ono · Maciunas, Ligeti and Saito · Knowles, Tenney, Higgins and Paik</p>
+        </div>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread mag-leaf-contents" data-ink="r" aria-labelledby="ev-contents-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/ev-contents.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker">In this issue</p>
+          <h3 id="ev-contents-h" class="mag-h" tabindex="-1">Contents</h3>
+          <ol class="mag-contents">
+            <li><span class="mag-n" aria-hidden="true">01</span><div><button type="button" class="mag-link" data-goto="2">Events on cards</button><p>Brecht’s cards, La Monte Young’s held fifth, Yoko Ono’s book of instructions, and the festival at Wiesbaden that took a piano apart.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">02</span><div><button type="button" class="mag-link" data-goto="3">Boxes, games and a newspaper</button><p>What came by post: the newspaper, a hundred metronomes, <i>Fluxus 1</i>, the Fluxkit and chess you play by ear.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">03</span><div><button type="button" class="mag-link" data-goto="4">A house of dust</button><p>Alison Knowles, James Tenney and FORTRAN: a poem from four lists, and Fluxus at the computer.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">05</span><div><button type="button" class="mag-link" data-goto="5">Five decks by mail order</button><p>The catalogue: every deck in this paper, available from the coding form.</p></div></li>
+          </ol>
+        </div>
+        <h4 class="mag-label">From the editorial council</h4>
+        <p>This paper is about Fluxus, the loose and quarrelsome company of composers, poets and artists that George Maciunas named, organised, designed and very nearly paid for, from the festival at Wiesbaden in 1962 to his death in 1978. It came to most people not in galleries but through the post: as cards in a box, as a kit in a briefcase, as a newspaper folded for mailing. Its three articles follow the event score, a whole work in a line or two of print; the boxes, games and newspapers in which Maciunas packed those scores and sold them cheap; and the moment in 1967 when one Fluxus artist handed her lists to a computer and a poem came back on fanfold paper.</p>
+        <p>The paper has a model, and does not hide it. In January 1964 Maciunas and George Brecht put out <i>cc V TRE</i>, the first Fluxus newspaper: a single sheet folded to four pages, about 58 centimetres tall, printed by offset. Maciunas laid it out with old clip art, photographs and type of every size; Brecht wrote the editorial. It printed scores, among them György Ligeti’s <i>Poème symphonique</i>, Ben Patterson’s “Man who runs” and Alison Knowles’s “Child Art Piece”; a page of musical texts by Dick Higgins, Emmett Williams and Jackson Mac Low; a photograph of a work by Christo of 1961; texts by Stan VanDerBeek and Eugen Gomringer; and, before long, comic strips, advertisements and order forms. There were eleven issues between January 1964 and March 1979, and the title rarely kept still: <i>cc V TRE</i>, <i>Fluxus cc Valise eTrangle</i>, <i>FLUXUS cc fiVe ThReE</i>. This paper borrows the arrangement and leaves the order forms at the back.</p>
+        <p>As in the old paper, the scores are there to be done, not admired. Wherever an article discusses a deck, a button beside the text puts it on the coding form. Run it, and the card reader takes the cards, the line printer answers, and the printout lands in the out tray, often with fresh cards in the stacker beside it: a deck of event cards to hand round, a tape of an open fifth or of metronomes running down for the tape player, a game to be played by ear, or a data card that carries a poem on to its next stanzas.</p>
+        <p>Every deck is in the same FORTRAN as the rest of the desk. The program comes first, its data cards follow the <code>END</code> card, and the comment cards at the top, the ones with a <code>C</code> in column 1, say what each number means. The decks that use chance keep a single number, the seed, and at every draw multiply it by 171 and keep the remainder after dividing by 30269. The same seed always gives the same result, so a performance can be written on a postcard and repeated by someone else, which is more or less what an event score is.</p>
+        <p>Do it yourself, then leave it in the tray for the next performer.</p>
+        <p class="mag-colophon">Printed in black on newsprint, folded twice for the post.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="ev-a1">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/ev-a1.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">01</span> Event scores, 1959–1964</p>
+          <h3 id="ev-a1" class="mag-h" tabindex="-1">Events on cards</h3>
+          <p class="mag-standfirst">A source of water, an empty vessel, a few words of instruction. From 1959 a handful of artists in New York began to write whole works on cards small enough to carry in a pocket.</p>
+          <blockquote class="mag-pull"><p>“Second version, Dripping.”</p></blockquote>
+        </div>
+        <h4>A drip in a vessel</h4>
+        <p>In 1958 and 1959 George Brecht, a research chemist at Johnson &amp; Johnson in New Jersey and a painter in his spare time, sat in John Cage’s class in experimental composition at the New School for Social Research in New York. Brecht came away with something smaller and odder: the event score, a work that was nothing but a few printed words, which anyone might perform, or simply read and notice happening around them.</p>
+        <p>The best known is <i>Drip Music (Drip Event)</i>, written between 1959 and 1962. It reads in full: “For single or multiple performance. A source of dripping water and an empty vessel are arranged so that the water falls into the vessel. Second version, Dripping.” Brecht later remarked that the score draws attention to how beautiful dripping water can be, when most people find a dripping tap merely annoying. At the Festum Fluxorum in Düsseldorf on 2 February 1963, George Maciunas performed it standing on a tall ladder, pouring water slowly into a vessel on the floor.</p>
+        <p>Brecht’s events were printed one to a card. In 1963 dozens of them were gathered in <i>Water Yam</i>, a box of loose cards of different sizes published by Fluxus, the kind of boxed edition this paper keeps returning to. A card is the right size for an event: it can be shuffled, dealt, posted or left on a table for someone to find.</p>
+        <h4>A deck of events</h4>
+        <p><i>Event cards</i> makes such a deck by chance. Each card has a title naming a thing in this room (a lamp, a door, the printer, the tape) and one to three lines drawn from a list of twenty, never the same line twice on one card: <code>ON.</code>, <code>OFF.</code>, <code>FILL.</code>, <code>EMPTY.</code>, <code>DRIPPING.</code>, <code>COUNT THEM.</code>, <code>LEAVE THE ROOM.</code> The printer frames each card in a ruled box and numbers it. With the seed on the data card, 1959, the first card is <code>CHAIR EVENT</code> with <code>OFF.</code>, <code>LISTEN.</code> and <code>SHUT.</code>, and the second is a <code>CARD EVENT</code> with a single line, <code>STOP.</code> None of these is Brecht’s; they are new events for an old desk.</p>
+        <p>Every card is also punched, the title and each of its lines on a card of its own, so the stacker ends up holding the deck, ready to be dealt out and performed. The second number on the data card says how many to draw.</p>
+        <p class="mag-deck"><button type="button" data-deck="event-cards">Put <i>Event cards</i> on the coding form</button></p>
+        <h4>To be held for a long time</h4>
+        <p>La Monte Young, a composer from Idaho, wrote his <i>Compositions 1960</i> in that year, most of them as words. <i>Composition 1960 #2</i> asks for a fire to be built in front of the audience; <i>#5</i> for a butterfly, or any number of butterflies, to be turned loose in the hall; <i>#10</i>, dedicated to Bob Morris, reads “Draw a straight line and follow it.” <i>Composition 1960 #7</i> is the exception, and the one that has lasted: two whole notes on a staff, a B and the F sharp above it, and the words “to be held for a long time.” In 1963 Young edited <i>An Anthology</i>, designed by Maciunas and published by Young and Jackson Mac Low, and went on to spend his life on sustained tones. <i>The Well-Tuned Piano</i>, begun in 1964, is played on a piano retuned in just intonation, with every interval a ratio of whole numbers.</p>
+        <p>The difference between the two is what you hear in a long fifth. <i>To be held for a long time</i> first does the arithmetic. With A above middle C at 440 hertz, its B sounds at 246.94 and its F sharp at 369.99. The fifth between them is exactly 700 cents, where the simple ratio 3:2 would make it about 701.96. So the third harmonic of the B (740.82 hertz) and the second harmonic of the F sharp (739.99) almost meet but not quite, and the deck finds that they beat 0.84 times a second: a slow pulse inside the drone that a pure fifth would not have.</p>
+        <p>Then it plays. Four players hold the two notes, two on each, in bows of three to nine seconds, each a little louder or softer than the last, and since no two players change bow together the sound never stops. Every bow is punched as a tape card for the tape player, 88 of them over 1008 pulses, a little over two minutes at 120 beats a minute. The printout charts each player as a row of digits, the loudness of the bow sounding, with an asterisk beneath every change of bow.</p>
+        <p class="mag-deck"><button type="button" data-deck="to-be-held-for-a-long-time">Put <i>To be held for a long time</i> on the coding form</button></p>
+        <p>What to try: put other notes on the players’ cards. A major third, 60 and 64, beats much faster than the fifth; an octave, 59 and 71, does not beat at all. Lengthen the first card’s second number for a longer hold; a multiple of 72 fills the chart exactly.</p>
+        <h4>A book of instructions</h4>
+        <p>Yoko Ono, in whose loft at 112 Chambers Street Young had organised a series of concerts from December 1960 to June 1961, published <i>Grapefruit</i> in Tokyo in 1964 with her own Wunternaum Press, in an edition of 500. It holds more than 150 instruction works, nearly all in English and about a third also in Japanese, in five sections: Music, Painting, Event, Poetry and Object.</p>
+        <h4>Wiesbaden, September 1962</h4>
+        <p>The scores needed a stage, and Maciunas, then working as a designer for the US Air Force in Wiesbaden, found one. The <i>Fluxus Internationale Festspiele Neuester Musik</i> ran from 1 to 23 September 1962 in the lecture hall of the Städtisches Museum: fourteen concerts on four weekends, with performers from Europe, Japan and the United States. It is usually counted as the founding of Fluxus. Its most notorious performance was a free reading of Philip Corner’s <i>Piano Activities</i>, in which Maciunas, Higgins, Knowles, Patterson, Williams and others took a grand piano to pieces; Corner, who was not there, was shocked when he heard.</p>
+        <p>The next year Maciunas issued a manifesto, collaged with photostats of dictionary definitions of the word <i>flux</i>, and copies were thrown into the audience at Düsseldorf. It had three commands in capitals. Purge the world of “dead art”. “PROMOTE A REVOLUTIONARY FLOOD AND TIDE IN ART”. And fuse the cadres of cultural, social and political revolutionaries into a united front. Most of the company ignored the politics and kept the cards.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="r" aria-labelledby="ev-a2">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/ev-a2.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">02</span> Fluxus editions, 1963–1966</p>
+          <h3 id="ev-a2" class="mag-h" tabindex="-1">Boxes, games and a newspaper</h3>
+          <p class="mag-standfirst">Maciunas wanted art to be cheap, small, plentiful and funny, and to arrive in the post. He packed it in boxes, briefcases and a newspaper, and he sold it from a shop on Canal Street.</p>
+          <blockquote class="mag-pull"><p>Arrange the beads such that the word CUAL never appears.</p></blockquote>
+        </div>
+        <h4>The newspaper</h4>
+        <p>Before <i>cc V TRE</i> there was <i>V TRE</i>, a single sheet that Brecht had issued in 1963 for the Yam Festival, its name taken, the story goes, from a neon sign with letters missing. When Maciunas made it the Fluxus newspaper in January 1964, the “cc” marked it as a copy of Brecht’s. The second issue followed in February, the third under the title <i>Fluxus cc Valise eTrangle</i>, and the fourth, <i>FLUXUS cc fiVe ThReE</i>, in June 1964. Maciunas designed every issue but the last two. The newspaper was a programme, a catalogue and an anthology at once: scores to perform, notices of concerts, and lists of what could be ordered from Fluxus by post.</p>
+        <h4>A hundred metronomes</h4>
+        <p>The first issue printed a score by György Ligeti, from his brief time in the company of Fluxus. <i>Poème symphonique</i>, of 1962, is for a hundred metronomes, looked after by ten performers with ten metronomes each. All of them are wound, set to different speeds and, after a silence, started as nearly together as possible. Then nobody does anything. The piece ends when the last metronome stops. Its first performance, on 13 September 1963 at the town hall of Hilversum during the Gaudeamus music week, ended in an uproar, and the Dutch television broadcast that had been planned was cancelled.</p>
+        <p><i>Poème symphonique</i> gives one performer’s share: ten metronomes, each given a speed by chance (a tick every 2 to 8 pulses, from 60 to 240 ticks a minute at 120 beats a minute), a winding good for 20 to 35 ticks, and a start up to three pulses late, since no ten hands start at once. The fast ones spend their winding first, so the clatter thins as it goes, and every tick is punched as a tape card on the metronome’s own high note. The printout lists each metronome’s speed, its ticks and when it stops, and then draws them as rows of asterisks that break off one by one into full stops. With the seed 1962 it punches 271 ticks, and the last metronome, ticking 68 times a minute, stops alone at pulse 227, after 28.4 seconds. The second number on the data card sets how many metronomes, up to twenty.</p>
+        <p class="mag-deck"><button type="button" data-deck="poeme-symphonique">Put <i>Poème symphonique</i> on the coding form</button></p>
+        <h4>A box that is a book</h4>
+        <p><i>Fluxus 1</i>, the yearbook Maciunas had been planning since 1961, finally appeared in 1964. It was nothing like a magazine. Its pages were manila envelopes and leaves of different papers, holding cards, scores and flattened objects, fastened with three large bolts and mailed in a wooden box. Ay-O contributed a finger envelope with a slit through which the reader felt a nylon stocking; Emmett Williams an opera on a long scroll. It sold for six dollars, or twelve for a <i>Luxus</i> copy with film, tape and objects. Maciunas assembled copies by hand for years, from whatever was to hand, so that no two were quite alike.</p>
+        <h4>A kit in a briefcase</h4>
+        <p>The fourth newspaper announced the Fluxkit: a vinyl-covered attaché case with its lid full of newspapers and announcements and its body divided into compartments, each holding a work. A typical kit held a noisemaker by Joe Jones; Mieko Shiomi’s <i>Endless Box</i>, a nest of paper boxes inside paper boxes; Ay-O’s <i>Finger Box</i>, with something to be felt inside; Alison Knowles’s <i>Bean Rolls</i>; film loops, games and score cards. It was portable and cheap by design, a gallery that went to the visitor. In 1965 Maciunas began asking for contributions to <i>Flux Year Box 2</i>, a hinged wooden box with fixed partitions, its compartments filled with small plastic boxes, cards and reels of film, together with a little viewer to watch them through.</p>
+        <h4>Games without rules</h4>
+        <p>Games suited the boxes. Brecht’s <i>Games &amp; Puzzles</i> of about 1965 came as small plastic boxes with labels by Maciunas, each with a card of impossible instructions. The <i>Bead Puzzle</i> asks you to arrange the beads so that they are the same, and then so that they are different. The <i>Swim Puzzle</i> reads: “Arrange the beads such that the word CUAL never appears.” His <i>Deck: A Fluxgame</i> is sixty-four cards collaged from encyclopaedia pictures, with no rules at all; the players invent the game.</p>
+        <p>Takako Saito made chess. Her <i>Spice Chess</i>, made in the winter of 1964–65 and offered for sale in March 1965, has pieces that all look the same, small corked vials, which are told apart only by the spice inside them. In her <i>Sound Chess</i> of 1965 every piece is the same wooden box and is known only by the noise it makes when shaken: a white knight rattles with a single grain of corn, the black queen jingles with bells. To play, you listen.</p>
+        <h4>Chess by ear</h4>
+        <p><i>Sound chess</i> turns that into a listening game for the tape player. The thirty-two boxes are mixed by chance, and a number of them are shaken one after another on tape. The deck’s own rule, not Saito’s, decides what is inside: a pawn holds one grain, a knight two, a bishop three, a rook four, the queen five and the king six, and the white boxes rattle high and the black ones low. Each grain falls on its own beat of a two-second shake, so the grains can be counted.</p>
+        <p>The first page of the printout is a listening sheet, one line per box with a blank to write on; the answers are on the second page. Play the stacker, count, write, and only then turn over. With the seed 1965 the twelve boxes are 28 grains in all, and the first is a black bishop. The second number on the data card sets how many boxes to shake, up to the full set of 32; the third sets the pulses from one box to the next, so a beginner can have longer to think.</p>
+        <p class="mag-deck"><button type="button" data-deck="sound-chess">Put <i>Sound chess</i> on the coding form</button></p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="ev-a3">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/ev-a3.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">03</span> Fluxus and the computer, 1961–1970</p>
+          <h3 id="ev-a3" class="mag-h" tabindex="-1">A house of dust</h3>
+          <p class="mag-standfirst">In 1967 Alison Knowles gave a computer four lists, and James Tenney showed her how to make it choose. The poem that came out has been printed, built, moved, rebuilt and recomputed ever since.</p>
+          <blockquote class="mag-pull"><p>A house of dust, on open ground.</p></blockquote>
+        </div>
+        <h4>Four lists</h4>
+        <p>Alison Knowles had been a Fluxus performer since Wiesbaden; her <i>Proposition #2: Make a Salad</i>, first performed at the Institute of Contemporary Arts in London in October 1962, ended with a salad served to the audience. In 1967 the composer James Tenney ran an informal workshop in FORTRAN for a group of composers and Fluxus artists that included Steve Reich, Nam June Paik, Dick Higgins, Jackson Mac Low, Philip Corner, Max Neuhaus and Knowles. From it came <i>The House of Dust</i>, among the first poems made with a computer.</p>
+        <p>Knowles “just made lists”, as she put it. There were four: what a house is made of, where it stands, how it is lit, and who lives in it. Tenney helped her write the program, in FORTRAN IV, that drew one entry from each list, by chance, for every stanza, and the computer printed the stanzas one after another down the paper:</p>
+        <p><code>A HOUSE OF DUST</code> <code>     ON OPEN GROUND</code> <code>     USING NATURAL LIGHT</code> <code>     INHABITED BY FRIENDS AND ENEMIES</code></p>
+        <p>The printout was published, credited to Knowles, Tenney and the Siemens System 4004 that ran it, as green-and-white continuous computer paper folded into a plastic sleeve, by the brothers König of Cologne and New York. A poem built from four short lists turned out to be long: every stanza is a new house, and none of them can be finished.</p>
+        <h4>A house to live in</h4>
+        <p>In 1968 a Guggenheim fellowship let Knowles build one of the houses. A quatrain beginning <code>A HOUSE OF PLASTIC / IN A METROPOLIS</code> became a structure in a housing co-operative in Chelsea, New York, where its neighbours did not take to it. When Knowles joined the founding faculty of the California Institute of the Arts, the house went with her and was rebuilt on the campus, now guided by the stanza printed above. Until 1971 it was a place for classes, meetings, readings, meals and performances, among them a sound installation by Max Neuhaus. The poem has kept producing houses since; in 2018 CalArts students built a house of glass from another of its stanzas.</p>
+        <h4>The deck</h4>
+        <p><i>The house of dust</i> draws its stanzas from Knowles’s own lists, shortened to fit a deck of cards: 14 materials, 16 places, 4 lights and 14 kinds of inhabitant, from <code>SAND</code> and <code>BROKEN DISHES</code> to <code>IN A DESERTED AIRPORT</code>, <code>USING CANDLES</code> and <code>PEOPLE WHO LOVE TO READ</code>. That is 12,544 different houses. Each list is a row of <code>FORMAT</code> cards, one per entry, and a draw from the generator picks one card from each row. With the seed on the data card, 1967, the first house is <code>A HOUSE OF STEEL / IN A COLD, WINDY CLIMATE / USING CANDLES / INHABITED BY PEOPLE WHO SLEEP ALMOST ALL THE TIME</code>; with the seed 10763 it is the house that was built at CalArts.</p>
+        <p>The run ends by punching one card: a new data card holding the seed it has reached. Put it after <code>END</code> in place of the old one, and the next run prints the stanzas that follow, as though the paper had simply kept running through the printer.</p>
+        <p class="mag-deck"><button type="button" data-deck="the-house-of-dust">Put <i>The house of dust</i> on the coding form</button></p>
+        <h4>Tenney at Bell Labs</h4>
+        <p>Tenney came to the computer before the rest of the company. From September 1961 to March 1964 he worked at Bell Telephone Laboratories in New Jersey, where Max Mathews had written the programs that let an IBM computer compute sound. Tenney was among the first composers to use them, and he used the computer to compose as well as to play. His <i>Analog #1 (Noise Study)</i>, finished in December 1961, came from the roar of traffic in the Holland Tunnel; the <i>Stochastic String Quartet</i> followed in February 1963, and <i>Phases</i>, finished that December, was composed by one of his own programs, PLF 5, which set the probabilities and let chance fill in the notes. All the while he was a Fluxus performer and, with Malcolm Goldstein and Philip Corner, a founder of the ensemble Tone Roads.</p>
+        <h4>Intermedia, and the artist as technician</h4>
+        <p>Dick Higgins, Knowles’s husband and a fellow veteran of Wiesbaden, founded the Something Else Press in 1963 to publish the books that no one else would, among them Emmett Williams’s <i>An Anthology of Concrete Poetry</i> in 1967. In February 1966 the first <i>Something Else Newsletter</i> carried a single essay, his “Intermedia”, about work that falls between the media, as happenings fall between theatre, music and painting. In 1970 his pamphlet <i>Computers for the Arts</i> urged artists to learn to program rather than hand the work to a technician.</p>
+        <h4>Paik and the dot</h4>
+        <p>Nam June Paik had shown prepared pianos and televisions with their pictures pulled out of shape at Galerie Parnass in Wuppertal, from 11 to 20 March 1963. In 1966 he was invited to Bell Labs, where Tenney and A. Michael Noll started him on FORTRAN, and his short film <i>Digital Experiment at Bell Labs</i> shows a single dot leaping about a line on a screen. It is the same joke as Brecht’s drip: the smallest possible event, watched closely, until it is enough.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="r" aria-labelledby="ev-cat-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/ev-catalogue.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">05</span> The catalogue</p>
+          <h3 id="ev-cat-h" class="mag-h" tabindex="-1">Five decks by mail order</h3>
+          <p class="mag-standfirst">The Fluxshop of this paper. Every deck runs as it stands; its comment cards say what its data cards hold, and what it punches lands in the stacker. No two performances need be alike; the same seed makes them alike again. Order from the coding form.</p>
+        </div>
+        <ol class="mag-cat">
+          <li><h4>Event cards</h4><p>A deck of event scores dealt by chance, each a thing in the room and one to three short lines, printed in ruled frames and numbered. Every card is punched as well, title and lines, ready to hand round and perform. Supplied with seed 1959; rewrite the lists for your own room.</p><p class="mag-deck"><button type="button" data-deck="event-cards">Put <i>Event cards</i> on the coding form</button></p></li>
+          <li><h4>To be held for a long time</h4><p>B and F sharp for four players, held in overlapping bows for just over two minutes and punched as tape cards. Includes the arithmetic: the frequencies, the cents, and the slow beat of the tempered fifth, 0.84 a second. Other intervals by return of card.</p><p class="mag-deck"><button type="button" data-deck="to-be-held-for-a-long-time">Put <i>To be held for a long time</i> on the coding form</button></p></li>
+          <li><h4>Poème symphonique</h4><p>Ten metronomes, wound and started together, punched tick by tick for the tape player until the last one stops. Charted as they run down, one by one. Up to twenty metronomes; a hundred available to anyone with ten friends.</p><p class="mag-deck"><button type="button" data-deck="poeme-symphonique">Put <i>Poème symphonique</i> on the coding form</button></p></li>
+          <li><h4>Sound chess</h4><p>Thirty-two identical boxes, known only by how many grains they rattle: shaken on tape, a listening sheet to fill in, and the answers overleaf. From twelve boxes for beginners to the full set.</p><p class="mag-deck"><button type="button" data-deck="sound-chess">Put <i>Sound chess</i> on the coding form</button></p></li>
+          <li><h4>The house of dust</h4><p>Quatrains from Alison Knowles’s four lists, drawn by chance as Tenney’s program drew them: 12,544 houses, printed down the paper. Punches its own next data card, so the poem can be continued indefinitely. Try seed 10763 for the house at CalArts.</p><p class="mag-deck"><button type="button" data-deck="the-house-of-dust">Put <i>The house of dust</i> on the coding form</button></p></li>
+        </ol>
+      </div>
+    </section>
+
+  </div>
+  <div class="mag-turn">
+    <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
+    <nav class="mag-index" aria-label="Pages of Event">
+      <ol>
+        <li><button type="button" data-goto="0"><span class="mag-dot">C</span><span class="mag-vh"> Cover</span></button></li>
+        <li><button type="button" data-goto="1"><span class="mag-dot">00</span><span class="mag-vh"> Contents</span></button></li>
+        <li><button type="button" data-goto="2"><span class="mag-dot">01</span><span class="mag-vh"> Events on cards</span></button></li>
+        <li><button type="button" data-goto="3"><span class="mag-dot">02</span><span class="mag-vh"> Boxes, games and a newspaper</span></button></li>
+        <li><button type="button" data-goto="4"><span class="mag-dot">03</span><span class="mag-vh"> A house of dust</span></button></li>
+        <li><button type="button" data-goto="5"><span class="mag-dot">05</span><span class="mag-vh"> Five decks by mail order</span></button></li>
+      </ol>
+    </nav>
+    <p class="mag-folio" aria-live="polite"></p>
+    <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
+  </div>
+</div>
+<div class="mag" id="mag-gesso" data-issue="gesso" data-cols="1" hidden>
+  <div class="mag-book">
+
+    <section class="mag-leaf mag-leaf-cover" data-ink="y" aria-labelledby="gs-title">
+      <div class="mag-page mag-cover">
+        <div class="mag-cover-top">
+          <p class="mag-dateline"><span>Winter</span> <span>Chance, system and the machine</span></p>
+          <h2 id="gs-title" class="mag-h" tabindex="-1"><span class="mag-big">Gesso</span> <span class="mag-sub">A magazine of painting by rule and chance</span></h2>
+        </div>
+        <div class="mag-cover-field">
+          <p class="mag-coverline"><span class="mag-cl-big">The hand let go</span> <span class="mag-cl-small">Five decks to punch, run and hang</span></p>
+          <p class="mag-cover-names">Kelly, Morellet and Richter · Albers, the Martins and LeWitt · Molnár, Nake, Mohr and Cohen</p>
+        </div>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread mag-leaf-contents" data-ink="y" aria-labelledby="gs-contents-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/gs-contents.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker">In this issue</p>
+          <h3 id="gs-contents-h" class="mag-h" tabindex="-1">Contents</h3>
+          <ol class="mag-contents">
+            <li><span class="mag-n" aria-hidden="true">01</span><div><button type="button" class="mag-link" data-goto="2">Colour by chance</button><p>Kelly’s numbered colours, Morellet’s telephone directory, and Richter’s 1,024 colours placed at random.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">02</span><div><button type="button" class="mag-link" data-goto="3">Painting by system</button><p>Albers’s squares, Kenneth and Mary Martin’s chance and order, Agnes Martin’s grids, and LeWitt’s walls drawn by other hands.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">03</span><div><button type="button" class="mag-link" data-goto="4">The computer at the easel</button><p>Molnár’s imaginary machine and the real one, Nake’s homage to Klee, Mohr’s first museum show, and Cohen’s AARON.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">05</span><div><button type="button" class="mag-link" data-goto="5">Five decks to punch</button><p>The catalogue: every deck in the issue, ready for the coding form.</p></div></li>
+          </ol>
+        </div>
+        <h4 class="mag-label">From the editors</h4>
+        <p>Every painting is a long run of decisions: this colour or that one, here or a little lower, one more line or stop. This issue is about painters who gave those decisions away. Some handed them to chance: to slips of paper drawn from a hat, or to the digits of a telephone directory. Some handed them to a system fixed before the first stroke, a proportion or a grid or a sentence of instructions that someone else could carry out. And some, from the middle of the 1960s, handed them to a computer, which is a system that never tires and, given a seed, a chance that can be repeated.</p>
+        <p>Our argument is that these were never three separate movements but one long experiment, and that the people who ran it were not trying to get rid of the artist. Ellsworth Kelly let numbers choose his colours, but he chose the colours that went into the hat. Sol LeWitt let draftsmen draw his walls, but he wrote the sentence they followed. Vera Molnár let the machine move the corners of her squares, but she decided how far. In every case the decision that was kept was the one that mattered most: which rule.</p>
+        <p>The three features follow that experiment from Paris in 1951 to a laboratory in California in 1973. Each is followed by a few plates, captioned with the title, date, medium, size and collection of the work wherever we could confirm them, and the artists speak for themselves, briefly, wherever their own words survive in print.</p>
+        <p>Five of the works are also here to be made again. Wherever an article discusses a deck, a button beside the text puts it on the coding form; run it, and the line printer sets out the picture in characters: a field of squares chosen by a directory, a chart of colours drawn from a hat, lines joined by chance, a wall drawing carried out to the letter, and squares losing their order across a sheet. The printer has no colour and only two marks that make a good picture, a full stop for bare paper and an asterisk for ink, so these are translations rather than reproductions. The comment cards at the top of each deck say what its data cards hold. Change them; a new seed is a new picture, and the same seed is the same picture again.</p>
+        <p class="mag-colophon">Printed in black and one colour on a square page, a format we owe to <i>Artforum</i>, and in grateful memory of <i>Studio International</i>’s <i>Cybernetic Serendipity</i> number of July 1968.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="o" aria-labelledby="gs-a1">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/gs-a1.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">01</span> Colour and chance, 1951–1973</p>
+          <h3 id="gs-a1" class="mag-h" tabindex="-1">Colour by chance</h3>
+          <p class="mag-standfirst">To keep his own taste out of the picture, a young American in Paris numbered his colours and let chance place them. A French toymaker went further, and let the telephone directory paint.</p>
+          <blockquote class="mag-pull"><p>“Each color had a number.”</p></blockquote>
+        </div>
+        <h4>Squares from a stationer’s</h4>
+        <p>In 1951 Ellsworth Kelly was living in Paris, a young American painter who had come to France in 1948 on the GI Bill and would stay until 1954. He had found, in a stationer’s, <i>papier gommette</i>, the gummed coloured paper that French schoolchildren cut and stick, sold in sheets of flat, even, factory colour. He cut it into small squares and used it for a series of large collages, each on a grid about forty inches wide, which he called <i>Spectrum Colors Arranged by Chance</i> and numbered with roman numerals. In 1953 he made a painting from the sixth, in oil on wood, five feet square.</p>
+        <p>The title is exact. Kelly did not choose where any colour went. Recalling the method years later, in a recording for the San Francisco Museum of Modern Art, he said: “I had numbered the squares, one through eighteen. I had decided that each color had a number.” Numbered slips were drawn, and each draw said which colour came next in the grid. Chance was a way of keeping his hand, and his preferences, out of the result. What he kept was the palette. The eighteen colours that went into the hat were his choice; only their places were left to luck.</p>
+        <p>The deck <i>Spectrum colors arranged by chance</i> repeats the experiment, in the only way a line printer can manage colour: by number. Its hat holds eighteen slips, numbered 01 to 18 for a spectrum that runs from lemon yellow through the reds, purples and blues round to yellow green. For every square of a grid 24 wide, a slip is drawn, read and put back, and the printer sets the grid out as a chart of colour numbers, like the cartoon a sign painter marks up before the paint. A key at the foot names each colour and counts its squares.</p>
+        <p class="mag-deck"><button type="button" data-deck="spectrum-colors-by-chance">Put <i>Spectrum colors arranged by chance</i> on the coding form</button></p>
+        <p>With the seed on the data card, 1951, the first row begins <code>15 04 10 14</code>, blue green, orange, violet, turquoise. Over 576 squares each colour should turn up about 32 times; in fact lemon yellow is drawn only 23 times and chrome yellow 40, and that unevenness is exactly what chance looks like. Reduce the hat to three colours on the data card and the counts close up. Every row is also punched, so the stacker holds the cartoon card by card, ready to be pasted up.</p>
+        <h4>The directory as painter</h4>
+        <p>François Morellet, born in Cholet in 1926, ran the family toy factory there from 1948 until 1975 and painted beside it. From 1958 he made what he called <i>trames</i>, overlapping sets of parallel lines laid down by rules set in advance, and in 1960 he was among the founders, in Paris, of the group that became the Groupe de Recherche d’Art Visuel. He wanted the rule to do all the work, and he wanted the rule to be visible.</p>
+        <p>His most famous rule needed a telephone directory. He divided a canvas into a grid of 200 by 200 squares, 40,000 in all, and read the numbers in the directory one digit at a time: an even digit gave a square of one colour, an odd digit a square of the other. He made the picture again and again, in different pairs of colours. Their titles are the method, set out in full: <i>Random Distribution of 40,000 Squares Using the Odd and Even Numbers of a Telephone Directory, 50% Blue, 50% Red</i> is the one the Museum of Modern Art acquired in 2012. The directory is the joke and the point. Nothing could be more orderly than a list of subscribers in alphabetical order, yet their numbers, read as digits, are as good a source of chance as dice.</p>
+        <p><i>Random distribution</i> reads a directory from cards. Each data card is one line of an imaginary directory, a name and ten six-digit numbers, and becomes one row of 60 squares, so that 36 cards make a field 60 squares wide and 36 deep, square on the paper because the printer’s lines are taller than its characters are wide. A key card says, for each digit from 0 to 9, whether it inks the square or leaves it bare. As it stands, the odd digits ink: of 2,160 squares, 1,124 come out as asterisks, a shade over half. Change the key to ink only the zeros and the field thins to 185 marks, one in twelve, a starry sky. The printout ends with the number of times each digit was read, so the directory can be checked against its picture.</p>
+        <p class="mag-deck"><button type="button" data-deck="random-distribution">Put <i>Random distribution</i> on the coding form</button></p>
+        <h4>1,024 colours</h4>
+        <p>Gerhard Richter came to the same idea from the hardware shop. In 1966 he began painting enlarged copies of commercial colour charts, the cards of paint samples handed out to decorators, because they set colours down with no thought of beauty. By 1973 the charts had become a system. For <i>1024 Farben</i> he mixed his colours from the three primaries and grey by repeated, equal subdivision, 4, 16, 64, 256, 1,024, and then let chance place them. “The arrangement of the colours on the squares was done by a random process,” he wrote for an exhibition catalogue in Brussels the following year, to give “a diffuse, undifferentiated overall effect”. The method still served him a generation later: the window he made for the south transept of Cologne Cathedral, unveiled on 25 August 2007, is 11,263 squares of glass in 72 colours, arranged for the most part by a random number generator.</p>
+        <h4>Plates</h4>
+        <p><i>Ellsworth Kelly</i>, <i>Spectrum Colors Arranged by Chance IV</i>, 1951. Collage of commercially printed, black and coloured papers with traces of coloured pencil, cut and laid down on ivory laid paper, 99.6 × 99.5 cm. The Art Institute of Chicago.</p>
+        <p><i>Ellsworth Kelly</i>, <i>Spectrum Colors Arranged by Chance</i>, 1951–53. Oil on wood, 152.4 × 152.4 cm. San Francisco Museum of Modern Art, Doris and Donald Fisher Collection.</p>
+        <p><i>François Morellet</i>, <i>Random Distribution of 40,000 Squares Using the Odd and Even Numbers of a Telephone Directory, 50% Blue, 50% Red</i>, 1960. Oil on canvas, 103 × 103 cm. The Museum of Modern Art, New York.</p>
+        <p><i>Gerhard Richter</i>, <i>1024 Farben</i> (350-3), 1973. Lacquer on canvas, 254 × 478 cm. Centre Pompidou, Musée national d’art moderne, Paris.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="c" aria-labelledby="gs-a2">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/gs-a2.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">02</span> New Haven, London and New York, 1950–1971</p>
+          <h3 id="gs-a2" class="mag-h" tabindex="-1">Painting by system</h3>
+          <p class="mag-standfirst">A painter may decide everything in advance and still be surprised. Four squares, a bag of numbered cards, a ruled pencil grid and a single sentence each prove it.</p>
+          <blockquote class="mag-pull"><p>“The idea becomes a machine that makes the art.”</p></blockquote>
+        </div>
+        <h4>Four squares, a thousand times</h4>
+        <p>In 1950, the year he went to Yale, Josef Albers began a series that he continued until his death in 1976, more than a thousand paintings and prints with one composition. <i>Homage to the Square</i> sets three or four squares one inside the other, each a single colour, and every one sits a little low: the gap below each square is smaller than the gaps at its sides, which are smaller than the gap above. The procedure was as fixed as the format. He painted on the rough side of a Masonite panel primed with at least six coats of white, laid the paint on straight from the tube with a palette knife, generally starting from the centre square and working out, and on the back of almost every panel he wrote down what he had used, down to the maker of each tube.</p>
+        <p>With everything else fixed, the colour was free to do the work, and the work it did was to change. “In visual perception a color is almost never seen as it really is,” Albers wrote at the start of <i>Interaction of Color</i> (Yale University Press, 1963), a book that grew out of his teaching. The same grey looks warm on blue and cold on orange; two different colours can be made to look the same. The squares are a laboratory for that, and the system is what makes the experiment fair.</p>
+        <h4>Chance and order</h4>
+        <p>In London, Kenneth Martin and Mary Martin had been making constructed abstract art since the end of the 1940s: she made her first reliefs in 1951, and in 1969, the year of her death, she was joint winner of the John Moores Painting Prize, with Richard Hamilton, the first woman to win it. That same year Kenneth Martin began a series of drawings, prints and paintings that he called <i>Chance and Order</i>. The method is simple to state. The crossing points of a grid of squares are numbered; the numbers are written on small cards; the cards are drawn at random, and each pair drawn is joined by a line. In the early drawings each line was drawn as a set of parallels, one stroke for the first line, two for the second, three for the third, always on the same side, so that the order of the drawing can be read in the finished work. Chance chooses where; the system decides how.</p>
+        <p><i>Chance and order</i> numbers the 25 crossings of a grid of four by four squares, shuffles 25 cards, and draws them two at a time. With the seed 1969 the first pairs are 3 and 19, 12 and 18, 13 and 22, 10 and 8, and 9 and 5, and the fifth line, joining the top row to the second, is laid down as five parallel strokes. The printer lists the draw before it draws, so the picture can be checked against its chance.</p>
+        <p class="mag-deck"><button type="button" data-deck="chance-and-order">Put <i>Chance and order</i> on the coding form</button></p>
+        <h4>The grid</h4>
+        <p>In New York, the Canadian-born Agnes Martin arrived at the grid by another road. By the early 1960s her hallmark was a square canvas, six feet a side, covered edge to edge with a grid ruled in pencil over thin paint. For <i>The Tree</i> (1964) she worked standing, guiding the pencil with a metal ruler; the lines are exact in plan and slightly unsteady in fact, and that unsteadiness, the hand showing through the rule, is much of what the paintings are about.</p>
+        <h4>Instructions for someone else</h4>
+        <p>Sol LeWitt took the hand out altogether. “The idea becomes a machine that makes the art,” he wrote in “Paragraphs on Conceptual Art”, in the June 1967 <i>Artforum</i>, an issue that also printed Michael Fried’s “Art and Objecthood”. In October 1968, for the opening exhibition of the Paula Cooper Gallery in New York, he drew his first work directly on the wall, <i>Wall Drawing 1: Drawing Series II 18 (A &amp; B)</i>, in pencil. Soon he was not drawing them himself. What a museum acquires is not a drawing but a document, prepared by the artist, that describes how the work is to be drawn, and others draw it, wherever it is shown. In his “Sentences on Conceptual Art”, first published in the magazine <i>0–9</i> in January 1969, he put it plainly: “The artist’s will is secondary to the process he initiates from idea to completion.”</p>
+        <p>His vocabulary at first was four kinds of line, vertical, horizontal, diagonal to the right and diagonal to the left, drawn in hard pencil and superimposed. <i>Wall Drawing 11</i> (1969) reads, in full: “A wall divided horizontally and vertically into four equal parts. Within each part, three of the four kinds of lines are superimposed.”</p>
+        <p>The deck <i>Wall drawing 11</i> is the draftsman. It prints the instruction, then a wall 64 characters wide and 32 lines high in four parts, each part leaving out a different kind of line. The lines are spaced six character widths apart, measured the same way across and down, so that the diagonals come out at true 45 degrees on paper. It ends by checking its own work, a table of which kinds went into which part and then <code>THE INSTRUCTION HAS BEEN CARRIED OUT.</code> Change the data card so that a part holds all four kinds, or only one, and the machine still draws what it is told, but says <code>THIS IS NOT WALL DRAWING 11. IT MAY BE ANOTHER.</code></p>
+        <p class="mag-deck"><button type="button" data-deck="wall-drawing-11">Put <i>Wall drawing 11</i> on the coding form</button></p>
+        <h4>Plates</h4>
+        <p><i>Josef Albers</i>, <i>Homage to the Square: With Rays</i>, 1959. Oil on Masonite, 121.9 × 121.9 cm. The Metropolitan Museum of Art, New York.</p>
+        <p><i>Kenneth Martin</i>, <i>Chance and Order V</i>, 1971–72. Screenprint. Tate, London.</p>
+        <p><i>Agnes Martin</i>, <i>The Tree</i>, 1964. Oil and pencil on canvas, 182.8 × 182.8 cm. The Museum of Modern Art, New York.</p>
+        <p><i>Sol LeWitt</i>, <i>Wall Drawing 1: Drawing Series II 18 (A &amp; B)</i>, October 1968. Graphite on wall, 121.9 × 121.9 cm. San Francisco Museum of Modern Art, Doris and Donald Fisher Collection.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="m" aria-labelledby="gs-a3">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/gs-a3.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">03</span> Computer art, 1959–1973</p>
+          <h3 id="gs-a3" class="mag-h" tabindex="-1">The computer at the easel</h3>
+          <p class="mag-standfirst">A painter in Paris spent nine years being a machine before she was allowed near one. When the machines came, the painters who used them asked them for the same things: rules, chance, and a little disorder.</p>
+          <blockquote class="mag-pull"><p>A machine imaginaire.</p></blockquote>
+        </div>
+        <h4>The imaginary machine</h4>
+        <p>Vera Molnár was born in Budapest in 1924, studied at the academy of fine arts there, and moved to Paris in 1947. In 1959, with no computer anywhere within her reach, she began working by what she called a <i>machine imaginaire</i>, an imaginary machine: she set herself a simple program of rules and constraints for combining lines and shapes, worked through its possibilities by hand, and drew the proposals she chose. In 1960 she was among the founders of the group of artists, Morellet among them, that became the Groupe de Recherche d’Art Visuel, though she soon left it.</p>
+        <p>In 1968 she gained access to a real computer, at a university computing centre at Orsay, outside Paris, and learned to program it in FORTRAN. The first series it gave her, <i>Interruptions</i> (1968–69), begins with a grid of short straight lines of equal length, turns each by a random angle, and then leaves some out, so that the field of lines is broken by holes. For the rest of her long life (she died on 7 December 2023, a month short of her hundredth birthday) her subject was the meeting of order and disorder, and how little disorder it takes to bring an order to life. She liked to speak of one per cent.</p>
+        <h4>(Des)Ordres</h4>
+        <p><i>(Des)Ordres</i> (1974) is the clearest statement of it. The sheet in the Victoria and Albert Museum is a grid of 20 by 20 cells; in each, squares of several colours are drawn one inside another, and their corners are pushed out of true, more in some cells and less in others, so that the whole field seems to jostle. It was drawn by a plotter, and the paper still has its sprocket holes.</p>
+        <p><i>Order and disorder</i> makes a small sheet of the same kind, four cells by four, with three squares nested in each. Every corner of every square is moved by chance, and the amount grows across the sheet: the cell at the top left is in perfect order, and the cell at the bottom right may move its corners by the full amount on the data card, three character widths as it stands. Set it to 0 and the sixteen cells are identical; set it to 5 and by the far corner the squares have begun to cross one another.</p>
+        <p class="mag-deck"><button type="button" data-deck="order-and-disorder">Put <i>Order and disorder</i> on the coding form</button></p>
+        <h4>Stuttgart and Paris</h4>
+        <p>The computer had reached the gallery almost a decade before Molnár’s <i>(Des)Ordres</i>, in Stuttgart, where Georg Nees and Frieder Nake drew with the Zuse Graphomat Z64 flatbed plotter. Nake, a mathematics student, had written the software that drove it. In 1965 he took as his starting point Paul Klee’s painting <i>Hauptweg und Nebenwege</i> (<i>High Roads and Byroads</i>, 1929), now in the Museum Ludwig in Cologne, and its play of proportion between horizontal and vertical lines. He wrote a program that set up a horizontal and vertical framework and left certain choices within it to the machine, at random, among options he had fixed. The plotter signed it as it drew, <i>Nake/ER56/Z64</i>: the artist, the computer and the plotter. Its title carries a date, 13 September 1965: <i>Hommage à Paul Klee, 13/9/65 Nr. 2</i>.</p>
+        <p>Manfred Mohr, born in Pforzheim in 1938, a painter and jazz musician who had settled in Paris, made his first plotter drawings in 1969. From 11 May to 6 June 1971 the ARC at the Musée d’Art Moderne de la Ville de Paris showed <i>Manfred Mohr: Computer Graphics, Une esthétique programmée</i>, the first one-person exhibition in a museum of works calculated entirely by a digital computer and drawn by a plotter, and a Benson plotter drew in front of the visitors. From 1973 Mohr took a single figure, the cube, and made it his alphabet: <i>Cubic Limit</i> draws signs from the twelve edges of a cube.</p>
+        <h4>A program that draws</h4>
+        <p>Harold Cohen went further than any of them. He was a British painter of reputation, who had represented Britain at the Venice Biennale in 1966, when he went to the University of California at San Diego in 1968 and learned to program. In 1971 he became a visiting scholar at the Artificial Intelligence Laboratory at Stanford University, and around 1973 he began the program he called AARON. It was not a tool for drawing but an attempt to codify the act of drawing itself, to set down as rules what a person knows when they draw, so that the program could make drawings of its own. AARON at first drew only lines, and Cohen coloured some of its drawings by hand. He went on teaching it for more than forty years, until his death in 2016.</p>
+        <p>Every painter in this issue kept one decision back. Kelly kept the palette, Morellet the rule, LeWitt the sentence, Molnár the measure of disorder. Cohen tried to write down the decisions themselves, and found, as each of them had, that the more of the work a rule does, the more depends on the rule.</p>
+        <h4>Plates</h4>
+        <p><i>Vera Molnár</i>, <i>Interruptions</i>, 1969. Plotter drawing, 32.8 × 34.7 cm. Victoria and Albert Museum, London.</p>
+        <p><i>Vera Molnár</i>, <i>(Des)Ordres</i>, 1974. Plotter drawing, 91.7 × 77.3 cm. Victoria and Albert Museum, London.</p>
+        <p><i>Frieder Nake</i>, <i>Hommage à Paul Klee, 13/9/65 Nr. 2</i>, 1965. Screenprint after the plotter drawing, 49.2 × 49.2 cm. Victoria and Albert Museum, London.</p>
+        <p><i>Manfred Mohr</i>, <i>P-62 (floating points)</i>, 1970. Offset lithograph after a plotter drawing, 41.0 × 41.1 cm. Victoria and Albert Museum, London.</p>
+        <p><i>Harold Cohen</i>, untitled drawing by AARON, 1974. Computer-generated drawing with hand colouring, 28 × 21.8 cm. Victoria and Albert Museum, London.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="y" aria-labelledby="gs-cat-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/gs-catalogue.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">05</span> The catalogue</p>
+          <h3 id="gs-cat-h" class="mag-h" tabindex="-1">Five decks to punch</h3>
+          <p class="mag-standfirst">Every deck in this issue, in the order the articles discuss them. Each one runs as it stands; its comment cards say what its data cards hold, and the same seed always gives the same picture.</p>
+        </div>
+        <ol class="mag-cat">
+          <li><h4>Spectrum colors arranged by chance</h4><p>Eighteen numbered colours drawn from a hat, one slip for every square of a grid 24 wide, printed as a chart of colour numbers with a key that counts each colour. Every row is punched as a cartoon for the squares.</p><p class="mag-deck"><button type="button" data-deck="spectrum-colors-by-chance">Put <i>Spectrum colors arranged by chance</i> on the coding form</button></p></li>
+          <li><h4>Random distribution</h4><p>Thirty-six lines of a telephone directory read one digit at a time, an even digit for paper and an odd one for ink, as a field of 2,160 squares. A key card says which digits ink.</p><p class="mag-deck"><button type="button" data-deck="random-distribution">Put <i>Random distribution</i> on the coding form</button></p></li>
+          <li><h4>Chance and order</h4><p>The 25 crossings of a grid numbered on cards, drawn at random in pairs and joined by lines of one, two, three and more parallel strokes, after Kenneth Martin.</p><p class="mag-deck"><button type="button" data-deck="chance-and-order">Put <i>Chance and order</i> on the coding form</button></p></li>
+          <li><h4>Wall drawing 11</h4><p>LeWitt’s instruction carried out by the machine: a wall in four parts, three of the four kinds of line in each, and a check that the instruction has been followed.</p><p class="mag-deck"><button type="button" data-deck="wall-drawing-11">Put <i>Wall drawing 11</i> on the coding form</button></p></li>
+          <li><h4>Order and disorder</h4><p>Sixteen cells of nested squares whose corners are moved by chance, more and more across the sheet, from perfect order at the top left, after Vera Molnár’s (Des)Ordres.</p><p class="mag-deck"><button type="button" data-deck="order-and-disorder">Put <i>Order and disorder</i> on the coding form</button></p></li>
+        </ol>
+      </div>
+    </section>
+
+  </div>
+  <div class="mag-turn">
+    <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
+    <nav class="mag-index" aria-label="Pages of Gesso">
+      <ol>
+        <li><button type="button" data-goto="0"><span class="mag-dot">C</span><span class="mag-vh"> Cover</span></button></li>
+        <li><button type="button" data-goto="1"><span class="mag-dot">00</span><span class="mag-vh"> Contents</span></button></li>
+        <li><button type="button" data-goto="2"><span class="mag-dot">01</span><span class="mag-vh"> Colour by chance</span></button></li>
+        <li><button type="button" data-goto="3"><span class="mag-dot">02</span><span class="mag-vh"> Painting by system</span></button></li>
+        <li><button type="button" data-goto="4"><span class="mag-dot">03</span><span class="mag-vh"> The computer at the easel</span></button></li>
+        <li><button type="button" data-goto="5"><span class="mag-dot">05</span><span class="mag-vh"> Five decks to punch</span></button></li>
       </ol>
     </nav>
     <p class="mag-folio" aria-live="polite"></p>
@@ -760,8 +1105,12 @@
         <ul class="decks" id="deck-tray-programs"></ul>
         <h4 class="tray-div">Music</h4>
         <ul class="decks" id="deck-tray-music"></ul>
-        <h4 class="tray-div">From the magazine</h4>
+        <h4 class="tray-div">From <i>Moiré</i></h4>
         <ul class="decks" id="deck-tray-magazine"></ul>
+        <h4 class="tray-div">From <i>Event</i></h4>
+        <ul class="decks" id="deck-tray-event"></ul>
+        <h4 class="tray-div">From <i>Gesso</i></h4>
+        <ul class="decks" id="deck-tray-gesso"></ul>
       </div>
     </div>
     <div class="pad" id="pad">
@@ -1023,5 +1372,7 @@
 <script src="look.js"></script>
 <script src="sounds.js"></script>
 <script src="hotspots.js"></script>
+<script src="pan.js"></script>
+<script src="corner.js"></script>
 </body>
 </html>

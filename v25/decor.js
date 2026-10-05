@@ -1,5 +1,5 @@
 /* The room's things that can be swapped, after v22: the three prints on the wall (one pinned
-   up behind the shelf), the lamp, the plant at each end of the floor, the plant on the desk
+   up behind the shelf) and a fourth over the fish tank round the corner, the lamp, the plant at each end of the floor, the plant on the desk
    and the mug. Each is a button; pressing it puts the next of its kind in its place at once.
    Every kind is drawn in pixels in the same box as the first, lit where it stands, so each
    takes the same place in the same light. The wallpaper changes too, from the menu or by
@@ -54,7 +54,11 @@
       ['mug-enamel', 'a speckled enamel mug rimmed in blue'],
       ['mug-sieve', 'a cream mug printed with a sieve in terracotta points'],
       ['mug-black', 'a black stoneware mug with a white ring'],
-      ['mug-cup', 'a white cup on its saucer']] }
+      ['mug-cup', 'a white cup on its saucer']] },
+    'print-tank': { what: 'the print over the fish tank', items: [
+      ['print-kelly', 'a grid of colours by chance, after Ellsworth Kelly'],
+      ['print-fluxus', 'a poster for a Fluxus concert in black and yellow'],
+      ['print-molnar', 'nested squares in disorder, after Vera Molnár']] }
   };
   var status = doc.getElementById('swap-status');
   function say(msg) { status.textContent = ''; setTimeout(function () { status.textContent = msg; }, 30); }
@@ -69,9 +73,9 @@
   function time() { return chosen === 'clock' ? clockTime() : chosen; }
   function base() { return 'assets/' + time() + '/'; }
   // the ground under each paper's tile, at each time (the colour behind the room)
-  var GROUND = { evening: { ogee: '#283463', atomic: '#344758', trellis: '#443048', grass: '#88808a' },
-    morning: { ogee: '#293a5b', atomic: '#47625e', trellis: '#673c44', grass: '#a39e94' },
-    night: { ogee: '#222a5e', atomic: '#293a5b', trellis: '#3e2a44', grass: '#575884' } };
+  var GROUND = { evening: { ogee: '#233676', atomic: '#3e4b61', trellis: '#4c3447', grass: '#888394' },
+    morning: { ogee: '#2c376a', atomic: '#48585e', trellis: '#64404b', grass: '#a59c8e' },
+    night: { ogee: '#1c2160', atomic: '#293556', trellis: '#342141', grass: '#575986' } };
 
   // the light: the lamp on the desk, or 'off'. What the lamp's light reaches is drawn for each
   // (assets/<time>/lit/<light>/); everything else once a time (assets/<time>/)
@@ -178,7 +182,7 @@
   // a new time's room is shown once its pictures are in, so it never stands bare between them
   function turnTo(fn) {
     var b = base(), p = PAPERS[paper][0];
-    var urls = [b + 'lit/' + light() + '/room-' + p + '.png', b + 'room-' + p + '-r.png', b + 'tile-' + p + '.png', b + 'floor-tile.png']
+    var urls = [b + 'lit/' + light() + '/room-' + p + '.png', b + 'room-' + p + '-r.png', b + 'room2-' + p + '.png', b + 'tile-' + p + '.png', b + 'floor-tile.png']
       .concat(swaps.map(function (sb) { return src(sb.swapItem()); }));
     Promise.all(urls.map(function (u) { return new Promise(function (r) { var i = new Image(); i.onload = i.onerror = r; i.src = u; if (i.complete) r(); setTimeout(r, 1500); }); }))
       .then(function () { relight(); prefetch(); if (fn) fn(); });
@@ -200,7 +204,8 @@
     room.setAttribute('data-time', t);
     var css = { '--back-l': b + 'lit/' + light() + '/room-' + p + '.png', '--back-r': b + 'room-' + p + '-r.png', '--tile': b + 'tile-' + p + '.png',
       '--floor-tile': b + 'floor-tile.png', '--steam': b + 'anim/lit/' + light() + '/steam.png', '--reel-l': b + 'anim/reel-l.png',
-      '--reel-r': b + 'anim/reel-r.png', '--screen': b + 'anim/screen.png' };
+      '--reel-r': b + 'anim/reel-r.png', '--screen': b + 'anim/screen.png', '--back-2': b + 'room2-' + p + '.png' };
+    ['tetras', 'angel', 'cory', 'bubbles', 'flakes', 'pendulum'].forEach(function (n) { css['--' + n] = b + 'anim/' + n + '.png'; });
     for (var k in css) room.style.setProperty(k, 'url(' + css[k] + ')');
     room.style.setProperty('--paper-blue', GROUND[t][p]);
     swaps.forEach(function (b) { b.show(); });
@@ -226,7 +231,7 @@
       });
     });
     lights.forEach(function (l) { get(b + 'anim/lit/' + l + '/steam.png'); });
-    PAPERS.forEach(function (p) { get(b + 'room-' + p[0] + '-r.png'); get(b + 'tile-' + p[0] + '.png'); get(b + 'lit/' + light() + '/room-' + p[0] + '.png'); });
+    PAPERS.forEach(function (p) { get(b + 'room-' + p[0] + '-r.png'); get(b + 'room2-' + p[0] + '.png'); get(b + 'tile-' + p[0] + '.png'); get(b + 'lit/' + light() + '/room-' + p[0] + '.png'); });
     lights.forEach(function (l) {
       get(b + 'lit/' + l + '/room-' + PAPERS[paper][0] + '.png');
       Array.prototype.forEach.call(scene.querySelectorAll('img[data-px]'), function (img) { get(src(img.getAttribute('data-px'), l)); });
@@ -235,14 +240,20 @@
   }
   window.addEventListener('load', prefetch);
 
-  // the bare wall, in the room's pixels (640 x 320): all of it above the floor but the desk's
-  // top, its trestles, the shelf's board and the stool; past the picture the paper runs on
+  // the bare wall, in the room's pixels (640 x 320, and the corner's 640 more to the right):
+  // all of it above the floor but the desk's top, its trestles, the shelf's board and the
+  // stool; round the corner, but the bookcase, the chair and the cabinet under the tank; past
+  // the pictures the paper runs on
   var wall = scene.querySelector('.wall');
   function wallAt(x, y) {
     if (getComputedStyle(wall).display === 'none') return false;
     var r = scene.getBoundingClientRect(), ap = parseFloat(getComputedStyle(scene).fontSize) * 92 / 640;
     var ax = (x - r.left) / ap, ay = (y - r.top) / ap;
     if (ay >= 309) return false;
+    if (ax >= 640) {
+      var cx = ax - 640;
+      return !((cx >= 36 && cx < 238 && ay >= 26) || (cx >= 262 && cx < 374 && ay >= 214) || (cx >= 408 && cx < 614 && ay >= 134));
+    }
     if (ax >= 70 && ax < 570 && ay >= 208 && ay < 225) return false;
     if (ax >= 327 && ax < 605 && ay >= 82 && ay < 89) return false;
     if (ax >= 368 && ax < 428 && ay >= 248) return false;

@@ -319,6 +319,10 @@ var Workspace = (function () {
   var tape = null, tapeEvents = [], tapeInfo = null, bareMode = 'rhythm';
   var roll = $('roll'), rollWrap = $('roll-wrap'), playhead = $('playhead');
   var player = Tape.createPlayer({ bpm: 120, speed: 1, onTick: onTick });
+  // the wave every note sounds in (../wavepad.js, as the room's tape player has), in the screen's palette
+  var css = getComputedStyle(doc.body);
+  WavePad($('pl-wave'), $$('#win-player [data-wave]'), function (n, samples) { player.setWave(samples); }, 'tape',
+    { paper: css.getPropertyValue('--paper').trim() || undefined, rule: css.getPropertyValue('--chrome').trim() || undefined, ink: css.getPropertyValue('--ink').trim() || undefined });
   function fmt(t) { var m = Math.floor(t / 60), s = t - m * 60; return m + ':' + (s < 10 ? '0' : '') + s.toFixed(1); }
   function loadTape() { tape = punched.slice(); $('pl-name').textContent = 'Output of ' + (jobName || 'the last job'); parseTape(); }
   function parseTape() {

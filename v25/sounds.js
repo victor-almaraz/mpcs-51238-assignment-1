@@ -3,7 +3,8 @@
    in another's place, a rustle as the paper changes, the tape motor's whir under the music,
    the printer's chatter while the computer scrolls its output, a blip when the narrator
    speaks, the keypunch's punch at every column typed, and the reader's riffle and the line
-   printer's hammers as a deck is run. They answer the room's events (room:*, from decor.js, life.js and look.js) and the
+   printer's hammers as a deck is run; round the corner, the metronome's tick, the fish's
+   flakes, a book taken down and the tank's bubbles. They answer the room's events (room:*, from decor.js, life.js and look.js) and the
    recorder's state. Nothing sounds until the page has been pressed, as browsers require;
    Room sounds in the menu turns them off and on. */
 
@@ -62,7 +63,13 @@
     skip: function (t) { burst(t, 0.01, 'bandpass', 2600, 2, 0.08); },
     // a card through the reader, a soft riffle; a line struck by the printer's hammers
     card: function (t) { burst(t, 0.02, 'bandpass', 3800, 1.2, 0.08); },
-    line: function (t) { for (var k = 0; k < 4; k++) burst(t + k * 0.009, 0.006, 'bandpass', 1800 + k * 300, 2.5, 0.12); }
+    line: function (t) { for (var k = 0; k < 4; k++) burst(t + k * 0.009, 0.006, 'bandpass', 1800 + k * 300, 2.5, 0.12); },
+    // the reading corner: the metronome's wooden tick, a pinch of flakes on the water, a book
+    // slid out of its row, a bubble from the airstone
+    tick: function (t) { burst(t, 0.008, 'bandpass', 3200, 4, 0.2); tone(t, 1400, 0.025, 0.06, 'triangle', 900); },
+    feed: function (t) { for (var k = 0; k < 6; k++) burst(t + k * 0.03 + Math.random() * 0.02, 0.012, 'highpass', 4500, 0.7, 0.05); tone(t + 0.25, 520, 0.08, 0.05, 'sine', 900); },
+    book: function (t) { burst(t, 0.12, 'bandpass', 1500, 0.6, 0.06); burst(t + 0.1, 0.02, 'lowpass', 600, 1, 0.1); },
+    bubble: function (t) { tone(t, 380 + Math.random() * 260, 0.05, 0.018, 'sine', 700 + Math.random() * 300); }
   };
   function play(name) { if (!ctx()) return; SOUND[name](ac.currentTime + 0.01); }
 
@@ -112,6 +119,14 @@
   scene.addEventListener('room:punch', function (e) { play(e.detail && e.detail.blank ? 'skip' : 'punch'); });
   scene.addEventListener('room:card', function () { play('card'); });
   scene.addEventListener('room:line', function () { play('line'); });
+  scene.addEventListener('room:tick', function () { play('tick'); });
+  scene.addEventListener('room:feed', function () { play('feed'); });
+  scene.addEventListener('room:book', function () { play('book'); });
+  // the airstone's bubbles, heard while the room is turned to the tank
+  setInterval(function () {
+    if (!ac || !on || room.getAttribute('data-at') !== 'desk' || scene.getAttribute('data-view') !== '1') return;
+    if (Math.random() < 0.55) play('bubble');
+  }, 140);
   new MutationObserver(function () { if (ctx()) steady(); }).observe(recorder, { attributes: true, attributeFilter: ['data-state'] });
   new MutationObserver(steady).observe(room, { attributes: true, attributeFilter: ['data-at'] });
   // the first press anywhere wakes the sound, and the hum with it

@@ -819,3 +819,9 @@ select { padding: 4px 8px; border: 2px solid var(--ink); border-radius: 0; color
 html, html * { cursor: url(../assets/cursor-arrow.png) 1 1, default; }
 textarea, input[type="text"], .ico-edit { cursor: text; }
 .grow { cursor: nwse-resize; }
+
+/* the Player's wave (../wavepad.js): one cycle on a small pad, and the shapes to choose */
+.pl-wave { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+#pl-wave { display: block; width: 192px; height: 96px; image-rendering: pixelated; outline: 2px solid var(--ink); touch-action: none; cursor: crosshair; }
+.pl-wave .wave-choices { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.pl-wave .wave-choices .btn { margin: 0; }

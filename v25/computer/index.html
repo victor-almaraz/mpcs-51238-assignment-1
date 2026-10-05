@@ -340,6 +340,7 @@
       <p>A record with only its first five columns filled, such as a record from the sieve generator, holds a bare number. With the <em>Rhythm</em> setting, the Player plays each bare number as a time, so a sieve sounds as a rhythm on middle C. With the <em>Scale</em> setting, it plays the numbers one per pulse in the order of the file, as semitones above the C an octave below middle C, so a sieve sounds as a scale. The setting matters only for bare numbers. The music programs write full note records that set their own times and notes, so for their files the setting is turned off. Records that are not notes, such as lines of text, are skipped, and the status line says how many were skipped.</p>
       <p>For example, the record <code>&nbsp;&nbsp;&nbsp;16&nbsp;&nbsp;&nbsp;67&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;9</code> starts at pulse 16, two seconds in at the starting tempo, and plays the G above middle C for four pulses, half a second, as loud as the Player goes.</p>
       <p>Press <em>Play in Player</em> in the Output window, or <em>Load Output</em> in the Player, and then <em>Play</em>. <em>Pause</em> holds the place, and <em>Stop</em> rewinds to the start. The roll shows every note as a bar, in the manner of a player piano&rsquo;s roll, with pitch running up and time across; a dotted line marks every C, and a tick under the roll marks every beat. The bars are coloured from sky blue for the quietest notes to terracotta for the loudest, and a terracotta line moves across the roll as the music plays; click the roll, or use the arrow keys on it, to move the place. The tempo control sets the beats per minute, from 40 to 240, and <em>Double speed</em> plays the music twice as fast and an octave higher, as a tape machine does when its speed is doubled. Sound starts only when you press <em>Play</em>.</p>
+      <p>Every note sounds in the wave shown on the Player&rsquo;s <em>Wave</em> pad. <em>Tape</em>, its own voice, is a triangle wave with a quiet tone an octave above it; <em>Sine</em>, <em>Triangle</em>, <em>Reed</em> and <em>Saw</em> sound in those shapes alone; and one cycle drawn on the pad with the pointer sounds as it is drawn. A new wave takes effect from the next note. The tape player on the desk has the same pad.</p>
       <p class="turns"><button type="button" class="btn" data-act="doc:ch-music">Previous: The music programs</button></p>
     </article>
   </div>
@@ -632,6 +633,11 @@
         <legend>Speed</legend>
         <label><input type="radio" name="pl-speed" value="1" checked> Normal</label>
         <label><input type="radio" name="pl-speed" value="2"> Double speed, an octave up</label>
+      </fieldset>
+      <fieldset class="ctl pl-wave">
+        <legend>Wave</legend>
+        <canvas id="pl-wave" width="96" height="48" role="img" aria-label="One cycle of the wave every note sounds in; draw on it to change it"></canvas>
+        <p class="wave-choices"><button type="button" class="btn" data-wave="tape">Tape</button> <button type="button" class="btn" data-wave="sine">Sine</button> <button type="button" class="btn" data-wave="triangle">Triangle</button> <button type="button" class="btn" data-wave="reed">Reed</button> <button type="button" class="btn" data-wave="tooth">Saw</button></p>
       </fieldset>
       <fieldset class="ctl radios" id="pl-bare">
         <legend>Bare numbers play as</legend>
@@ -1070,6 +1076,7 @@
 <script src="../../scripts/hollerith.js"></script>
 <script src="../../scripts/fortran.js"></script>
 <script src="../../scripts/tape.js"></script>
+<script src="../wavepad.js"></script>
 <script src="programs.js"></script>
 <script src="pixels.js"></script>
 <script src="wm.js"></script>

@@ -50,6 +50,14 @@
 .mag var { font-style: italic; }
 .mag-vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
+/* ---------- the rack: the magazines on the shelf, one open at a time ----------
+   It sits in the station's top margin, level with the room's menu, so the pages keep their height. */
+.mag-rack { position: absolute; z-index: 4; top: 0.8rem; left: 1.6rem; }
+.mag-rack ul { display: flex; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.mag-rack button { padding: 0.3rem 0.9rem; font: 600 20px/1.3 var(--sans); color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 0; }
+.mag-rack button[aria-pressed="true"] { color: var(--paper); background: var(--ink); }
+.mag[hidden] { display: none; }
+
 /* ---------- without script: every leaf in one scroll ---------- */
 
 .mag:not(.mag-js) .mag-book { overflow: auto; }
@@ -190,6 +198,67 @@
   .mag-contents li { grid-template-columns: 2.6rem minmax(0, 1fr); }
   .mag-flow h3, .mag-pull p { font-size: 20px; line-height: 30px; }
 }
+
+/* ---------- Event: a Fluxus newspaper ----------
+   After cc V TRE, the newspaper George Maciunas designed for Fluxus from 1964: cheap newsprint,
+   black and one yellow (the yellow only in blocks and rules, never as type, so the type stays black), two narrow columns to a page under hairline rules, headlines in capitals,
+   kickers as black bars, no initials; its front page a grid of boxes under a black masthead. */
+.mag[data-issue="event"] {
+  --mag-paper: #eee8d6; --mag-ink: #121212; --mag-acc: #f2b705;
+  /* one yellow only: every ink and tint the other magazines use is the yellow here, so nothing
+     inherited prints red, orange, cyan or magenta; the light tint (hovers, underlays) a pale yellow */
+  --mag-yellow: var(--mag-acc); --mag-orange: var(--mag-acc); --mag-cyan: var(--mag-acc); --mag-magenta: var(--mag-acc);
+  --mag-tint: var(--mag-acc);
+  --flat-k: #121212; --flat-y: #f6dc7c; --flat-o: #f6dc7c;
+  --mag-edge: #d8d0bb; --mag-edge-2: #c4baa2;
+}
+.mag[data-issue="event"] .mag-leaf[data-ink="r"] { --mag-tint: var(--mag-acc); }
+.mag[data-issue="event"] .mag-leaf[data-ink="k"] { --mag-tint: var(--mag-ink); }
+.mag[data-issue="event"] .mag-spread { --pad: 16px; }
+.mag-js[data-issue="event"] .mag-flow { column-rule: 1px solid var(--mag-ink); }
+.mag[data-issue="event"] .mag-flow h3 { text-transform: uppercase; letter-spacing: 0.04em; }
+.mag[data-issue="event"] .mag-kicker { padding: 4px 8px; color: var(--mag-paper); background: var(--mag-ink); letter-spacing: 0.14em; }
+.mag[data-issue="event"] .mag-kicker::before { display: none; }
+.mag[data-issue="event"] .mag-num { margin-right: 0.5em; color: var(--mag-ink); background: var(--mag-acc); box-shadow: none; }
+.mag[data-issue="event"] .mag-first::first-letter { float: none; margin: 0; font: inherit; }
+.mag[data-issue="event"] .mag-standfirst { border-top-width: 4px; }
+.mag[data-issue="event"] .mag-pull { border-top: 10px solid var(--mag-acc); }
+.mag[data-issue="event"] .mag-flow .mag-pull p { line-height: 50px; color: var(--mag-ink); text-transform: uppercase; }
+.mag[data-issue="event"] .mag-flow h4 { padding: 2px 0; border-top: 2px solid var(--mag-ink); border-bottom: 1px solid var(--mag-ink); }
+.mag[data-issue="event"] .mag-flow p { line-height: 26px; }
+.mag[data-issue="event"] .mag-flow i { background: none; text-decoration: underline; text-decoration-thickness: 4px; text-decoration-color: var(--mag-acc); text-underline-offset: 0.15em; }
+.mag[data-issue="event"] .mag-cover-top { background: var(--mag-paper); color: var(--mag-ink); border-bottom: 8px solid var(--mag-ink); }
+.mag[data-issue="event"] .mag-dateline { color: var(--mag-ink); border-bottom: 2px solid var(--mag-ink); padding-bottom: 4px; }
+.mag[data-issue="event"] .mag-big { color: var(--mag-ink); text-transform: uppercase; letter-spacing: 0.08em; text-shadow: 6px 6px 0 var(--mag-acc); }
+.mag[data-issue="event"] .mag-sub { width: fit-content; padding: 2px 8px; color: var(--mag-ink); background: var(--mag-acc); }
+.mag[data-issue="event"] .mag-cover-field { background: var(--mag-paper) url(assets/st/ev-cover-field.png) 50% 50% / cover no-repeat; }
+.mag[data-issue="event"] .mag-coverline, .mag[data-issue="event"] .mag-cover-names { border: 2px solid var(--mag-ink); }
+.mag[data-issue="event"] .mag-cover-names { border-top: 0; }
+.mag[data-issue="event"] .mag-book .mag-deck button { box-shadow: inset 8px 0 0 var(--mag-acc); }
+
+/* ---------- Gesso: a magazine of painting ----------
+   After the square art magazines of the period (Artforum's 10½ inches): square pages on a warm
+   white, generous margins, the plates set as reproductions in a white mount with a hairline,
+   the painters' colours for the leaves' inks; the cover given wholly to one painting. */
+.mag[data-issue="gesso"] {
+  --mag-paper: #f7f2e8; --mag-ink: #1b1b1b;
+  --mag-yellow: #f2c230; --mag-orange: #e2662c; --mag-cyan: #3b7fb6; --mag-magenta: #b8283c;
+  --flat-y: #f5e3a8; --flat-k: #1b1b1b;
+}
+/* two square pages: as wide as twice the height the page-turn bar leaves, or the window's width */
+.mag[data-issue="gesso"] .mag-spread { --pad: 44px; width: min(100%, calc(2 * (100cqh - 5.5rem))); height: auto; aspect-ratio: 2 / 1; }
+.mag[data-issue="gesso"] .mag-spread.one { aspect-ratio: auto; height: 100%; width: 100%; }
+.mag[data-issue="gesso"] .mag-plate-box { padding: 10px; background: #fffdf8; box-shadow: 0 0 0 1px var(--mag-ink); }
+.mag[data-issue="gesso"] .mag-kicker::before { background: var(--mag-tint); box-shadow: none; }
+.mag[data-issue="gesso"] .mag-num { background: var(--mag-tint); color: var(--mag-ink); box-shadow: none; }
+.mag[data-issue="gesso"] .mag-pull { border-top: 0; border-left: 8px solid var(--mag-tint); padding: 0 0 0 16px; }
+.mag[data-issue="gesso"] .mag-flow h4 { color: var(--mag-ink); letter-spacing: 0.24em; }
+.mag[data-issue="gesso"] .mag-cover { aspect-ratio: 1 / 1; }
+.mag[data-issue="gesso"] .mag-cover-top { background: var(--mag-paper); color: var(--mag-ink); padding-bottom: 14px; }
+.mag[data-issue="gesso"] .mag-dateline { color: var(--mag-ink); }
+.mag[data-issue="gesso"] .mag-big { font-size: 80px; color: var(--mag-ink); text-shadow: none; }
+.mag[data-issue="gesso"] .mag-sub { color: var(--mag-ink); letter-spacing: 0.24em; }
+.mag[data-issue="gesso"] .mag-cover-field { background: var(--mag-paper) url(assets/st/gs-cover-field.png) 50% 50% / cover no-repeat; }
 
 /* ---------- the magazine as it stands on the shelf ---------- */
 

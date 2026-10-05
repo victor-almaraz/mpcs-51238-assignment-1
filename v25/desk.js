@@ -15,11 +15,13 @@ var Desk = (function () {
   function $$(sel, el) { return Array.prototype.slice.call((el || doc).querySelectorAll(sel)); }
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : (many || one + 's')); }
 
-  /* ---------------- the decks: the engine's samples, the music decks, the magazine's ---------------- */
+  /* ---------------- the decks: the engine's samples, the music decks, the magazines' ---------------- */
   function slug(n) { return n.toLowerCase().replace(/\(.*?\)/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
   var decks = Fortran.samples.map(function (s) { return { id: slug(s.name), name: s.name, cards: s.cards, section: 'programs' }; })
     .concat(DECKS.music.map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'music' }; }))
-    .concat(DECKS.magazine.map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'magazine' }; }));
+    .concat(DECKS.magazine.map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'magazine' }; }))
+    .concat((DECKS.event || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'event' }; }))
+    .concat((DECKS.gesso || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'gesso' }; }));
   var byId = {};
   decks.forEach(function (d) { byId[d.id] = d; });
 
