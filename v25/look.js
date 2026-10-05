@@ -64,6 +64,9 @@
     'book-knuth': ['Donald Knuth, The Art of Computer Programming, volume 2: Seminumerical Algorithms, 1969. Its first chapter is on random numbers: how a machine that only follows rules makes numbers that pass for chance, and how to test them.', 'stochastic-cloud', 'Stochastic cloud'],
     'book-reichardt': ['Cybernetic Serendipity: the computer and the arts, 1968, edited by Jasia Reichardt: Studio International’s special issue for her show at the ICA in London, Knowlton and Harmon’s pictures among its pages.', 'studies-in-perception', 'Studies in perception'],
     camera: [null],
+    'o-influences': ['A folio in marbled boards, tied with a ribbon: a sheet for every kind of thing this room was made from, and every name it owes.'],
+    'o-rooms': ['A folio in oxblood cloth: a print of every room this one grew from, pinned to a board, each a way back into it.'],
+    'o-tree': ['A folio in sage cloth: the rooms’ family tree on graph paper, each under the rooms it was made from.'],
     'o-records': ['A portable record player in a two-tone case on the side table, a crate of records beside it: Pachelbel, Bach, Beethoven, Grieg, Satie, Rimsky-Korsakov and Joplin.'],
     'o-album': ['A photo album in black cloth: black-and-white prints and a few Polaroids, of places and of people, each held by its corners and captioned in white pencil.'],
     'o-timer': ['A tomato kitchen timer, for working in pomodoros: twenty-five minutes of work, then a short break, and after every fourth a long one. Francesco Cirillo named the method after a timer like it, in the late 1980s.'],
@@ -149,7 +152,7 @@
     if (s) { e.preventDefault(); look(s); }
   }, true);
   // taking a thing up puts the narration away
-  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder', 'reader', 'upic', 'console', 'timer', 'album', 'records'].forEach(function (n) { Desk.onShow(n, close); });
+  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder', 'reader', 'upic', 'console', 'timer', 'album', 'records', 'influences'].forEach(function (n) { Desk.onShow(n, close); });
   scene.addEventListener('room:turn', close);
   window.Look = { look: look };
 })();

@@ -39,7 +39,7 @@ var Desk = (function () {
     manual: ['.spread', '.spine.v1'], magazine: ['#mag', '.o-mag .mini-mag'], portfolio: ['.folio-inside', '.o-folio .folders'],
     form: ['.pad-sheet', '.o-form .clipboard'], out: ['.fanfold', '.o-out .outtray'], recorder: ['.recorder', '.o-tape .player'],
     computer: ['.monitor', '.o-computer .computer'], reader: ['.reader-pic', '.o-reader .reader'], upic: ['.upic-board', '.o-upic .tablet'],
-    console: ['.gb', '.o-console .handheld'], timer: ['.pomo-tomato', '.o-timer .kitchen-timer'], album: ['.album-book', '.o-album .album-spine'], records: ['.rec-deck', '.o-records .record-player']
+    console: ['.gb', '.o-console .handheld'], timer: ['.pomo-tomato', '.o-timer .kitchen-timer'], album: ['.album-book', '.o-album .album-spine'], records: ['.rec-deck', '.o-records .record-player'], influences: ['.fo', '.o-influences .folio-spine']
   };
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var LIST = window.matchMedia('(max-width: 1011px), (max-height: 505px)');   // the room drawn as a list: nothing to grow from

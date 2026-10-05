@@ -163,13 +163,13 @@ td code { white-space: nowrap; }
    corner. decor.js hangs a paper (data-paper on the room) and sets the pictures for the time
    and the light (--back-l, --back-r, --tile, --floor-tile, --paper-blue); these are evening's */
 .desk { --back-l: url(assets/evening/lit/task/room-ogee.png); --back-r: url(assets/evening/room-ogee-r.png); --tile: url(assets/evening/tile-ogee.png); --tw: 42; --th: 63;
-  --floor-tile: url(assets/evening/floor-tile.png); --paper-blue: #27306c; --steam: url(assets/evening/anim/lit/task/steam.png);
+  --floor-tile: url(assets/evening/floor-tile.png); --paper-blue: #232e70; --steam: url(assets/evening/anim/lit/task/steam.png);
   --reel-l: url(assets/evening/anim/reel-l.png); --reel-r: url(assets/evening/anim/reel-r.png); --screen: url(assets/evening/anim/screen.png);
   --back-2: url(assets/evening/room2-ogee.png); --tetras: url(assets/evening/anim/tetras.png); --angel: url(assets/evening/anim/angel.png); --cory: url(assets/evening/anim/cory.png);
   --bubbles: url(assets/evening/anim/bubbles.png); --flakes: url(assets/evening/anim/flakes.png); --pendulum: url(assets/evening/anim/pendulum.png); --cat: url(assets/evening/anim/cat.png); --spin: url(assets/evening/anim/spin.png); }
-.desk[data-paper="atomic"] { --tile: url(assets/evening/tile-atomic.png); --tw: 42; --th: 42; --back-r: url(assets/evening/room-atomic-r.png); --back-2: url(assets/evening/room2-atomic.png); --paper-blue: #41496b; }
-.desk[data-paper="trellis"] { --tile: url(assets/evening/tile-trellis.png); --tw: 28; --th: 42; --back-r: url(assets/evening/room-trellis-r.png); --back-2: url(assets/evening/room2-trellis.png); --paper-blue: #583145; }
-.desk[data-paper="grass"] { --tile: url(assets/evening/tile-grass.png); --tw: 34; --th: 12; --back-r: url(assets/evening/room-grass-r.png); --back-2: url(assets/evening/room2-grass.png); --paper-blue: #7e849e; }
+.desk[data-paper="atomic"] { --tile: url(assets/evening/tile-atomic.png); --tw: 42; --th: 42; --back-r: url(assets/evening/room-atomic-r.png); --back-2: url(assets/evening/room2-atomic.png); --paper-blue: #3f4a5d; }
+.desk[data-paper="trellis"] { --tile: url(assets/evening/tile-trellis.png); --tw: 28; --th: 42; --back-r: url(assets/evening/room-trellis-r.png); --back-2: url(assets/evening/room2-trellis.png); --paper-blue: #563047; }
+.desk[data-paper="grass"] { --tile: url(assets/evening/tile-grass.png); --tw: 34; --th: 12; --back-r: url(assets/evening/room-grass-r.png); --back-2: url(assets/evening/room2-grass.png); --paper-blue: #8a838f; }
 .wall { position: absolute; inset: -100vh -100vw 0; background: var(--tile) 100vw 100vh / calc(var(--tw) * 1em * 92 / 640) calc(var(--th) * 1em * 92 / 640), var(--paper-blue); }
 .wall::after { content: ""; position: absolute; left: 100vw; top: 100vh; width: 92em; height: 46em; background: var(--back-l) 0 0 / calc(100% * 368 / 640) 100% no-repeat, var(--back-r) 100% 0 / calc(100% * 272 / 640) 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
 .floor { position: absolute; left: 0; right: 0; bottom: 0; height: calc(11em * 92 / 640); background: var(--floor-tile) 100vw 0 / calc(77em * 92 / 640) 100% repeat-x; }
@@ -322,7 +322,20 @@ td code { white-space: nowrap; }
 .part2 { position: absolute; left: 92em; top: 0; width: 92em; height: 46em; background: var(--back-2) 0 0 / 100% 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
 .part2 > :not(.books), .part2 .books > li { pointer-events: auto; }
 .part2 .books { position: absolute; inset: 0; }
-.part2 .books > li { position: absolute; }
+.part2 .books > li { position: static; }
+/* each thing on the shelves in its own place, in the wall's pixels */
+.books .book-xenakis { left: calc(92em * 92 / 640); top: calc(52em * 92 / 640); width: calc(11em * 92 / 640); height: calc(41em * 92 / 640); }
+.books .book-hiller { left: calc(152em * 92 / 640); top: calc(50em * 92 / 640); width: calc(10em * 92 / 640); height: calc(43em * 92 / 640); }
+.books .book-cage { left: calc(70em * 92 / 640); top: calc(107em * 92 / 640); width: calc(9em * 92 / 640); height: calc(37em * 92 / 640); }
+.books .metronome { left: calc(186em * 92 / 640); top: calc(111em * 92 / 640); width: calc(21em * 92 / 640); height: calc(33em * 92 / 640); }
+.books .book-mccracken { left: calc(120em * 92 / 640); top: calc(156em * 92 / 640); width: calc(10em * 92 / 640); height: calc(39em * 92 / 640); }
+.books .book-knuth { left: calc(178em * 92 / 640); top: calc(153em * 92 / 640); width: calc(13em * 92 / 640); height: calc(42em * 92 / 640); }
+.books .book-reichardt { left: calc(150em * 92 / 640); top: calc(206em * 92 / 640); width: calc(31em * 92 / 640); height: calc(40em * 92 / 640); }
+.books .o-album { left: calc(193em * 92 / 640); top: calc(252em * 92 / 640); width: calc(17em * 92 / 640); height: calc(46em * 92 / 640); }
+.books .o-console { left: calc(210em * 92 / 640); top: calc(149em * 92 / 640); width: calc(17em * 92 / 640); height: calc(26em * 92 / 640); }
+.books .o-rooms { left: calc(62em * 92 / 640); top: calc(149em * 92 / 640); width: calc(14em * 92 / 640); height: calc(46em * 92 / 640); }
+.books .o-tree { left: calc(77em * 92 / 640); top: calc(152em * 92 / 640); width: calc(14em * 92 / 640); height: calc(43em * 92 / 640); }
+.books .o-influences { left: calc(44em * 92 / 640); top: calc(151em * 92 / 640); width: calc(17em * 92 / 640); height: calc(44em * 92 / 640); }
 .scene .turn { top: calc(150em * 92 / 640); width: calc(12em * 92 / 640); height: calc(22em * 92 / 640); }
 .turn-r { left: calc(626em * 92 / 640); }
 /* only the tab on the wall in front shows; the other wall's, past the edge, is out of the way */
@@ -350,22 +363,16 @@ td code { white-space: nowrap; }
 @keyframes spin { to { background-position: 150% 0; } }
 .scene .tank { left: calc(418em * 92 / 640); top: calc(134em * 92 / 640); width: calc(184em * 92 / 640); height: calc(94em * 92 / 640); }
 /* the books, each in its place on its shelf; taken down, it comes a step up out of the row */
-.books .book, .books .metronome { position: relative; display: block; margin: 0; padding: 0; width: 100%; height: 100%; background: none; border: 0; }
+.books .book, .books .metronome { position: absolute; display: block; margin: 0; padding: 0; background: none; border: 0; }
 .books .book img, .books .metronome img { display: block; width: 100%; height: 100%; }
-.books > li:nth-child(1) { left: calc(92em * 92 / 640); top: calc(52em * 92 / 640); width: calc(11em * 92 / 640); height: calc(41em * 92 / 640); }
-.books > li:nth-child(2) { left: calc(152em * 92 / 640); top: calc(50em * 92 / 640); width: calc(10em * 92 / 640); height: calc(43em * 92 / 640); }
-.books > li:nth-child(3) { left: calc(70em * 92 / 640); top: calc(107em * 92 / 640); width: calc(9em * 92 / 640); height: calc(37em * 92 / 640); }
-.books > li:nth-child(4) { left: calc(186em * 92 / 640); top: calc(111em * 92 / 640); width: calc(21em * 92 / 640); height: calc(33em * 92 / 640); }
-.books > li:nth-child(5) { left: calc(120em * 92 / 640); top: calc(156em * 92 / 640); width: calc(10em * 92 / 640); height: calc(39em * 92 / 640); }
-.books > li:nth-child(6) { left: calc(178em * 92 / 640); top: calc(153em * 92 / 640); width: calc(13em * 92 / 640); height: calc(42em * 92 / 640); }
-.books > li:nth-child(8) { left: calc(193em * 92 / 640); top: calc(252em * 92 / 640); width: calc(17em * 92 / 640); height: calc(46em * 92 / 640); }
-.books .o-album, .books .album-spine, .books .album-spine img { display: block; width: 100%; height: 100%; }
+.books .o-album, .books .o-influences, .books .o-rooms, .books .o-tree { position: absolute; display: block; }
+.books .album-spine, .books .album-spine img, .books .folio-spine, .books .folio-spine img { display: block; width: 100%; height: 100%; }
+.books :is(.o-influences, .o-rooms, .o-tree):is(:hover, :focus-visible) .folio-spine { transform: translateY(calc(-1em * 92 / 640)); }
 .books .o-album:is(:hover, :focus-visible) .album-spine { transform: translateY(calc(-1em * 92 / 640)); }
-.books > li:nth-child(9) { left: calc(210em * 92 / 640); top: calc(149em * 92 / 640); width: calc(17em * 92 / 640); height: calc(26em * 92 / 640); }
-.books .o-console, .books .handheld { display: block; width: 100%; height: 100%; }
+.books .o-console { position: absolute; display: block; }
+.books .handheld { display: block; width: 100%; height: 100%; }
 .books .handheld img { display: block; width: 100%; height: 100%; }
 .books .o-console:is(:hover, :focus-visible) .handheld { transform: translateY(calc(-1em * 92 / 640)); }
-.books > li:nth-child(7) { left: calc(150em * 92 / 640); top: calc(206em * 92 / 640); width: calc(31em * 92 / 640); height: calc(40em * 92 / 640); }
 .books .book:is(:hover, :focus-visible) { transform: translateY(calc(-1em * 92 / 640)); }
 .books .book.taken { transform: translateY(calc(-5em * 92 / 640)); }
 .books .metronome { filter: drop-shadow(calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(20, 16, 12, 0.35)); }
@@ -404,6 +411,29 @@ td code { white-space: nowrap; }
 .scene.feeding .flakes { visibility: visible; animation: flakes 4.8s steps(7) forwards; }
 @keyframes flakes { to { background-position: 100% 0; } }
 
+/* ================================================================ the folio of influences
+   A folio opened on the desk (influences.js): its marbled board at the left with the title,
+   a note and the index of its sheets; at the right one sheet, its entries set as a catalogue's
+   cards, the name, then who or what and when, then what the room takes from it. */
+.st-folio-inf { display: grid; place-items: start center; container-type: size; }
+.fo { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 46rem); grid-template-rows: minmax(0, 1fr) auto; gap: 0; width: min(100%, 66rem); height: calc(100cqh - 5.4rem); box-shadow: var(--lift); }
+.fo-cover { grid-row: 1 / 3; min-height: 0; overflow: auto; padding: 1.2rem; color: var(--paper);
+  background: repeating-radial-gradient(circle at 30% 20%, #3c5878 0 6px, #56749a 6px 11px, #c49446 11px 13px, #3c5878 13px 19px); image-rendering: pixelated; }
+.fo-cover .desk-tag { color: var(--paper); background: #7a2428; padding: 0.3rem 0.7rem; border: 0; }
+.fo-intro { margin: 0.9rem 0; padding: 0.7rem 0.8rem; color: var(--ink); background: var(--paper); line-height: 1.4; }
+.fo-index { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.fo-index button { width: 100%; text-align: left; padding: 0.2rem 0.6rem; }
+.fo-index button[aria-current="page"] { box-shadow: inset 4px 0 0 #7a2428; background: var(--ivory); }
+.fo-sheets { min-height: 0; overflow: auto; padding: 1.2rem 1.6rem 0.6rem; background: var(--paper); border-left: 6px solid #7a2428; }
+.fo-sheet h3 { margin: 0 0 0.8rem; font-size: 40px; line-height: 1.1; }
+.fo-list { margin: 0; padding: 0; list-style: none; columns: 2 18rem; column-gap: 2rem; }
+.fo-list li { display: grid; margin: 0 0 0.7rem; padding: 0.4rem 0 0.5rem; border-top: 1px solid var(--rule); break-inside: avoid; line-height: 1.3; }
+.fo-list b { font-weight: 600; }
+.fo-who { color: var(--ink-soft); }
+.fo-turn { grid-column: 2; margin: 0; padding: 0.6rem 1.6rem; background: var(--paper); border-left: 6px solid #7a2428; border-top: 1px solid var(--rule); }
+.fo-folio { margin: 0 0.6rem; }
+@media (max-width: 1000px) { .fo { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; } .fo-cover { grid-row: auto; } .fo-turn { grid-column: 1; } }
+
 /* ================================================================ the record player
    The player from above (records.js), drawn in pixels at two CSS pixels to its pixel, beside
    the crate of records, each a sleeve in two colours with its title. */
@@ -427,29 +457,25 @@ td code { white-space: nowrap; }
 @media (max-width: 1000px) { .records { grid-template-columns: minmax(0, 1fr); grid-template-areas: "h" "deck" "side"; } }
 
 /* ================================================================ the photo album
-   An album open on the desk: two black pages to an opening in a black cloth binding, the
-   photographs on them at twice their pixels (three in a tall window), each held by four black
-   corners, its caption under it in white pencil. Its pages turn as the manual's do. */
+   An album open on the desk: two black pages to an opening in a black cloth binding, one
+   photograph to a page at twice its pixels, held by black corners, its caption under it in
+   white pencil. Its pages turn as the manual's do. */
 .st-album { display: grid; place-items: start center; }
 .album { --as: 2; display: grid; gap: 0.8rem; width: fit-content; max-width: 100%; }
-@media (min-height: 1300px) and (min-width: 1900px) { .album { --as: 4; } }
 .album .desk-tag { justify-self: start; }
 .album-book { padding: 10px; background: #28242a; box-shadow: var(--lift); }
 .album-spread { display: grid; grid-template-columns: repeat(2, minmax(0, auto)); }
 .album-spread[hidden] { display: none; }
-.album-page { display: flex; flex-wrap: wrap; align-content: space-evenly; justify-content: space-evenly; gap: 10px 22px;
-  width: calc(var(--as) * 104px + 120px); min-height: calc(var(--as) * 176px + 80px); padding: 14px 22px; background: #141214; }
+.album-page { display: grid; place-items: center; width: calc(var(--as) * 208px + 64px); min-height: calc(var(--as) * 168px + 70px); padding: 14px 22px; background: #141214; }
 .album-page + .album-page { box-shadow: inset 6px 0 0 #0a090a; }
-.snap { position: relative; margin: 0; display: grid; justify-items: center; gap: 8px; }
-.snap img { display: block; width: calc(var(--as) * 104px); height: calc(var(--as) * 80px); image-rendering: pixelated; box-shadow: 2px 2px 0 #000; }
-.snap.polaroid img { width: calc(var(--as) * 72px); height: calc(var(--as) * 88px); }
+.snap { position: relative; margin: 0; display: grid; justify-items: center; gap: 10px; --w: calc(var(--as) * 208px); --h: calc(var(--as) * 160px); }
+.snap.polaroid { --w: calc(var(--as) * 140px); --h: calc(var(--as) * 168px); }
+.snap img { display: block; width: var(--w); height: var(--h); image-rendering: pixelated; box-shadow: 2px 2px 0 #000; }
 /* the photo corners: four black triangles over the print's corners */
-.snap::before, .snap::after { content: ""; position: absolute; top: -4px; width: 14px; height: 14px; background: #060506; }
+.snap::before, .snap::after { content: ""; position: absolute; top: -4px; width: 16px; height: 16px; background: #060506; }
 .snap::before { left: calc(50% - var(--w) / 2 - 4px); clip-path: polygon(0 0, 100% 0, 0 100%); }
-.snap::after { left: calc(50% + var(--w) / 2 - 10px); clip-path: polygon(0 0, 100% 0, 100% 100%); }
-.snap { --w: calc(var(--as) * 104px); }
-.snap.polaroid { --w: calc(var(--as) * 72px); }
-.snap figcaption { max-width: calc(var(--w) + 20px); font: 400 20px/24px var(--sans); color: #ece8dc; text-align: center; }
+.snap::after { left: calc(50% + var(--w) / 2 - 12px); clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.snap figcaption { max-width: var(--w); font: 400 20px/24px var(--sans); color: #ece8dc; text-align: center; }
 .album-turn { margin: 0; }
 .album-folio { margin: 0 0.6rem; }
 
@@ -1032,7 +1058,7 @@ button:disabled { cursor: url(assets/cursor-arrow.png) 1 1, default !important; 
 
 /* the pixel faces are drawn on a 10px grid and shown without smoothing, at whole multiples */
 html { -webkit-font-smoothing: none; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
-img, canvas, .st-form, .st-out, .st-manual, .st-mag, .st-folio, .st-tape, .st-computer, .st-reader, .st-upic, .st-console, .st-timer, .st-album, .st-records, .desk { image-rendering: pixelated; }
+img, canvas, .st-form, .st-out, .st-manual, .st-mag, .st-folio, .st-tape, .st-computer, .st-reader, .st-upic, .st-console, .st-timer, .st-album, .st-records, .st-folio-inf, .desk { image-rendering: pixelated; }
 
 /* the tape player's wave (wavepad.js): one cycle on a small pad, and the shapes to choose */
 .tape-wave { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 0.9rem; }

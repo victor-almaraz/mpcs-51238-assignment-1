@@ -672,17 +672,22 @@ def cover_gesso():
     return cv.image()
 
 def cover_cons():
-    # Cons: a terminal's green on black, its title in parentheses, a list's boxes and arrows under it
+    # Cons: a botanical journal's cover, its title in a deep green over a fern frond on cream
     w, h = 37, 50
-    PH, PH_D = (120, 220, 140), (40, 110, 70)
+    DEEP, MID, LITE, CRM = (47, 93, 42), (79, 138, 58), (140, 186, 96), (246, 241, 226)
     cv = Canvas(w, h)
-    cv.rect(0, 0, w - 1, h - 1, (16, 22, 18))
-    text_px(cv, 3, -1, '(CONS)', PH)
-    for k in range(3):
-        x = 3 + k * 10.5
-        cv.rect(x, 16, x + 7, 21, PH_D); cv.rect(x + 1, 17, x + 2.6, 20, PH); cv.rect(x + 4.4, 17, x + 6, 20, PH)
-        if k < 2: cv.line(x + 6, 18.5, x + 10.5, 18.5, PH)
-    for y in range(26, 47, 3): cv.line(3, y, 3 + (y * 7) % 26, y, PH_D)
+    cv.rect(0, 0, w - 1, h - 1, CRM)
+    text_px(cv, 4, -1, 'CONS', DEEP)
+    cv.rect(2, 10, w - 3, 10.6, MID)
+    # the frond: Barnsley's fern, as on the issue's own cover, small
+    from mag_plates3 import barnsley
+    c = barnsley(w, h - 13, 30000, 3.4, w // 2, h - 14, 1988)
+    top = np.percentile(c[c > 0], 85)
+    for y in range(c.shape[0]):
+        for x in range(w):
+            if c[y, x] > 0:
+                v = c[y, x] / top
+                cv.a[y + 12, x] = (DEEP if v > 0.9 else MID if v > 0.35 else LITE) + (255,)
     return cv.image()
 
 def cover_silver():
@@ -705,6 +710,6 @@ def back_issues():
     cv.rect(2, 2.4, 38, 53, (247, 242, 232))
     for k, c in enumerate(((242, 194, 48), (59, 127, 182), (184, 40, 60), (70, 132, 92))): cv.rect(34, 6 + k * 10, 38, 15 + k * 10, c)
     cv.rect(2, 2.4, 30, 3.4, INK)
-    cv.rect(39, 1, 41, 52, (16, 22, 18)); cv.rect(39, 1, 41, 2, (120, 220, 140))          # Cons, and Silver behind it
+    cv.rect(39, 1, 41, 52, (246, 241, 226)); cv.rect(39, 1, 41, 2, (79, 138, 58))          # Cons, and Silver behind it
     cv.rect(42, 0.4, 44.5, 52, (14, 14, 14)); cv.rect(42, 8, 44.5, 20, (196, 196, 192))
     return finish(cv)

@@ -52,6 +52,7 @@ def blocks(body):
         if m:
             flush(); out.append('<p class="mag-deck"><button type="button" data-deck="%s">Put <i>%s</i> on the coding form</button></p>' % (m.group(1), inline(m.group(2)))); continue
         if s.startswith('## '): flush(); out.append('<h4>' + inline(s[3:]) + '</h4>'); continue
+        if s.startswith('= '): flush(); out.append('<p class="mag-formula">' + inline(s[2:]) + '</p>'); continue
         para.append(s)
     flush()
     return out

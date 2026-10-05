@@ -36,7 +36,8 @@ The current pipeline. Run from `v25/`:
 | `build.py`, `build2.py`, `build3.py`, `light24.py` | | v24's backdrop, the lamp's light for each state, the loops (reels, screen, steam, sway), the light of each time of day. Imported by `build4.py`. |
 | `build_mags.py` | `v25/index.html` (the magazine station) | Sets every magazine from its text in `text/<issue>.md` (cover, contents and editors, three or four articles, catalogue), with its rack. Reads `text/magazine.md`, `event.md`, `gesso.md`, `cons.md`, `silver.md`. |
 | `mag_plates.py`, `mag_plates2.py`, `mag_plates3.py` | `v25/assets/st/` | The magazines' plates and cover fields, drawn in pixels: Moiré; Event and Gesso; Cons and Silver. |
-| `album_pics.py` | `v25/assets/st/album-*.png` | The photo album's black-and-white prints and Polaroids. |
+| `album_pics.py` | `v25/assets/st/album-*.png` | The photo album's black-and-white prints and Polaroids, one to a page. |
+| `build_folio.py` | `v25/index.html` (the folio of influences) | Sets the folio's sheets from `text/folio.md`. |
 | `desktop_pic.py`, `karawane_pic.py`, `tzara_pic.py`, `pixart.py` | `v25/assets/pics/` | The computer's desk picture (Persepolis), Ball's *Karawane* and Tzara's hat, drawn in pixels and graded for the screen. |
 | `gesso/build.py` | (a JavaScript array) | Builds the Gesso decks and writes them as a JavaScript array. |
 | `proof_times.py` | `times.png` | A proof of the room at the three times of day. |
@@ -49,6 +50,13 @@ decks as written and checked; they are copied by hand into `v25/decks.js`. `BRIE
 
 A typical change to the room: edit `part2.py` or `art.py`, run `python3.11 part2.py` to proof
 it, then `python3.11 build4.py && python3.11 sync_grounds.py`, and look at the page.
+
+## The gallery and the genealogy
+
+Run from `gallery/`, with the local server running:
+
+- `thumbs.py [v01 …]`: screenshots each version and cuts it to the gallery's print (192 × 120, in the last room's palette), into `../../assets/rooms/`.
+- `build_pages.py`: sets the gallery (`../../index.html`) and the genealogy's written lineage (`../../genealogy/index.html`) from `scripts/versions.js`. Edit the data there, then run this.
 
 ## Earlier versions
 

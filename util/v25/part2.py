@@ -1,6 +1,6 @@
 # v25's second wall: round the corner from the desk, the reading corner. A bookcase of five
 # shelves (its books drawn in the backdrop, but for the ones that can be taken down), a
-# metronome on its second shelf, a pocket game console on its third, a 35 mm camera on top, a photo album on its bottom shelf, a chair to change (four) under a cat clock, a record player on a side table, and a planted fish tank on
+# metronome on its second shelf, a pocket game console on its third, a folio of influences beside it with the gallery's and the genealogy's, a 35 mm camera on top, a photo album on its bottom shelf, a chair to change (four) under a cat clock, a record player on a side table, and a planted fish tank on
 # a teak cabinet under a print. Drawn directly in art pixels (no smoothing), in the same
 # colours as the first wall, then lit by its own light (the ambient of the hour, the tank's
 # glow, its top and far end falling away) and quantized into the room's one palette by build4.
@@ -64,6 +64,8 @@ BOOKS = [('book-xenakis', 0, 92, 11, 41), ('book-hiller', 0, 152, 10, 43), ('boo
          ('book-mccracken', 2, 120, 10, 39), ('book-knuth', 2, 178, 13, 42), ('book-reichardt', 3, 150, 31, 40)]
 METRONOME = (186, 1, 21, 33)             # left, compartment, width, height
 HANDHELD = (210, 149, 17, 26)
+FOLIO = (44, 151, 17, 44)                  # the folio of influences, on end at the third shelf's left: left, top, width, height
+FOLIOS = {'px-folio-rooms.png': (62, 149, 14, 46, (122, 36, 40), (160, 64, 60), (84, 24, 28)), 'px-folio-tree.png': (77, 152, 14, 43, (96, 120, 92), (130, 154, 124), (66, 86, 64))}   # the gallery's and the genealogy's: left, top, width, height, cloth, its light, its shade
 ALBUM = (193, 252, 17, 46)                # the photo album, on end on the bottom shelf: left, top, width, height
 SIDE_TABLE = (375, 262, 31)               # the side table by the chair: left, top, width
 PLAYER = (376, 230, 29, 32)                # the record player on it: left, top, width, height
@@ -155,6 +157,7 @@ def bookcase(cv, rnd):
     keep.setdefault(METRONOME[1], []).append((METRONOME[0] - 2, METRONOME[0] + METRONOME[2] + 1))
     keep.setdefault(4, []).append((150, 228))          # the records and the vase
     keep.setdefault(2, []).append((206, 228))          # a stack lying flat
+    keep.setdefault(2, []).append((42, 93))            # the three folios
     keep.setdefault(3, []).append((44, 60))            # a bookend and a pot
     for ci, (top, bot) in enumerate(COMPS):
         x = INNER[0] + 2
@@ -607,6 +610,34 @@ def camera():
     cv.rect(31, 15, 32, 17, CHR_D)                    # the self-timer's lever
     return cv.im
 
+def folio():
+    # a folio standing on end: boards papered in a marbled blue and ochre, a cloth spine and
+    # corners, a label, and the ribbon that ties it shut
+    w, h = FOLIO[2], FOLIO[3]
+    rnd = random.Random(1910)
+    cv = C(w, h)
+    for y in range(h):
+        for x in range(w):
+            v = math.sin(x * 0.7 + 3 * math.sin(y * 0.21)) + math.sin(y * 0.33 + x * 0.2)
+            cv.px(x, y, (52, 76, 116) if v > 0.6 else (196, 150, 70) if v < -0.9 else (86, 112, 150))
+    cv.rect(0, 0, 3, h - 1, (120, 36, 40)); cv.rect(0, 0, 0, h - 1, (160, 64, 60))
+    cv.rect(w - 1, 0, w - 1, h - 1, (40, 54, 84)); cv.rect(4, h - 1, w - 1, h - 1, (40, 54, 84))
+    cv.poly([(w - 6, 0), (w - 1, 0), (w - 1, 5)], (120, 36, 40)); cv.poly([(w - 6, h - 1), (w - 1, h - 1), (w - 1, h - 6)], (120, 36, 40))
+    cv.rect(6, 9, w - 3, 15, (240, 232, 210)); cv.rect(8, 11, w - 5, 11, (98, 96, 89)); cv.rect(8, 13, w - 7, 13, (150, 146, 136))
+    cv.rect(w - 2, 24, w - 1, 25, (232, 214, 140)); cv.line([(w - 1, 25), (w - 4, 31)], (232, 214, 140))
+    return cv.im
+
+def cloth_folio(w, h, c, cl, cd):
+    # a folio in cloth on end: its spine lit at the left, a gilt label with two lines of
+    # lettering, gilt bands, a ribbon at the fore-edge
+    cv = C(w, h)
+    cv.rect(0, 0, w - 1, h - 1, c); cv.rect(0, 0, 1, h - 1, cl); cv.rect(w - 1, 0, w - 1, h - 1, cd); cv.rect(0, h - 1, w - 1, h - 1, cd)
+    for y in (3, h - 5): cv.rect(2, y, w - 3, y, (214, 178, 96))
+    cv.rect(3, 9, w - 4, 16, (214, 178, 96)); cv.rect(4, 11, w - 5, 11, cd); cv.rect(4, 13, w - 7, 13, cd)
+    for y in range(20, h - 8, 3): cv.px(w // 2, y, cl)
+    cv.rect(w - 2, 24, w - 1, 25, (236, 226, 204))
+    return cv.im
+
 def handheld():
     # a pocket game console standing on end: a pale grey case, its screen's grey-green glass in
     # a dark bezel, a cross of buttons and two round ones, a slanting grille at its foot
@@ -809,7 +840,8 @@ def backdrop2(tile, first):
 def sprites2():
     """the things that stand on their own: name -> (picture, place)"""
     S = {'px-tank.png': (tank(), TANK[:2]), 'px-metronome.png': (metronome(), (METRONOME[0], COMPS[METRONOME[1]][1] - METRONOME[3] + 1)),
-         'px-cat-clock.png': (cat_body(), CAT[:2]), 'px-handheld.png': (handheld(), HANDHELD[:2]), 'px-camera.png': (camera(), CAMERA[:2]), 'px-album.png': (album(), ALBUM[:2]), 'px-record-player.png': (record_player(), PLAYER[:2])}
+         'px-cat-clock.png': (cat_body(), CAT[:2]), 'px-handheld.png': (handheld(), HANDHELD[:2]), 'px-camera.png': (camera(), CAMERA[:2]), 'px-album.png': (album(), ALBUM[:2]), 'px-record-player.png': (record_player(), PLAYER[:2]), 'px-folio.png': (folio(), FOLIO[:2])}
+    for n, (x, y, w, h, c, cl, cd) in FOLIOS.items(): S[n] = (cloth_folio(w, h, c, cl, cd), (x, y))
     for n, fn in CHAIRS.items(): S[n + '.png'] = (chair_pic(fn), CHAIR_BOX[:2])
     for n, *_ in BOOKS:
         x, y, w, h = book_box(n); S['px-' + n + '.png'] = (book(n), (x, y))

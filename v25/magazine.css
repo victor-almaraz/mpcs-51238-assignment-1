@@ -123,6 +123,8 @@
 .mag-first::first-letter { float: left; margin: 4px 10px 0 0; font: 400 80px/80px var(--mag-display); }
 .mag-label { margin: 0 0 14px; font: 700 20px/1.3 var(--mag-body); letter-spacing: 0.2em; text-transform: uppercase; }
 .mag-colophon { padding-top: 12px; border-top: 2px solid var(--mag-ink); }
+/* a formula set on its own line between two rules (in the proportional face, which has λ and π) */
+.mag-flow .mag-formula { margin: 14px 0; padding: 8px 12px; font-family: var(--mag-body); text-align: center; border-top: 1px solid var(--mag-ink); border-bottom: 1px solid var(--mag-ink); break-inside: avoid; }
 /* the face has no italic: a title is set on a flat underlay of yellow instead */
 .mag-flow i, .mag-cover i { font-style: normal; background: linear-gradient(transparent 58%, var(--flat-y) 58%); }
 .mag-book .mag-deck button i { background: none; }
@@ -261,36 +263,35 @@
 .mag[data-issue="gesso"] .mag-cover-field { background: var(--mag-paper) url(assets/st/gs-cover-field.png) 50% 50% / cover no-repeat; }
 
 /* ---------- Cons: a magazine of Lisp ----------
-   After the listings and memos of the AI laboratories: pages of fan-fold paper set in the
-   printer's monospaced face, a terminal's phosphor green for its one ink, every kicker and
-   standfirst in parentheses, as an S-expression is; the cover a terminal's screen. */
+   Set as a botanical journal of the period: a cream laid paper, leaf greens for its inks, its
+   plates ferns and leaves grown by recursion (a list is built as a frond is), generous margins,
+   the headings in a quiet green parenthesis, as an S-expression is. */
 .mag[data-issue="cons"] {
-  --mag-paper: #f4f1e4; --mag-ink: #16201a; --mag-acc: #1f7a46; --mag-phos: #78dc8c;
+  --mag-paper: #f6f1e2; --mag-ink: #22301e; --mag-acc: #4f8a3a; --mag-deep: #2f5d2a; --mag-pale: #cfe3a8;
   --mag-yellow: var(--mag-acc); --mag-orange: var(--mag-acc); --mag-cyan: var(--mag-acc); --mag-magenta: var(--mag-acc); --mag-tint: var(--mag-acc);
-  --flat-k: #16201a; --flat-y: #cfe9d2; --flat-o: #cfe9d2;
-  --mag-body: "Fusion Pixel 10px Monospaced", monospace;
-  --mag-edge: #dcd8c6; --mag-edge-2: #c6c1aa;
+  --flat-k: #2f5d2a; --flat-y: #dcebc0; --flat-o: #dcebc0;
+  --mag-edge: #e4dcc4; --mag-edge-2: #cdc3a6;
 }
-.mag[data-issue="cons"] .mag-leaf[data-ink="k"] { --mag-tint: var(--mag-ink); }
-.mag[data-issue="cons"] .mag-spread { --pad: 30px; }
-.mag[data-issue="cons"] .mag-flow h3 { text-transform: lowercase; }
+.mag[data-issue="cons"] .mag-leaf[data-ink="k"] { --mag-tint: var(--mag-deep); }
+.mag[data-issue="cons"] .mag-spread { --pad: 36px; }
+.mag[data-issue="cons"] .mag-plate-box { padding: 8px; background: #fbf8ee; box-shadow: 0 0 0 1px var(--mag-acc); }
+.mag[data-issue="cons"] .mag-flow h3 { color: var(--mag-deep); }
 .mag[data-issue="cons"] .mag-flow h3::before { content: "("; color: var(--mag-acc); }
 .mag[data-issue="cons"] .mag-flow h3::after { content: ")"; color: var(--mag-acc); }
+.mag[data-issue="cons"] .mag-kicker { color: var(--mag-acc); letter-spacing: 0.24em; }
 .mag[data-issue="cons"] .mag-kicker::before { display: none; }
-.mag[data-issue="cons"] .mag-num { color: var(--mag-phos); background: var(--mag-ink); box-shadow: none; }
-.mag[data-issue="cons"] .mag-standfirst { border-top: 0; padding: 10px 0 0 16px; border-left: 4px solid var(--mag-acc); }
-.mag[data-issue="cons"] .mag-pull { border-top: 0; padding: 14px 18px; color: var(--mag-phos); background: var(--mag-ink); }
-.mag[data-issue="cons"] .mag-flow .mag-pull p { color: var(--mag-phos); }
-.mag[data-issue="cons"] .mag-flow h4 { color: var(--mag-acc); letter-spacing: 0.06em; }
-.mag[data-issue="cons"] .mag-flow h4::before { content: ";; "; }
-.mag[data-issue="cons"] .mag-first::first-letter { float: none; margin: 0; font: inherit; }
-.mag[data-issue="cons"] .mag-flow i { background: none; text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--mag-acc); text-underline-offset: 0.18em; }
-.mag[data-issue="cons"] .mag-cover-top { background: var(--mag-ink); color: var(--mag-phos); }
-.mag[data-issue="cons"] .mag-dateline, .mag[data-issue="cons"] .mag-sub { color: var(--mag-phos); }
-.mag[data-issue="cons"] .mag-big { color: var(--mag-phos); text-transform: uppercase; text-shadow: 6px 6px 0 var(--mag-acc); }
-.mag[data-issue="cons"] .mag-big::before { content: "("; } .mag[data-issue="cons"] .mag-big::after { content: ")"; }
-.mag[data-issue="cons"] .mag-cover-field { background: var(--mag-ink) url(assets/st/cn-cover-field.png) 50% 50% / cover no-repeat; }
-.mag[data-issue="cons"] .mag-coverline, .mag[data-issue="cons"] .mag-cover-names { color: var(--mag-phos); background: var(--mag-ink); box-shadow: 0 0 0 2px var(--mag-acc); }
+.mag[data-issue="cons"] .mag-num { color: var(--mag-paper); background: var(--mag-acc); box-shadow: none; }
+.mag[data-issue="cons"] .mag-standfirst { border-top: 0; padding: 10px 0 0 16px; border-left: 4px solid var(--mag-pale); }
+.mag[data-issue="cons"] .mag-pull { border-top: 0; padding: 4px 0 4px 18px; border-left: 8px solid var(--mag-acc); }
+.mag[data-issue="cons"] .mag-flow .mag-pull p { color: var(--mag-deep); }
+.mag[data-issue="cons"] .mag-flow h4 { color: var(--mag-deep); letter-spacing: 0.18em; padding-top: 6px; border-top: 2px solid var(--mag-pale); }
+.mag[data-issue="cons"] .mag-first::first-letter { color: var(--mag-acc); }
+.mag[data-issue="cons"] .mag-flow i { background: none; text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--mag-pale); text-underline-offset: 0.18em; }
+.mag[data-issue="cons"] .mag-cover-top { background: var(--mag-paper); color: var(--mag-deep); border-bottom: 4px solid var(--mag-acc); }
+.mag[data-issue="cons"] .mag-dateline, .mag[data-issue="cons"] .mag-sub { color: var(--mag-acc); }
+.mag[data-issue="cons"] .mag-big { font-size: 100px; color: var(--mag-deep); text-shadow: 6px 6px 0 var(--mag-pale); }
+.mag[data-issue="cons"] .mag-cover-field { background: var(--mag-paper) url(assets/st/cn-cover-field.png) 50% 50% / cover no-repeat; }
+.mag[data-issue="cons"] .mag-coverline, .mag[data-issue="cons"] .mag-cover-names { color: var(--mag-ink); background: var(--mag-paper); box-shadow: 0 0 0 2px var(--mag-acc); }
 .mag[data-issue="cons"] .mag-book .mag-deck button { box-shadow: inset 6px 0 0 var(--mag-acc); }
 
 /* ---------- Silver: a magazine of black-and-white photography ----------

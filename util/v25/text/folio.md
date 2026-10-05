@@ -1,0 +1,174 @@
+# FOLIO
+title: Influences
+intro: A folio of what this room was made from: the music, machines, pictures, books and people it borrows from, cites and owes. Each leaf names a source, says who or what it was, and says what of it is here, on the shelf, on the walls, in the decks or in the way the room is drawn. The room’s debts are larger than its furniture, and this is the list of them.
+
+# SECTION Music and sound
+- Iannis Xenakis | composer, architect and engineer, 1922–2001 | the room’s first subject: the sieves of the deck box and the manual’s second volume, *Akrata* (1964–65), *Nomos Alpha* (1965–66) and *Psappha* (1975); *Metastaseis* (1953–54), *Pithoprakta* (1955–56), *Achorripsis* (1956–57), *Analogique A* and *B* (1958–59), *Concret PH* (1958), the ST programs of 1962, *Terretektorh* (1965–66), *Mikka* (1971), *Evryali* (1973), *Erikhthon* (1974) and *Jonchaies* (1977), all in the file box and the music decks
+- The UPIC | composing machine of Xenakis’s CEMAMu, Paris, completed 1977 with the engineer Patrick Saint-Jean | the tablet under the desk, on which music is drawn, and its pages after *Mycènes Alpha* (1978), the first piece made entirely on it
+- The Polytopes | Xenakis’s works of light and sound: Montréal (1967), Persepolis (1971), Cluny (1972–74), Mycenae (1978) | the print of cables and flashes, the file box’s imagined photographs, and the night at Persepolis behind the computer’s icons
+- M. F. Génuys and M. J. Barraud | programmers at IBM France | coded Xenakis’s Free Stochastic Music program in FORTRAN IV on an IBM 7090 in 1962, the mock ST printout in the file box
+- Hermann Scherchen | conductor, 1891–1966 | first performances of *Pithoprakta*, *Achorripsis* and *Terretektorh*; his studio at Gravesano, where the tape of *Analogique B* was begun
+- Hans Rosbaud | conductor, 1895–1962 | gave the first performance of *Metastaseis* at Donaueschingen in 1955
+- Siegfried Palm | cellist, 1927–2005 | the player for whom *Nomos Alpha* was written, and its first performer in 1966
+- Sylvio Gualda | percussionist, born 1939 | the dedicatee and first performer of *Psappha*, London, 1976
+- Marie-Françoise Bucquet | pianist | the first performer of *Evryali*, New York, 1973
+- Michel Tabachnik | conductor, born 1942 | conducted the first performance of *Jonchaies*, Paris, 1977
+- Konstantin Simonović | conductor | led the first performance of *ST/10* at IBM France in 1962
+- George Balanchine | choreographer, 1904–1983 | set *Metastaseis* and *Pithoprakta* as a ballet for New York City Ballet in 1968
+- Ellen Rennie Flint | musicologist | her reconstruction of the rhythmic sieve of *Psappha* from Xenakis’s sketches, drawn in the file box and on the pinned print
+- Agostino Di Scipio | composer and scholar, born 1962 | his account of the screens of *Analogique A*, after which they are drawn
+- Groupe de Recherches Musicales | studio of musique concrète, Paris | where the tape of *Analogique B* was finished
+- Edgard Varèse | composer, 1883–1965 | *Poème électronique* (1958), the eight minutes of sound that filled the Philips Pavilion
+- John Cage | composer, 1912–1992 | *Cartridge Music* on the *Cybernetic Serendipity* record; the class at the New School where George Brecht learnt the event; *Silence* on the bookcase
+- Lejaren Hiller and Leonard Isaacson | composers, 1924–1994 and 1925–2018 | the *Illiac Suite* (1957), composed on the ILLIAC I, with its Markov chains, which the Markov melody deck follows
+- Max Mathews | engineer, 1926–2011 | the MUSIC programs at Bell Labs (from 1957) that let a computer compute sound, on which James Tenney composed
+- James Tenney | composer, 1934–2006 | *Analog #1 (Noise Study)* (1961), the *Stochastic String Quartet* (1963), *Phases* (1963), Tone Roads, and the FORTRAN behind *The House of Dust* (1967), a deck in *Event*
+- Alvin Lucier | composer, 1931–2021 | *I am sitting in a room* (1969), the deck that re-records itself until only the room is left
+- La Monte Young | composer, born 1935 | *Compositions 1960*, *#7* (“to be held for a long time”) and *#10* (“Draw a straight line and follow it”); *An Anthology* (1963); *The Well-Tuned Piano* (begun 1964)
+- György Ligeti | composer, 1923–2006 | *Poème symphonique* (1962) for a hundred metronomes, a deck in *Event* and the metronome on the bookcase
+- Johann Pachelbel | composer, 1653–1706 | the Canon in D, the first record in the crate
+- Johann Sebastian Bach | composer, 1685–1750 | the Prelude in C major, BWV 846, from *The Well-Tempered Clavier*, book I (1722), on the record player
+- Ludwig van Beethoven | composer, 1770–1827 | *Für Elise* (1810), on the record player
+- Edvard Grieg | composer, 1843–1907 | *In the Hall of the Mountain King*, from the music for Ibsen’s *Peer Gynt* (1875), louder and faster each time round on the record player
+- Erik Satie | composer, 1866–1925 | the first *Gymnopédie* (1888), on the record player
+- Nikolai Rimsky-Korsakov | composer, 1844–1908 | *Flight of the Bumblebee* (1899–1900), on the record player and as the pocket game’s theme
+- Scott Joplin | composer, about 1868–1917 | *The Entertainer* (1902), the last record in the crate
+
+# SECTION Computing and its history
+- Herman Hollerith | inventor, 1860–1929 | the punched cards and tabulators of the 1890 United States census; the Hollerith code and FORTRAN’s Hollerith field
+- The IBM card and the IBM 029 keypunch | IBM’s 80-column card (1928) and keypunch (1964) | the coding form’s columns and characters, the card in hand at the keypunch, the holes of every character; with the 083 sorter and 557 interpreter of the course on the computer
+- John Backus and FORTRAN | IBM team led by Backus, 1924–2007; first compiler 1957 | the language of every deck in the room, FORTRAN II (1958), FORTRAN IV (1962) and the standard of 1966
+- The IBM 704, 7090 and 7094 | IBM scientific computers, 1954 onwards | FORTRAN’s first machine and Lisp’s; the 7090 on which Xenakis ran ST; the 7094 of Julesz and Noll’s pictures and of CTSS
+- The IBM System/360 and the 2540 card read punch | IBM computers and reader, announced 1964 | the computing centre the card reader under the desk stands in for, and job-control cards it does without
+- The IBM 1403 | line printer, introduced 1959 with the IBM 1401 | the printer under the desk: 132 characters a line, carriage control in the first column, a chain spinning past its hammers
+- Alan Turing | mathematician, 1912–1954 | “On Computable Numbers” (1936), the machine of *A busy beaver*
+- Tibor Radó | mathematician, 1895–1965 | “On Non-Computable Functions” (1962) and the busy beaver game, with Shen Lin’s three-state proof (1965), Allen Brady’s four-state champion (1983) and the Busy Beaver Challenge’s fifth (2024)
+- Stephen Wolfram | physicist and programmer, born 1959 | the 256 elementary cellular automata (1983), *Rule 30*, Rule 90 and Rule 110, which Matthew Cook proved universal (2004)
+- John Horton Conway | mathematician, 1937–2020 | the Game of Life (1970), the *Life* deck, with Bill Gosper’s glider gun
+- Martin Gardner | writer, 1914–2010 | the “Mathematical Games” column in *Scientific American*, October 1970, that brought Life to the public
+- Lothar Collatz | mathematician, 1910–1990 | the 3x+1 problem (1937), *The 3x+1 problem*
+- John Pollard | mathematician, born 1941 | the rho method (1975) behind *The corridor*, and the factoring of the eighth Fermat number with Richard Brent (1980)
+- John McCarthy | computer scientist, 1927–2011 | Lisp, car and cdr, garbage collection and “Recursive Functions of Symbolic Expressions” (1960), the whole of *Cons*
+- Steve Russell | programmer, born 1937 | hand-coded eval as Lisp’s first interpreter on the 704; began *Spacewar!*
+- Allen Newell, Cliff Shaw and Herbert Simon | researchers, 1927–1992, 1922–1991 and 1916–2001 | IPL and the Logic Theorist, the lists Lisp began from
+- Marvin Minsky | computer scientist, 1927–2016 | the MIT AI Project with McCarthy (1958), asked for “a room, two programmers, a secretary and a keypunch”
+- Nathaniel Rochester, Herbert Gelernter and Carl Gerberich | IBM researchers; Rochester 1919–2001, Gelernter 1929–2015 | FLPL, the list-processing language built inside FORTRAN for the geometry theorem machine
+- Alonzo Church | logician, 1903–1995 | the lambda notation (1941) that Lisp borrowed for its functions
+- Phyllis Fox | mathematician, 1923–2017 | the *LISP I Programmer’s Manual* (1960)
+- The *LISP 1.5 Programmer’s Manual* | by McCarthy, Abrahams, Edwards, Hart and Levin, MIT Press, 1962 | its page 13, the interpreter in a few lines, behind the *Eval* deck
+- Alan Kay | computer scientist, born 1940 | called page 13 “Maxwell’s Equations of Software!”
+- Richard Greenblatt and Thomas Knight | MIT programmers; Greenblatt born 1944 | the MIT Lisp Machine, the CONS and the CADR
+- James Slagle | computer scientist, 1934–2023 | SAINT (1961), the symbolic integrator
+- Project MAC and Robert Fano | MIT laboratory, opened 1963; Fano, 1917–2016, its first director | the house of the AI group, CTSS and Macsyma
+- Macsyma | symbolic algebra system begun 1968 by Carl Engelman, William Martin and Joel Moses (1941–2022) | the largest Lisp program of its day, in *Cons*
+- Joseph Weizenbaum | computer scientist, 1923–2008 | ELIZA (1966), and Bernie Cosell’s Lisp ELIZA at Bolt Beranek and Newman
+- Terry Winograd | computer scientist, born 1946 | SHRDLU (1968–70) and its blocks: “Pick up a big red block”
+- Gerald Jay Sussman and Guy Steele | computer scientists, born 1947 and 1954 | Scheme (1975), the Lambda Papers and *Lambda: The Ultimate GOTO* (1977), the tail calls of *Ackermann’s function*
+- Carl Hewitt | computer scientist, 1944–2022 | the actor model, which Scheme was built to understand
+- Wilhelm Ackermann | mathematician, 1896–1962 | his function (1928), in the two-argument form of Rózsa Péter (1905–1977) and Raphael Robinson (1911–1995)
+- Édouard Lucas | mathematician, 1842–1891 | the tower of Hanoi (1883), sold as by “N. Claus de Siam”, a deck in *Cons*
+
+# SECTION Art by chance and rule
+- Dada | movement, Zürich and after, from 1916 | the poster on the wall, the Dada folder on the computer, and three decks of chance
+- Tristan Tzara | poet, 1896–1963 | the recipe “To make a Dadaist poem” (1920), *Tzara’s hat*
+- Marcel Duchamp | artist, 1887–1968 | *Erratum musical* (1913), *3 Standard Stoppages* (1913–14), *Network of Stoppages* (1914), the *Green Box* (1934) and *The Large Glass*
+- Hugo Ball | poet, 1886–1927 | the Cabaret Voltaire (1916), opened with Emmy Hennings (1885–1948); *Karawane* and *Gadji beri bimba* (1916), his cardboard costume, the Dada poster
+- Richard Huelsenbeck | writer, 1892–1974 | the *Dada Almanach* (1920), in which *Karawane* was set in many faces
+- Hans Arp | artist, 1886–1966 | squares “arranged according to the laws of chance” (1916–17), the torn-squares print and the album’s falls
+- Sophie Taeuber-Arp | artist, 1889–1943 | the print of a grid of flat colours and circles
+- Man Ray | artist and photographer, 1890–1976 | the *Lautgedicht* of black bars (1924), performed as a score by Jaap Blonk (born 1953); the rayographs of *Les Champs délicieux* (1922), *A rayograph by chance*
+- Francis Picabia | artist, 1879–1953 | *391*, where the *Lautgedicht* was printed, and the exhibition at which Tzara read his recipe
+- Brion Gysin and William S. Burroughs | painter and novelist, 1916–1986 and 1914–1997 | took up Tzara’s cut-up again in Paris in 1959
+- Fluxus | international company of artists, from Wiesbaden, 1962 | *Event*, the poster over the tank, and five decks; with Ben Patterson’s and Emmett Williams’s scores and the taking-apart of a piano at Wiesbaden
+- George Maciunas | designer and organiser, 1931–1978 | *cc V TRE*, *Fluxus 1* (1964), the Fluxkit with Ay-O’s *Finger Box* and Mieko Shiomi’s *Endless Box*, the Fluxus manifesto (1963)
+- George Brecht | artist, 1926–2008 | the event score, *Drip Music*, *Water Yam* (1963), *Games & Puzzles*, *V TRE*; *Event cards*
+- Yoko Ono | artist, born 1933 | *Grapefruit* (1964), a book of instructions
+- Nam June Paik | artist, 1932–2006 | *Zen for Head* (1962), the Wuppertal show of 1963, *Digital Experiment at Bell Labs*
+- Alison Knowles | artist, 1933–2025 | *Make a Salad* (1962), *Bean Rolls*, and *The House of Dust* (1967), among the first poems made by computer, a deck in *Event*
+- Dick Higgins | artist and publisher, 1938–1998 | the Something Else Press (1963), “Intermedia” (1966), *Computers for the Arts* (1970)
+- Takako Saito | artist, 1929–2025 | *Spice Chess* and *Sound Chess* (1965), *Sound chess*
+- Philip Corner | composer, born 1933 | *Piano Activities* (1962) and Tone Roads
+- Jackson Mac Low | poet, 1922–2004 | chance operations, *An Anthology* (1963) with Young, and Tenney’s FORTRAN workshop
+- Sol LeWitt | artist, 1928–2007 | “Paragraphs on Conceptual Art” (1967), “Sentences on Conceptual Art” (1969), *Wall Drawing 1* (1968) and *Wall Drawing 11* (1969), the deck that draws it
+- Ellsworth Kelly | painter, 1923–2015 | *Spectrum Colors Arranged by Chance* (1951–53), the print over the tank and its deck
+- François Morellet | artist, 1926–2016 | squares by a telephone directory’s digits (1960) and the Groupe de Recherche d’Art Visuel, *Random distribution*
+- Gerhard Richter | painter, born 1932 | *1024 Farben* (1973) and the window of Cologne Cathedral (2007), in *Gesso*
+- Josef Albers | painter and teacher, 1888–1976 | *Homage to the Square* (from 1950) and *Interaction of Color* (1963), in *Gesso*
+- Kenneth Martin | painter and sculptor, 1905–1984 | *Chance and Order* (from 1969), the deck of that name
+- Mary Martin | artist, 1907–1969 | constructed reliefs from 1951, joint winner of the John Moores Painting Prize in 1969, in *Gesso*
+- Agnes Martin | painter, 1912–2004 | the pencilled grid of *The Tree* (1964), a plate in *Gesso*
+- Vera Molnár | artist, 1924–2023 | the *machine imaginaire*, *Interruptions* (1968–69) and *(Des)Ordres* (1974), the print over the tank and *Order and disorder*
+- Manfred Mohr | artist, born 1938 | the first museum show of computed plotter drawings (Paris, 1971), *P-62*, *Cubic Limit*
+- Harold Cohen | painter, 1928–2016 | AARON, the program that draws, begun around 1973, the last word in *Gesso*
+- Georg Nees | mathematician and artist, 1926–2016 | the first exhibition of computer graphics (Stuttgart, 1965), drawn on the Zuse Graphomat Z64; his squares on *Moiré*’s first plate
+- Max Bense | philosopher, 1910–1990 | the *rot* booklet *Computer-Grafik* and *Projekte generativer Ästhetik* (1965)
+- Béla Julesz and A. Michael Noll | Bell Labs scientists, 1928–2003 and born 1939 | *Computer-Generated Pictures*, Howard Wise Gallery (1965); Noll’s computed Mondrian (1964)
+- Frieder Nake | mathematician and artist, born 1938 | *Hommage à Paul Klee, 13/9/65 Nr. 2* (1965)
+- Paul Klee | painter, 1879–1940 | *Hauptweg und Nebenwege* (1929), the start of Nake’s homage
+- Piet Mondrian | painter, 1872–1944 | *Composition with Lines* (1917), the picture Noll imitated
+- Kenneth Knowlton and Leon Harmon | Bell Labs scientists, 1931–2022 and born 1922 | *Studies in Perception I* (1966–67), the nude in symbols, *Studies in perception*; Harmon’s “The Recognition of Faces” (1973)
+- Deborah Hay | choreographer, born 1941 | the dancer photographed for *Studies in Perception I*
+- Experiments in Art and Technology | founded 1967, launched in Robert Rauschenberg’s loft | where Knowlton and Harmon’s nude first hung in public
+- *Cybernetic Serendipity* | exhibition at the ICA, London, 1968, curated by Jasia Reichardt (born 1933) | the room’s idea of art and computing together, and its record with Xenakis’s *Stratégie*, the *Illiac Suite* and Cage
+
+# SECTION Photography
+- Oskar Barnack | engineer, 1879–1936 | the Leica and its 24 × 36 frame, made by Ernst Leitz II (1871–1956) with Max Berek’s (1886–1949) Elmar lens; the camera on the bookcase
+- Henri Cartier-Bresson | photographer, 1908–2004 | *Images à la sauvette* / *The Decisive Moment* (1952), published by Tériade with a cover by Henri Matisse; Magnum Photos (1947) with Robert Capa and others
+- Ilse Bing | photographer, 1899–1998 | *My Shadow on the Roof with Leica* (1930), the “Queen of the Leica”
+- Friedrich Deckel | shutter maker | the light value and exposure value, the sum behind *Sunny sixteen*
+- Ferdinand Hurter and Vero Charles Driffield | chemists, 1844–1898 and 1848–1915 | the characteristic curve (1890), *The characteristic curve*
+- Ansel Adams | photographer, 1902–1984 | the Zone System and *Moonrise, Hernandez, New Mexico* (1941), first published by Edward Steichen; turned to photography after Paul Strand showed him his negatives
+- Fred Archer | photographer and teacher, 1889–1963 | worked out the Zone System with Adams at the Art Center School, about 1939–40
+- William Henry Fox Talbot | inventor of photography, 1800–1877 | photogenic drawings and the photographic screen proposed in 1852
+- László Moholy-Nagy | artist, 1895–1946 | photograms (from 1922), made with Lucia Moholy (1894–1989)
+- Stephen Horgan | photographer and engraver, 1854–1941 | “A Scene in Shantytown” in the *Daily Graphic*, 1880, the first newspaper halftone
+- Georg Meisenbach and Frederic Ives | inventors, 1841–1912 and 1856–1937 | the halftone processes of the 1880s, *A halftone screen*, and every screen in *Moiré*
+- Margaret Bourke-White | photographer, 1904–1971 | Fort Peck Dam on the first cover of *Life* (1936)
+- *Picture Post* | British picture magazine, 1938, founded by Edward Hulton (1906–1988) and Stefan Lorant (1901–1997) | the story told in photographs
+
+# SECTION Books and writing
+- *Formalized Music* | Xenakis’s book, Indiana University Press, 1971, after *Musiques formelles* (1963) | on the bookcase, with the sieves, *Achorripsis* and the ST program’s listing; the sieve generator
+- *Experimental Music* | by Hiller and Isaacson, 1959 | on the bookcase, leading to the Markov melody
+- *Silence* | by John Cage, 1961 | on the bookcase, with the anechoic chamber, leading to *An echo in an empty room*
+- *A Guide to FORTRAN Programming* | by Daniel D. McCracken (1930–2011), Wiley, 1961 | on the bookcase, one of the first books to teach the language
+- *The Art of Computer Programming*, volume 2: *Seminumerical Algorithms* | by Donald Knuth (born 1938), 1969 | on the bookcase, on random numbers, leading to the stochastic cloud; Knuth’s “granddaddy of all algorithms” for Euclid’s
+- *Cybernetic Serendipity: the computer and the arts* | *Studio International* special issue, edited by Jasia Reichardt, 1968 | face out on the bookcase, leading to *Studies in perception*
+- Euclid’s *Elements* | about 300 BC | the greatest common measure of Book VII, *Euclid, read aloud*
+- Ovid’s *Metamorphoses* | about AD 8 | the nymph Echo, who fades in *An echo in an empty room*
+- William Morris Davis | geographer, 1850–1934 | landscapes young, mature and old, the ages of *Erosion*
+- *Le Modulor* | by Le Corbusier, 1948 | lying flat on the shelf with *Musiques formelles* and *Neue Grafik*
+- *cc V TRE* | the first Fluxus newspaper, Maciunas and Brecht, January 1964 | the model for *Event*
+- *Artforum* | art magazine, founded 1962 | the square page of *Gesso*, and LeWitt’s “Paragraphs” (June 1967)
+- *Studio International* | art magazine, London | its *Cybernetic Serendipity* number of July 1968, remembered in *Gesso*
+- Francesco Cirillo | writer on work | the Pomodoro Technique (late 1980s), the tomato timer by the tape player
+
+# SECTION Film, design and pictures
+- *Reflection in a Dead Diamond* | film by Hélène Cattet and Bruno Forzani, 2025 | the bold, slightly odd 1960s design of an earlier room, its split screens, Didone title and op-art targets, which *Moiré* still carries
+- *Backrooms* | Kane Parsons’s web series (from 2022) and A24 film (2026) | the faded yellow wall and echoing rooms of an earlier room, and the room as a liminal space
+- German Expressionist cinema | film movement, about 1919–1927, *The Cabinet of Dr. Caligari* (1920) among its films | the diagonal beams, painted sets, winding streets and hand shadow of an earlier room
+- The Cray-2 | supercomputer by Seymour Cray, 1985 | the red, copper and smoked-glass slabs of an earlier room, drawn from its C-shaped geometry
+- The Swiss or International Typographic Style | design movement, 1950s and 1960s | the strict grid, flush-left type and numbered thumb index of the earlier rooms, hatched instead of coloured
+- *Neue Grafik* | Zürich design journal, 1958–1965, of Müller-Brockmann, Lohse, Neuburg and Vivarelli | lying on the shelf; the grotesque of its pages behind the room’s display face
+- Op art | movement of the 1960s | the targets, rings, stripes and moiré of the magazine
+- The Philips Pavilion | Expo 58, Brussels; Le Corbusier’s office, shaped by Xenakis | the screen prints of ruled surfaces and the Pavilion print on the wall
+- Le Corbusier | architect, 1887–1965 | the office where Xenakis worked twelve years, La Tourette and the Pavilion
+- The Macintosh and its Finder | Apple’s desktop, System 1 to 7 (from 1984), and the *Macintosh Human Interface Guidelines* (1992) | the computer’s window manager, menus, folders and locked files
+- Susan Kare | designer, born 1954 | the classic Mac icons, after whose rules the computer’s icons were drawn
+- Bill Atkinson | programmer, 1951–2025 | MacPaint and his error diffusion, by which the night at Persepolis was once dithered
+- Bryce Bayer | Kodak scientist, 1929–2012 | the ordered-dither matrix (1973), in the earlier screens, the room’s evening light and *Studies in perception*
+- Geography of Robots’s *NORCO* | point-and-click game, 2022 | the room’s evening light, low-key and lit by its lamps and screen
+- Point-and-click adventure games | genre | the room’s hotspots and captions, looking as well as using, the pan round the corner
+- *Tetris* for Game Boy | Nintendo, 1989, after Alexey Pajitnov’s *Tetris* (1984) | the falling blocks of the pocket game, its four greens and its scoring
+- William Morris | designer, 1834–1896 | *Strawberry Thief* (1883) and *Willow Bough* (1887), the prints of the scrapbook album of the site’s earlier rooms
+- Oliver Byrne | mathematician | *The First Six Books of the Elements of Euclid* (1847), in red, yellow and blue, after which the *Nomos Alpha* cube is coloured
+- Adolphe Ganot | physics teacher, 1804–1887 | the engraved figures of his *Traité élémentaire de physique* (1851), after which the file box’s plates are drawn
+- Étienne-Jules Marey | physiologist, 1830–1904 | *La méthode graphique* (1878), the smoked-paper tracing of the UPIC page
+- Ettore Sottsass and Mario Bellini | designers for Olivetti, 1917–2007 and born 1935 | the computer of an earlier room, in a stone-white hood with cream keys
+- Alvar Aalto | architect, 1898–1976 | Stool 60 (1933), the birch stool under the desk
+- Serge Mouille | lamp maker, 1922–1988 | the shade of the task lamp
+- Harry Bertoia | sculptor, 1915–1978 | the Sonambient sounding rods once on the shelf
+- Nisse and Kajsa Strinning | architects, 1917–2006 and 1922–2017 | the String shelf (1949), its wire ladders under the oak board
+- Arabia | Finnish porcelain factory, founded 1873 | the mug banded in ochre and slate
+- Alvin Lustig and Herbert Matter | designers, 1915–1955 and 1907–1984 | a panel of colour set against a photograph, as the ochre print hangs behind the shelf; Matter’s advertising for Knoll
+- Paul Rand | designer, 1914–1996 | the City slab of his IBM logo (1956), behind the slab on the manuals’ spines
+- *Arts & Architecture* | Los Angeles magazine, 1944–1967 under that name | its Futura, behind the room’s small tracked capitals

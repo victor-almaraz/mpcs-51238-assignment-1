@@ -16,7 +16,7 @@ We should own up at once. The FORTRAN on this desk is close kin to the language 
 
 Wherever an article discusses a deck, a button beside the text puts it on the coding form. Run it, and the card reader takes the cards, the line printer answers, and the printout lands in the out tray: a chain of cells built, reversed and shared; a tower of discs moved with a stack drawn beside it; free storage drawn as a row of asterisks and full stops at every collection; a trace of an evaluator at work; and a function that grows faster than any loop can follow. The comment cards at the top of each deck say what its data cards hold. Change them; the one deck that uses chance takes a seed, and the same seed gives the same garbage again.
 
-Printed in black on fanfold paper, every parenthesis set by hand and counted twice.
+Printed in two greens on a cream laid paper; the ferns on its plates are grown by Barnsley’s four maps, as *Fractals Everywhere* (1988) gave them.
 
 # CONTENTS
 - 01 | Contents of the address part | The IBM 704 word, FORTRAN’s list-processing language, the AI Project and the eval that was meant only for reading.
@@ -50,7 +50,7 @@ McCarthy had already felt the lack. Writing chess legal-move routines in FORTRAN
 
 In the autumn of 1958 McCarthy became an assistant professor at MIT, and he and Minsky began the MIT Artificial Intelligence Project. There was no written proposal. Asked what they needed, they asked for “a room, two programmers, a secretary and a keypunch”. The first functions were compiled into assembly language by hand, and recursion was managed by SAVE and UNSAVE routines that kept variables and return addresses on a single public stack. Programs were drafted in M-expressions, a FORTRAN-like notation with square brackets, which the IBM 026 keypunch could not even punch; data were S-expressions, so that x + 3y + z became `(PLUS X (TIMES 3 Y) Z)`, a notation later nicknamed “Cambridge Polish”.
 
-*The tower of Hanoi* shows what that stack is for. Édouard Lucas sold the puzzle in 1883 under the name N. Claus de Siam, an anagram of Lucas d’Amiens, and its solution is the classic recursion: move all but the largest disc out of the way, move the largest, then move the rest back on top. The deck cannot call itself, so every call not yet finished is a frame on a push-down list, and each move is printed with the list drawn beside it, an asterisk to a frame, and the three pegs read from the bottom up. Four discs take fifteen moves, as 2⁴ − 1 says they must, with 31 frames pushed and never more than five waiting at once; seven discs take 127 moves and a list eight deep.
+*The tower of Hanoi* shows what that stack is for. Édouard Lucas sold the puzzle in 1883 under the name N. Claus de Siam, an anagram of Lucas d’Amiens, and its solution is the classic recursion: move all but the largest disc out of the way, move the largest, then move the rest back on top. The deck cannot call itself, so every call not yet finished is a frame on a push-down list, and each move is printed with the list drawn beside it, an asterisk to a frame, and the three pegs read from the bottom up. Four discs take fifteen moves, as 2⁴ - 1 says they must, with 31 frames pushed and never more than five waiting at once; seven discs take 127 moves and a list eight deep.
 
 [deck: tower-of-hanoi | The tower of Hanoi]
 
@@ -130,7 +130,7 @@ In the autumn of 1975 Gerald Jay Sussman and Guy Steele set out to understand Ca
 
 The report, AI Memo 349 of December 1975, was the first of the Lambda Papers. *Lambda: The Ultimate Imperative* and *Lambda: The Ultimate Declarative* followed in 1976, and in October 1977 Steele’s AI Memo 443 set out to debunk the “expensive procedure call” myth, under the third of its titles, *Lambda: The Ultimate GOTO*. A call that is the last thing a procedure does needs nothing kept for it; it can be compiled as a jump that carries its arguments with it.
 
-*Ackermann’s function* puts that to work in FORTRAN. Wilhelm Ackermann gave his function in 1928 as one that can be computed but is not primitive recursive, so that no program made only of DO loops, however nested, can compute it; the deck uses the two-argument form of Rózsa Péter and Raphael Robinson. Of its three cases, two end in a tail call, and the deck does those with a GO TO; only the inner call of A(m, A(m, n−1)) leaves an outer call waiting, and only that goes on the push-down list. It traces A(2,1), five in fourteen steps, then tables the function up to A(3,5), which is 253, found in 42,438 steps with 251 calls waiting at the deepest.
+*Ackermann’s function* puts that to work in FORTRAN. Wilhelm Ackermann gave his function in 1928 as one that can be computed but is not primitive recursive, so that no program made only of DO loops, however nested, can compute it; the deck uses the two-argument form of Rózsa Péter and Raphael Robinson. Of its three cases, two end in a tail call, and the deck does those with a GO TO; only the inner call of A(m, A(m, n-1)) leaves an outer call waiting, and only that goes on the push-down list. It traces A(2,1), five in fourteen steps, then tables the function up to A(3,5), which is 253, found in 42,438 steps with 251 calls waiting at the deepest.
 
 [deck: ackermann | Ackermann’s function]
 

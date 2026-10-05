@@ -6,7 +6,10 @@
 ├── README.md             Short summary of the project + link to the live site on Vercel
 ├── AGENTS.md             Context for the coding agent (loaded every run)
 ├── genealogy/
-│   └── index.html        Genealogy page (/genealogy), reads scripts/versions.js
+│   ├── index.html        Genealogy page (/genealogy): the lineage, set from scripts/versions.js
+│   └── genealogy.js      Draws the family tree from scripts/versions.js
+├── assets/
+│   └── rooms/            The gallery's print of each version (vNN.png), made by util/gallery/thumbs.py
 ├── v01/
 │   ├── index.html        Version 1 (/v01)
 │   └── style.css         Version 1 styles only
@@ -22,7 +25,7 @@
 │   ├── index.html        Version 25 (/v25)
 │   └── style.css
 ├── css/
-│   └── base.css          Shared reset + design tokens (kept minimal)
+│   └── rooms.css         The gallery's and the genealogy's styles, after the last room
 ├── fonts/
 │   ├── fonts.css         @font-face rules for every bundled font
 │   └── <family>/         WOFF2 files (Latin subset) + the font's LICENSE (SIL OFL)
@@ -30,10 +33,11 @@
 │   ├── hollerith.js      Character ↔ punch-code tables, card encode/decode
 │   ├── fortran.js        Deck split, scanner, parser, interpreter, FORMAT
 │   ├── tape.js           Punched cards → notes, and a Web Audio tape player (reel-to-reel)
-│   └── versions.js       Genealogy data (id, parents, note, status)
+│   └── versions.js       Genealogy data (id, title, parents, borrows, note, status)
 ├── util/                 Offline Python tools that drew the pixel-art assets (not loaded by any page)
 │   ├── README.md         What each tool makes, and how to run the v25 pipeline
-│   └── v19r/ … v25/      One folder per version the tools were made for
+│   ├── v19r/ … v25/      One folder per version the tools were made for
+│   └── gallery/          The gallery's prints and the two pages' written content
 ├── tests/
 │   ├── index.html        Test runner: open in a browser, no tools needed
 │   ├── harness.js        Tiny test harness

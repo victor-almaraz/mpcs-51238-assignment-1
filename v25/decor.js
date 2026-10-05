@@ -78,9 +78,9 @@
   function time() { return chosen === 'clock' ? clockTime() : chosen; }
   function base() { return 'assets/' + time() + '/'; }
   // the ground under each paper's tile, at each time (the colour behind the room)
-  var GROUND = { evening: { ogee: '#27306c', atomic: '#41496b', trellis: '#583145', grass: '#7e849e' },
-    morning: { ogee: '#2a3a57', atomic: '#42595c', trellis: '#583c3e', grass: '#a69f92' },
-    night: { ogee: '#1e2a6b', atomic: '#2a3a57', trellis: '#352247', grass: '#525581' } };
+  var GROUND = { evening: { ogee: '#232e70', atomic: '#3f4a5d', trellis: '#563047', grass: '#8a838f' },
+    morning: { ogee: '#2b3a57', atomic: '#42595c', trellis: '#573e42', grass: '#a49fa0' },
+    night: { ogee: '#1e1f56', atomic: '#2b3a57', trellis: '#372147', grass: '#535988' } };
 
   // the light: the lamp on the desk, or 'off'. What the lamp's light reaches is drawn for each
   // (assets/<time>/lit/<light>/); everything else once a time (assets/<time>/)
