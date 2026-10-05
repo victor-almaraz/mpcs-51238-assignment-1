@@ -24,7 +24,8 @@
     <li role="none">
       <button type="button" class="m-top" role="menuitem" id="m-file" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-file">File</button>
       <ul class="menu" role="menu" id="menu-file" aria-labelledby="m-file">
-        <li role="none"><button type="button" role="menuitem" data-act="new">New</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="new">New Program</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="new-text">New Text</button></li>
         <li role="none"><button type="button" role="menuitem" data-act="new-folder">New Folder</button></li>
         <li role="none"><button type="button" role="menuitem" data-act="open-programs">Open Program&hellip;</button></li>
         <li role="none"><button type="button" role="menuitem" data-act="open-selected">Open Selected Icon</button></li>
@@ -39,7 +40,7 @@
         <li role="none"><button type="button" role="menuitem" data-act="move-to">Move To&hellip;</button></li>
         <li role="none"><button type="button" role="menuitem" data-act="trash-selected">Move to Trash</button></li>
         <li role="separator"></li>
-        <li role="none"><button type="button" role="menuitem" data-act="click:ed-run">Run</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:ed-run" data-mirror="ed-run">Run</button></li>
         <li role="none" class="in-room-only"><button type="button" role="menuitem" data-act="punch">Punch on Cards</button></li>
       </ul>
     </li>
@@ -69,7 +70,7 @@
     <li role="none">
       <button type="button" class="m-top" role="menuitem" id="m-job" aria-haspopup="menu" aria-expanded="false" aria-controls="menu-job">Job</button>
       <ul class="menu" role="menu" id="menu-job" aria-labelledby="m-job">
-        <li role="none"><button type="button" role="menuitem" data-act="click:ed-run">Run the Editor&rsquo;s Text</button></li>
+        <li role="none"><button type="button" role="menuitem" data-act="click:ed-run" data-mirror="ed-run">Run the Editor&rsquo;s Text</button></li>
         <li role="separator"></li>
         <li role="none"><button type="button" role="menuitem" data-act="open:win-printer">Printout</button></li>
         <li role="none"><button type="button" role="menuitem" data-act="open:win-log">Job Log</button></li>
@@ -198,7 +199,7 @@
       <img class="pic plate" src="../assets/pics/plate-2.png" width="644" height="112" alt="">
       <p>The icons on the desktop open the parts of the workspace, each in a window of its own. Double-click an icon, or move to it with the <kbd>Tab</kbd> or arrow keys and press <kbd>Enter</kbd>, to open it. Click a window to bring it to the front, drag it by its striped title bar, click the box in its top right corner to make it fill the screen, and click its close box in the top left corner or press <kbd>Escape</kbd> to close it. The menus in the menu bar hold the same commands as the buttons in the windows: <em>File</em> for opening, saving and running texts, <em>Job</em> for the results of the last run, <em>View</em> for the order of the icons, and <em>Window</em> to bring any window to the front. <em>Clean Up Windows</em>, in the <em>Special</em> menu, puts every open window back in its first place and size.</p>
       <h3>Writing a program</h3>
-      <p>The <em>Editor</em> holds one text at a time. Open a program from the <em>Programs</em> folder, or choose <em>Open Program</em> from the <em>File</em> menu, and it replaces the text in the Editor; choose <em>New</em> to start an empty one. The ruler above the text marks the label field, the continuation column, the statement field and the ignored columns, and a dotted line runs down the text at column 72. The status line below the text shows the line and column of the cursor and the field it is in, and it warns you when a line runs past column 72 or past column 80. In a data line, which comes after <code>END</code>, all 80 columns count, so the warning comes only past column 80.</p>
+      <p>The <em>Editor</em> holds one text at a time. Open a program from the <em>Programs</em> folder, or choose <em>Open Program</em> from the <em>File</em> menu, and it replaces the text in the Editor; choose <em>New Program</em> to start an empty one. <em>New Text</em> starts a plain text instead, for notes, a letter or a list: it has no ruler, its lines wrap, it is not run, and it is saved, renamed and thrown away as a program is; downloaded, it is a <code>.txt</code> file. The ruler above the text marks the label field, the continuation column, the statement field and the ignored columns, and a dotted line runs down the text at column 72. The status line below the text shows the line and column of the cursor and the field it is in, and it warns you when a line runs past column 72 or past column 80. In a data line, which comes after <code>END</code>, all 80 columns count, so the warning comes only past column 80.</p>
       <p>The <kbd>Tab</kbd> key moves the cursor to column 7, where statements begin, or on to the next field, and <kbd>Shift</kbd>&nbsp;+&nbsp;<kbd>Tab</kbd> moves it back. Because <kbd>Tab</kbd> works inside the text, press <kbd>Escape</kbd> to leave the text; after that, <kbd>Tab</kbd> moves between the controls again, and a second <kbd>Escape</kbd> closes the window. <kbd>Control</kbd>&nbsp;+&nbsp;<kbd>Enter</kbd>, or <kbd>Command</kbd>&nbsp;+&nbsp;<kbd>Enter</kbd> on a Mac, runs the job.</p>
       <h3>Running it</h3>
       <p>Press <em>Run</em> in the Editor, or choose <em>Run</em> from the <em>File</em> menu or <em>Run the Editor&rsquo;s Text</em> from the <em>Job</em> menu. The <em>Printout</em> window opens with whatever the program printed, and a dashed rule labelled <em>new page</em> marks each place where the printer moved on to a new sheet of its fan-fold paper. The <em>Job Log</em>, with any errors and warnings and the code of the <code>STOP</code>, and the <em>Listing</em> of the program as the interpreter read it each have a window of their own. Those three and the Output are kept in the <em>Results</em> folder, and they are written afresh at each run. If the job stops with errors, an alert says so and the job log opens.</p>

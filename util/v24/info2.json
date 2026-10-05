@@ -1,0 +1,46 @@
+{
+ "vary": [
+  "desk-cacti.png",
+  "desk-jade.png",
+  "desk-pothos.png",
+  "lamp-angle.png",
+  "lamp-ceramic.png",
+  "lamp-dome.png",
+  "lamp-task.png",
+  "mug-black.png",
+  "mug-cup.png",
+  "mug-dipped.png",
+  "mug-enamel.png",
+  "mug-sage.png",
+  "mug-sieve.png",
+  "mug-striped.png",
+  "plant-fig.png",
+  "plant-palm.png",
+  "plant-snake.png",
+  "print-arp.png",
+  "print-dada.png",
+  "print-pavilion.png",
+  "print-polytope.png",
+  "print-sieve.png",
+  "print-taeuber.png",
+  "px-coding-form.png",
+  "px-computer.png",
+  "px-out-tray.png",
+  "px-vol-1.png",
+  "room-atomic.png",
+  "room-grass.png",
+  "room-ogee.png",
+  "room-trellis.png",
+  "switch-off.png",
+  "switch-on.png"
+ ],
+ "split": 368,
+ "switch": [
+  40,
+  128
+ ],
+ "size": [
+  10,
+  16
+ ]
+}

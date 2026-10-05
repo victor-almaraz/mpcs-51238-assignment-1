@@ -1,0 +1,11 @@
+# what the tools write beside themselves: proofs, contact sheets, renders, browser profiles
+*.png
+!v23/unlit/*.png
+!v19r/seeds/*.png
+*.webp
+*.npy
+*.log
+_svg.html
+chrome-prof/
+v19r/svg/
+__pycache__/

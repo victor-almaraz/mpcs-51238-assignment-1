@@ -21,7 +21,9 @@ var Desk = (function () {
     .concat(DECKS.music.map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'music' }; }))
     .concat(DECKS.magazine.map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'magazine' }; }))
     .concat((DECKS.event || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'event' }; }))
-    .concat((DECKS.gesso || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'gesso' }; }));
+    .concat((DECKS.gesso || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'gesso' }; }))
+    .concat((DECKS.cons || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'cons' }; }))
+    .concat((DECKS.silver || []).map(function (d) { return { id: d.id, name: d.name, cards: d.cards, section: 'silver' }; }));
   var byId = {};
   decks.forEach(function (d) { byId[d.id] = d; });
 
@@ -36,7 +38,8 @@ var Desk = (function () {
   var MORPH = {
     manual: ['.spread', '.spine.v1'], magazine: ['#mag', '.o-mag .mini-mag'], portfolio: ['.folio-inside', '.o-folio .folders'],
     form: ['.pad-sheet', '.o-form .clipboard'], out: ['.fanfold', '.o-out .outtray'], recorder: ['.recorder', '.o-tape .player'],
-    computer: ['.monitor', '.o-computer .computer'], reader: ['.reader-pic', '.o-reader .reader'], upic: ['.upic-board', '.o-upic .tablet']
+    computer: ['.monitor', '.o-computer .computer'], reader: ['.reader-pic', '.o-reader .reader'], upic: ['.upic-board', '.o-upic .tablet'],
+    console: ['.gb', '.o-console .handheld'], timer: ['.pomo-tomato', '.o-timer .kitchen-timer'], album: ['.album-book', '.o-album .album-spine']
   };
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var LIST = window.matchMedia('(max-width: 1011px), (max-height: 505px)');   // the room drawn as a list: nothing to grow from

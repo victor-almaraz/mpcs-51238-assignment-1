@@ -260,6 +260,67 @@
 .mag[data-issue="gesso"] .mag-sub { color: var(--mag-ink); letter-spacing: 0.24em; }
 .mag[data-issue="gesso"] .mag-cover-field { background: var(--mag-paper) url(assets/st/gs-cover-field.png) 50% 50% / cover no-repeat; }
 
+/* ---------- Cons: a magazine of Lisp ----------
+   After the listings and memos of the AI laboratories: pages of fan-fold paper set in the
+   printer's monospaced face, a terminal's phosphor green for its one ink, every kicker and
+   standfirst in parentheses, as an S-expression is; the cover a terminal's screen. */
+.mag[data-issue="cons"] {
+  --mag-paper: #f4f1e4; --mag-ink: #16201a; --mag-acc: #1f7a46; --mag-phos: #78dc8c;
+  --mag-yellow: var(--mag-acc); --mag-orange: var(--mag-acc); --mag-cyan: var(--mag-acc); --mag-magenta: var(--mag-acc); --mag-tint: var(--mag-acc);
+  --flat-k: #16201a; --flat-y: #cfe9d2; --flat-o: #cfe9d2;
+  --mag-body: "Fusion Pixel 10px Monospaced", monospace;
+  --mag-edge: #dcd8c6; --mag-edge-2: #c6c1aa;
+}
+.mag[data-issue="cons"] .mag-leaf[data-ink="k"] { --mag-tint: var(--mag-ink); }
+.mag[data-issue="cons"] .mag-spread { --pad: 30px; }
+.mag[data-issue="cons"] .mag-flow h3 { text-transform: lowercase; }
+.mag[data-issue="cons"] .mag-flow h3::before { content: "("; color: var(--mag-acc); }
+.mag[data-issue="cons"] .mag-flow h3::after { content: ")"; color: var(--mag-acc); }
+.mag[data-issue="cons"] .mag-kicker::before { display: none; }
+.mag[data-issue="cons"] .mag-num { color: var(--mag-phos); background: var(--mag-ink); box-shadow: none; }
+.mag[data-issue="cons"] .mag-standfirst { border-top: 0; padding: 10px 0 0 16px; border-left: 4px solid var(--mag-acc); }
+.mag[data-issue="cons"] .mag-pull { border-top: 0; padding: 14px 18px; color: var(--mag-phos); background: var(--mag-ink); }
+.mag[data-issue="cons"] .mag-flow .mag-pull p { color: var(--mag-phos); }
+.mag[data-issue="cons"] .mag-flow h4 { color: var(--mag-acc); letter-spacing: 0.06em; }
+.mag[data-issue="cons"] .mag-flow h4::before { content: ";; "; }
+.mag[data-issue="cons"] .mag-first::first-letter { float: none; margin: 0; font: inherit; }
+.mag[data-issue="cons"] .mag-flow i { background: none; text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--mag-acc); text-underline-offset: 0.18em; }
+.mag[data-issue="cons"] .mag-cover-top { background: var(--mag-ink); color: var(--mag-phos); }
+.mag[data-issue="cons"] .mag-dateline, .mag[data-issue="cons"] .mag-sub { color: var(--mag-phos); }
+.mag[data-issue="cons"] .mag-big { color: var(--mag-phos); text-transform: uppercase; text-shadow: 6px 6px 0 var(--mag-acc); }
+.mag[data-issue="cons"] .mag-big::before { content: "("; } .mag[data-issue="cons"] .mag-big::after { content: ")"; }
+.mag[data-issue="cons"] .mag-cover-field { background: var(--mag-ink) url(assets/st/cn-cover-field.png) 50% 50% / cover no-repeat; }
+.mag[data-issue="cons"] .mag-coverline, .mag[data-issue="cons"] .mag-cover-names { color: var(--mag-phos); background: var(--mag-ink); box-shadow: 0 0 0 2px var(--mag-acc); }
+.mag[data-issue="cons"] .mag-book .mag-deck button { box-shadow: inset 6px 0 0 var(--mag-acc); }
+
+/* ---------- Silver: a magazine of black-and-white photography ----------
+   After the photographers' quarterlies: no colour at all, white pages and wide margins, the
+   plates printed as photographs are, edge to edge in a thin black keyline, the type small and
+   grey beside them; the cover one photograph under a black band. */
+.mag[data-issue="silver"] {
+  --mag-paper: #fbfbf9; --mag-ink: #141414; --mag-grey: #6c6c6a;
+  --mag-yellow: var(--mag-ink); --mag-orange: var(--mag-ink); --mag-cyan: var(--mag-ink); --mag-magenta: var(--mag-ink); --mag-tint: var(--mag-grey);
+  --flat-k: #141414; --flat-y: #e2e2de; --flat-o: #e2e2de;
+  --mag-edge: #dedede; --mag-edge-2: #c4c4c2;
+}
+.mag[data-issue="silver"] .mag-leaf { --mag-tint: var(--mag-grey); }
+.mag[data-issue="silver"] .mag-spread { --pad: 40px; }
+.mag[data-issue="silver"] .mag-plate-box { padding: 0; box-shadow: 0 0 0 2px var(--mag-ink); }
+.mag[data-issue="silver"] .mag-kicker { color: var(--mag-grey); letter-spacing: 0.3em; }
+.mag[data-issue="silver"] .mag-kicker::before { display: none; }
+.mag[data-issue="silver"] .mag-num { color: var(--mag-paper); background: var(--mag-ink); box-shadow: none; }
+.mag[data-issue="silver"] .mag-standfirst { border-top: 1px solid var(--mag-ink); color: var(--mag-grey); }
+.mag[data-issue="silver"] .mag-pull { border-top: 2px solid var(--mag-ink); }
+.mag[data-issue="silver"] .mag-flow .mag-pull p { color: var(--mag-grey); }
+.mag[data-issue="silver"] .mag-flow h4 { color: var(--mag-grey); letter-spacing: 0.3em; }
+.mag[data-issue="silver"] .mag-flow i { background: none; font-style: normal; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.mag[data-issue="silver"] .mag-cover-top { background: var(--mag-ink); color: var(--mag-paper); }
+.mag[data-issue="silver"] .mag-dateline, .mag[data-issue="silver"] .mag-sub { color: #b4b4b0; }
+.mag[data-issue="silver"] .mag-big { font-size: 80px; color: var(--mag-paper); letter-spacing: 0.08em; text-transform: uppercase; text-shadow: none; }
+.mag[data-issue="silver"] .mag-cover-field { background: #8a8a86 url(assets/st/sv-cover-field.png) 50% 50% / cover no-repeat; }
+.mag[data-issue="silver"] .mag-coverline, .mag[data-issue="silver"] .mag-cover-names { color: var(--mag-ink); background: var(--mag-paper); }
+.mag[data-issue="silver"] .mag-book .mag-deck button { box-shadow: inset 6px 0 0 var(--mag-ink); }
+
 /* ---------- the magazine as it stands on the shelf ---------- */
 
 .mini-mag {

@@ -170,6 +170,13 @@ var Px = (function () {
     },
     readme: function (g) { page(g); stamp(g, 9, 5, GLYPH_INFO); text(g, 9, 18, [[[0, 14]], [[0, 9], [10, 4]], [[0, 12]], [[0, 6]]]); },
     document: function (g) { page(g); text(g, 9, 9, [[[0, 9]], [[0, 14]], [[0, 5], [6, 8]], [[0, 13]], [[0, 8], [9, 5]], [[0, 14]], [[0, 7]]]); },
+    // a plain text: notepaper ruled in blue, a red margin, a few lines of handwriting
+    note: function (g) {
+      page(g);
+      for (var j = 0; j < 7; j++) line(g, 6, 9 + 3 * j, 26, 9 + 3 * j, BLU);
+      line(g, 9, 2, 9, 29, RED);
+      text(g, 11, 8, [[[0, 8]], [[0, 12]], [[0, 5], [6, 6]], [[0, 10]], [[0, 7]]]);
+    },
     // a table of numbers in columns
     textdoc: function (g) { page(g); line(g, 9, 8, 22, 8); for (var j = 0; j < 6; j++) { var y = 11 + 3 * j; line(g, 9, y, 10, y); line(g, 13, y, 16, y); line(g, 19, y, 22, y); } },
     folder: folder,

@@ -9,7 +9,6 @@ var Pan = (function () {
   'use strict';
   var doc = document, scene = doc.querySelector('.overview'), corner = doc.getElementById('corner');
   if (!scene || !corner) return { to: function () {}, view: function () { return 0; } };
-  var station = scene.closest('.station');
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
   var LIST = window.matchMedia('(max-width: 1011px), (max-height: 505px)');
   var WIDTH = 640, TIME = 700;
@@ -47,8 +46,7 @@ var Pan = (function () {
   // the keyboard's focus on the other wall turns the room to it
   scene.addEventListener('focusin', function (e) {
     if (e.target.closest('.narration') || e.target.matches('[data-turn-to]')) return;
-    if (e.target.closest('.scene .swap, .scene .obj')) to(corner.contains(e.target) ? 1 : 0);
-    station.scrollLeft = 0;
+    if (e.target.closest('.swap, .obj')) to(corner.contains(e.target) ? 1 : 0);
   });
   return { to: to, view: function () { return view; } };
 })();

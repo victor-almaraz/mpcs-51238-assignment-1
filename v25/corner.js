@@ -1,8 +1,9 @@
 /* The reading corner's things (index.html, #corner). A book is taken down from the shelf and
    the narrator says what it is, offering a deck it calls to mind (look.js); the metronome is
-   set going, and runs down after a while; the fish are fed, and come up to the flakes; the
-   clock's hands keep the visitor's time, drawn in pixels on its face. What happens is told as
-   events on the scene, for the sounds (sounds.js). Needs Look (look.js) and Decor (decor.js). */
+   set going, and runs down after a while; the fish are fed, and come up to the flakes; the camera takes
+   photographs, a flash and a frame of its roll at a time; the cat
+   clock's hands keep the visitor's time, drawn in pixels on its belly. What happens is told as
+   events on the scene, for the sounds (sounds.js). Needs Look (look.js). */
 
 (function () {
   'use strict';
@@ -49,10 +50,35 @@
     say('A pinch of flakes on the water. The tetras and the angelfish come up for them; the corydoras waits on the gravel for what sinks.');
   });
 
+  /* ---------------- the camera: thirty-six frames of black-and-white film ---------------- */
+  var cam = corner.querySelector('.camera'), frames = 0, FRAMES = 36;
+  cam.addEventListener('click', function () {
+    if (frames >= FRAMES) {
+      frames = 0; tell('rewind');
+      say('The roll is finished; the camera rewinds it into its cassette and a new roll is loaded. Thirty-six frames.');
+      return;
+    }
+    frames++;
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      scene.classList.remove('flashing'); void scene.offsetWidth; scene.classList.add('flashing');
+    }
+    tell('shutter');
+    say('Click: frame ' + frames + ' of ' + FRAMES + '.' + (frames === FRAMES ? ' That was the last frame on the roll.' : ''));
+  });
+
   /* ---------------- the clock ---------------- */
-  // its hands in the ink of its marks, for each time of day (the palette's, as the face is drawn)
-  var INK = { morning: '#342b4a', evening: '#342b4a', night: '#271e3f' };
-  var clock = corner.querySelector('.clock'), hands = clock.querySelector('canvas'), g = hands.getContext('2d');
+  // its hands in the ink of its marks, read from the face as it is drawn for the light (the
+  // twelve o'clock mark); a page opened from disk may not be read, and keeps a dark ink
+  var clock = corner.querySelector('.clock'), face = clock.querySelector('img'), hands = clock.querySelector('canvas'), g = hands.getContext('2d');
+  var ink = '#322a48', probe = doc.createElement('canvas'); probe.width = probe.height = 1;
+  function readInk() {
+    try {
+      var p = probe.getContext('2d'); p.clearRect(0, 0, 1, 1); p.drawImage(face, -20, -49);
+      var c = p.getImageData(0, 0, 1, 1).data;
+      if (c[3]) ink = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+    } catch (e) { /* a page from disk */ }
+    draw();
+  }
   function line(x0, y0, x1, y1) {
     var dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1, e = dx - dy;
     for (;;) {
@@ -65,19 +91,19 @@
   }
   function draw() {
     var d = new Date(), m = d.getMinutes(), h = d.getHours() % 12 + m / 60;
-    g.clearRect(0, 0, 29, 29);
-    g.fillStyle = INK[Decor.time()] || INK.evening;
+    g.clearRect(0, 0, 25, 25);
+    g.fillStyle = ink;
     var a = m / 60 * 2 * Math.PI, b = h / 12 * 2 * Math.PI;
-    line(14, 14, Math.round(14 + Math.sin(a) * 9), Math.round(14 - Math.cos(a) * 9));
-    line(14, 14, Math.round(14 + Math.sin(b) * 6), Math.round(14 - Math.cos(b) * 6));
+    line(12, 12, Math.round(12 + Math.sin(a) * 9), Math.round(12 - Math.cos(a) * 9));
+    line(12, 12, Math.round(12 + Math.sin(b) * 6), Math.round(12 - Math.cos(b) * 6));
   }
   function told() {
     var d = new Date(), h = d.getHours(), m = d.getMinutes();
     return 'It says ' + (h % 12 || 12) + ':' + (m < 10 ? '0' : '') + m + '.';
   }
   clock.addEventListener('click', function () { Look.look(clock); });
-  draw();
+  face.addEventListener('load', readInk);
+  if (face.complete) readInk();
   setInterval(draw, 20000);
-  new MutationObserver(draw).observe(doc.getElementById('desk'), { attributes: true, attributeFilter: ['data-time'] });
-  window.Corner = { time: told };
+  window.Corner = { time: told, frames: function () { return frames; } };
 })();

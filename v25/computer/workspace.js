@@ -3,6 +3,9 @@
    through Tape. Needs Desk (wm.js), Files (fs.js), Px (pixels.js) and PROGRAMS (programs.js).
 
    Workspace.openText(name, text, kind)   puts a text in the Editor (the old one to the Trash)
+   A text is FORTRAN (a program, its data, its output) or, of kind 'plain text', a note: in
+   the Editor a note has no card ruler, margins or line numbers, wraps its lines, and is not
+   run; saved, it has a page of its own for an icon; downloaded, it is a .txt.
    Workspace.renderPrinter(box, lines, empty)   printer lines, with a rule at each new page */
 
 var Workspace = (function () {
@@ -71,19 +74,29 @@ var Workspace = (function () {
     return 'past column 80';
   }
   var shownText = '', note = '', curLine = null;
-  // One pass over the lines on each change; the cursor's line is looked up, not rescanned.
-  function updateStatus() {
-    var ls = src.value.split('\n'), c = caret(), l = ls[c.line - 1] || '', end = endIndex(ls);
-    var data = end >= 0 && c.line - 1 > end;
+  var PLAIN = 'plain text';
+  function plain() { return current.kind === PLAIN; }
+  // a note in the Editor: the cards' furniture put away, the lines wrapped, nothing to run
+  function setMode() {
+    var p = plain();
+    $('win-editor').classList.toggle('plain', p);
+    src.wrap = p ? 'soft' : 'off';
+    src.setAttribute('aria-label', p ? 'Text' : 'FORTRAN source');
+    $('ed-run').disabled = p;
+    $('src-hint').textContent = p ? 'A plain text: it is not run. Escape leaves the text.'
+      : 'Each line is one record. Tab moves to column 7 or the next field, Shift Tab moves back, Escape leaves the text, and Control Enter runs the job.';
+  }
+  function words(t) { var m = t.match(/\S+/g); return m ? m.length : 0; }
+  // what the status line says of a program: the cursor's field, a warning about the columns
+  // (the cursor's line first, then any other line that runs too far), its lines and data
+  function cardStatus(ls, c) {
+    var l = ls[c.line - 1] || '', end = endIndex(ls), data = end >= 0 && c.line - 1 > end;
     renderGutter(ls);
     if (curLine) curLine.classList.remove('cur');
     curLine = gutterEl.children[c.line - 1] || null;
     if (curLine) curLine.classList.add('cur');
-    $('ed-pos').textContent = 'Line ' + c.line + ', Col ' + c.col;
-    $('ed-field').textContent = fieldName(l, c.col, data);
     $('caretcol').style.transform = 'translateX(' + (Math.min(c.col, 81) - 1) * 10 + 'px)';
     $('caretcol').hidden = c.col > 80;
-    // warnings: the cursor's line first, then any other line that runs too far
     var warn = '', over = [];
     ls.forEach(function (x, i) {
       var n = lastCol(x), isData = end >= 0 && i > end;
@@ -93,11 +106,20 @@ var Workspace = (function () {
     if (n > 80) warn = 'Line ' + c.line + ' is ' + n + ' columns long; only the first 80 are read.';
     else if (!data && !isComment(l) && n > 72) warn = 'Line ' + c.line + ' runs past column 72; columns 73–80 are ignored.';
     else if (over.length) warn = plural(over.length, 'line') + ' run' + (over.length === 1 ? 's' : '') + ' too far, first line ' + (over[0] + 1) + '.';
+    return { field: fieldName(l, c.col, data), warn: warn,
+      lines: end >= 0 ? plural(Math.max(0, trimmed(ls).length - end - 1), 'data line') : 'no END line' };
+  }
+  // One pass over the lines on each change; the cursor's line is looked up, not rescanned.
+  function updateStatus() {
+    var ls = src.value.split('\n'), c = caret();
+    var st = plain() ? { field: 'text', warn: '', lines: plural(words(src.value), 'word') } : cardStatus(ls, c);
+    $('ed-pos').textContent = 'Line ' + c.line + ', Col ' + c.col;
+    $('ed-field').textContent = st.field;
     // a warning about the columns comes first; otherwise the last note stands
-    var line = warn || note;
+    var line = st.warn || note;
     if (line !== shownText) { $('ed-warn').textContent = line; shownText = line; }
-    $('ed-warn').classList.toggle('on', !!warn);
-    $('ed-lines').textContent = plural(ls.length, 'line') + (end >= 0 ? ', ' + plural(Math.max(0, trimmed(ls).length - end - 1), 'data line') : ', no END line');
+    $('ed-warn').classList.toggle('on', !!st.warn);
+    $('ed-lines').textContent = plural(ls.length, 'line') + ', ' + st.lines;
     var edited = src.value !== current.original;
     $('ed-revert').disabled = !edited;
     $('ed-kind').textContent = current.kind + (edited ? ', edited' : '');
@@ -113,8 +135,11 @@ var Workspace = (function () {
       src.dispatchEvent(new Event('input'));
     }
   }
-  // Tab: on to column 7, then to column 73; Shift+Tab: back to the start of the field
+  // Control (or Command) + S saves; in a program, Tab goes on to column 7, then to column 73,
+  // Shift+Tab back to the start of the field, and Control + Enter runs it
   src.addEventListener('keydown', function (e) {
+    if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey)) { e.preventDefault(); Desk.act(e.shiftKey ? 'save-as' : 'save'); return; }
+    if (plain()) return;
     if (e.key === 'Tab' && !e.altKey && !e.ctrlKey && !e.metaKey) {
       e.preventDefault();
       var c = caret(), l = src.value.split('\n')[c.line - 1], col = c.col, lineStart = c.pos - (col - 1);
@@ -134,8 +159,6 @@ var Workspace = (function () {
       insert(' '.repeat(stop - col));
     } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault(); runJob();
-    } else if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault(); Desk.act(e.shiftKey ? 'save-as' : 'save');
     }
   });
 
@@ -145,6 +168,7 @@ var Workspace = (function () {
     current = d;
     src.value = d.text != null ? d.text : d.original;
     $('ed-name').textContent = d.name;
+    setMode();
     lastCount = -1;
     src.setSelectionRange(0, 0); src.scrollTop = 0; src.scrollLeft = 0; syncScroll();
     updateStatus();
@@ -176,7 +200,7 @@ var Workspace = (function () {
       msg: 'Save the Editor’s text as a document. It is kept in the folder you choose until the page is closed; Download keeps a copy on your computer.',
       name: n && n.kind === 'text' ? current.name + ' copy' : current.name, folder: n && n.parent
     }, function (name, folder) {
-      var node = Files.add(folder, { kind: 'text', name: name, icon: current.kind === 'output records' ? 'punchfile' : 'source', text: src.value, kindText: current.kind === 'FORTRAN source' ? null : current.kind });
+      var node = Files.add(folder, { kind: 'text', name: name, icon: current.kind === 'output records' ? 'punchfile' : plain() ? 'note' : 'source', text: src.value, kindText: current.kind === 'FORTRAN source' ? null : current.kind });
       setTimeout(function () {
         current = { name: name, original: src.value, kind: current.kind, node: node };
         $('ed-name').textContent = name;
@@ -200,7 +224,7 @@ var Workspace = (function () {
     say('The text is back to the way it was opened.');
   });
   $('ed-download').addEventListener('click', function () {
-    var name = slug(current.name) + '.f';
+    var name = slug(current.name) + (plain() ? '.txt' : '.f');
     Desk.download(src.value.replace(/\n?$/, '\n'), name);
     say('Downloaded the text as ' + name + '.');
   });
@@ -208,6 +232,7 @@ var Workspace = (function () {
   /* ================================================================ running a job */
   var punched = [], jobName = '';
   function runJob() {
+    if (plain()) { say('A plain text is not a program; it cannot be run.'); return; }
     var lines = trimmed(src.value.split('\n'));
     var result = Fortran.run(lines);
     renderPrinter($('printer'), result.printer, 'The program did not print anything.');
@@ -439,7 +464,8 @@ var Workspace = (function () {
   Desk.onOpen('win-player', function () { requestAnimationFrame(function () { drawRoll(); onTick(player.state()); }); });
 
   /* ---------------- the workspace's actions ---------------- */
-  Desk.action('new', function () { openText('Untitled', '', 'FORTRAN source', 'A new, empty text.'); });
+  Desk.action('new', function () { openText('Untitled', '', 'FORTRAN source', 'A new, empty program.'); });
+  Desk.action('new-text', function () { openText('Untitled text', '', PLAIN, 'A new, empty plain text: notes, a letter, a list. It is not run.'); });
   Desk.action('open-programs', function () { Desk.open('win-programs', { focus: false }); doc.querySelector('#win-programs .icon').focus(); });
   Desk.action('select-all', function () { Desk.open('win-editor', { focusEl: src }); src.select(); });
   Desk.action('save', save);
@@ -448,7 +474,7 @@ var Workspace = (function () {
   // Escape in the text leaves it, rather than closing the Editor
   Desk.onEscape(function (e) {
     if (e.target !== src) return false;
-    $('ed-run').focus();
+    (plain() ? $('ed-download') : $('ed-run')).focus();
     say('Left the text. Tab moves between the controls; Escape again closes the Editor.');
     return true;
   });

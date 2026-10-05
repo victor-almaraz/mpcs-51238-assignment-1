@@ -14,9 +14,9 @@
   var SAY = { v1: 'Read volume 1: FORTRAN', v2: 'Read volume 2: Sieves', v3: 'Read volume 3: Music and tape',
     'o-mag': 'Read the magazines', 'o-folio': 'Look through the miscellanea', 'o-box': 'Open the deck box',
     'o-form': 'Pick up the coding form', 'o-out': 'Look in the out tray', 'o-computer': 'Use the computer', 'o-tape': 'Use the tape player',
-    'o-reader': 'Look at the card reader and printer', 'o-upic': 'Draw on the UPIC',
+    'o-reader': 'Look at the card reader and printer', 'o-upic': 'Draw on the UPIC', 'o-console': 'Play the pocket game', 'o-timer': 'Set the tomato timer', 'o-album': 'Look through the photo album',
     'print-wide': 'Change the print', 'print-narrow': 'Change the print', 'print-shelf': 'Change the print', 'floor-l': 'Change the plant',
-    'floor-r': 'Change the plant', 'desk-plant': 'Change the plant', lamp: 'Change the lamp', mug: 'Change the mug', 'print-tank': 'Change the print' };
+    'floor-r': 'Change the plant', 'desk-plant': 'Change the plant', lamp: 'Change the lamp', mug: 'Change the mug', 'print-tank': 'Change the print', chair: 'Change the chair' };
   var spots = Array.prototype.slice.call(scene.querySelectorAll('.obj, .swap'));
   function sayOf(b) { if (b.hasAttribute('data-say')) return b.getAttribute('data-say'); if (b.classList.contains('lamp-switch')) return Decor.lampOn() ? 'Turn the lamp off' : 'Turn the lamp on'; var sw = b.getAttribute('data-swap'); if (sw) return SAY[sw]; for (var k in SAY) if (b.classList.contains(k)) return SAY[k]; return b.getAttribute('aria-label') || b.textContent.trim(); }
   var hint = doc.createElement('div');

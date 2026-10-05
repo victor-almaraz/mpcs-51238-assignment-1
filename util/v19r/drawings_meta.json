@@ -1,0 +1,62 @@
+{
+ "a1": {
+  "w": 560,
+  "h": 360,
+  "alt": "Graph of straight string glissando lines whose bundles form curved envelopes, bars 309 to 314",
+  "cls": "drawing graphpaper"
+ },
+ "a2": {
+  "w": 420,
+  "h": 280,
+  "alt": "Postcard drawing of a tent-like pavilion built from ruled, saddle-shaped concrete shells",
+  "cls": "drawing postcard"
+ },
+ "b1": {
+  "w": 560,
+  "h": 340,
+  "alt": "A cloud of short sloping glissando strokes and pizzicato dots, denser in the middle",
+  "cls": "drawing tracing"
+ },
+ "c1": {
+  "w": 560,
+  "h": 320,
+  "alt": "A single line branching like a tree from left to right, with a faint mirrored copy in red",
+  "cls": "drawing vellum"
+ },
+ "d1": {
+  "w": 440,
+  "h": 330,
+  "alt": "A cube with vertices numbered 1 to 8 and three dashed rotation axes: through faces, through a diagonal, through edges",
+  "cls": "drawing graphpaper"
+ },
+ "e1": {
+  "w": 600,
+  "h": 300,
+  "alt": "Three sieves drawn on lines: a seventeen-semitone scale, a forty-pulse rhythm, and the sample deck's sieve 2 3 7 8 12 13 17 18",
+  "cls": "drawing manuscript"
+ },
+ "f1": {
+  "w": 560,
+  "h": 320,
+  "alt": "A page of pen-drawn wavy arcs in bundles, pitch against time",
+  "cls": "drawing upic"
+ },
+ "i1": {
+  "w": 640,
+  "h": 330,
+  "alt": "A matrix of 28 columns of time by 7 rows of timbre; most of its 196 cells are empty, and the rest hold 1, 2, 3 or, once, 4 events",
+  "cls": "drawing"
+ },
+ "j1": {
+  "w": 640,
+  "h": 344,
+  "alt": "Eight small panels lettered A to H, each a cloud of short grains of sound placed by pitch and loudness, some dense and some sparse",
+  "cls": "drawing"
+ },
+ "l1": {
+  "w": 520,
+  "h": 470,
+  "alt": "Plan of a round hall: 88 players, marked by section, are scattered through rings of audience seats",
+  "cls": "drawing"
+ }
+}

@@ -1,5 +1,5 @@
 /* The room's things that can be swapped, after v22: the three prints on the wall (one pinned
-   up behind the shelf) and a fourth over the fish tank round the corner, the lamp, the plant at each end of the floor, the plant on the desk
+   up behind the shelf) and a fourth over the fish tank round the corner, the chair there, the lamp, the plant at each end of the floor, the plant on the desk
    and the mug. Each is a button; pressing it puts the next of its kind in its place at once.
    Every kind is drawn in pixels in the same box as the first, lit where it stands, so each
    takes the same place in the same light. The wallpaper changes too, from the menu or by
@@ -58,7 +58,12 @@
     'print-tank': { what: 'the print over the fish tank', items: [
       ['print-kelly', 'a grid of colours by chance, after Ellsworth Kelly'],
       ['print-fluxus', 'a poster for a Fluxus concert in black and yellow'],
-      ['print-molnar', 'nested squares in disorder, after Vera Molnár']] }
+      ['print-molnar', 'nested squares in disorder, after Vera Molnár']] },
+    'chair': { what: 'the chair', items: [
+      ['chair-lounge', 'a teak lounge chair with slate cushions'],
+      ['chair-butterfly', 'a butterfly chair, tan leather slung on black iron'],
+      ['chair-wire', 'a diamond chair of steel wire with a terracotta pad'],
+      ['chair-tub', 'a low tub chair in mustard bouclé']] }
   };
   var status = doc.getElementById('swap-status');
   function say(msg) { status.textContent = ''; setTimeout(function () { status.textContent = msg; }, 30); }
@@ -73,9 +78,9 @@
   function time() { return chosen === 'clock' ? clockTime() : chosen; }
   function base() { return 'assets/' + time() + '/'; }
   // the ground under each paper's tile, at each time (the colour behind the room)
-  var GROUND = { evening: { ogee: '#233676', atomic: '#3e4b61', trellis: '#4c3447', grass: '#888394' },
-    morning: { ogee: '#2c376a', atomic: '#48585e', trellis: '#64404b', grass: '#a59c8e' },
-    night: { ogee: '#1c2160', atomic: '#293556', trellis: '#342141', grass: '#575986' } };
+  var GROUND = { evening: { ogee: '#232e6f', atomic: '#424a62', trellis: '#402e44', grass: '#7d7b93' },
+    morning: { ogee: '#2a3c7b', atomic: '#435a5d', trellis: '#563b4c', grass: '#a59e8f' },
+    night: { ogee: '#232e6f', atomic: '#2a3b56', trellis: '#382843', grass: '#555a8a' } };
 
   // the light: the lamp on the desk, or 'off'. What the lamp's light reaches is drawn for each
   // (assets/<time>/lit/<light>/); everything else once a time (assets/<time>/)
@@ -205,7 +210,7 @@
     var css = { '--back-l': b + 'lit/' + light() + '/room-' + p + '.png', '--back-r': b + 'room-' + p + '-r.png', '--tile': b + 'tile-' + p + '.png',
       '--floor-tile': b + 'floor-tile.png', '--steam': b + 'anim/lit/' + light() + '/steam.png', '--reel-l': b + 'anim/reel-l.png',
       '--reel-r': b + 'anim/reel-r.png', '--screen': b + 'anim/screen.png', '--back-2': b + 'room2-' + p + '.png' };
-    ['tetras', 'angel', 'cory', 'bubbles', 'flakes', 'pendulum'].forEach(function (n) { css['--' + n] = b + 'anim/' + n + '.png'; });
+    ['tetras', 'angel', 'cory', 'bubbles', 'flakes', 'pendulum', 'cat'].forEach(function (n) { css['--' + n] = b + 'anim/' + n + '.png'; });
     for (var k in css) room.style.setProperty(k, 'url(' + css[k] + ')');
     room.style.setProperty('--paper-blue', GROUND[t][p]);
     swaps.forEach(function (b) { b.show(); });

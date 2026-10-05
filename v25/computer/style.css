@@ -402,6 +402,9 @@ label, legend, output { font: 400 var(--t)/24px var(--sys); }
   tab-size: 8;
 }
 #src:focus { outline: none; }
+/* a plain text: no ruler, margins or line numbers, its lines wrapped at the window's edge */
+#win-editor.plain .ruler, #win-editor.plain .margins, #win-editor.plain .gutter, #win-editor.plain #ed-run { display: none; }
+#win-editor.plain #src { white-space: pre-wrap; overflow-wrap: break-word; overflow-x: hidden; }
 /* a red dotted margin at column 72 and a black one at 80, between the characters */
 .margins { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .margins-in { position: absolute; top: 0; bottom: 0; left: 8px; width: 820px; }

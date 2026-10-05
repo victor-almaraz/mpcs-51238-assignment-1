@@ -45,7 +45,7 @@
     v1: ['The reference manual, volume 1: FORTRAN, card by card.'],
     v2: ['The reference manual, volume 2: sieves, and how to compute them.'],
     v3: ['The reference manual, volume 3: music, and the tape player.'],
-    'o-mag': ['Three magazines in their ledge: Moiré, of art and computing; Event, a Fluxus newspaper; and Gesso, of painting by rule and chance. Their articles print decks you can run.'],
+    'o-mag': ['Five magazines in their ledge: Moiré, of art and computing; Event, a Fluxus newspaper; Gesso, of painting by rule and chance; Cons, of Lisp; and Silver, of black-and-white photography. Their articles print decks you can run.'],
     'o-folio': ['A file box of Xenakis miscellanea: drawings, photographs, notes.'],
     'o-box': ['The deck box: every sample deck, each behind its tab.'],
     'o-form': ['A coding form on a clipboard, eighty columns to a line, ready for cards.'],
@@ -63,10 +63,17 @@
     'book-mccracken': ['Daniel D. McCracken, A Guide to FORTRAN Programming, 1961: one of the first books to teach the language, statement by statement.', 'squares-and-roots', 'Squares and roots'],
     'book-knuth': ['Donald Knuth, The Art of Computer Programming, volume 2: Seminumerical Algorithms, 1969. Its first chapter is on random numbers: how a machine that only follows rules makes numbers that pass for chance, and how to test them.', 'stochastic-cloud', 'Stochastic cloud'],
     'book-reichardt': ['Cybernetic Serendipity: the computer and the arts, 1968, edited by Jasia Reichardt: Studio International’s special issue for her show at the ICA in London, Knowlton and Harmon’s pictures among its pages.', 'studies-in-perception', 'Studies in perception'],
+    camera: [null],
+    'o-album': ['A photo album in black cloth: black-and-white prints and a few Polaroids, of places and of people, each held by its corners and captioned in white pencil.'],
+    'o-timer': ['A tomato kitchen timer, for working in pomodoros: twenty-five minutes of work, then a short break, and after every fourth a long one. Francesco Cirillo named the method after a timer like it, in the late 1980s.'],
+    'o-console': ['A pocket game console, grey, its screen grey-green, its batteries still good. In it is a game of falling blocks.'],
     metronome: ['A wooden metronome. György Ligeti’s Poème symphonique, 1962, is for a hundred of them, wound, set going at once and left to run down.', 'poeme-symphonique', 'Poème symphonique'],
     tank: ['A planted tank: a school of neon tetras, an angelfish, and a corydoras that keeps to the gravel, among vallisneria, a sword plant and a piece of driftwood. Press it to feed them.'],
+    'chair-lounge': ['A teak lounge chair, slate cushions buttoned twice, a terracotta throw over its arm and a book left open face down on the seat.'],
+    'chair-butterfly': ['A butterfly chair: one sling of tan leather hung by its corners from two loops of black iron rod.'],
+    'chair-wire': ['A diamond chair of welded steel wire, a lattice you can see the wall through, a terracotta pad on its seat.'],
+    'chair-tub': ['A low tub chair in mustard bouclé, its back and arms one rounded wall. Easy to get into, hard to get out of.'],
     clock: [null],
-    turn: [null],
     'lamp-switch': [null],
     wall: [null]
   };
@@ -83,8 +90,8 @@
   }
   function lineOf(k) {
     if (k === 'wall') return [PAPER[Decor.paper()] + ' Press the bare wall to hang another.'];
-    if (k === 'clock') return ['A teak wall clock, keeping the visitor’s own time. ' + Corner.time()];
-    if (k === 'turn') return null;
+    if (k === 'camera') return ['A 35 mm single-lens reflex, its film the full frame of 24 by 36 millimetres that Barnack’s Leica set in 1925, loaded with black-and-white film, ' + Corner.frames() + ' of its 36 frames taken.'];
+    if (k === 'clock') return ['A black cat clock, its eyes and tail swinging to the seconds, keeping the visitor’s own time. ' + Corner.time()];
     if (k === 'lamp-switch') return [Decor.lampOn() ? 'A toggle switch, up. The lamp is on.' : 'A toggle switch, down. The lamp is off, and the room is lit by the screen and ' + { morning: 'the morning', evening: 'the dusk', night: 'the moon' }[Decor.time()] + '.'];
     return LOOK[k];
   }
@@ -141,7 +148,7 @@
     if (s) { e.preventDefault(); look(s); }
   }, true);
   // taking a thing up puts the narration away
-  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder', 'reader', 'upic'].forEach(function (n) { Desk.onShow(n, close); });
+  ['manual', 'magazine', 'portfolio', 'form', 'out', 'computer', 'recorder', 'reader', 'upic', 'console', 'timer', 'album'].forEach(function (n) { Desk.onShow(n, close); });
   scene.addEventListener('room:turn', close);
   window.Look = { look: look };
 })();

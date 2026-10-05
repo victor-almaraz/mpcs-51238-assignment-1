@@ -29,6 +29,9 @@
         <li><button type="button" class="label" data-go="recorder"><span class="no" aria-hidden="true">8</span>Tape player</button></li>
         <li><button type="button" class="label" data-go="reader"><span class="no" aria-hidden="true">9</span>Card reader and printer</button></li>
         <li><button type="button" class="label" data-go="upic"><span class="no" aria-hidden="true">10</span>UPIC</button></li>
+        <li><button type="button" class="label" data-go="console"><span class="no" aria-hidden="true">11</span>Pocket game</button></li>
+        <li><button type="button" class="label" data-go="timer"><span class="no" aria-hidden="true">12</span>Tomato timer</button></li>
+        <li><button type="button" class="label" data-go="album"><span class="no" aria-hidden="true">13</span>Photo album</button></li>
       </ol>
       <p class="back"><button type="button" class="menu-act" id="paper-btn">Change the wallpaper</button></p>
       <p class="back"><button type="button" class="menu-act" id="light-btn">Light: by the clock</button></p>
@@ -38,6 +41,7 @@
     </div>
   </nav>
 
+  <p class="vh" id="pomo-status" role="status"></p>
   <div class="stations">
 
   <!-- the room seen whole, straight on: the bookshelf on the wall, the desk under it, and
@@ -82,15 +86,19 @@
         <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/evening/px-tape.png" data-px="px-tape" width="90" height="64" alt=""><span class="anim reel reel-l"></span><span class="anim reel reel-r"></span><span class="anim meter"></span></span><span class="obj-tag">Tape player</span></button></li>
         <li><button type="button" class="obj o-reader" data-go="reader"><span class="reader" aria-hidden="true"><img src="assets/evening/lit/task/px-reader.png" data-px="px-reader" width="130" height="62" alt=""></span><span class="obj-tag">Card reader and printer</span></button></li>
         <li><button type="button" class="obj o-upic" data-go="upic"><span class="tablet" aria-hidden="true"><img src="assets/evening/px-upic.png" data-px="px-upic" width="66" height="80" alt=""></span><span class="obj-tag">UPIC</span></button></li>
+        <li><button type="button" class="obj o-timer" data-go="timer"><span class="kitchen-timer" aria-hidden="true"><img src="assets/evening/px-timer.png" data-px="px-timer" width="17" height="15" alt=""></span><span class="obj-tag">Tomato timer</span></button></li>
       </ul>
       <!-- round the corner, the reading corner (pan.js turns to it): a bookcase whose books can
-           be taken down, a metronome on its second shelf, a lounge chair under a wall clock, a
+           be taken down, a 35 mm camera on its top, a metronome on its second shelf, a chair to change under a cat clock, a
            planted fish tank on a teak cabinet under a print. Set in the wall's own pixels. -->
       <div class="part2" id="corner">
         <h2 id="corner-h" class="vh" tabindex="-1">The reading corner</h2>
         <button type="button" class="swap turn turn-l" data-turn-to="0" data-say="Turn to the desk" aria-label="Turn back to the desk"><img src="assets/turn-l.png" width="12" height="22" alt=""></button>
         <button type="button" class="swap sw-print-tank" data-swap="print-tank"><img src="assets/evening/print-kelly.png" width="128" height="86" alt=""></button>
-        <button type="button" class="swap clock" data-say="Read the clock" aria-label="The clock"><img src="assets/evening/px-clock.png" data-px="px-clock" width="29" height="29" alt=""><canvas class="clock-hands" width="29" height="29" aria-hidden="true"></canvas></button>
+        <button type="button" class="swap camera" data-say="Take a photograph" aria-label="The camera: take a photograph"><img src="assets/evening/px-camera.png" data-px="px-camera" width="40" height="27" alt=""></button>
+        <span class="flash" aria-hidden="true"></span>
+        <button type="button" class="swap sw-chair" data-swap="chair"><img src="assets/evening/chair-lounge.png" width="111" height="109" alt=""></button>
+        <button type="button" class="swap clock" data-say="Read the clock" aria-label="The cat clock"><img src="assets/evening/px-cat-clock.png" data-px="px-cat-clock" width="42" height="114" alt=""><span class="anim cat-moves"></span><canvas class="clock-hands" width="25" height="25" aria-hidden="true"></canvas></button>
         <ul class="books" aria-label="On the bookcase">
           <li><button type="button" class="swap book book-xenakis" data-say="Take down Formalized Music" aria-label="Formalized Music, by Iannis Xenakis"><img src="assets/evening/px-book-xenakis.png" data-px="px-book-xenakis" width="11" height="41" alt=""></button></li>
           <li><button type="button" class="swap book book-hiller" data-say="Take down Experimental Music" aria-label="Experimental Music, by Lejaren Hiller and Leonard Isaacson"><img src="assets/evening/px-book-hiller.png" data-px="px-book-hiller" width="10" height="43" alt=""></button></li>
@@ -99,6 +107,8 @@
           <li><button type="button" class="swap book book-mccracken" data-say="Take down A Guide to FORTRAN Programming" aria-label="A Guide to FORTRAN Programming, by Daniel D. McCracken"><img src="assets/evening/px-book-mccracken.png" data-px="px-book-mccracken" width="10" height="39" alt=""></button></li>
           <li><button type="button" class="swap book book-knuth" data-say="Take down Seminumerical Algorithms" aria-label="The Art of Computer Programming, volume 2: Seminumerical Algorithms, by Donald Knuth"><img src="assets/evening/px-book-knuth.png" data-px="px-book-knuth" width="13" height="42" alt=""></button></li>
           <li><button type="button" class="swap book book-reichardt" data-say="Take down Cybernetic Serendipity" aria-label="Cybernetic Serendipity: the computer and the arts, edited by Jasia Reichardt"><img src="assets/evening/px-book-reichardt.png" data-px="px-book-reichardt" width="31" height="40" alt=""></button></li>
+          <li><button type="button" class="obj o-album" data-go="album"><span class="album-spine" aria-hidden="true"><img src="assets/evening/px-album.png" data-px="px-album" width="17" height="46" alt=""></span><span class="obj-tag">Photo album</span></button></li>
+          <li><button type="button" class="obj o-console" data-go="console"><span class="handheld" aria-hidden="true"><img src="assets/evening/px-handheld.png" data-px="px-handheld" width="17" height="26" alt=""></span><span class="obj-tag">Pocket game</span></button></li>
         </ul>
         <button type="button" class="swap tank" data-say="Feed the fish" aria-label="The fish tank: feed the fish"><img src="assets/evening/px-tank.png" data-px="px-tank" width="184" height="94" alt=""></button>
         <span class="anim fish tetras" aria-hidden="true"></span>
@@ -563,8 +573,9 @@
 
   <!-- the magazine, open -->
   <section class="station st-mag" id="magazine" data-station="magazine" aria-labelledby="mag-title" hidden>
-<!-- The magazines on the shelf: Moiré (art and computing), Event (a Fluxus newspaper) and Gesso
-     (painting by rule and chance), the rack above them choosing one. After its cover, each
+<!-- The magazines on the shelf: Moiré (art and computing), Event (a Fluxus newspaper), Gesso
+     (painting by rule and chance), Cons (Lisp) and Silver (black-and-white photography), the
+     rack above them choosing one. After its cover, each
      issue's .mag-leaf is an article whose text flows in columns over as many spreads as it
      needs (magazine.js turns them a spread at a time); its plates are pixel pictures in
      assets/st/. -->
@@ -573,6 +584,8 @@
     <li><button type="button" data-issue="moire" aria-pressed="true">Moiré</button></li>
     <li><button type="button" data-issue="event" aria-pressed="false">Event</button></li>
     <li><button type="button" data-issue="gesso" aria-pressed="false">Gesso</button></li>
+    <li><button type="button" data-issue="cons" aria-pressed="false">Cons</button></li>
+    <li><button type="button" data-issue="silver" aria-pressed="false">Silver</button></li>
   </ul>
 </nav>
 <div class="mag" id="mag" data-issue="moire" data-cols="1">
@@ -1091,6 +1104,321 @@
     <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
   </div>
 </div>
+<div class="mag" id="mag-cons" data-issue="cons" data-cols="1" hidden>
+  <div class="mag-book">
+
+    <section class="mag-leaf mag-leaf-cover" data-ink="g" aria-labelledby="cn-title">
+      <div class="mag-page mag-cover">
+        <div class="mag-cover-top">
+          <p class="mag-dateline"><span>Lists</span> <span>Recursion</span> <span>Garbage</span> <span>Machines</span></p>
+          <h2 id="cn-title" class="mag-h" tabindex="-1"><span class="mag-big">Cons</span> <span class="mag-sub">A magazine of Lisp and symbolic computing</span></h2>
+        </div>
+        <div class="mag-cover-field">
+          <p class="mag-coverline"><span class="mag-cl-big">Programs are lists</span> <span class="mag-cl-small">Five decks to punch, run and trace</span></p>
+          <p class="mag-cover-names">McCarthy, Rochester and Russell · Edwards, Levin, Greenblatt and Knight · Slagle, Moses, Winograd, Sussman and Steele</p>
+        </div>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread mag-leaf-contents" data-ink="g" aria-labelledby="cn-contents-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/cn-contents.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker">In this issue</p>
+          <h3 id="cn-contents-h" class="mag-h" tabindex="-1">Contents</h3>
+          <ol class="mag-contents">
+            <li><span class="mag-n" aria-hidden="true">01</span><div><button type="button" class="mag-link" data-goto="2">Contents of the address part</button><p>The IBM 704 word, FORTRAN’s list-processing language, the AI Project and the eval that was meant only for reading.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">02</span><div><button type="button" class="mag-link" data-goto="3">Garbage collection</button><p>Reclamation, the Lisp 1.5 manual and its page 13, the wizards of the PDP-10, and a machine built for Lisp.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">03</span><div><button type="button" class="mag-link" data-goto="4">Symbols at work</button><p>Integration and algebra at Project MAC, two conversations with a computer, and Scheme.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">05</span><div><button type="button" class="mag-link" data-goto="5">Five decks to punch</button><p>The catalogue: every deck in the issue, ready for the coding form.</p></div></li>
+          </ol>
+        </div>
+        <h4 class="mag-label">From the editors</h4>
+        <p>Our title is the smallest word in Lisp and the busiest. <code>cons</code> takes one cell from free storage, puts two things in it, and hands back the cell: every list a Lisp program has ever built was built that way, one cell at a time. It was also the name of the first of MIT’s Lisp machines, and its successor was called the CADR, which is a joke only a Lisp programmer would make. This issue is about the language behind the word, from a summer at Dartmouth in 1956 to the Lisp machines of 1980. Looking back in 1979, John McCarthy could already call Lisp “the second oldest programming language in present widespread use”, after FORTRAN.</p>
+        <p>The three features follow it in order. The first goes from McCarthy’s notes on the IBM 704 to his paper of April 1960 and the afternoon a programmer turned a mathematical definition into a working interpreter. The second is about rubbish: what happens to a list nobody wants, the manual of 1962 that put the whole language on one page, and the machines built so that Lisp could have a computer of its own. The third is about what the language was for: integrating, simplifying, talking about blocks on a table, and, in the hands of two people at the AI Lab, explaining itself.</p>
+        <p>We should own up at once. The FORTRAN on this desk is close kin to the language Lisp was invented to get away from. It has no recursion. Its card reader reads only numbers, and its printer cannot put a parenthesis anywhere it was not told to put one in advance. McCarthy knew the problem: in the late 1950s, he wrote, “keypunches and printers with adequate character sets didn’t exist”. So the five decks in this issue do in FORTRAN what the articles describe, and show what it costs. A list is two arrays and a free-storage list. Recursion is a push-down list kept by hand. An S-expression arrives one token to a card, punched as a code.</p>
+        <p>Wherever an article discusses a deck, a button beside the text puts it on the coding form. Run it, and the card reader takes the cards, the line printer answers, and the printout lands in the out tray: a chain of cells built, reversed and shared; a tower of discs moved with a stack drawn beside it; free storage drawn as a row of asterisks and full stops at every collection; a trace of an evaluator at work; and a function that grows faster than any loop can follow. The comment cards at the top of each deck say what its data cards hold. Change them; the one deck that uses chance takes a seed, and the same seed gives the same garbage again.</p>
+        <p class="mag-colophon">Printed in black on fanfold paper, every parenthesis set by hand and counted twice.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="cn-a1">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/cn-a1.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">01</span> Dartmouth, IBM and MIT, 1956–1962</p>
+          <h3 id="cn-a1" class="mag-h" tabindex="-1">Contents of the address part</h3>
+          <p class="mag-standfirst">John McCarthy wanted to write programs that reason, in a language as algebraic as FORTRAN. FORTRAN could not be made to do it, so he wrote a paper instead, and a programmer who had been told the paper was not meant to be run ran it.</p>
+          <blockquote class="mag-pull"><p>“This eval is intended for reading, not for computing.”</p></blockquote>
+        </div>
+        <h4>A word in four parts</h4>
+        <p>The idea came to John McCarthy in the summer of 1956, at the Dartmouth Summer Research Project on Artificial Intelligence, the first organised study of the subject. There Allen Newell, Cliff Shaw and Herbert Simon described IPL 2, the list-processing language in which they had written their Logic Theorist for the RAND Corporation’s JOHNNIAC. McCarthy liked the lists but wanted them written algebraically, as FORTRAN wrote arithmetic, so that the part of a part of an expression could be taken by composing two functions.</p>
+        <p>The machine was to be the IBM 704, then on its way to a new computation centre at MIT. Its word was 36 bits, and two 15-bit parts of it, the <i>address</i> and the <i>decrement</i>, had instructions of their own; 15 bits was also the size of an address, so a list could be built of words that pointed at words. So <i>car</i> came to mean “Contents of the Address part of Register number” and <i>cdr</i> the same for the decrement; <i>cpr</i> and <i>ctr</i>, for the word’s two small remaining parts, did not survive. A way to take a word off the free-storage list and fill it was needed too. All this was done at Dartmouth, on paper: the 704 had not yet arrived.</p>
+        <p><i>Car and cdr</i> keeps the 704’s word in two arrays, ICAR and ICDR, forty cells of each, with a CDR of 0 for NIL, the end of a list, and every unused cell chained on a free-storage list. It conses the five digits on its data card into a list, reverses the list and appends the reverse to the original, printing every cons: the cell it took and where the free list now begins. With 3 1 4 1 5 on the card, the printer gives <code>(3 1 4 1 5)</code> at cell 5, <code>(5 1 4 1 3)</code> at cell 10 and the appended list of ten atoms at cell 15, using fifteen cells where twenty might be expected. The deck then follows the appended list and finds that after five new cells it runs straight into cell 10: append copied its first list and simply pointed at the second, a sharing that is the whole economy of Lisp.</p>
+        <p class="mag-deck"><button type="button" data-deck="car-and-cdr">Put <i>Car and cdr</i> on the coding form</button></p>
+        <h4>A list language inside FORTRAN</h4>
+        <p>IBM had its own reason to want lists: a program to prove theorems in plane geometry, on an idea of Marvin Minsky’s, for which McCarthy was a consultant. Nathaniel Rochester and Herbert Gelernter decided, on McCarthy’s advice, to build list processing inside FORTRAN, since a compiler for a new language was then thought to take many man-years. Gelernter and Carl Gerberich made it FLPL, the FORTRAN List Processing Language, and noticed something McCarthy had missed: <i>cons</i> should be a function whose value is the cell it fills, so that new expressions could be built by nesting conses. FLPL served the geometry program well. But it had, in McCarthy’s words, “neither conditional expressions nor recursion”, and every list had to be erased by hand.</p>
+        <p>McCarthy had already felt the lack. Writing chess legal-move routines in FORTRAN at MIT in 1957–58, he had invented a function XIF(M,N1,N2) whose value was N1 or N2 as M was zero or not. FORTRAN computed both branches before the call, which led him to the true conditional expression, which evaluates only one. In the summer of 1958, at IBM, he chose differentiating algebraic expressions as a sample problem. Differentiation is recursive by nature, and writing it down needed recursive definitions, conditional expressions and, to pass functions as arguments, the lambda notation of Alonzo Church’s book of 1941. “I didn’t understand the rest of his book,” McCarthy admitted, so he was not tempted to implement more of it. FLPL could not express the result, and it was never run that summer.</p>
+        <h4>A room and a keypunch</h4>
+        <p>In the autumn of 1958 McCarthy became an assistant professor at MIT, and he and Minsky began the MIT Artificial Intelligence Project. There was no written proposal. Asked what they needed, they asked for “a room, two programmers, a secretary and a keypunch”. The first functions were compiled into assembly language by hand, and recursion was managed by SAVE and UNSAVE routines that kept variables and return addresses on a single public stack. Programs were drafted in M-expressions, a FORTRAN-like notation with square brackets, which the IBM 026 keypunch could not even punch; data were S-expressions, so that x + 3y + z became <code>(PLUS X (TIMES 3 Y) Z)</code>, a notation later nicknamed “Cambridge Polish”.</p>
+        <p><i>The tower of Hanoi</i> shows what that stack is for. Édouard Lucas sold the puzzle in 1883 under the name N. Claus de Siam, an anagram of Lucas d’Amiens, and its solution is the classic recursion: move all but the largest disc out of the way, move the largest, then move the rest back on top. The deck cannot call itself, so every call not yet finished is a frame on a push-down list, and each move is printed with the list drawn beside it, an asterisk to a frame, and the three pegs read from the bottom up. Four discs take fifteen moves, as 2⁴ − 1 says they must, with 31 frames pushed and never more than five waiting at once; seven discs take 127 moves and a list eight deep.</p>
+        <p class="mag-deck"><button type="button" data-deck="tower-of-hanoi">Put <i>The tower of Hanoi</i> on the coding form</button></p>
+        <h4>A universal function</h4>
+        <p>McCarthy wanted to show that his language was a neater way of describing computable functions than Turing machines, and the proof was a universal function, <i>eval</i>, that computes the value of any Lisp expression given as a Lisp list. It appeared in “Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I”, in <i>Communications of the ACM</i> for April 1960. Part II was never written. S. R. Russell, known as Steve, saw that eval could serve as an interpreter. McCarthy remembered his own reply: “ho, ho, you’re confusing theory with practice, this eval is intended for reading, not for computing.” Russell hand-coded it for the 704 anyway, and Lisp had an interpreter. The unexpected appearance of one, McCarthy wrote, “tended to freeze the form of the language”. The parentheses stayed. Russell went on to begin <i>Spacewar!</i> on the PDP-1.</p>
+        <h4>Plates</h4>
+        <p><i>John McCarthy</i>, “Recursive Functions of Symbolic Expressions and Their Computation by Machine, Part I”, <i>Communications of the ACM</i> 3, no. 4 (April 1960), 184–195.</p>
+        <p><i>Phyllis A. Fox</i>, <i>LISP I Programmer’s Manual</i>, 1 March 1960. Research Laboratory of Electronics, MIT.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="g" aria-labelledby="cn-a2">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/cn-a2.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">02</span> From the 704 to the Lisp machine, 1960–1980</p>
+          <h3 id="cn-a2" class="mag-h" tabindex="-1">Garbage collection</h3>
+          <p class="mag-standfirst">Lisp never asks its programmer to throw anything away. Something has to, and for twenty years the answer was a few seconds of marking and sweeping, a page of definitions, and at last a computer built around the problem.</p>
+          <blockquote class="mag-pull"><p>“We already called this process ‘garbage collection’.”</p></blockquote>
+        </div>
+        <h4>Reclamation</h4>
+        <p>Since <i>car</i> and <i>cdr</i> copy nothing, lists share their parts, and a cell may be wanted by several lists or by none. IPL erased lists explicitly, which McCarthy found “clearly unaesthetic”, and counting references would have needed room the 704’s word did not have. So storage would be abandoned until the free-storage list ran out; then everything still reachable would be found, and the rest gathered up.</p>
+        <p>The paper of 1960 describes it plainly. About 15,000 registers start on the free-storage list. When none is left, a “reclamation cycle” begins: starting from a fixed set of base registers, every register that can be reached by a chain of cars and cdrs has its sign made negative; then a sweep through memory puts every register whose sign did not change back on the free list, and turns the others positive again. It took several seconds, so it had better recover several thousand registers. In a footnote to a later reprint of the paper, McCarthy confessed: “We already called this process ‘garbage collection’, but I guess I chickened out of using it in the paper.”</p>
+        <p><i>Reclamation</i> runs the same cycle on sixty cells. It builds lists at random, from a seed, and puts each in one of four base registers, abandoning whatever was there; now and then an element is not an atom but another register’s list, so structure is shared. When the cells run out, it marks from the four registers and from the list half built (the protection Lisp 1.5 gave its partial results), keeping the cells still to visit on a push-down list, and then sweeps. At each collection the printer draws storage under a ruler, an asterisk for a cell still in use and a full stop for one reclaimed. With seed 1960, eighty lists take 229 conses from sixty cells and four collections; the first finds twelve cells in use and returns 48. Raise the chance of sharing to five in ten and the shared lists hold on to more and more: the fifth collection finds 38 cells in use, and with 99 lists instead of 80 the seventh finds all sixty reachable, and the deck reports that nothing could be reclaimed.</p>
+        <p class="mag-deck"><button type="button" data-deck="reclamation">Put <i>Reclamation</i> on the coding form</button></p>
+        <h4>Page 13</h4>
+        <p>The <i>LISP 1.5 Programmer’s Manual</i> was published by the MIT Press in 1962. Its preface, dated 17 August 1962, says that the manual was written by Michael Levin, that the interpreter was programmed by Stephen Russell and Daniel Edwards, that Edwards also wrote the garbage collector and the arithmetic, and that the compiler was the work of Timothy Hart and Levin. At the foot of page 13 are the definitions of <code>evalquote</code>, <code>apply</code>, <code>eval</code>, <code>evcon</code> and <code>evlis</code>: the whole interpreter, a few lines long. Alan Kay read them as a graduate student and called them “Maxwell’s Equations of Software!”</p>
+        <p>The manual is also a document of the card age. “There is no particular card format for writing LISP,” it says: columns 1 to 72 of any number of cards, card boundaries ignored. A run was a series of packets, each ending with the word STOP, which should be followed “by a large number of right parentheses” in case the count had gone wrong, and the deck finished with two blank cards to keep the reader from hanging up. A garbage collection on the 7090 took about a second, and could be recognised by the stationary pattern of the MQ lights.</p>
+        <p><i>Eval</i> is our page 13, at more length because it is in FORTRAN. Each token of an expression is a data card: a code in column 1, a number or the name of a function in the next nine columns, and the token as written further along, for people. A reader with a push-down list builds the expression as cells; eval then works through it with a frame for every function not yet finished, and prints a trace as each one begins and ends. It knows four functions of Lisp 1.5, <code>PLUS</code> and <code>TIMES</code> of any number of arguments and <code>DIFFERENCE</code> and <code>QUOTIENT</code> of exactly two. <code>(PLUS 1 (TIMES 3 4) 5)</code>, McCarthy’s example with numbers for letters, gives 18; a longer expression three lists deep gives 42. The last card says STOP.</p>
+        <p class="mag-deck"><button type="button" data-deck="eval">Put <i>Eval</i> on the coding form</button></p>
+        <h4>Wizards down the hall</h4>
+        <p>By 1964 Lisp 1.5 ran on the IBM 7094 under MIT’s Compatible Time-Sharing System. That spring DEC and members of MIT’s Tech Model Railroad Club wrote a Lisp for the new PDP-6, the first program written on the machine and the ancestor of MacLisp. On the PDP-6 and the PDP-10 after it, a 36-bit word with 18-bit addresses held a whole cons cell, and half-word instructions reached the car and the cdr. At Bolt Beranek and Newman another line grew into BBN Lisp, renamed Interlisp in 1973 when Xerox PARC shared its upkeep. Interlisp had DWIM, “Do What I Mean”, which corrected spelling and could even see that an 8 was a left parenthesis typed without the shift key on a Model 33 teletype. Guy Steele and Richard Gabriel later summed up the period as “an AI lab with a Lisp wizard down the hall”.</p>
+        <h4>A machine of its own</h4>
+        <p>In 1974 Richard Greenblatt started the MIT Lisp Machine project with Thomas Knight, Jack Holloway and Pitts Jarvis. Greenblatt’s working paper, <i>The LISP Machine</i>, and Knight’s <i>CONS</i> appeared that November. The aims were a single-user machine at less than $70,000, hardware support for type checking and garbage collection, and large bit-mapped displays. The CONS was built, then an improved design, the CADR, of which some dozens were made; in 1979 and 1980 two companies, Lisp Machines Incorporated and Symbolics, set out to sell them. There is a last irony. For some years the early Lisp machines had no garbage collector in use, and users preferred to leave it off: their memories were large enough to work for days or weeks before saving the whole “world” to disk and starting again.</p>
+        <h4>Plates</h4>
+        <p><i>John McCarthy, Paul W. Abrahams, Daniel J. Edwards, Timothy P. Hart and Michael I. Levin</i>, <i>LISP 1.5 Programmer’s Manual</i>. Cambridge, Mass.: MIT Press, 1962.</p>
+        <p><i>Richard Greenblatt</i>, <i>The LISP Machine</i>. MIT Artificial Intelligence Laboratory Working Paper 79, November 1974.</p>
+        <p><i>Thomas F. Knight</i>, <i>CONS</i>. MIT Artificial Intelligence Laboratory Working Paper 80, November 1974.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="cn-a3">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/cn-a3.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">03</span> Project MAC and the AI Lab, 1961–1978</p>
+          <h3 id="cn-a3" class="mag-h" tabindex="-1">Symbols at work</h3>
+          <p class="mag-standfirst">A language for symbols was built to do things with them: integrate, simplify, converse. The longest-lived thing it did was to describe itself, and to show that a procedure call need be no dearer than a GO TO.</p>
+          <blockquote class="mag-pull"><p>“Pick up a big red block.”</p></blockquote>
+        </div>
+        <h4>Algebra by machine</h4>
+        <p>McCarthy’s unwritten Part II was to have shown “applications to computing with algebraic expressions”, and his students wrote it instead. James Slagle’s doctoral thesis of 1961, supervised by Minsky, described SAINT, the Symbolic Automatic INTegrator, written in Lisp and run interpretively on an IBM 7090. Set 54 problems from MIT’s freshman calculus examinations, it solved 52, taking about two minutes each.</p>
+        <p>Project MAC opened at MIT on 1 July 1963, with a two-million-dollar grant from ARPA and Robert Fano as director, and the AI group worked within it until it became a laboratory of its own in 1970. In July 1968 Carl Engelman, William Martin and Joel Moses began Macsyma, Project MAC’s SYmbolic MAnipulator. It was written in MacLisp, and was perhaps the largest Lisp program of its day, large enough to change the language: arbitrary-precision integers were added to MacLisp in 1970 or 1971 because Macsyma’s users needed them.</p>
+        <h4>Two conversations</h4>
+        <p>Not every famous program of the AI Lab’s neighbourhood was written in Lisp. Joseph Weizenbaum’s ELIZA, described in 1966, was written in MAD-SLIP for the IBM 7094 under CTSS. But Bernie Cosell soon wrote a Lisp ELIZA at Bolt Beranek and Newman, and when BBN became one of the first sites on the ARPANET, that Lisp ELIZA travelled across it and became the strain most people knew.</p>
+        <p>SHRDLU was Lisp from the start. Terry Winograd wrote it at MIT between 1968 and 1970, in Lisp and Micro-Planner on a PDP-6 with a graphics terminal, and named it after ETAOIN SHRDLU, the order of the keys on a Linotype machine. Its world was a table of blocks and pyramids, its conversation began “Pick up a big red block”, and when told to grasp the pyramid it replied that it did not understand which pyramid was meant. The thesis that describes it, published as an AI Lab report in February 1971, is called <i>Procedures as a Representation for Data</i>, which is as good a short description of Lisp as any.</p>
+        <h4>The ultimate</h4>
+        <p>In the autumn of 1975 Gerald Jay Sussman and Guy Steele set out to understand Carl Hewitt’s theory of actors by building a toy. They wrote a tiny Lisp interpreter in MacLisp, lexically scoped because Sussman had just been studying Algol, and added actors to it. When it worked, they found that the code in <i>apply</i> for calling a function and for sending a message to an actor was identical: actors and closures were the same thing. They called the interpreter Schemer, after Planner and Conniver, but the ITS operating system allowed file names of only six characters, and Scheme it became. This room’s FORTRAN has the same rule for the names of its variables.</p>
+        <p>The report, AI Memo 349 of December 1975, was the first of the Lambda Papers. <i>Lambda: The Ultimate Imperative</i> and <i>Lambda: The Ultimate Declarative</i> followed in 1976, and in October 1977 Steele’s AI Memo 443 set out to debunk the “expensive procedure call” myth, under the third of its titles, <i>Lambda: The Ultimate GOTO</i>. A call that is the last thing a procedure does needs nothing kept for it; it can be compiled as a jump that carries its arguments with it.</p>
+        <p><i>Ackermann’s function</i> puts that to work in FORTRAN. Wilhelm Ackermann gave his function in 1928 as one that can be computed but is not primitive recursive, so that no program made only of DO loops, however nested, can compute it; the deck uses the two-argument form of Rózsa Péter and Raphael Robinson. Of its three cases, two end in a tail call, and the deck does those with a GO TO; only the inner call of A(m, A(m, n−1)) leaves an outer call waiting, and only that goes on the push-down list. It traces A(2,1), five in fourteen steps, then tables the function up to A(3,5), which is 253, found in 42,438 steps with 251 calls waiting at the deepest.</p>
+        <p class="mag-deck"><button type="button" data-deck="ackermann">Put <i>Ackermann’s function</i> on the coding form</button></p>
+        <p>Sussman and Steele went on: a revised report in 1978, a compiler called RABBIT, and <i>The Art of the Interpreter</i>, a set of small Lisp interpreters with variations, titled after <i>The Art of the Fugue</i>. It was rejected by an ACM journal. The idea it served, that a language is best understood by writing its interpreter in itself, had been on page 13 since 1962.</p>
+        <h4>Plates</h4>
+        <p><i>James R. Slagle</i>, <i>A Heuristic Program that Solves Symbolic Integration Problems in Freshman Calculus: Symbolic Automatic Integrator (SAINT)</i>. Doctoral thesis, MIT, 1961.</p>
+        <p><i>Terry Winograd</i>, <i>Procedures as a Representation for Data in a Computer Program for Understanding Natural Language</i>. MIT AI Technical Report 235, February 1971.</p>
+        <p><i>Gerald Jay Sussman and Guy L. Steele Jr.</i>, <i>Scheme: An Interpreter for Extended Lambda Calculus</i>. MIT AI Memo 349, December 1975.</p>
+        <p><i>Guy L. Steele Jr.</i>, <i>Debunking the “Expensive Procedure Call” Myth, or, Procedure Call Implementations Considered Harmful, or, Lambda: The Ultimate GOTO</i>. MIT AI Memo 443, October 1977.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="g" aria-labelledby="cn-cat-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/cn-catalogue.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">05</span> The catalogue</p>
+          <h3 id="cn-cat-h" class="mag-h" tabindex="-1">Five decks to punch</h3>
+          <p class="mag-standfirst">Every deck in this issue, in the order the articles discuss them. Each one runs as it stands; its comment cards say what its data cards hold. None of them calls itself: where Lisp would recurse, each keeps a push-down list by hand.</p>
+        </div>
+        <ol class="mag-cat">
+          <li><h4>Car and cdr</h4><p>Forty cells in two arrays and a free-storage list. Builds a list from the digits on its data card, reverses it and appends the two, printing every cons and the lists as S-expressions, and shows that append shares its second list rather than copying it.</p><p class="mag-deck"><button type="button" data-deck="car-and-cdr">Put <i>Car and cdr</i> on the coding form</button></p></li>
+          <li><h4>The tower of Hanoi</h4><p>Lucas’s puzzle for one to seven discs, solved by the recursion that is not allowed: every move printed with the push-down list beside it and the pegs after it. Four discs, fifteen moves; seven, 127.</p><p class="mag-deck"><button type="button" data-deck="tower-of-hanoi">Put <i>The tower of Hanoi</i> on the coding form</button></p></li>
+          <li><h4>Reclamation</h4><p>A mark-and-sweep garbage collector over sixty cells, after the 704’s reclamation cycle. Lists built at random from a seed, storage drawn at every collection, and a warning when nothing is left to reclaim.</p><p class="mag-deck"><button type="button" data-deck="reclamation">Put <i>Reclamation</i> on the coding form</button></p></li>
+          <li><h4>Eval</h4><p>An S-expression reader and evaluator for PLUS, DIFFERENCE, TIMES and QUOTIENT, one token to a card, with a trace of every function as it begins and ends. Supplied with two expressions and the STOP card.</p><p class="mag-deck"><button type="button" data-deck="eval">Put <i>Eval</i> on the coding form</button></p></li>
+          <li><h4>Ackermann’s function</h4><p>The function no nest of loops can compute, worked with a push-down list for the waiting calls and a GO TO for the tail calls: one call traced step by step, and a table of values, steps and stack depths up to A(3,5).</p><p class="mag-deck"><button type="button" data-deck="ackermann">Put <i>Ackermann’s function</i> on the coding form</button></p></li>
+        </ol>
+      </div>
+    </section>
+
+  </div>
+  <div class="mag-turn">
+    <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
+    <nav class="mag-index" aria-label="Pages of Cons">
+      <ol>
+        <li><button type="button" data-goto="0"><span class="mag-dot">C</span><span class="mag-vh"> Cover</span></button></li>
+        <li><button type="button" data-goto="1"><span class="mag-dot">00</span><span class="mag-vh"> Contents</span></button></li>
+        <li><button type="button" data-goto="2"><span class="mag-dot">01</span><span class="mag-vh"> Contents of the address part</span></button></li>
+        <li><button type="button" data-goto="3"><span class="mag-dot">02</span><span class="mag-vh"> Garbage collection</span></button></li>
+        <li><button type="button" data-goto="4"><span class="mag-dot">03</span><span class="mag-vh"> Symbols at work</span></button></li>
+        <li><button type="button" data-goto="5"><span class="mag-dot">05</span><span class="mag-vh"> Five decks to punch</span></button></li>
+      </ol>
+    </nav>
+    <p class="mag-folio" aria-live="polite"></p>
+    <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
+  </div>
+</div>
+<div class="mag" id="mag-silver" data-issue="silver" data-cols="1" hidden>
+  <div class="mag-book">
+
+    <section class="mag-leaf mag-leaf-cover" data-ink="k" aria-labelledby="sv-title">
+      <div class="mag-page mag-cover">
+        <div class="mag-cover-top">
+          <p class="mag-dateline"><span>Autumn</span> <span>Camera, darkroom and page</span></p>
+          <h2 id="sv-title" class="mag-h" tabindex="-1"><span class="mag-big">Silver</span> <span class="mag-sub">A magazine of black-and-white photography</span></h2>
+        </div>
+        <div class="mag-cover-field">
+          <p class="mag-coverline"><span class="mag-cl-big">Every shade of grey</span> <span class="mag-cl-small">Five decks to punch, expose and print</span></p>
+          <p class="mag-cover-names">Barnack and Cartier-Bresson · Hurter, Driffield, Adams and Archer · Man Ray, Moholy-Nagy, Knowlton and Harmon</p>
+        </div>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread mag-leaf-contents" data-ink="k" aria-labelledby="sv-contents-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/sv-a1.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker">In this issue</p>
+          <h3 id="sv-contents-h" class="mag-h" tabindex="-1">Contents</h3>
+          <ol class="mag-contents">
+            <li><span class="mag-n" aria-hidden="true">01</span><div><button type="button" class="mag-link" data-goto="2">The decisive moment</button><p>Barnack’s Leica and its 24 × 36 frame, exposure by rule and by number, and Cartier-Bresson’s book of 1952.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">02</span><div><button type="button" class="mag-link" data-goto="3">The negative and the print</button><p>Hurter and Driffield’s curve, the Zone System of Adams and Archer, a moonrise in New Mexico, and the work of the darkroom.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">03</span><div><button type="button" class="mag-link" data-goto="4">Light without a lens</button><p>Photograms from Talbot to Moholy-Nagy, the halftone screen, the picture magazines, and photographs made of characters at Bell Labs.</p></div></li>
+            <li><span class="mag-n" aria-hidden="true">05</span><div><button type="button" class="mag-link" data-goto="5">Five decks to punch</button><p>The catalogue: every deck in the issue, ready for the coding form.</p></div></li>
+          </ol>
+        </div>
+        <h4 class="mag-label">From the editors</h4>
+        <p>A black-and-white photograph is made of very little: grains of silver in a layer of gelatin, black where the light fell and clear where it did not. Everything else, every shade of grey from the shadow under a tree to the white of a cloud, is a matter of how much, and the whole craft of the photographer between the 1920s and the 1970s was the craft of how much. How much light, for how long. How much development. How much more light on this corner of the print than on that. And, at the end, how much ink on the page.</p>
+        <p>This issue is about the people who turned those amounts into rules. An engineer at Leitz who doubled a frame of cinema film and made a camera small enough for a pocket. Two friends in a chemical works in Lancashire who measured the blackness of their plates and drew it as a curve. A pianist turned photographer and a portrait photographer from Hollywood who divided the grey scale into eleven zones, so that a picture could be planned before the shutter was pressed. A young Frenchman trained as a painter, with a Leica, who thought a photograph was a matter of a fraction of a second. And the printers and engravers, and in the end the programmers, who found that a page with only one ink could still carry a photograph, if the ink was broken into dots.</p>
+        <p>Our argument is that black-and-white photography was always half arithmetic. The rules were never the art, but the art could not be had without them, and the photographers who mattered most knew the rules best and leaned on them hardest.</p>
+        <p>Five of those rules are here to be run. Wherever an article discusses a deck, a button beside the text puts it on the coding form. The line printer is a fitting darkroom, because like a printing press it has only black and paper: a full stop for paper and an asterisk for ink. With them the decks print a table of exposures, a film’s characteristic curve under three developments, the eleven zones as a printed wedge, a photogram made by chance, and a picture broken into halftone dots. The comment cards at the top of each deck say what its data cards hold. Change them, and the darkroom does as it is told.</p>
+        <p class="mag-colophon">Printed in black alone on coated paper, the plates through a screen of 150 lines to the inch.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="sv-a1">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/sv-contents.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">01</span> The 35 mm camera, 1913–1952</p>
+          <h3 id="sv-a1" class="mag-h" tabindex="-1">The decisive moment</h3>
+          <p class="mag-standfirst">An asthmatic engineer wanted a camera light enough to take on his travels. He turned a strip of cinema film on its side, and gave a generation of photographers a frame of 24 by 36 millimetres and a way of seeing.</p>
+          <blockquote class="mag-pull"><p>“It became the extension of my eye.”</p></blockquote>
+        </div>
+        <h4>Two cine frames</h4>
+        <p>Oskar Barnack came to the Ernst Leitz works at Wetzlar, the microscope makers, on 1 January 1911, from Carl Zeiss in Jena, to head its design department. He suffered from asthma, and he wanted a lighter camera to take on his travels than those of the day, with their glass plates, plate holders and tripods. Between 1913 and 1914 he built a small metal camera of his own that took the perforated 35 mm film made for the cinema.</p>
+        <p>The cinema ran that film vertically through the camera, and each frame was 18 by 24 millimetres. Barnack ran it sideways and let each picture take the length of two cine frames, 24 by 36 millimetres, with sides in the proportion of two to three. It is the frame that photographers still call full frame. A small negative meant a small camera, and a small negative could be enlarged later in the darkroom; the camera could be carried everywhere, and a single load of film gave thirty-six pictures.</p>
+        <p>It was ten years before Leitz made it. In 1923 Barnack persuaded his chief, Ernst Leitz II, to make a trial batch of 31; in 1924 the camera was named Leica, from the first letters of Leitz Camera; and in 1925 the Leica I was shown at the Leipzig Spring Fair. Its lens was a 50 mm of f/3.5, sold at first as the Elmax, for Ernst Leitz and the optical designer Max Berek, and renamed Elmar in October of that year when another maker objected to the name. Barnack died in 1936, by which time the small camera had changed the press, the street and the way photographs looked.</p>
+        <h4>A rule for the sun</h4>
+        <p>A camera that fits in a pocket asks to be used quickly, and early Leicas had no exposure meter. Photographers carried tables, or slide rules, or a rule of thumb. The best known is still taught: in bright sun, set the lens to f/16 and the shutter to one over the film speed. A light overcast is a stop less light, so open to f/11; overcast f/8, heavy overcast f/5.6, open shade f/4; on sand or snow close to f/22.</p>
+        <p>The rule works because exposure is a product. Each stop on the lens halves or doubles the light that passes; each step on the shutter dial, 1/60 to 1/125 to 1/250, halves or doubles the time. Open one and shorten the other, and the film receives the same light. In the 1950s the German shutter maker Friedrich Deckel gave the sum a single number, the light value in Europe and the exposure value, or EV, in America: EV 0 is f/1 for one second, each step is a stop, and a bright sunny scene for film of ASA 100 comes out at EV 15.</p>
+        <p><i>Sunny sixteen</i> does the arithmetic. As the data card stands, ASA 100 in bright sun, the rule asks for f/16 at 1/100 second, a speed that falls between the halvings of the dial; the deck works it out as EV 14.64 and calls it 15. Then it prints every stop from f/1.4 to f/32 against every speed from one second to 1/1000, and the same number runs down the table on a diagonal: that is reciprocity, set out in figures. It ends by listing the six settings that give the rule’s exposure, from f/5.6 at 1/1000 to f/32 at 1/30, and reminds the photographer that a wide stop gives less depth of field and a short time stops more motion. Try fast film in open shade, ASA 400 and f/4, and the deck finds EV 13 and eight ways to make it.</p>
+        <p class="mag-deck"><button type="button" data-deck="sunny-sixteen">Put <i>Sunny sixteen</i> on the coding form</button></p>
+        <h4>The extension of an eye</h4>
+        <p>Henri Cartier-Bresson, born in 1908, studied painting under André Lhote in 1926 and took his first photographs about the same time. In 1932 he bought his first Leica and travelled in Europe with his friends Leonor Fini and André Pieyre de Mandiargues; in 1933 he had his first exhibition, at the Julien Levy Gallery in New York. “I had just discovered the Leica,” he wrote later. “It became the extension of my eye, and I have never been separated from it since I found it.” In 1947 he founded the agency Magnum Photos with Robert Capa, David Seymour, William Vandivert and George Rodger, and from 1948 to 1950 he spent three years in Asia: in India at the death of Gandhi, in China at the change of government, in Indonesia at independence.</p>
+        <p>Then came the book. <i>Images à la sauvette</i>, initiated by the publisher Tériade, appeared from his Éditions Verve in October 1952, with a cover cut in paper by Henri Matisse and in an American edition from Simon and Schuster. The French title, worked out with Cartier-Bresson’s brother-in-law Georges Sadoul, evokes the street pedlar selling <i>à la sauvette</i>, without a licence, ready to run. Richard Simon wanted something punchier for America, and chose <i>The Decisive Moment</i>, from an epigraph Tériade had suggested, from the memoirs of the Cardinal de Retz, first published in 1717: “There is nothing in this world which does not have its decisive moment.” Matisse wrote the English title by hand at the foot of his cut-out.</p>
+        <p>The book let the 24 × 36 frame spread out across very large pages, printed in heliogravure by the Draeger brothers. Robert Capa called it “a Bible for photographers”. In its introduction Cartier-Bresson defined the thing in a sentence: “To me, photography is the simultaneous recognition, in a fraction of a second, of the significance of an event as well as of a precise organization of forms which give that event its proper expression.” The fraction of a second is the shutter’s; the recognition had to be the photographer’s, and a camera small and quiet enough to be forgotten was what made it possible.</p>
+        <h4>Plates</h4>
+        <p><i>Ilse Bing</i>, <i>My Shadow on the Roof with Leica (and Mart Stam), Hellerhof Settlement, Frankfurt-am-Main</i>, 1930. Gelatin silver print, 19 × 28.2 cm. The Metropolitan Museum of Art, New York.</p>
+        <p><i>Henri Cartier-Bresson</i>, <i>Hyères, France</i>, 1932. Gelatin silver print, 20 × 29.5 cm. The Metropolitan Museum of Art, New York.</p>
+        <p><i>Henri Cartier-Bresson</i>, <i>Seville</i>, 1933. Gelatin silver print, 19.6 × 29.4 cm. The Metropolitan Museum of Art, New York.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="sv-a2">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/sv-a2.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">02</span> Sensitometry and the darkroom, 1876–1948</p>
+          <h3 id="sv-a2" class="mag-h" tabindex="-1">The negative and the print</h3>
+          <p class="mag-standfirst">Two friends in a Lancashire chemical works drew the first curve of a film. Half a century later a pianist and a portrait photographer turned it into eleven zones, and a photograph could be planned before it was taken.</p>
+          <blockquote class="mag-pull"><p>“a codification of the principles of sensitometry”</p></blockquote>
+        </div>
+        <h4>A curve from Widnes</h4>
+        <p>Ferdinand Hurter, born in Switzerland in 1844, had studied chemistry under Robert Bunsen and physics under Gustav Kirchhoff before he settled in England as chief chemist of the Gaskell-Deacon works at Widnes, in Lancashire. Vero Charles Driffield, four years younger, came to the works in 1871. They became friends over music, and around 1876 Driffield persuaded Hurter to take up photography as a hobby. Before long the two men were measuring their plates.</p>
+        <p>They exposed plates to carefully graded amounts of light, developed them, and measured how much light each patch of the developed plate would let through. Their key step was to take a logarithm. The opacity of a patch is how many times it cuts down the light; its density is the logarithm of that opacity, so that a density of 0.3 lets through half the light and a density of 1.0 a tenth. Plotted against the logarithm of the exposure, density makes a curve that every photographer would come to know. It rises slowly from the faint fog of the unexposed plate in a curved toe, climbs a long straight line whose slope came to be called gamma, and bends over at the top in a shoulder, where more light hardly adds any more black. They published it in the <i>Journal of the Society of Chemical Industry</i> in May 1890, as “Photo-Chemical Investigations and a New Method of Determination of the Sensitiveness of Photographic Plates”. Two years before, they had built an actinograph, a slide rule for exposures.</p>
+        <p><i>The characteristic curve</i> draws the curve three times, for three development times, as a field of dots with the curve in asterisks. The film is a model, but behaves as film does: longer development steepens the straight line, by less with each extra minute. With the times on the data card, 6.5, 8 and 10.5 minutes, gamma rises from 0.56 to 0.63 to 0.73. Along the foot of each plot the deck marks the zones (of which more below), one stop or 0.3 of log exposure apart, and tells which zone of exposure reaches the density that normal development gives Zone VIII. Under the short development it is Zone IX; under the long, Zone VII.</p>
+        <p class="mag-deck"><button type="button" data-deck="characteristic-curve">Put <i>The characteristic curve</i> on the coding form</button></p>
+        <h4>Eleven zones</h4>
+        <p>Ansel Adams had trained as a concert pianist and only gave up music for photography in 1930, after Paul Strand showed him a box of negatives in Taos. Fred Archer, born in 1889, was a portrait photographer who had made his name with pictures of Hollywood stars, and from 1935 taught photography at the Art Center School in Los Angeles. When the two taught together there, around 1939 and 1940, they worked out what Adams later described as not an invention of his but “a codification of the principles of sensitometry”: the Zone System.</p>
+        <p>It divides the tones of a print into eleven zones, from 0, full black, to X, the white of the paper. Each zone is one stop of exposure, twice the light of the zone below. Zone V is middle grey: clear north sky, average weathered wood. The key is the meter. A reflected-light meter knows nothing of the subject; whatever it is pointed at, it recommends the exposure that would render that surface as Zone V. So the photographer reads a surface, decides where it should fall, and gives a stop less exposure for each zone below V. The other surfaces then fall where their readings put them, a zone for every stop. Development then moves the bright tones, as the curve showed: N+1, a longer development, carries a Zone VII surface up to VIII; N−1, a shorter one, brings Zone IX down to VIII. Adams set it all out in <i>The Negative</i> in 1948.</p>
+        <p><i>The Zone System</i> prints the eleven zones as a wedge through a screen, each a tenth more paper than the last, with the relative exposure under each, from 1 to 1,024. Then it photographs a landscape of six surfaces whose meter readings are on the data card. As it stands, the shadow under the pines reads EV 8 and is placed on Zone III, so the exposure is EV 10, f/4 at 1/60. Dark rock falls on V, foliage on VI, weathered wood on VII, granite in sun on VIII and a white cloud on IX, each marked under its zone, and the deck advises a contraction: develop N−1. Place the shadow on Zone II instead and everything falls a zone lower, the cloud lands on VIII, and the advice is to develop normally.</p>
+        <p class="mag-deck"><button type="button" data-deck="zone-system">Put <i>The Zone System</i> on the coding form</button></p>
+        <h4>Moonrise</h4>
+        <p>The system’s most famous test came at speed. On 1 November 1941, by the astronomers’ later reckoning at 4:49 in the afternoon, Adams was at the village of Hernandez, in New Mexico, when he saw the moon rising over it, with the last sun on the white crosses of its graveyard. In the best-known telling of the story he could not find his meter, but he knew the luminance of the moon, 250 candles per square foot, placed it on Zone VII, and worked out the exposure from that. As he pulled the dark slide for a second negative, the sunlight left the crosses.</p>
+        <p><i>Moonrise, Hernandez, New Mexico</i> was first published in <i>U.S. Camera Annual 1943</i>, chosen by Edward Steichen. The negative was hard to print. Adams made more than 1,300 prints from it, heightening the contrast over the years, so that later skies are far darker than early ones.</p>
+        <h4>In the darkroom</h4>
+        <p>That is the other half of the craft. Adams liked to compare the negative to a composer’s score and the print to its performance. The 35 mm negative was meant to be enlarged: an enlarger is a camera in reverse, a lamp shining down through the negative and a lens that throws its image onto a sheet of paper on the baseboard. First a whole roll is laid on one sheet under glass and printed in contact, thirty-six small frames, and the photographer marks the frame worth enlarging. At the enlarger, a hand or a card on a wire held in the light for part of the exposure dodges a shadow, so that it prints lighter; a card with a hole burns in a sky. No two prints from the same negative need be quite alike.</p>
+        <h4>Plates</h4>
+        <p><i>Ansel Adams</i>, <i>Moonrise, Hernandez, New Mexico</i>, about 1941, printed about 1978. Gelatin silver print. The Metropolitan Museum of Art, New York.</p>
+        <p><i>Ansel Adams</i>, <i>Winter Sunrise, Sierra Nevada, from Lone Pine, California</i>, 1944, printed 1978. Gelatin silver print. The Metropolitan Museum of Art, New York.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="sv-a3">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/sv-a3.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">03</span> Photograms and the printed page, 1835–1973</p>
+          <h3 id="sv-a3" class="mag-h" tabindex="-1">Light without a lens</h3>
+          <p class="mag-standfirst">You can make a photograph without a camera, by laying things on paper and switching on the light. You can print one without grey, with a single black ink broken into dots. In the end a computer learned to make one out of characters.</p>
+          <blockquote class="mag-pull"><p>Black ink, and paper.</p></blockquote>
+        </div>
+        <h4>Shadows on paper</h4>
+        <p>The first photographs had no lens. In the 1830s William Henry Fox Talbot laid leaves, flowers and lace on paper made sensitive with salt and silver nitrate and put it in the sun; where the object lay, the paper stayed pale, and everywhere else it darkened. He called the results photogenic drawings. They are negatives, white shapes on a dark ground, and they are exactly the size of what made them.</p>
+        <p>The modern artists rediscovered the method as a way of escaping the camera. By his own account in his autobiography of 1963, Man Ray found it by accident in his Paris darkroom, when an unexposed sheet of paper slipped into the developing tray and he laid a glass funnel and a thermometer on it and turned on the light. He called the results rayographs, and in 1922 put twelve of them into a portfolio, <i>Les Champs délicieux</i>, in an edition of 40, with a preface by Tristan Tzara. In the summer of 1922 László Moholy-Nagy and Lucia Moholy, his wife and a photographer, began laying objects of different shapes, textures and transparencies on sensitive paper in Berlin. It was in <i>Malerei, Photographie, Film</i>, the eighth of the Bauhaus books, in 1925, that Moholy-Nagy used the word that has stuck, photogram; the book carried only his name, though Lucia Moholy had shared the work.</p>
+        <p><i>A rayograph by chance</i> drops things on a sheet of paper 72 characters wide and 36 lines deep, chosen and placed by chance from a seed on the data card: a button, a washer, a pencil, a loop of thread, or a glass, which lets half the light through and prints grey. Then it switches on the light. Where the light falls the paper prints black, an asterisk; where a thing lies it stays white, a full stop; so the picture comes out as Talbot’s did, white shapes on black. With the seed 1927 the paper catches a pencil, two washers, a button, two loops of thread and a glass, and the deck lists where each landed before it prints the sheet. A new seed is a new rayograph, and the same seed the same one.</p>
+        <p class="mag-deck"><button type="button" data-deck="rayograph-by-chance">Put <i>A rayograph by chance</i> on the coding form</button></p>
+        <h4>A screen of crossed lines</h4>
+        <p>A press prints ink or no ink. To print a photograph with all its greys, it has to be broken into dots: big dots that merge in the shadows, small ones in the light tones, too fine for the eye to see one by one. Talbot himself proposed photographic screens in a patent of 1852. On 4 March 1880 the New York <i>Daily Graphic</i> printed “A Scene in Shantytown”, the first photograph reproduced with a full range of tones in a newspaper, made by Stephen Horgan with a crude screen. Georg Meisenbach patented a halftone process in Germany in 1882, and in Philadelphia Frederic Ives worked out a commercial method of his own. The screen that lasted came from two brothers there, Max and Louis Levy, patented in 1893: two sheets of glass ruled with fine opaque lines, cemented face to face with the lines at right angles. The photograph was copied through it onto a printing plate, and every square of the screen made one dot.</p>
+        <p>For a single ink the screen is turned to 45 degrees, where the rows of dots catch the eye least. Its fineness is counted in lines to the inch: about 85 for a newspaper, 133 to 150 for a magazine like this one.</p>
+        <p><i>A halftone screen</i> shows how the dots work, at the coarseness of a line printer. Its picture is a ball lit from the upper left, sitting on a floor before a grey wall, with its shadow; below it, a scale of ten tones from 10 to 100 per cent. Every character is inked where the picture is darker than the screen’s threshold, which rises and falls across the page like an egg box, turned by the angle on the data card. As it stands, the pitch is five characters and the angle 45 degrees, and since the printer sets ten characters to the inch, the deck reports a screen of 2.0 lines to the inch. Watch the scale: small black dots at 10 per cent, a chequerboard at 50, small white holes near 90. Set the angle to 0 and the dots line up in rows and columns; set the pitch to 3 and the characters are too coarse to hold the dots, so that every tone from 60 per cent up fills in solid black.</p>
+        <p class="mag-deck"><button type="button" data-deck="halftone-screen">Put <i>A halftone screen</i> on the coding form</button></p>
+        <h4>Magazines of pictures</h4>
+        <p>With the halftone, photographs could be printed with the type, and by the 1930s whole magazines were built on them. <i>Life</i> published its first issue on 23 November 1936, with Margaret Bourke-White’s photograph of the Fort Peck Dam in Montana on the cover. In Britain <i>Picture Post</i> followed on 1 October 1938, founded by the publisher Edward Hulton and the Hungarian-born editor Stefan Lorant, who had developed the story told in photographs at picture weeklies in Berlin and Munich. A photographer’s work now reached most of its public not as a print at all but as a pattern of dots.</p>
+        <h4>Pictures made of characters</h4>
+        <p>A computer can make that pattern itself. At Bell Labs in 1966 or 1967 Kenneth Knowlton and Leon Harmon scanned a photograph of the dancer Deborah Hay, reduced it to a grid of greys, and printed each cell as a small symbol whose density of ink matched its grey. <i>Studies in Perception I</i> was about twelve feet wide; it hung at the press conference in Robert Rauschenberg’s loft that launched Experiments in Art and Technology on 10 October 1967, and was in <i>The New York Times</i> the next day. In November 1973 Harmon showed in <i>Scientific American</i>, in “The Recognition of Faces”, how few squares of grey it takes to recognise Abraham Lincoln, with a portrait so coarse it looks like a mosaic. Three years later Salvador Dalí painted it into a picture of his own.</p>
+        <p>A line printer is the plainest of these machines: one size of mark, in one ink, on paper. Every deck in this issue is a black-and-white photograph made the hard way.</p>
+        <h4>Plates</h4>
+        <p><i>William Henry Fox Talbot</i>, <i>Botanical Specimen</i>, about 1835. Salted paper print, 18.8 × 11.3 cm. The Metropolitan Museum of Art, New York.</p>
+        <p><i>Man Ray</i>, <i>Rayograph</i>, 1922. Gelatin silver print, 23.9 × 17.8 cm. The Metropolitan Museum of Art, New York.</p>
+        <p><i>László Moholy-Nagy</i>, <i>Fotogramm</i>, 1922. Gelatin silver print, 17.8 × 23.7 cm. The Metropolitan Museum of Art, New York.</p>
+        <p><i>Margaret Bourke-White</i>, <i>Fort Peck Dam, Montana</i>, 1936. Gelatin silver print, 33.1 × 26.6 cm. The Metropolitan Museum of Art, New York.</p>
+      </div>
+    </section>
+    <section class="mag-leaf mag-spread" data-ink="k" aria-labelledby="sv-cat-h">
+      <div class="mag-flow">
+        <div class="mag-opener">
+          <figure class="mag-plate-box"><img class="mag-plate" src="assets/st/sv-catalogue.png" width="264" height="96" alt=""></figure>
+          <p class="mag-kicker"><span class="mag-num">05</span> The catalogue</p>
+          <h3 id="sv-cat-h" class="mag-h" tabindex="-1">Five decks to punch</h3>
+          <p class="mag-standfirst">Every deck in this issue, in the order the articles discuss them. Each one runs as it stands, and its comment cards say what its data cards hold. The printer has two marks, a full stop for paper and an asterisk for ink, and the decks make every grey out of them.</p>
+        </div>
+        <ol class="mag-cat">
+          <li><h4>Sunny sixteen</h4><p>The sunny sixteen rule turned into an exposure value for any film speed and light, a table of every stop against every shutter speed, and the settings that give the same exposure.</p><p class="mag-deck"><button type="button" data-deck="sunny-sixteen">Put <i>Sunny sixteen</i> on the coding form</button></p></li>
+          <li><h4>The characteristic curve</h4><p>A film’s density against log exposure, toe, straight line and shoulder, drawn for three development times, with the density of each zone and the zone that reaches normal Zone VIII.</p><p class="mag-deck"><button type="button" data-deck="characteristic-curve">Put <i>The characteristic curve</i> on the coding form</button></p></li>
+          <li><h4>The Zone System</h4><p>The eleven zones printed as a wedge, then a landscape of six surfaces placed and exposed by meter readings, each marked on its zone, with the development that brings the brightest to Zone VIII.</p><p class="mag-deck"><button type="button" data-deck="zone-system">Put <i>The Zone System</i> on the coding form</button></p></li>
+          <li><h4>A rayograph by chance</h4><p>Buttons, washers, pencils, thread and glass dropped by chance on photographic paper and exposed to the light: white shapes on black, after Man Ray’s rayographs.</p><p class="mag-deck"><button type="button" data-deck="rayograph-by-chance">Put <i>A rayograph by chance</i> on the coding form</button></p></li>
+          <li><h4>A halftone screen</h4><p>A ball and its shadow broken into dots by a screen of crossed lines at any pitch and angle, with a scale of tones from 10 to 100 per cent.</p><p class="mag-deck"><button type="button" data-deck="halftone-screen">Put <i>A halftone screen</i> on the coding form</button></p></li>
+        </ol>
+      </div>
+    </section>
+
+  </div>
+  <div class="mag-turn">
+    <button type="button" class="mag-pill" data-turn="-1">&lsaquo; Previous page</button>
+    <nav class="mag-index" aria-label="Pages of Silver">
+      <ol>
+        <li><button type="button" data-goto="0"><span class="mag-dot">C</span><span class="mag-vh"> Cover</span></button></li>
+        <li><button type="button" data-goto="1"><span class="mag-dot">00</span><span class="mag-vh"> Contents</span></button></li>
+        <li><button type="button" data-goto="2"><span class="mag-dot">01</span><span class="mag-vh"> The decisive moment</span></button></li>
+        <li><button type="button" data-goto="3"><span class="mag-dot">02</span><span class="mag-vh"> The negative and the print</span></button></li>
+        <li><button type="button" data-goto="4"><span class="mag-dot">03</span><span class="mag-vh"> Light without a lens</span></button></li>
+        <li><button type="button" data-goto="5"><span class="mag-dot">05</span><span class="mag-vh"> Five decks to punch</span></button></li>
+      </ol>
+    </nav>
+    <p class="mag-folio" aria-live="polite"></p>
+    <button type="button" class="mag-pill mag-next" data-turn="1">Next page &rsaquo;</button>
+  </div>
+</div>
   </section>
 
   <!-- the editing station: the deck box beside the coding form, the card in hand under it -->
@@ -1111,6 +1439,10 @@
         <ul class="decks" id="deck-tray-event"></ul>
         <h4 class="tray-div">From <i>Gesso</i></h4>
         <ul class="decks" id="deck-tray-gesso"></ul>
+        <h4 class="tray-div">From <i>Cons</i></h4>
+        <ul class="decks" id="deck-tray-cons"></ul>
+        <h4 class="tray-div">From <i>Silver</i></h4>
+        <ul class="decks" id="deck-tray-silver"></ul>
       </div>
     </div>
     <div class="pad" id="pad">
@@ -1311,6 +1643,99 @@
     </div>
   </section>
 
+  <!-- the photo album from the bookcase: black-and-white prints and Polaroids, places and people (album.js) -->
+  <section class="station st-album" id="album" data-station="album" aria-labelledby="album-h" hidden>
+    <div class="album">
+      <h2 id="album-h" class="desk-tag" tabindex="-1">Photo album</h2>
+      <div class="album-book">
+        <div class="album-spread">
+          <h3 class="vh" tabindex="-1">Pages 1 and 2</h3>
+          <div class="album-page"><figure class="snap"><img src="assets/st/album-p1.png" width="104" height="80" alt="A black-and-white photograph of a city street at night: a tram with its windows lit, their light reflected in the wet road, a street lamp at the left."><figcaption>The last tram home, the street still wet</figcaption></figure><figure class="snap polaroid"><img src="assets/st/album-q1.png" width="72" height="88" alt="A faded Polaroid of three striped beach huts, red, blue and yellow, on the sand before a blue sea, the sun high."><figcaption>The huts at the end of the beach</figcaption></figure></div>
+          <div class="album-page"><figure class="snap"><img src="assets/st/album-p2.png" width="104" height="80" alt="A black-and-white photograph of a woman in a headscarf at a ferry’s rail, the water and a far shore behind her."><figcaption>On the morning ferry, the wind off the water</figcaption></figure><figure class="snap polaroid"><img src="assets/st/album-q4.png" width="72" height="88" alt="A faded Polaroid of a café table seen from above, a cup of coffee and a letter on it, the café’s awning and windows beyond."><figcaption>A coffee on the square, and the letter home</figcaption></figure></div>
+        </div>
+        <div class="album-spread" hidden>
+          <h3 class="vh" tabindex="-1">Pages 3 and 4</h3>
+          <div class="album-page"><figure class="snap"><img src="assets/st/album-p3.png" width="104" height="80" alt="A black-and-white photograph of two old men playing chess at a table in a park under a plane tree, a third man standing to watch."><figcaption>Chess under the plane trees, Sunday</figcaption></figure><figure class="snap"><img src="assets/st/album-p4.png" width="104" height="80" alt="A black-and-white photograph of a mountain lake, snow on the peaks, a figure at the end of a jetty."><figcaption>The lake above the village, before the weather turned</figcaption></figure></div>
+          <div class="album-page"><figure class="snap polaroid"><img src="assets/st/album-q2.png" width="72" height="88" alt="A faded Polaroid of two friends on a rooftop holding hands, the city’s blocks dark against an orange sunset."><figcaption>Up on the roof, the evening it finally stopped raining</figcaption></figure><figure class="snap polaroid"><img src="assets/st/album-q3.png" width="72" height="88" alt="A faded Polaroid of a child with a red balloon beside a grown-up at a fair, a striped tent and a stall behind them."><figcaption>The fair on the common: the balloon was not lost</figcaption></figure></div>
+        </div>
+        <div class="album-spread" hidden>
+          <h3 class="vh" tabindex="-1">Pages 5 and 6</h3>
+          <div class="album-page"><figure class="snap"><img src="assets/st/album-p5.png" width="104" height="80" alt="A black-and-white photograph of a computer room at night: a row of tape drives behind an operator seated at the console."><figcaption>The machine room after midnight, the operator at the console</figcaption></figure><figure class="snap polaroid"><img src="assets/st/album-q5.png" width="72" height="88" alt="A faded Polaroid of a jazz trio in a cellar club under a single light: a pianist, a saxophonist and a bass player."><figcaption>The trio in the cellar, the night the bass came</figcaption></figure></div>
+          <div class="album-page"><figure class="snap"><img src="assets/st/album-p6.png" width="104" height="80" alt="A black-and-white photograph of a striped lighthouse on a headland in fog, its beam across the grey."><figcaption>The light at the point, in fog</figcaption></figure><figure class="snap"><img src="assets/st/album-p7.png" width="104" height="80" alt="A black-and-white photograph of a station platform under its roof, travellers with cases, steam rolling in from the train."><figcaption>Waiting for the night train, with the steam coming in</figcaption></figure></div>
+        </div>
+      </div>
+      <div class="toolbar album-turn">
+        <button type="button" data-turn="-1">&lsaquo; Previous pages</button>
+        <p class="album-folio" id="album-folio" aria-live="polite"></p>
+        <button type="button" data-turn="1">Next pages &rsaquo;</button>
+        <button type="button" data-go="desk">Put it back on the shelf</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- the tomato timer from the desk, for working in pomodoros (timer.js) -->
+  <section class="station st-timer" data-station="timer" aria-labelledby="timer-h" hidden>
+    <div class="pomo">
+      <h2 id="timer-h" class="desk-tag" tabindex="-1">Tomato timer</h2>
+      <div class="pomo-face">
+        <div class="pomo-tomato"><canvas id="pomo-canvas" width="160" height="128" aria-hidden="true"></canvas></div>
+        <p class="pomo-read"><span id="pomo-phase">Work</span> <span id="pomo-time" class="pomo-time" role="timer">25:00</span></p>
+        <p class="pomo-set"><span class="pomo-tally" id="pomo-tally" aria-hidden="true"></span> <span id="pomo-count">0 spells of work done</span></p>
+      </div>
+      <div class="toolbar pomo-tools">
+        <button type="button" id="pomo-go">Start</button>
+        <button type="button" id="pomo-reset">Reset</button>
+        <button type="button" id="pomo-skip">Skip</button>
+      </div>
+      <fieldset class="pomo-lengths">
+        <legend>Minutes</legend>
+        <label>Work <input type="number" id="pomo-work" min="1" max="90" value="25"></label>
+        <label>Short break <input type="number" id="pomo-short" min="1" max="90" value="5"></label>
+        <label>Long break <input type="number" id="pomo-long" min="1" max="90" value="15"></label>
+        <label>Long break after <input type="number" id="pomo-every" min="2" max="8" value="4"> spells</label>
+        <label class="pomo-auto"><input type="checkbox" id="pomo-auto"> Start the next spell by itself</label>
+      </fieldset>
+      <p class="pomo-note">Spells of work with short breaks between and a long one after every fourth: the pomodoro method, named by Francesco Cirillo after his tomato-shaped kitchen timer. It runs wherever you are in the room, and rings when a spell ends.</p>
+      <p class="pomo-back"><button type="button" data-go="desk">Put it back on the desk</button></p>
+    </div>
+  </section>
+
+  <!-- the pocket game from the bookcase: a handheld console, and on it Stack (console.js) -->
+  <section class="station st-console" data-station="console" aria-labelledby="console-h" hidden>
+    <div class="console-wrap">
+      <div class="gb-stand">
+        <div class="gb" tabindex="0" role="application" aria-label="The pocket game’s screen. Arrows move, Up or X turns, Z turns back, Space drops, Enter is Start, M is Select." aria-describedby="gb-status">
+          <canvas id="gb-canvas" width="200" height="300" aria-hidden="true"></canvas>
+          <span class="gb-key k-up" data-key="up" aria-hidden="true"></span>
+          <span class="gb-key k-down" data-key="down" aria-hidden="true"></span>
+          <span class="gb-key k-left" data-key="left" aria-hidden="true"></span>
+          <span class="gb-key k-right" data-key="right" aria-hidden="true"></span>
+          <span class="gb-key k-a" data-key="a" aria-hidden="true"></span>
+          <span class="gb-key k-b" data-key="b" aria-hidden="true"></span>
+          <span class="gb-key k-select" data-key="select" aria-hidden="true"></span>
+          <span class="gb-key k-start" data-key="start" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="gb-card">
+        <h2 id="console-h" class="desk-tag" tabindex="-1">Pocket game</h2>
+        <p>A handheld from the bookcase, and in it <i>Stack</i>: turn the falling shapes to fill the well’s rows. A full row clears; every ten, they fall faster.</p>
+        <h3>Keys</h3>
+        <dl class="gb-keys">
+          <dt><kbd>&larr;</kbd> <kbd>&rarr;</kbd></dt><dd>Move</dd>
+          <dt><kbd>&darr;</kbd></dt><dd>Drop faster</dd>
+          <dt><kbd>&uarr;</kbd> or <kbd>X</kbd> (A)</dt><dd>Turn clockwise</dd>
+          <dt><kbd>Z</kbd> (B)</dt><dd>Turn back</dd>
+          <dt><kbd>Space</kbd></dt><dd>Drop at once</dd>
+          <dt><kbd>Enter</kbd> (Start)</dt><dd>Begin, pause</dd>
+          <dt><kbd>M</kbd> (Select)</dt><dd>Music off and on</dd>
+        </dl>
+        <p>Or press the console’s own buttons. The best score is kept until the page is closed.</p>
+        <p class="vh" id="gb-status" role="status"></p>
+        <p><button type="button" data-go="desk">Put it back on the shelf</button></p>
+      </div>
+    </div>
+  </section>
+
   <!-- the UPIC: music drawn on a page -->
   <section class="station st-upic" data-station="upic" aria-labelledby="upic-h" hidden>
     <div class="upic">
@@ -1374,5 +1799,8 @@
 <script src="hotspots.js"></script>
 <script src="pan.js"></script>
 <script src="corner.js"></script>
+<script src="console.js"></script>
+<script src="timer.js"></script>
+<script src="album.js"></script>
 </body>
 </html>

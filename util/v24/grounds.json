@@ -1,0 +1,20 @@
+{
+ "evening": {
+  "ogee": "#293365",
+  "atomic": "#334658",
+  "trellis": "#4a3349",
+  "grass": "#7f7d96"
+ },
+ "morning": {
+  "ogee": "#2a3c76",
+  "atomic": "#47625f",
+  "trellis": "#663a43",
+  "grass": "#a49c90"
+ },
+ "night": {
+  "ogee": "#21265c",
+  "atomic": "#283856",
+  "trellis": "#3b2743",
+  "grass": "#575782"
+ }
+}
