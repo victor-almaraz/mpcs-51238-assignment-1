@@ -14,7 +14,7 @@
   var SAY = { v1: 'Read volume 1: FORTRAN', v2: 'Read volume 2: Sieves', v3: 'Read volume 3: Music and tape',
     'o-mag': 'Read the magazines', 'o-folio': 'Look through the miscellanea', 'o-box': 'Open the deck box',
     'o-form': 'Pick up the coding form', 'o-out': 'Look in the out tray', 'o-computer': 'Use the computer', 'o-tape': 'Use the tape player',
-    'o-reader': 'Look at the card reader and printer', 'o-upic': 'Draw on the UPIC', 'o-console': 'Play the pocket game', 'o-timer': 'Set the tomato timer', 'o-album': 'Look through the photo album',
+    'o-reader': 'Look at the card reader and printer', 'o-upic': 'Draw on the UPIC', 'o-console': 'Play the pocket game', 'o-timer': 'Set the tomato timer', 'o-album': 'Look through the photo album', 'o-records': 'Play a record',
     'print-wide': 'Change the print', 'print-narrow': 'Change the print', 'print-shelf': 'Change the print', 'floor-l': 'Change the plant',
     'floor-r': 'Change the plant', 'desk-plant': 'Change the plant', lamp: 'Change the lamp', mug: 'Change the mug', 'print-tank': 'Change the print', chair: 'Change the chair' };
   var spots = Array.prototype.slice.call(scene.querySelectorAll('.obj, .swap'));

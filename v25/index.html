@@ -32,6 +32,7 @@
         <li><button type="button" class="label" data-go="console"><span class="no" aria-hidden="true">11</span>Pocket game</button></li>
         <li><button type="button" class="label" data-go="timer"><span class="no" aria-hidden="true">12</span>Tomato timer</button></li>
         <li><button type="button" class="label" data-go="album"><span class="no" aria-hidden="true">13</span>Photo album</button></li>
+        <li><button type="button" class="label" data-go="records"><span class="no" aria-hidden="true">14</span>Record player</button></li>
       </ol>
       <p class="back"><button type="button" class="menu-act" id="paper-btn">Change the wallpaper</button></p>
       <p class="back"><button type="button" class="menu-act" id="light-btn">Light: by the clock</button></p>
@@ -42,6 +43,7 @@
   </nav>
 
   <p class="vh" id="pomo-status" role="status"></p>
+  <p class="vh" id="rec-status" role="status"></p>
   <div class="stations">
 
   <!-- the room seen whole, straight on: the bookshelf on the wall, the desk under it, and
@@ -97,6 +99,7 @@
         <button type="button" class="swap sw-print-tank" data-swap="print-tank"><img src="assets/evening/print-kelly.png" width="128" height="86" alt=""></button>
         <button type="button" class="swap camera" data-say="Take a photograph" aria-label="The camera: take a photograph"><img src="assets/evening/px-camera.png" data-px="px-camera" width="40" height="27" alt=""></button>
         <span class="flash" aria-hidden="true"></span>
+        <button type="button" class="obj o-records" data-go="records"><span class="record-player" aria-hidden="true"><img src="assets/evening/px-record-player.png" data-px="px-record-player" width="29" height="32" alt=""><span class="anim spin"></span></span><span class="obj-tag">Record player</span></button>
         <button type="button" class="swap sw-chair" data-swap="chair"><img src="assets/evening/chair-lounge.png" width="111" height="109" alt=""></button>
         <button type="button" class="swap clock" data-say="Read the clock" aria-label="The cat clock"><img src="assets/evening/px-cat-clock.png" data-px="px-cat-clock" width="42" height="114" alt=""><span class="anim cat-moves"></span><canvas class="clock-hands" width="25" height="25" aria-hidden="true"></canvas></button>
         <ul class="books" aria-label="On the bookcase">
@@ -1643,6 +1646,21 @@
     </div>
   </section>
 
+  <!-- the record player from the reading corner, and its crate of records (records.js) -->
+  <section class="station st-records" data-station="records" aria-labelledby="records-h" hidden>
+    <div class="records">
+      <h2 id="records-h" class="desk-tag" tabindex="-1">Record player</h2>
+      <div class="rec-deck"><canvas id="rec-canvas" width="200" height="140" aria-hidden="true"></canvas>
+        <p class="rec-note">Renditions of music long out of copyright, played on the room’s own instruments. A record plays on wherever you go in the room, until it ends or the needle is lifted.</p></div>
+      <div class="rec-side">
+        <p class="rec-now" id="rec-now">Nothing is playing. Choose a record from the crate.</p>
+        <h3>The crate</h3>
+        <ul class="rec-crate" id="rec-crate"></ul>
+        <p class="toolbar"><button type="button" id="rec-stop" disabled>Lift the needle</button> <button type="button" data-go="desk">Back to the room</button></p>
+      </div>
+    </div>
+  </section>
+
   <!-- the photo album from the bookcase: black-and-white prints and Polaroids, places and people (album.js) -->
   <section class="station st-album" id="album" data-station="album" aria-labelledby="album-h" hidden>
     <div class="album">
@@ -1704,7 +1722,7 @@
   <section class="station st-console" data-station="console" aria-labelledby="console-h" hidden>
     <div class="console-wrap">
       <div class="gb-stand">
-        <div class="gb" tabindex="0" role="application" aria-label="The pocket game’s screen. Arrows move, Up or X turns, Z turns back, Space drops, Enter is Start, M is Select." aria-describedby="gb-status">
+        <div class="gb" tabindex="0" role="application" aria-label="The pocket game’s screen. Arrows move, Up or X turns, Z turns back, Space drops, Enter is Start, M is Select.">
           <canvas id="gb-canvas" width="200" height="300" aria-hidden="true"></canvas>
           <span class="gb-key k-up" data-key="up" aria-hidden="true"></span>
           <span class="gb-key k-down" data-key="down" aria-hidden="true"></span>
@@ -1802,5 +1820,6 @@
 <script src="console.js"></script>
 <script src="timer.js"></script>
 <script src="album.js"></script>
+<script src="records.js"></script>
 </body>
 </html>

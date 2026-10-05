@@ -1,20 +1,20 @@
 {
  "evening": {
-  "ogee": "#232e6f",
-  "atomic": "#424a62",
-  "trellis": "#402e44",
-  "grass": "#7d7b93"
+  "ogee": "#27306c",
+  "atomic": "#41496b",
+  "trellis": "#583145",
+  "grass": "#7e849e"
  },
  "morning": {
-  "ogee": "#2a3c7b",
-  "atomic": "#435a5d",
-  "trellis": "#563b4c",
-  "grass": "#a59e8f"
+  "ogee": "#2a3a57",
+  "atomic": "#42595c",
+  "trellis": "#583c3e",
+  "grass": "#a69f92"
  },
  "night": {
-  "ogee": "#232e6f",
-  "atomic": "#2a3b56",
-  "trellis": "#382843",
-  "grass": "#555a8a"
+  "ogee": "#1e2a6b",
+  "atomic": "#2a3a57",
+  "trellis": "#352247",
+  "grass": "#525581"
  }
 }

@@ -1,6 +1,6 @@
 # v25's second wall: round the corner from the desk, the reading corner. A bookcase of five
 # shelves (its books drawn in the backdrop, but for the ones that can be taken down), a
-# metronome on its second shelf, a pocket game console on its third, a 35 mm camera on top, a photo album on its bottom shelf, a chair to change (four) under a cat clock, and a planted fish tank on
+# metronome on its second shelf, a pocket game console on its third, a 35 mm camera on top, a photo album on its bottom shelf, a chair to change (four) under a cat clock, a record player on a side table, and a planted fish tank on
 # a teak cabinet under a print. Drawn directly in art pixels (no smoothing), in the same
 # colours as the first wall, then lit by its own light (the ambient of the hour, the tank's
 # glow, its top and far end falling away) and quantized into the room's one palette by build4.
@@ -65,6 +65,8 @@ BOOKS = [('book-xenakis', 0, 92, 11, 41), ('book-hiller', 0, 152, 10, 43), ('boo
 METRONOME = (186, 1, 21, 33)             # left, compartment, width, height
 HANDHELD = (210, 149, 17, 26)
 ALBUM = (193, 252, 17, 46)                # the photo album, on end on the bottom shelf: left, top, width, height
+SIDE_TABLE = (375, 262, 31)               # the side table by the chair: left, top, width
+PLAYER = (376, 230, 29, 32)                # the record player on it: left, top, width, height
 CAMERA = (110, 13, 40, 27)               # the 35 mm camera, on the bookcase's top: left, top, width, height            # the pocket game, on the books lying flat: left, top, width, height
 CAT = (296, 64, 42, 114)                   # the cat clock: left, top, width, height
 CAT_FACE = (8, 47, 25)                     # its face's box in the cat: left, top, size
@@ -334,6 +336,51 @@ def chair_pic(fn):
     cv = C(W, H); fn(cv)
     x, y, w, h = CHAIR_BOX
     return cv.im.crop((x, y, x + w, y + h))
+
+def side_table(cv):
+    # a small teak side table between the chair and the cabinet: a round-edged top, a shelf
+    # under it, three splayed legs (two seen)
+    x0, y0, w = SIDE_TABLE; x1 = x0 + w - 1
+    cv.rect(x0, y0, x1, y0 + 2, TEAK); cv.rect(x0, y0, x1, y0, TEAK_L); cv.rect(x0, y0 + 2, x1, y0 + 2, TEAK_D)
+    cv.rect(x0 + 4, y0 + 24, x1 - 4, y0 + 25, TEAK); cv.rect(x0 + 4, y0 + 25, x1 - 4, y0 + 25, TEAK_D)
+    n = FLOOR_TOP - y0 - 3
+    for lx, d in ((x0 + 3, -1), (x1 - 4, 1)):
+        for k in range(n):
+            x = lx + d * (k * 3 // n)
+            cv.rect(x, y0 + 3 + k, x + 1, y0 + 3 + k, TEAK); cv.px(x + (1 if d > 0 else 0), y0 + 3 + k, TEAK_D)
+    # two records leaning on the shelf under it
+    cv.rect(x0 + 7, y0 + 12, x0 + 19, y0 + 23, (60, 110, 150)); cv.rect(x0 + 9, y0 + 11, x0 + 21, y0 + 23, (220, 200, 150))
+    cv.rect(x0 + 13, y0 + 15, x0 + 17, y0 + 19, (180, 60, 50))
+
+def record_player():
+    # a portable record player in a two-tone case: its lid up behind, lined in cream, the
+    # turntable's record seen nearly edge on with its red label, the tonearm resting on it,
+    # the speaker grille and the knobs on the front
+    w, h = PLAYER[2], PLAYER[3]
+    CASE, CASE_L, CASE_D, LID = (72, 128, 132), (104, 160, 160), (48, 92, 98), (236, 226, 204)
+    cv = C(w, h)
+    cv.rect(1, 0, w - 2, 15, CASE); cv.rect(3, 2, w - 4, 14, LID); cv.rect(1, 0, w - 2, 0, CASE_L)
+    for y in range(4, 14, 2): cv.rect(5, y, w - 6, y, (220, 208, 182))
+    cv.rect(0, 16, w - 1, 18, (40, 38, 40))                         # the deck
+    cv.ell(3, 14, w - 6, 18, (24, 22, 24)); cv.ell(10, 15, 16, 17, (190, 56, 46))
+    cv.rect(13, 16, 13, 16, (240, 230, 210))
+    cv.line([(w - 3, 13), (w - 4, 16), (16, 16)], (196, 198, 200)); cv.rect(w - 4, 12, w - 2, 13, (150, 152, 154))
+    cv.rect(0, 19, w - 1, h - 1, CASE); cv.rect(0, 19, w - 1, 19, CASE_L); cv.rect(0, h - 1, w - 1, h - 1, CASE_D); cv.rect(w - 1, 19, w - 1, h - 1, CASE_D)
+    for y in range(21, h - 2, 2):
+        for x in range(2, 15, 2): cv.px(x, y, CASE_D)
+    for x in (19, 24): cv.rect(x, 24, x + 2, 26, (220, 210, 190)); cv.px(x + 1, 24, (120, 110, 100))
+    return cv.im
+
+def spin(n=3):
+    # the record turning: a glint that runs round the record, seen edge on, a frame at a time
+    w, h = PLAYER[2], PLAYER[3]
+    out = []
+    for k in range(n):
+        cv = C(w, h)
+        for i, x in enumerate((5 + k * 6, 21 - k * 4)):
+            cv.px(x, 15 + i * 2, (110, 108, 120)); cv.px(x + 1, 15 + i * 2, (80, 78, 90))
+        out.append(cv.im)
+    return out
 
 def cabinet(cv):
     # a teak cabinet on a plinth, two sliding doors with round pulls; the tank stands on it
@@ -749,7 +796,7 @@ def backdrop2(tile, first):
     """the second wall, for one paper: wall, floor, bookcase and its books, chair, cabinet, and
     their hard shadows"""
     bg = wall2(tile, first)
-    for fn in (bookcase, cabinet):
+    for fn in (bookcase, cabinet, side_table):
         cv = C(W, H); fn(cv, random.Random(1971)) if fn is bookcase else fn(cv)
         drop(bg, cv.im, 0, 0, 2, 2); bg.alpha_composite(cv.im)
     # the print's and the tank's shadows fall on the wall whichever print hangs
@@ -762,7 +809,7 @@ def backdrop2(tile, first):
 def sprites2():
     """the things that stand on their own: name -> (picture, place)"""
     S = {'px-tank.png': (tank(), TANK[:2]), 'px-metronome.png': (metronome(), (METRONOME[0], COMPS[METRONOME[1]][1] - METRONOME[3] + 1)),
-         'px-cat-clock.png': (cat_body(), CAT[:2]), 'px-handheld.png': (handheld(), HANDHELD[:2]), 'px-camera.png': (camera(), CAMERA[:2]), 'px-album.png': (album(), ALBUM[:2])}
+         'px-cat-clock.png': (cat_body(), CAT[:2]), 'px-handheld.png': (handheld(), HANDHELD[:2]), 'px-camera.png': (camera(), CAMERA[:2]), 'px-album.png': (album(), ALBUM[:2]), 'px-record-player.png': (record_player(), PLAYER[:2])}
     for n, fn in CHAIRS.items(): S[n + '.png'] = (chair_pic(fn), CHAIR_BOX[:2])
     for n, *_ in BOOKS:
         x, y, w, h = book_box(n); S['px-' + n + '.png'] = (book(n), (x, y))
@@ -775,7 +822,7 @@ def anims2():
     return {'tetras.png': (t, (SWIM[0] + 40, SWIM[1] + 18)), 'angel.png': (a, (SWIM[0] + 90, SWIM[1] + 10)),
             'cory.png': (c, (SWIM[0] + 60, TANK[1] + TANK[3] - 15)), 'bubbles.png': (bubbles(), (TANK[0] + TANK[2] - 11, TANK[1] + 10)),
             'flakes.png': (flakes(), (TANK[0] + 52, TANK[1] + 11)), 'pendulum.png': (pendulum(), (METRONOME[0], COMPS[METRONOME[1]][1] - METRONOME[3] + 1)),
-            'cat.png': (cat_moves(), CAT[:2])}
+            'cat.png': (cat_moves(), CAT[:2]), 'spin.png': (spin(), PLAYER[:2])}
 
 if __name__ == '__main__':
     PROOF_CHAIR = sys.argv[1] if len(sys.argv) > 1 else 'chair-lounge.png'

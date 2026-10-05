@@ -14,7 +14,7 @@ var Upic = (function () {
   'use strict';
   var doc = document, $ = Desk.$, plural = Desk.plural;
   var W = 360, H = 200, LOW = 36, OCT = 4;               // the page in pixels; C2 (MIDI 36) and four octaves up
-  var PAPER = '#f1e7d5', GRID = '#e2d6bd', RULE = '#cbb991', INK = '#1e1d1b', LIVE = '#b5462b', PEN = '#2b4560';
+  var PAPER = '#f1e7d5', GRID = '#e2d6bd', RULE = '#cbb991', INK = '#1e1d1b', LIVE = '#b5462b';
   var page = $('upic-page'), g = page.getContext('2d');
   var status = $('upic-status'), lengthIn = $('upic-length'), lengthOut = $('upic-length-out');
   var playBtn = $('upic-play'), head = $('upic-playhead'), penMark = $('upic-pen'), threadBtn = $('upic-thread');

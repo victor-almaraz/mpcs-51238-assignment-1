@@ -78,9 +78,9 @@
   function time() { return chosen === 'clock' ? clockTime() : chosen; }
   function base() { return 'assets/' + time() + '/'; }
   // the ground under each paper's tile, at each time (the colour behind the room)
-  var GROUND = { evening: { ogee: '#232e6f', atomic: '#424a62', trellis: '#402e44', grass: '#7d7b93' },
-    morning: { ogee: '#2a3c7b', atomic: '#435a5d', trellis: '#563b4c', grass: '#a59e8f' },
-    night: { ogee: '#232e6f', atomic: '#2a3b56', trellis: '#382843', grass: '#555a8a' } };
+  var GROUND = { evening: { ogee: '#27306c', atomic: '#41496b', trellis: '#583145', grass: '#7e849e' },
+    morning: { ogee: '#2a3a57', atomic: '#42595c', trellis: '#583c3e', grass: '#a69f92' },
+    night: { ogee: '#1e2a6b', atomic: '#2a3a57', trellis: '#352247', grass: '#525581' } };
 
   // the light: the lamp on the desk, or 'off'. What the lamp's light reaches is drawn for each
   // (assets/<time>/lit/<light>/); everything else once a time (assets/<time>/)
@@ -210,7 +210,7 @@
     var css = { '--back-l': b + 'lit/' + light() + '/room-' + p + '.png', '--back-r': b + 'room-' + p + '-r.png', '--tile': b + 'tile-' + p + '.png',
       '--floor-tile': b + 'floor-tile.png', '--steam': b + 'anim/lit/' + light() + '/steam.png', '--reel-l': b + 'anim/reel-l.png',
       '--reel-r': b + 'anim/reel-r.png', '--screen': b + 'anim/screen.png', '--back-2': b + 'room2-' + p + '.png' };
-    ['tetras', 'angel', 'cory', 'bubbles', 'flakes', 'pendulum', 'cat'].forEach(function (n) { css['--' + n] = b + 'anim/' + n + '.png'; });
+    ['tetras', 'angel', 'cory', 'bubbles', 'flakes', 'pendulum', 'cat', 'spin'].forEach(function (n) { css['--' + n] = b + 'anim/' + n + '.png'; });
     for (var k in css) room.style.setProperty(k, 'url(' + css[k] + ')');
     room.style.setProperty('--paper-blue', GROUND[t][p]);
     swaps.forEach(function (b) { b.show(); });
