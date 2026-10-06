@@ -8,17 +8,18 @@
 <link rel="stylesheet" href="../css/rooms.css">
 </head>
 <body>
-<!-- The genealogy: the rooms as a family tree on graph paper (genealogy.js draws it from
-     scripts/versions.js), each room under the ones it was made from, and the lineage written out.
-     The lineage is set from scripts/versions.js by util/gallery/build_pages.py. -->
-<main class="board">
+<!-- The genealogy: the rooms as a family tree on graph paper, read from left to right (genealogy.js
+     draws it from scripts/versions.js), each room beside the ones it was made from, and the
+     lineage written out in the work's four chapters. The lineage is set from scripts/versions.js
+     by util/gallery/build_pages.py. -->
+<main class="board wide">
   <span class="pin l" aria-hidden="true"></span><span class="pin r" aria-hidden="true"></span>
   <div class="board-in">
     <header class="head">
       <div>
         <p class="kicker">A folio from the bookshelf</p>
         <h1>The genealogy of the rooms</h1>
-        <p class="lede">How each room was made from the ones before it: a plain page, three ways of laying it out, eleven styles on the one with tabs, then the styles crossed with each other into desks, desktops, a game, a magazine and the room. A full line runs from a room to one it builds on; a dashed line to one it took a single part from. Point at a room to see its line.</p>
+        <p class="lede">How each room was made from the ones before it, read from left to right: a plain page and two ways of laying it out, eleven styles on the one with tabs, the styles crossed with one another, and the workspace they became. A full line runs to a room from one it builds on; a dashed line from one it took a single part from. Point at a print to read its label and light its line.</p>
       </div>
       <ul class="ways">
         <li><a href="../">The rooms</a></li>
@@ -28,33 +29,51 @@
     <div class="tree-wrap"><div class="tree" id="tree" aria-hidden="true"></div></div>
     <ul class="legend" aria-hidden="true"><li><i></i>builds on</li><li><i class="b"></i>takes a part from</li></ul>
     <h2>The lineage</h2>
-    <ol class="lineage">
-      <li id="l-v01"><span class="no">No. 01</span><b><a href="../v01/">The working core</a></b><span class="from">The first room.</span> The interpreter and the sieve solver made to work, in black text on white with the least styling.</li>
-      <li id="l-v02"><span class="no">No. 02</span><b><a href="../v02/">Sub-pages</a></b><span class="from">From No. 01.</span> The one long scroll split into sub-pages for the instructions, the editor, the card viewer and the output.</li>
-      <li id="l-v03"><span class="no">No. 03</span><b><a href="../v03/">Tabs</a></b><span class="from">From No. 01.</span> The same four parts behind tabs: the layout every themed version starts from.</li>
-      <li id="l-v04"><span class="no">No. 04</span><b><a href="../v04/">Thermal paper and typewriter</a></b><span class="from">From No. 03.</span> Printouts on thermal paper and typewritten documents: monochrome, serif, yellowed, with scanner dust.</li>
-      <li id="l-v05"><span class="no">No. 05</span><b><a href="../v05/">Microfiche</a></b><span class="from">From No. 03.</span> High contrast, monochromatic, grainy and ragged, as a frame of microfiche on a reader.</li>
-      <li id="l-v06"><span class="no">No. 06</span><b><a href="../v06/">Scrapbook</a></b><span class="from">From No. 03.</span> An eclectic scrapbook of collected paper artifacts, and the first of the miscellanea.</li>
-      <li id="l-v07"><span class="no">No. 07</span><b><a href="../v07/">Cray-2</a></b><span class="from">From No. 03.</span> The bold colours and geometric shapes of the Cray-2 supercomputer.</li>
-      <li id="l-v08"><span class="no">No. 08</span><b><a href="../v08/">Ordered dithering</a></b><span class="from">From No. 03.</span> Vintage computer graphics: ordered dithering with at most eight steps to a channel.</li>
-      <li id="l-v09"><span class="no">No. 09</span><b><a href="../v09/">Swiss style in hatching</a></b><span class="from">From No. 03.</span> The Swiss and International styles, with hatching in place of colour.</li>
-      <li id="l-v10"><span class="no">No. 10</span><b><a href="../v10/">Halftone</a></b><span class="from">From No. 03.</span> Everything printed through a halftone screen.</li>
-      <li id="l-v11"><span class="no">No. 11</span><b><a href="../v11/">Dada</a></b><span class="from">From No. 03.</span> The page as a Dada collage, with experimental decks of chance.</li>
-      <li id="l-v12"><span class="no">No. 12</span><b><a href="../v12/">The Backrooms</a></b><span class="from">From No. 03.</span> The look and feel of the Backrooms: the page as a liminal space, an echo of the past.</li>
-      <li id="l-v13"><span class="no">No. 13</span><b><a href="../v13/">German Expressionism</a></b><span class="from">From No. 03.</span> The look and cinematography of German Expressionist film.</li>
-      <li id="l-v14"><span class="no">No. 14</span><b><a href="../v14/">Reflection in a Dead Diamond</a></b><span class="from">From No. 03.</span> The cinematography and set design of Cattet and Forzani’s film: bold, slightly odd 1960s design.</li>
-      <li id="l-v15"><span class="no">No. 15</span><b><a href="../v15/">A physical workspace</a></b><span class="from">From No. 04 and No. 06.</span> A skeuomorph of a desk, its materials in books, notebooks and decks, with music decks and a reel-to-reel player.</li>
-      <li id="l-v16"><span class="no">No. 16</span><b><a href="../v16/">A digital workspace</a></b><span class="from">From No. 08, with a part of No. 15.</span> A vintage computer desktop with a buffer editor and a player program, and v15’s miscellanea as documents.</li>
-      <li id="l-v17"><span class="no">No. 17</span><b><a href="../v17/">A game of punch cards</a></b><span class="from">From No. 09.</span> v9’s style for a puzzle game that teaches how to write and use punch cards.</li>
-      <li id="l-v18"><span class="no">No. 18</span><b><a href="../v18/">Code art in halftone</a></b><span class="from">From No. 10 and No. 14, with a part of No. 11 and No. 12.</span> v14’s graphics through v10’s halftone, and the experimental decks of v11 and v12, framed by code art.</li>
-      <li id="l-v19"><span class="no">No. 19</span><b><a href="../v19/">The workspace with a magazine</a></b><span class="from">From No. 15 and No. 18.</span> v15’s desk tightened, with v18 as a magazine on it whose decks can be run.</li>
-      <li id="l-v20"><span class="no">No. 20</span><b><a href="../v20/">Puzzles on the desktop</a></b><span class="from">From No. 16 and No. 17.</span> v17’s puzzles inside v16’s desktop, its graphics refined in v17’s design language.</li>
-      <li id="l-v21"><span class="no">No. 21</span><b><a href="../v21/">A desk with a computer</a></b><span class="from">From No. 19 and No. 20.</span> One workspace: v19’s desk with a computer on it that runs v20’s desktop, each half in its own style.</li>
-      <li id="l-v22"><span class="no">No. 22</span><b><a href="../v22/">Vector</a></b><span class="from">From No. 21.</span> v21 in one style: the computer redrawn as a modern vector interface, and things in the room that can be changed.</li>
-      <li id="l-v23"><span class="no">No. 23</span><b><a href="../v23/">Pixel art</a></b><span class="from">From No. 21.</span> v21 in one style: the room as pixel art, the computer in full-colour pixels.</li>
-      <li id="l-v24"><span class="no">No. 24</span><b><a href="../v24/">Pixel art with variations</a></b><span class="from">From No. 23 and No. 22.</span> v23’s pixel room with v22’s variations, lit for every lamp and every time of day.</li>
-      <li id="l-v25"><span class="no">No. 25</span><b><a href="../v25/">The room, perfected and expanded</a></b><span class="from">From No. 24.</span> v24 perfected and expanded into a space to wander: a reading corner round the corner, machines under the desk, and nooks to get lost in.</li>
-    </ol>
+    <section class="ln-ch" id="ch-core" aria-labelledby="ln-core-h">
+      <h3 id="ln-core-h"><span class="cn">I</span> The working core <span class="cr">Nos. 1 to 3</span></h3>
+      <ol class="lineage" start="1">
+        <li id="l-v01" tabindex="-1"><img src="../assets/rooms/v01-s.png" width="48" height="30" alt=""><div><span class="no">No. 01</span> <b><a href="../v01/">The working core</a></b><span class="from">The first room.</span> The interpreter and the sieve solver made to work, in black text on white with the least styling.</div></li>
+        <li id="l-v02" tabindex="-1"><img src="../assets/rooms/v02-s.png" width="48" height="30" alt=""><div><span class="no">No. 02</span> <b><a href="../v02/">Sub-pages</a></b><span class="from">From No. 01.</span> The one long scroll split into sub-pages for the instructions, the editor, the card viewer and the output.</div></li>
+        <li id="l-v03" tabindex="-1"><img src="../assets/rooms/v03-s.png" width="48" height="30" alt=""><div><span class="no">No. 03</span> <b><a href="../v03/">Tabs</a></b><span class="from">From No. 01.</span> The same four parts behind tabs: the layout every themed version starts from.</div></li>
+      </ol>
+    </section>
+    <section class="ln-ch" id="ch-styles" aria-labelledby="ln-styles-h">
+      <h3 id="ln-styles-h"><span class="cn">II</span> Eleven styles <span class="cr">Nos. 4 to 14</span></h3>
+      <ol class="lineage" start="4">
+        <li id="l-v04" tabindex="-1"><img src="../assets/rooms/v04-s.png" width="48" height="30" alt=""><div><span class="no">No. 04</span> <b><a href="../v04/">Thermal paper and typewriter</a></b><span class="from">From No. 03.</span> Printouts on thermal paper and typewritten documents: monochrome, serif, yellowed, with scanner dust.</div></li>
+        <li id="l-v05" tabindex="-1"><img src="../assets/rooms/v05-s.png" width="48" height="30" alt=""><div><span class="no">No. 05</span> <b><a href="../v05/">Microfiche</a></b><span class="from">From No. 03.</span> High contrast, monochromatic, grainy and ragged, as a frame of microfiche on a reader.</div></li>
+        <li id="l-v06" tabindex="-1"><img src="../assets/rooms/v06-s.png" width="48" height="30" alt=""><div><span class="no">No. 06</span> <b><a href="../v06/">Scrapbook</a></b><span class="from">From No. 03.</span> An eclectic scrapbook of collected paper artifacts, and the first of the miscellanea.</div></li>
+        <li id="l-v07" tabindex="-1"><img src="../assets/rooms/v07-s.png" width="48" height="30" alt=""><div><span class="no">No. 07</span> <b><a href="../v07/">Cray-2</a></b><span class="from">From No. 03.</span> The bold colours and geometric shapes of the Cray-2 supercomputer.</div></li>
+        <li id="l-v08" tabindex="-1"><img src="../assets/rooms/v08-s.png" width="48" height="30" alt=""><div><span class="no">No. 08</span> <b><a href="../v08/">Ordered dithering</a></b><span class="from">From No. 03.</span> Vintage computer graphics: ordered dithering with at most eight steps to a channel.</div></li>
+        <li id="l-v09" tabindex="-1"><img src="../assets/rooms/v09-s.png" width="48" height="30" alt=""><div><span class="no">No. 09</span> <b><a href="../v09/">Swiss style in hatching</a></b><span class="from">From No. 03.</span> The Swiss and International styles, with hatching in place of colour.</div></li>
+        <li id="l-v10" tabindex="-1"><img src="../assets/rooms/v10-s.png" width="48" height="30" alt=""><div><span class="no">No. 10</span> <b><a href="../v10/">Halftone</a></b><span class="from">From No. 03.</span> Everything printed through a halftone screen.</div></li>
+        <li id="l-v11" tabindex="-1"><img src="../assets/rooms/v11-s.png" width="48" height="30" alt=""><div><span class="no">No. 11</span> <b><a href="../v11/">Dada</a></b><span class="from">From No. 03.</span> The page as a Dada collage, with experimental decks of chance.</div></li>
+        <li id="l-v12" tabindex="-1"><img src="../assets/rooms/v12-s.png" width="48" height="30" alt=""><div><span class="no">No. 12</span> <b><a href="../v12/">The Backrooms</a></b><span class="from">From No. 03.</span> The look and feel of the Backrooms: the page as a liminal space, an echo of the past.</div></li>
+        <li id="l-v13" tabindex="-1"><img src="../assets/rooms/v13-s.png" width="48" height="30" alt=""><div><span class="no">No. 13</span> <b><a href="../v13/">German Expressionism</a></b><span class="from">From No. 03.</span> The look and cinematography of German Expressionist film.</div></li>
+        <li id="l-v14" tabindex="-1"><img src="../assets/rooms/v14-s.png" width="48" height="30" alt=""><div><span class="no">No. 14</span> <b><a href="../v14/">Reflection in a Dead Diamond</a></b><span class="from">From No. 03.</span> The cinematography and set design of Cattet and Forzani’s film: bold, slightly odd 1960s design.</div></li>
+      </ol>
+    </section>
+    <section class="ln-ch" id="ch-crossings" aria-labelledby="ln-crossings-h">
+      <h3 id="ln-crossings-h"><span class="cn">III</span> Crossings <span class="cr">Nos. 15 to 18</span></h3>
+      <ol class="lineage" start="15">
+        <li id="l-v15" tabindex="-1"><img src="../assets/rooms/v15-s.png" width="48" height="30" alt=""><div><span class="no">No. 15</span> <b><a href="../v15/">A physical workspace</a></b><span class="from">From No. 04 and No. 06.</span> A skeuomorph of a desk, its materials in books, notebooks and decks, with music decks and a reel-to-reel player.</div></li>
+        <li id="l-v16" tabindex="-1"><img src="../assets/rooms/v16-s.png" width="48" height="30" alt=""><div><span class="no">No. 16</span> <b><a href="../v16/">A digital workspace</a></b><span class="from">From No. 08, with a part of No. 15.</span> A vintage computer desktop with a buffer editor and a player program, and v15’s miscellanea as documents.</div></li>
+        <li id="l-v17" tabindex="-1"><img src="../assets/rooms/v17-s.png" width="48" height="30" alt=""><div><span class="no">No. 17</span> <b><a href="../v17/">A game of punch cards</a></b><span class="from">From No. 09.</span> v9’s style for a puzzle game that teaches how to write and use punch cards.</div></li>
+        <li id="l-v18" tabindex="-1"><img src="../assets/rooms/v18-s.png" width="48" height="30" alt=""><div><span class="no">No. 18</span> <b><a href="../v18/">Code art in halftone</a></b><span class="from">From No. 10 and No. 14, with a part of No. 11 and No. 12.</span> v14’s graphics through v10’s halftone, and the experimental decks of v11 and v12, framed by code art.</div></li>
+      </ol>
+    </section>
+    <section class="ln-ch" id="ch-workspace" aria-labelledby="ln-workspace-h">
+      <h3 id="ln-workspace-h"><span class="cn">IV</span> The workspace <span class="cr">Nos. 19 to 25</span></h3>
+      <ol class="lineage" start="19">
+        <li id="l-v19" tabindex="-1"><img src="../assets/rooms/v19-s.png" width="48" height="30" alt=""><div><span class="no">No. 19</span> <b><a href="../v19/">The workspace with a magazine</a></b><span class="from">From No. 15 and No. 18.</span> v15’s desk tightened, with v18 as a magazine on it whose decks can be run.</div></li>
+        <li id="l-v20" tabindex="-1"><img src="../assets/rooms/v20-s.png" width="48" height="30" alt=""><div><span class="no">No. 20</span> <b><a href="../v20/">Puzzles on the desktop</a></b><span class="from">From No. 16 and No. 17.</span> v17’s puzzles inside v16’s desktop, its graphics refined in v17’s design language.</div></li>
+        <li id="l-v21" tabindex="-1"><img src="../assets/rooms/v21-s.png" width="48" height="30" alt=""><div><span class="no">No. 21</span> <b><a href="../v21/">A desk with a computer</a></b><span class="from">From No. 19 and No. 20.</span> One workspace: v19’s desk with a computer on it that runs v20’s desktop, each half in its own style.</div></li>
+        <li id="l-v22" tabindex="-1"><img src="../assets/rooms/v22-s.png" width="48" height="30" alt=""><div><span class="no">No. 22</span> <b><a href="../v22/">Vector</a></b><span class="from">From No. 21.</span> v21 in one style: the computer redrawn as a modern vector interface, and things in the room that can be changed.</div></li>
+        <li id="l-v23" tabindex="-1"><img src="../assets/rooms/v23-s.png" width="48" height="30" alt=""><div><span class="no">No. 23</span> <b><a href="../v23/">Pixel art</a></b><span class="from">From No. 21.</span> v21 in one style: the room as pixel art, the computer in full-colour pixels.</div></li>
+        <li id="l-v24" tabindex="-1"><img src="../assets/rooms/v24-s.png" width="48" height="30" alt=""><div><span class="no">No. 24</span> <b><a href="../v24/">Pixel art with variations</a></b><span class="from">From No. 23 and No. 22.</span> v23’s pixel room with v22’s variations, lit for every lamp and every time of day.</div></li>
+        <li id="l-v25" tabindex="-1"><img src="../assets/rooms/v25-s.png" width="48" height="30" alt=""><div><span class="no">No. 25</span> <b><a href="../v25/">The room, perfected and expanded</a></b><span class="from">From No. 24.</span> v24 perfected and expanded into a space to wander: a reading corner round the corner, machines under the desk, and nooks to get lost in.</div></li>
+      </ol>
+    </section>
   </div>
 </main>
 <script src="../scripts/versions.js"></script>

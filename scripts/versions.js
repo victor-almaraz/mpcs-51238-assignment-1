@@ -4,7 +4,9 @@
      { id: 'v07', title, parents: [ids it builds on], borrows: [ids it takes a part from],
        note: what it is, in a sentence, status: 'complete' or 'in progress' }
    "parents" are the versions a brief names as its base or combines; "borrows" the ones it
-   names for a single part (a set of decks, the miscellanea, a feature). */
+   names for a single part (a set of decks, the miscellanea, a feature). A second global,
+   CHAPTERS, groups the versions into the four stretches of the work, in order:
+     { id, numeral, title, first: id, last: id, note } */
 
 var VERSIONS = [
   { id: 'v01', title: 'The working core', parents: [], borrows: [], status: 'complete',
@@ -57,4 +59,15 @@ var VERSIONS = [
     note: 'v23’s pixel room with v22’s variations, lit for every lamp and every time of day.' },
   { id: 'v25', title: 'The room, perfected and expanded', parents: ['v24'], borrows: [], status: 'complete',
     note: 'v24 perfected and expanded into a space to wander: a reading corner round the corner, machines under the desk, and nooks to get lost in.' }
+];
+
+var CHAPTERS = [
+  { id: 'core', numeral: 'I', title: 'The working core', first: 'v01', last: 'v03',
+    note: 'The interpreter and the sieves made to work on a plain page, then laid out two ways.' },
+  { id: 'styles', numeral: 'II', title: 'Eleven styles', first: 'v04', last: 'v14',
+    note: 'The page with tabs dressed eleven ways, from thermal paper and microfiche to Dada and film.' },
+  { id: 'crossings', numeral: 'III', title: 'Crossings', first: 'v15', last: 'v18',
+    note: 'The styles crossed with one another into a desk, a desktop, a game and a magazine of code art.' },
+  { id: 'workspace', numeral: 'IV', title: 'The workspace', first: 'v19', last: 'v25',
+    note: 'The desk and the desktop brought into one room, then drawn again and again until it was a place to wander.' }
 ];

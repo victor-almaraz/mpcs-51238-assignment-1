@@ -9,7 +9,7 @@
 │   ├── index.html        Genealogy page (/genealogy): the lineage, set from scripts/versions.js
 │   └── genealogy.js      Draws the family tree from scripts/versions.js
 ├── assets/
-│   └── rooms/            The gallery's print of each version (vNN.png), made by util/gallery/thumbs.py
+│   └── rooms/            Each version's prints (vNN.png, vNN-s.png; v25-l.png), made by util/gallery/thumbs.py
 ├── v01/
 │   ├── index.html        Version 1 (/v01)
 │   └── style.css         Version 1 styles only
@@ -62,7 +62,7 @@
 - `v06/assets/` is the first exception to the two-file shape. Two of its images are sources kept for reference: the page uses `marble-nonpareil-tile.jpg` and `morris-acanthus-band.jpg`, made seamless from `marble-nonpareil.jpeg` and `morris-acanthus-border.jpeg`.
 - Some versions add page-only sample decks after the engine's samples (v11, v12); they live in that version's `index.html`, and `scripts/` is not changed for them.
 - Fonts are bundled, not loaded from a font service: themed versions link `../fonts/fonts.css` and put a bundled family first in each stack, so every visitor sees the same type regardless of what is installed. Only open-licensed (SIL OFL) fonts go in `fonts/`, each with its LICENSE file.
-- `scripts/versions.js` is the single source of genealogy data, read by both the gallery and the genealogy page.
+- `scripts/versions.js` is the single source of genealogy data (the versions and the four chapters), read by both the gallery and the genealogy page.
 - Every version links back to `../` (the gallery).
 - The sieve generator is a FORTRAN deck in `scripts/fortran.js` (`Fortran.samples`), not a separate engine.
 - `scripts/tape.js` is shared audio code: a version that plays cards loads it after the engine (`../scripts/tape.js`). It turns punched cards into notes (see `tape-spec.md`).

@@ -56,8 +56,8 @@ it, then `python3.11 build4.py && python3.11 sync_grounds.py`, and look at the p
 
 Run from `gallery/`, with the local server running:
 
-- `thumbs.py [v01 …]`: screenshots each version and cuts it to the gallery's print (192 × 120, in the last room's palette), into `../../assets/rooms/`.
-- `build_pages.py`: sets the gallery (`../../index.html`) and the genealogy's written lineage (`../../genealogy/index.html`) from `scripts/versions.js`. Edit the data there, then run this.
+- `thumbs.py [v01 …]`: screenshots each version and cuts it, in the last room's palette, to the gallery's print (`vNN.png`, 192 × 120), the genealogy's small print (`vNN-s.png`, 48 × 30) and, for the last room, the gallery's largest print (`v25-l.png`, 384 × 240), into `../../assets/rooms/`.
+- `build_pages.py`: sets the gallery (`../../index.html`) and the genealogy's written lineage (`../../genealogy/index.html`) from `scripts/versions.js` (its rooms and its chapters). Edit the data there, then run this.
 
 ## Earlier versions
 
