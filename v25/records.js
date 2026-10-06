@@ -1,8 +1,8 @@
 /* The record player in the reading corner, and its crate of seven records: renditions of
    music now in the public domain, from Pachelbel to Joplin, each played by the page with Web
    Audio (no recordings) in a voice of its own (a piano, strings, plucked strings, a violin),
-   with a record's hiss, its crackle and a little wow. Taken up, the player is drawn from above
-   in pixels, its platter turning and its tonearm crossing the side as it plays; a record is
+   with a record's hiss, its crackle and a little wow. Taken up, the player is shown from above,
+   its stylus in the groove while a record plays; a record is
    chosen from the crate, and plays on wherever the visitor goes in the room, turning in the
    room too, until it ends or is stopped. Needs Desk (desk.js). */
 
@@ -289,54 +289,17 @@
       b.setAttribute('aria-label', (on ? 'Stop ' : 'Play ') + RECORDS[i].title + ', by ' + RECORDS[i].who);
     });
     $('rec-stop').disabled = !playing;
+    deck.src = playing ? 'assets/st/rec-deck-playing.png' : 'assets/st/rec-deck.png';
     $('rec-now').textContent = playing ? RECORDS[playing.i].title + ' · ' + RECORDS[playing.i].who : 'Nothing is playing. Choose a record from the crate.';
     if (scene) scene.classList.toggle('record-on', !!playing);
     if (roomBtn) roomBtn.setAttribute('data-say', playing ? 'The record player: ' + RECORDS[playing.i].title : 'Play a record');
   }
 
-  /* ---------------- the player from above, drawn in pixels ---------------- */
-  var canvas = $('rec-canvas'), g = canvas.getContext('2d'), W = 200, H = 140;
-  function rect(x, y, w, h, c) { g.fillStyle = c; g.fillRect(x, y, w, h); }
-  var CX = 78, CY = 70, R = 58;
-  var angle = 0, last = 0;
-  function draw(t) {
-    var dt = last ? (t - last) / 1000 : 0; last = t;
-    if (playing) angle += dt * 2 * Math.PI * (33.333 / 60);
-    // the case: teal, its lid's cream lining behind, the deck in black
-    rect(0, 0, W, H, '#3f7478'); rect(2, 2, W - 4, H - 4, '#48828a'); rect(6, 6, W - 12, H - 12, '#232124');
-    for (var y = -R - 4; y <= R + 4; y++) for (var x = -R - 4; x <= R + 4; x++) {
-      var d = Math.sqrt(x * x + y * y);
-      if (d > R + 3.5) continue;
-      var c = d > R ? '#8a8c90' : '#141315';
-      if (d <= R && d > 22 && Math.round(d) % 3 === 0) c = '#1d1c20';                   // the grooves
-      if (d <= R && d > 26 && (x + y) % 2 === 0 && Math.cos(Math.atan2(y, x) - angle - 0.8) > 0.9985) c = '#4a4a54';   // a glint on them, turning
-      if (d <= 20) {
-        var r = playing ? RECORDS[playing.i] : null;
-        c = r ? r.label : '#8a8c90';
-        var la = Math.atan2(y, x) - angle;
-        if (r && d > 7 && d < 15 && Math.abs(Math.sin(la)) < 0.12 && Math.cos(la) > 0) c = '#f2ead8';   // the label's lettering, turning
-      }
-      if (d <= 1.5) c = '#d8d8dc';
-      rect(CX + x, CY + y, 1, 1, c);
-    }
-    // the tonearm: at rest on its post beside the platter; playing, its needle in the groove,
-    // from the outer edge to the label as the side plays
-    var px = 168, py = 22, L = 88, armA = Math.PI / 2;
-    if (playing) {
-      var prog = Math.max(0, Math.min(1, (ac.currentTime - playing.t0) / (playing.len - 2.5)));
-      var groove = R - 4 - prog * (R - 26);
-      while (armA < 3 && Math.hypot(px + Math.cos(armA) * L - CX, py + Math.sin(armA) * L - CY) > groove) armA += 0.004;
-    }
-    rect(px - 6, py - 6, 13, 13, '#5a5c60'); rect(px - 4, py - 4, 9, 9, '#b8babe');
-    var hx = px + Math.cos(armA) * L, hy = py + Math.sin(armA) * L;
-    for (var k = 0; k <= L; k++) rect(Math.round(px + Math.cos(armA) * k), Math.round(py + Math.sin(armA) * k), 2, 2, '#c8cacd');
-    rect(Math.round(hx) - 3, Math.round(hy) - 2, 7, 5, '#e8e8ea');
-    // the speed switch and the knobs
-    rect(150, 112, 30, 8, '#5a5c60'); rect(playing ? 152 : 164, 113, 14, 6, '#e8e2d0');
-    rect(150, 92, 8, 8, '#e8e2d0'); rect(164, 92, 8, 8, '#e8e2d0');
-  }
-  var frame = null;
-  function tick(t) { frame = null; if (Desk.current() !== 'records') { last = 0; return; } draw(t); frame = requestAnimationFrame(tick); }
-  Desk.onShow('records', function () { show(); if (!frame) frame = requestAnimationFrame(tick); });
+  /* ---------------- the player from above ----------------
+     Two pictures (util/v25/seeds25.py): at rest, the arm on its post; playing, the stylus in
+     the groove and the speed lever at 33. */
+  var deck = $('rec-deck'), ahead = new Image();
+  ahead.src = 'assets/st/rec-deck-playing.png';                        // fetched now, so the swap is at once
+  Desk.onShow('records', show);
   show();
 })();

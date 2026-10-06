@@ -37,7 +37,7 @@ def gather(t, S, sw, tiles, backs, floor_tile, backs2):
     for n, im in (('px-cover-event.png', cover_event()), ('px-cover-gesso.png', cover_gesso()), ('px-cover-cons.png', cover_cons()), ('px-cover-silver.png', cover_silver())):
         pics.append((n, im, THINGS['px-cover.png'], None))
     # under the desk: the card reader and line printer at the left, the UPIC's tablet at the right
-    for n, im, xy in (('px-reader.png', reader(), (140, 247)), ('px-upic.png', upic(), (445, 229)), ('px-timer.png', part2.kitchen_timer(), (553, 194))):
+    for n, im, xy in (('px-reader.png', reader(), (140, 247)), ('px-upic.png', upic(), (445, 229)), ('px-timer.png', part2.kitchen_timer(), (552, 193))):
         pics.append((n, im, xy, STATES if reaches(*xy, *im.size) else None))
     pics.append(('switch-on.png', sw[True], SWITCH, list(LAMPS))); pics.append(('switch-off.png', sw[False], SWITCH, ['off']))
     lits = []

@@ -68,92 +68,98 @@
   }
 
   /* ---------------- the tomato, drawn in pixels ----------------
-     Its body an ellipsoid lit from the upper left, its shading dithered between neighbouring
-     tones of one ramp, faint lobes running down from the calyx, a highlight; the turning top's
-     band a slice of the same ellipsoid, curving down at the front as a ring seen from a little
-     above does, its minutes foreshortened toward the sides; the calyx's five sepals and the
-     stem, cut square, on top. The body and calyx are drawn once; the band each second. */
-  var RED = ['#4a1312', '#6e1b18', '#922620', '#b53326', '#d0452f', '#e56a4e', '#f49a7e'], SHINE = '#ffe3d4';
-  var CRM = ['#a8936f', '#c9b48e', '#e3d4b4', '#f6eddb', '#fffaf0'], INK = '#3a2422';
-  var GRN = ['#22381c', '#33532a', '#487236', '#62923f', '#86b552', '#aed27a'];
-  var BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]];
-  var CX = 80, CY = 78, RX = 66, RY = 46, BAND = 58, LIGHT = norm([-0.55, -0.62, 0.56]);
-  function norm(v) { var l = Math.hypot(v[0], v[1], v[2]); return [v[0] / l, v[1] / l, v[2] / l]; }
-  function ramp(tones, v, x, y) {
-    // v in 0..1 across the ramp; between two tones, an ordered dither fixed to the grid
-    var f = Math.max(0, Math.min(tones.length - 1.001, v * (tones.length - 1))), i = Math.floor(f);
-    return tones[(f - i) * 16 > BAYER[y & 3][x & 3] + 0.5 ? i + 1 : i];
+     The body, its calyx and its stem are a picture (assets/st/pomo-body.png), made by
+     util/v25/seeds25.py from a solid: a squat sphere whose radius swells in five lobes round its
+     shoulders, dips into a well at the top and flattens where it stands, seen from a little
+     above. Over it, each second, the turning top's band of minutes is drawn round the same solid
+     (TOM matches seeds25.py's), so it rides the lobes and sags at the front as a ring seen from
+     above does; its minutes and numbers are placed by longitude, so they foreshorten toward the
+     sides and turn away round them. */
+  var RED0 = '#3e1022', CRM = ['#a8936f', '#c9b48e', '#e3d4b4', '#f6eddb', '#fffaf0'], INK = '#3a2422';
+  var TOM = { cx: 80, cy: 76, rx: 66, ry: 46, tilt: 0.36, lobes: 0.055, well: 0.2 }, BAND = -0.2, BH = 0.13;
+  function radius(ph, la) {
+    var up = Math.max(0, Math.min(1, (0.75 - Math.sin(ph)) / 1.5));
+    return 1 + TOM.lobes * Math.cos(5 * la + 0.4) * up - TOM.well * Math.exp(-Math.pow((ph + Math.PI / 2) / 0.42, 2));
   }
-  function normal(x, y) {
-    var nx = (x + 0.5 - CX) / RX, ny = (y + 0.5 - CY) / RY, q = 1 - nx * nx - ny * ny;
-    return q <= 0 ? null : [nx, ny, Math.sqrt(q)];
+  function point(ph, la) {
+    var r = radius(ph, la), X = r * Math.cos(ph) * Math.sin(la) * TOM.rx, Y = r * Math.sin(ph) * TOM.ry, Z = r * Math.cos(ph) * Math.cos(la) * TOM.rx;
+    if (Y > 0.8 * TOM.ry) Y = 0.8 * TOM.ry + (Y - 0.8 * TOM.ry) * 0.35;
+    var c = Math.cos(TOM.tilt), s = Math.sin(TOM.tilt);
+    return [TOM.cx + X, TOM.cy + Y * c + Z * s, Z * c - Y * s];
   }
-  function lit(n) { return Math.max(0, n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]); }
+  // how squarely a point of the surface faces the viewer, and how much light it takes
+  function facing(ph, la) {
+    var p = point(ph, la), a = point(ph + 1e-3, la), b = point(ph, la + 1e-3);
+    var u = [a[0] - p[0], a[1] - p[1], a[2] - p[2]], v = [b[0] - p[0], b[1] - p[1], b[2] - p[2]];
+    var n = [v[1] * u[2] - v[2] * u[1], v[2] * u[0] - v[0] * u[2], v[0] * u[1] - v[1] * u[0]], l = Math.hypot(n[0], n[1], n[2]) || 1;
+    if (n[0] * (p[0] - TOM.cx) + n[1] * (p[1] - TOM.cy) + n[2] * p[2] < 0) l = -l;   // outward
+    return [n[0] / l, n[1] / l, n[2] / l];
+  }
   var base = doc.createElement('canvas'); base.width = W; base.height = H;
   (function drawBase() {
     var c = base.getContext('2d');
-    function put(x, y, col) { c.fillStyle = col; c.fillRect(x, y, 1, 1); }
-    // its shadow on the desk, a soft ellipse in two steps of dither
-    for (var y = CY + 20; y < H; y++) for (var x = 0; x < W; x++) {
-      var u = (x - CX - 8) / (RX + 4), v = (y - CY - 30) / 16, d = u * u + v * v;
-      if (d < 1 && (d < 0.55 || (x + y) % 2)) put(x, y, 'rgba(46,26,20,0.32)');
+    // its shadow on the desk, a soft ellipse in two steps
+    c.fillStyle = 'rgba(46,26,20,0.32)';
+    for (var y = 100; y < H; y++) for (var x = 0; x < W; x++) {
+      var u = (x - TOM.cx - 8) / (TOM.rx + 6), v = (y - 113) / 13, d = u * u + v * v;
+      if (d < 1 && (d < 0.55 || (x + y) % 2)) c.fillRect(x, y, 1, 1);
     }
-    for (var y2 = 0; y2 < H; y2++) for (var x2 = 0; x2 < W; x2++) {
-      var n = normal(x2, y2);
-      if (!n) continue;
-      var l = lit(n), lobe = Math.cos(Math.atan2(n[0], n[2]) * 7) * (1 - n[1]) * 0.05;
-      var v2 = 0.12 + 0.88 * Math.pow(l, 0.85) - Math.max(0, lobe);
-      var edge = n[2] < 0.16;
-      var col = edge ? RED[0] : ramp(RED, v2, x2, y2);
-      var h = norm([LIGHT[0], LIGHT[1], LIGHT[2] + 1]), sp = n[0] * h[0] + n[1] * h[1] + n[2] * h[2];
-      if (sp > 0.985) col = SHINE; else if (sp > 0.97 && (x2 + y2) % 2) col = RED[6];
-      put(x2, y2, col);
-    }
-    // the calyx: five sepals from the stem, seen a little from above, and the stem cut square
-    var sx = CX, sy = 34;
-    for (var k = 0; k < 5; k++) {
-      var a = -Math.PI / 2 + k * 2 * Math.PI / 5 + 0.35;
-      for (var t = 0; t < 1; t += 0.02) {
-        var len = 26 * (0.8 + 0.2 * Math.sin(k * 2.1)), w = 5.5 * Math.sin(Math.PI * Math.min(1, t * 1.25)) * (1 - t * 0.6);
-        var px = sx + Math.cos(a) * len * t, py = sy + Math.sin(a) * len * t * 0.42 + t * t * 6;
-        for (var s2 = -w; s2 <= w; s2 += 0.5) {
-          var qx = Math.round(px - Math.sin(a) * s2 * 0.9), qy = Math.round(py + Math.cos(a) * s2 * 0.42);
-          var side = s2 < 0 ? 1 : 0, shade = 0.25 + 0.5 * side + 0.25 * (1 - t);
-          put(qx, qy, Math.abs(s2) > w - 0.7 ? GRN[0] : ramp(GRN, shade, qx, qy));
-        }
+    var body = new Image();
+    body.onload = function () { c.drawImage(body, 0, 0); if (Desk.current() === 'timer') draw(); };
+    body.src = 'assets/st/pomo-body.png';
+  })();
+  // the band's pixels, worked out once: for each, its longitude, how far down the band it lies
+  // (0 its top, 1 its foot) and its shade
+  var BANDPX = (function () {
+    var seen = {}, out = [];
+    for (var i = 0; i <= 1600; i++) {
+      var la = -Math.PI + i * 2 * Math.PI / 1600;
+      for (var k = 0; k <= 40; k++) {
+        var ph = BAND - BH + k * 2 * BH / 40, n = facing(ph, la);
+        if (n[2] < 0.2) continue;
+        var p = point(ph, la), x = Math.floor(p[0]), y = Math.floor(p[1]), key = y * W + x;
+        if (seen[key] !== undefined && out[seen[key]].z > p[2]) continue;
+        var l = -0.55 * n[0] - 0.68 * n[1] + 0.48 * n[2];
+        var o = { x: x, y: y, z: p[2], la: la, t: k / 40, edge: n[2] < 0.32, l: l };
+        if (seen[key] === undefined) { seen[key] = out.length; out.push(o); } else out[seen[key]] = o;
       }
     }
-    for (var yy = 16; yy < 36; yy++) for (var xx = -3; xx <= 3; xx++) {
-      var bend = Math.round((36 - yy) * 0.12);
-      put(sx + xx + bend, yy, Math.abs(xx) === 3 ? GRN[0] : xx < 0 ? GRN[3] : xx === 0 ? GRN[2] : GRN[1]);
+    return out;
+  })();
+  var SEAM = (function () {
+    var out = [];
+    for (var i = 0; i <= 1600; i++) {
+      var la = -Math.PI + i * 2 * Math.PI / 1600;
+      if (facing(BAND + BH + 0.02, la)[2] < 0.2) continue;
+      var p = point(BAND + BH + 0.02, la); out.push([Math.floor(p[0]), Math.floor(p[1])]);
     }
-    for (var e = -3; e <= 3; e++) put(sx + e + 2, 15, e === -3 || e === 3 ? GRN[0] : GRN[5]);
+    return out;
   })();
   function draw() {
     g.clearRect(0, 0, W, H);
     g.drawImage(base, 0, 0);
-    // the band: the ellipsoid's slice from BAND - 5 to BAND + 4, its front sagging by up to 3
-    var min = remaining() / 60000, hw = Math.sqrt(1 - Math.pow((BAND - CY) / RY, 2)) * RX;
-    for (var x = Math.ceil(CX - hw); x < CX + hw; x++) {
-      var sinT = (x + 0.5 - CX) / hw, cosT = Math.sqrt(Math.max(0, 1 - sinT * sinT)), sag = Math.round(3 * cosT);
-      for (var dy = -5; dy <= 4; dy++) {
-        var y = BAND + dy + sag, n = normal(x, y);
-        if (!n) continue;
-        var l = lit([sinT * 0.9, -0.1, cosT]);
-        rect(x, y, 1, 1, dy === 4 ? CRM[0] : dy === -5 ? CRM[1] : ramp(CRM, 0.2 + 0.8 * l, x, y));
-      }
-      if (normal(x, BAND + 5 + sag)) rect(x, BAND + 5 + sag, 1, 1, RED[0]);         // the seam under the turning top
-    }
-    // the minutes, round the band: foreshortened toward its sides, numbered every five
+    SEAM.forEach(function (p) { rect(p[0], p[1], 1, 1, RED0); });              // the seam under the turning top
+    BANDPX.forEach(function (o) {
+      // lit from the upper left, in bands; its top edge catching the light, its foot in shade,
+      // its ends, where it turns away, dark
+      var v = o.l + (o.t < 0.2 ? 0.14 : o.t > 0.8 ? -0.16 : 0);
+      rect(o.x, o.y, 1, 1, o.edge || o.t > 0.95 ? CRM[0] : CRM[Math.max(1, Math.min(4, Math.floor(0.4 + v * 4.4)))]);
+    });
+    // the minutes, round the band, numbered every five
+    var min = remaining() / 60000;
     for (var m = 0; m <= 60; m++) {
-      var th = (m - min) * 6 * Math.PI / 180;
-      if (Math.cos(th) < 0.18) continue;
-      var tx = Math.round(CX + Math.sin(th) * (hw - 2)), sg = Math.round(3 * Math.cos(th)), major = m % 5 === 0;
-      rect(tx, BAND - 4 + sg, 1, major ? 3 : 2, INK);
-      if (major && Math.cos(th) > 0.6) { var s = String(m); digits(s, tx - ((s.length * 6 - 1) / 2 | 0), BAND - 0 + sg, INK); }
+      var la = (m - min) * 6 * Math.PI / 180, major = m % 5 === 0;
+      if (facing(BAND, la)[2] < 0.4) continue;
+      var a = point(BAND - BH * 0.85, la), b2 = point(BAND - BH * (major ? 0.45 : 0.62), la);
+      for (var y = Math.floor(a[1]); y <= Math.floor(b2[1]); y++) rect(Math.floor(a[0] + (b2[0] - a[0]) * (y - a[1]) / Math.max(1, b2[1] - a[1])), y, 1, 1, INK);
+      if (major && Math.cos(la) > 0.55) {
+        var c = point(BAND - BH * 0.3, la), s = String(m);
+        digits(s, Math.round(c[0]) - ((s.length * 6 - 1) / 2 | 0), Math.round(c[1]), INK);
+      }
     }
     // the pointer, a cream notch on the body under the band's middle
-    rect(CX - 2, BAND + 8, 5, 1, CRM[3]); rect(CX - 1, BAND + 9, 3, 1, CRM[3]); rect(CX, BAND + 10, 1, 1, CRM[2]);
+    var q = point(BAND + BH + 0.09, 0), qx = Math.round(q[0]), qy = Math.round(q[1]);
+    rect(qx - 2, qy, 5, 1, CRM[3]); rect(qx - 1, qy + 1, 3, 1, CRM[3]); rect(qx, qy + 2, 1, 1, CRM[2]);
   }
   var DIG = { 0: '0e11131519110e', 1: '040c040404040e', 2: '0e11010204081f', 3: '1f02040201110e', 4: '02060a121f0202', 5: '1f101e0101110e',
     6: '0608101e11110e', 7: '1f010204080808', 8: '0e11110e11110e', 9: '0e11110f01020c' };

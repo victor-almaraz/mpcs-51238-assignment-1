@@ -68,7 +68,7 @@ FOLIO = (44, 151, 17, 44)                  # the folio of influences, on end at 
 FOLIOS = {'px-folio-rooms.png': (62, 149, 14, 46, (122, 36, 40), (160, 64, 60), (84, 24, 28)), 'px-folio-tree.png': (77, 152, 14, 43, (96, 120, 92), (130, 154, 124), (66, 86, 64))}   # the gallery's and the genealogy's: left, top, width, height, cloth, its light, its shade
 ALBUM = (193, 252, 17, 46)                # the photo album, on end on the bottom shelf: left, top, width, height
 SIDE_TABLE = (375, 262, 31)               # the side table by the chair: left, top, width
-PLAYER = (376, 230, 29, 32)                # the record player on it: left, top, width, height
+PLAYER = (375, 232, 30, 30)                # the record player on it: left, top, width, height (drawn in seeds25.py)
 CAMERA = (110, 13, 40, 27)               # the 35 mm camera, on the bookcase's top: left, top, width, height            # the pocket game, on the books lying flat: left, top, width, height
 CAT = (296, 64, 42, 114)                   # the cat clock: left, top, width, height
 CAT_FACE = (8, 47, 25)                     # its face's box in the cat: left, top, size
@@ -356,34 +356,15 @@ def side_table(cv):
     cv.rect(x0 + 13, y0 + 15, x0 + 17, y0 + 19, (180, 60, 50))
 
 def record_player():
-    # a portable record player in a two-tone case: its lid up behind, lined in cream, the
-    # turntable's record seen nearly edge on with its red label, the tonearm resting on it,
-    # the speaker grille and the knobs on the front
-    w, h = PLAYER[2], PLAYER[3]
-    CASE, CASE_L, CASE_D, LID = (72, 128, 132), (104, 160, 160), (48, 92, 98), (236, 226, 204)
-    cv = C(w, h)
-    cv.rect(1, 0, w - 2, 15, CASE); cv.rect(3, 2, w - 4, 14, LID); cv.rect(1, 0, w - 2, 0, CASE_L)
-    for y in range(4, 14, 2): cv.rect(5, y, w - 6, y, (220, 208, 182))
-    cv.rect(0, 16, w - 1, 18, (40, 38, 40))                         # the deck
-    cv.ell(3, 14, w - 6, 18, (24, 22, 24)); cv.ell(10, 15, 16, 17, (190, 56, 46))
-    cv.rect(13, 16, 13, 16, (240, 230, 210))
-    cv.line([(w - 3, 13), (w - 4, 16), (16, 16)], (196, 198, 200)); cv.rect(w - 4, 12, w - 2, 13, (150, 152, 154))
-    cv.rect(0, 19, w - 1, h - 1, CASE); cv.rect(0, 19, w - 1, 19, CASE_L); cv.rect(0, h - 1, w - 1, h - 1, CASE_D); cv.rect(w - 1, 19, w - 1, h - 1, CASE_D)
-    for y in range(21, h - 2, 2):
-        for x in range(2, 15, 2): cv.px(x, y, CASE_D)
-    for x in (19, 24): cv.rect(x, 24, x + 2, 26, (220, 210, 190)); cv.px(x + 1, 24, (120, 110, 100))
-    return cv.im
+    # a portable record player in a two-tone case, its lid up behind: drawn as a vector and cut
+    # to pixels by seeds25.py, which writes seeds25/px-record-player.png
+    return Image.open(UTIL + '/v25/seeds25/px-record-player.png').convert('RGBA')
 
-def spin(n=3):
-    # the record turning: a glint that runs round the record, seen edge on, a frame at a time
+def spin():
+    # the record turning: a mark on its label going round, a frame at a time (seeds25.py)
+    sheet = Image.open(UTIL + '/v25/seeds25/spin.png').convert('RGBA')
     w, h = PLAYER[2], PLAYER[3]
-    out = []
-    for k in range(n):
-        cv = C(w, h)
-        for i, x in enumerate((5 + k * 6, 21 - k * 4)):
-            cv.px(x, 15 + i * 2, (110, 108, 120)); cv.px(x + 1, 15 + i * 2, (80, 78, 90))
-        out.append(cv.im)
-    return out
+    return [sheet.crop((k * w, 0, k * w + w, h)) for k in range(sheet.width // w)]
 
 def cabinet(cv):
     # a teak cabinet on a plinth, two sliding doors with round pulls; the tank stands on it
@@ -561,19 +542,9 @@ def pendulum(n=4):
     return out
 
 def kitchen_timer():
-    # (for the desk, by the tape player) a tomato kitchen timer: a red body, lit from the left,
-    # its turning top banded with the minutes' marks, a green calyx and stem on top
-    w, h = 17, 15
-    R, R_L, R_D, R_DD = (206, 58, 46), (238, 118, 96), (160, 40, 34), (118, 28, 26)
-    cv = C(w, h)
-    cv.ell(0, 3, w - 1, h - 1, R_D); cv.ell(0, 3, w - 3, h - 2, R)
-    cv.rect(3, 5, 5, 6, R_L); cv.px(2, 7, R_L)
-    cv.rect(1, 8, w - 2, 8, R_DD)                                  # the seam under the turning top
-    for x in range(3, 14, 2): cv.px(x, 7, (246, 236, 220))         # its minutes
-    cv.px(8, 9, (246, 236, 220))                                   # the pointer
-    cv.poly([(4, 3), (8, 1), (12, 3), (8, 4)], (90, 140, 60)); cv.px(5, 4, (70, 112, 52)); cv.px(11, 4, (70, 112, 52))
-    cv.rect(8, 0, 8, 2, (60, 96, 46))
-    return cv.im
+    # (for the desk, by the tape player) a tomato kitchen timer, its band of minutes round its
+    # turning top: drawn as a vector and cut to pixels by seeds25.py
+    return Image.open(UTIL + '/v25/seeds25/px-timer.png').convert('RGBA')
 
 def album():
     # a photo album on end: a deep spine in black cloth, two gilt bands and a gilt label, its

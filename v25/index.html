@@ -89,7 +89,7 @@
         <li><button type="button" class="obj o-tape" data-go="recorder"><span class="player" aria-hidden="true"><img src="assets/evening/px-tape.png" data-px="px-tape" width="90" height="64" alt=""><span class="anim reel reel-l"></span><span class="anim reel reel-r"></span><span class="anim meter"></span></span><span class="obj-tag">Tape player</span></button></li>
         <li><button type="button" class="obj o-reader" data-go="reader"><span class="reader" aria-hidden="true"><img src="assets/evening/lit/task/px-reader.png" data-px="px-reader" width="130" height="62" alt=""></span><span class="obj-tag">Card reader and printer</span></button></li>
         <li><button type="button" class="obj o-upic" data-go="upic"><span class="tablet" aria-hidden="true"><img src="assets/evening/px-upic.png" data-px="px-upic" width="66" height="80" alt=""></span><span class="obj-tag">UPIC</span></button></li>
-        <li><button type="button" class="obj o-timer" data-go="timer"><span class="kitchen-timer" aria-hidden="true"><img src="assets/evening/px-timer.png" data-px="px-timer" width="17" height="15" alt=""></span><span class="obj-tag">Tomato timer</span></button></li>
+        <li><button type="button" class="obj o-timer" data-go="timer"><span class="kitchen-timer" aria-hidden="true"><img src="assets/evening/px-timer.png" data-px="px-timer" width="18" height="16" alt=""></span><span class="obj-tag">Tomato timer</span></button></li>
       </ul>
       <!-- round the corner, the reading corner (pan.js turns to it): a bookcase whose books can
            be taken down, a 35 mm camera on its top, a metronome on its second shelf, a chair to change under a cat clock, a
@@ -100,7 +100,7 @@
         <button type="button" class="swap sw-print-tank" data-swap="print-tank"><img src="assets/evening/print-kelly.png" width="128" height="86" alt=""></button>
         <button type="button" class="swap camera" data-say="Take a photograph" aria-label="The camera: take a photograph"><img src="assets/evening/px-camera.png" data-px="px-camera" width="40" height="27" alt=""></button>
         <span class="flash" aria-hidden="true"></span>
-        <button type="button" class="obj o-records" data-go="records"><span class="record-player" aria-hidden="true"><img src="assets/evening/px-record-player.png" data-px="px-record-player" width="29" height="32" alt=""><span class="anim spin"></span></span><span class="obj-tag">Record player</span></button>
+        <button type="button" class="obj o-records" data-go="records"><span class="record-player" aria-hidden="true"><img src="assets/evening/px-record-player.png" data-px="px-record-player" width="30" height="30" alt=""><span class="anim spin"></span></span><span class="obj-tag">Record player</span></button>
         <button type="button" class="swap sw-chair" data-swap="chair"><img src="assets/evening/chair-lounge.png" width="111" height="109" alt=""></button>
         <button type="button" class="swap clock" data-say="Read the clock" aria-label="The cat clock"><img src="assets/evening/px-cat-clock.png" data-px="px-cat-clock" width="42" height="114" alt=""><span class="anim cat-moves"></span><canvas class="clock-hands" width="25" height="25" aria-hidden="true"></canvas></button>
         <ul class="books" aria-label="On the bookcase">
@@ -1902,8 +1902,8 @@
   <section class="station st-records" data-station="records" aria-labelledby="records-h" hidden>
     <div class="records">
       <h2 id="records-h" class="desk-tag" tabindex="-1">Record player</h2>
-      <div class="rec-deck"><canvas id="rec-canvas" width="200" height="140" aria-hidden="true"></canvas>
-        <p class="rec-note">Renditions of music long out of copyright, played on the room’s own instruments. A record plays on wherever you go in the room, until it ends or the needle is lifted.</p></div>
+      <div class="rec-deck"><img id="rec-deck" src="assets/st/rec-deck.png" width="240" height="160" alt="">
+        <p class="rec-note">A record plays on wherever you go in the room, until it ends or the needle is lifted.</p></div>
       <div class="rec-side">
         <p class="rec-now" id="rec-now">Nothing is playing. Choose a record from the crate.</p>
         <h3>The crate</h3>

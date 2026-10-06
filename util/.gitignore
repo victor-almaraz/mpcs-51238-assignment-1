@@ -2,10 +2,12 @@
 *.png
 !v23/unlit/*.png
 !v19r/seeds/*.png
+!v25/seeds25/*.png
 *.webp
 *.npy
 *.log
 _svg.html
 chrome-prof/
 v19r/svg/
+v25/seeds25/big/
 __pycache__/

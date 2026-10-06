@@ -163,13 +163,13 @@ td code { white-space: nowrap; }
    corner. decor.js hangs a paper (data-paper on the room) and sets the pictures for the time
    and the light (--back-l, --back-r, --tile, --floor-tile, --paper-blue); these are evening's */
 .desk { --back-l: url(assets/evening/lit/task/room-ogee.png); --back-r: url(assets/evening/room-ogee-r.png); --tile: url(assets/evening/tile-ogee.png); --tw: 42; --th: 63;
-  --floor-tile: url(assets/evening/floor-tile.png); --paper-blue: #232e70; --steam: url(assets/evening/anim/lit/task/steam.png);
+  --floor-tile: url(assets/evening/floor-tile.png); --paper-blue: #232e71; --steam: url(assets/evening/anim/lit/task/steam.png);
   --reel-l: url(assets/evening/anim/reel-l.png); --reel-r: url(assets/evening/anim/reel-r.png); --screen: url(assets/evening/anim/screen.png);
   --back-2: url(assets/evening/room2-ogee.png); --tetras: url(assets/evening/anim/tetras.png); --angel: url(assets/evening/anim/angel.png); --cory: url(assets/evening/anim/cory.png);
   --bubbles: url(assets/evening/anim/bubbles.png); --flakes: url(assets/evening/anim/flakes.png); --pendulum: url(assets/evening/anim/pendulum.png); --cat: url(assets/evening/anim/cat.png); --spin: url(assets/evening/anim/spin.png); }
-.desk[data-paper="atomic"] { --tile: url(assets/evening/tile-atomic.png); --tw: 42; --th: 42; --back-r: url(assets/evening/room-atomic-r.png); --back-2: url(assets/evening/room2-atomic.png); --paper-blue: #3f4a5d; }
-.desk[data-paper="trellis"] { --tile: url(assets/evening/tile-trellis.png); --tw: 28; --th: 42; --back-r: url(assets/evening/room-trellis-r.png); --back-2: url(assets/evening/room2-trellis.png); --paper-blue: #563047; }
-.desk[data-paper="grass"] { --tile: url(assets/evening/tile-grass.png); --tw: 34; --th: 12; --back-r: url(assets/evening/room-grass-r.png); --back-2: url(assets/evening/room2-grass.png); --paper-blue: #8a838f; }
+.desk[data-paper="atomic"] { --tile: url(assets/evening/tile-atomic.png); --tw: 42; --th: 42; --back-r: url(assets/evening/room-atomic-r.png); --back-2: url(assets/evening/room2-atomic.png); --paper-blue: #3f4a5c; }
+.desk[data-paper="trellis"] { --tile: url(assets/evening/tile-trellis.png); --tw: 28; --th: 42; --back-r: url(assets/evening/room-trellis-r.png); --back-2: url(assets/evening/room2-trellis.png); --paper-blue: #572e47; }
+.desk[data-paper="grass"] { --tile: url(assets/evening/tile-grass.png); --tw: 34; --th: 12; --back-r: url(assets/evening/room-grass-r.png); --back-2: url(assets/evening/room2-grass.png); --paper-blue: #8b858f; }
 .wall { position: absolute; inset: -100vh -100vw 0; background: var(--tile) 100vw 100vh / calc(var(--tw) * 1em * 92 / 640) calc(var(--th) * 1em * 92 / 640), var(--paper-blue); }
 .wall::after { content: ""; position: absolute; left: 100vw; top: 100vh; width: 92em; height: 46em; background: var(--back-l) 0 0 / calc(100% * 368 / 640) 100% no-repeat, var(--back-r) 100% 0 / calc(100% * 272 / 640) 100% no-repeat; image-rendering: pixelated; pointer-events: none; }
 .floor { position: absolute; left: 0; right: 0; bottom: 0; height: calc(11em * 92 / 640); background: var(--floor-tile) 100vw 0 / calc(77em * 92 / 640) 100% repeat-x; }
@@ -213,7 +213,7 @@ td code { white-space: nowrap; }
 .desk-top > li:nth-child(5) { left: calc(140em * 92 / 640); bottom: calc(-100em * 92 / 640); }
 .desk-top > li:nth-child(6) { left: calc(445em * 92 / 640); bottom: calc(-100em * 92 / 640); }
 /* by the tape player, the tomato timer */
-.desk-top > li:nth-child(7) { left: calc(553em * 92 / 640); }
+.desk-top > li:nth-child(7) { left: calc(552em * 92 / 640); }
 .desk-top .obj, .desk-top .obj > span:first-child { display: block; }
 .scene .obj-tag, .scene .shelf-tag { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .clipboard { position: relative; display: block; width: calc(49em * 92 / 640); height: calc(65em * 92 / 640); }
@@ -222,7 +222,7 @@ td code { white-space: nowrap; }
 .player { position: relative; display: block; width: calc(104em * 92 / 640); height: calc(74em * 92 / 640); }
 .reader { position: relative; display: block; width: calc(130em * 92 / 640); height: calc(62em * 92 / 640); }
 .tablet { position: relative; display: block; width: calc(66em * 92 / 640); height: calc(80em * 92 / 640); }
-.kitchen-timer { position: relative; display: block; width: calc(17em * 92 / 640); height: calc(15em * 92 / 640); }
+.kitchen-timer { position: relative; display: block; width: calc(18em * 92 / 640); height: calc(16em * 92 / 640); }
 .sp-pic, .folders img, .clipboard img, .deckbox img, .outtray img, .computer img, .player img, .reader img, .tablet img, .kitchen-timer img { display: block; width: 100%; height: 100%; }
 /* what stands in the room casts a hard shadow, an art pixel down and to the right */
 .shelf .obj > span:first-child, .desk-top .obj > span:first-child, .spine, .ledge { filter: drop-shadow(calc(1em * 92 / 640) calc(1em * 92 / 640) 0 rgba(20, 16, 12, 0.35)); }
@@ -356,11 +356,11 @@ td code { white-space: nowrap; }
 .scene.flashing .flash { animation: flash 0.5s steps(5) forwards; }
 @keyframes flash { 0% { opacity: 0.85; } 100% { opacity: 0; } }
 /* the record player on its side table; while a record plays, it turns in the room too */
-.scene .o-records { position: absolute; left: calc(376em * 92 / 640); top: calc(230em * 92 / 640); width: calc(29em * 92 / 640); height: calc(32em * 92 / 640); }
+.scene .o-records { position: absolute; left: calc(375em * 92 / 640); top: calc(232em * 92 / 640); width: calc(30em * 92 / 640); height: calc(30em * 92 / 640); }
 .o-records .record-player, .o-records .record-player img { display: block; width: 100%; height: 100%; }
-.scene .spin { inset: 0; background: var(--spin) 0 0 / 300% 100%; visibility: hidden; }
-.scene.record-on .spin { visibility: visible; animation: spin 0.6s steps(3) infinite; }
-@keyframes spin { to { background-position: 150% 0; } }
+.scene .spin { inset: 0; background: var(--spin) 0 0 / 600% 100%; visibility: hidden; }
+.scene.record-on .spin { visibility: visible; animation: spin 1.8s steps(6) infinite; }
+@keyframes spin { to { background-position: 120% 0; } }
 .scene .tank { left: calc(418em * 92 / 640); top: calc(134em * 92 / 640); width: calc(184em * 92 / 640); height: calc(94em * 92 / 640); }
 /* the books, each in its place on its shelf; taken down, it comes a step up out of the row */
 .books .book, .books .metronome { position: absolute; display: block; margin: 0; padding: 0; background: none; border: 0; }
@@ -440,8 +440,8 @@ td code { white-space: nowrap; }
 .st-records { display: grid; place-items: start center; }
 .records { display: grid; grid-template-columns: auto minmax(0, 28rem); grid-template-areas: "h h" "deck side"; gap: 0.8rem 2.4rem; align-items: start; width: min(100%, 64rem); }
 .records .desk-tag { grid-area: h; justify-self: start; }
-.rec-deck { grid-area: deck; display: grid; gap: 1rem; width: 400px; }
-#rec-canvas { display: block; width: 400px; height: 280px; image-rendering: pixelated; box-shadow: var(--lift); }
+.rec-deck { grid-area: deck; display: grid; gap: 1rem; width: 480px; }
+#rec-deck { display: block; width: 480px; height: 320px; image-rendering: pixelated; box-shadow: var(--lift); }
 .rec-side { grid-area: side; display: grid; gap: 0.6rem; }
 .rec-side h3 { margin: 0.4rem 0 0; font-size: 20px; }
 .rec-now { margin: 0; padding: 0.4rem 0.8rem; color: var(--paper); background: var(--ink); }
