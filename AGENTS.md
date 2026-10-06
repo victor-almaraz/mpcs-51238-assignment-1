@@ -110,6 +110,18 @@ This projects is composed of 25 variations on the core idea, a gallery page disp
 
 *Version 23* builds on *Version 21* and removes the separation of styles between the desk and computer. This version moves the room style to pixel art. It also revises the computer UI from 3-bit dithering to full color pixel art.
 
+#### Version 24
+
+*Version 24* combines the pixel-art look of *Version 23* with the variation feature from *Version 22*.
+
+#### Version 25
+
+*Version 25* is a perfection and expansion of *Version 24*.
+
 ### Gallery
 
+While the gallery page is separate from the versioned pages, it should be style as if it existed within the fiction of *Version 25*. The gallery should be accessible from a folio in the bookshelf of *Version 25*.
+
 ### Genealogy
+
+While the genealogy page is separate from the versioned pages, it should be style as if it existed within the fiction of *Version 25*. The genealogy should be accessible from a folio in the bookshelf of *Version 25*. The genealogy of the pages should be derived from the notes above.
