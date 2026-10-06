@@ -1,11 +1,11 @@
 # Brief: a new magazine for the workspace's shelf (v25)
 
-First read the general brief: /private/tmp/claude-502/-Users-jesusaa-Desktop-mpcs-51238-assignment-1/f1d609ed-382f-4724-8c29-6127ee49b791/scratchpad/v25/text/BRIEF.md
+First read the general brief, `BRIEF.md`, beside this file.
 (the project, voice, British spelling, facts must be right and verified by web search, never say "version").
 
 The shelf already holds **Moiré**, a magazine of art and computing. Read its text, written in the exact
 format you will use, to see the voice, length and how decks are woven in:
-/private/tmp/claude-502/-Users-jesusaa-Desktop-mpcs-51238-assignment-1/f1d609ed-382f-4724-8c29-6127ee49b791/scratchpad/v25/text/magazine.md
+util/v25/text/magazine.md
 
 Two new magazines join it, each its own title with its own subject. Each is written as text in that same
 Markdown structure (COVER, EDITORS, CONTENTS, ARTICLE 01 …, CATALOGUE), with these differences:
@@ -19,16 +19,16 @@ Markdown structure (COVER, EDITORS, CONTENTS, ARTICLE 01 …, CATALOGUE), with t
 ## The decks
 A deck is FORTRAN on punched cards, run by the page's own interpreter. You must write each deck, run it, and make
 sure it does what the article says it does.
-- The language and the card format: /Users/jesusaa/Desktop/mpcs-51238-assignment-1/docs/fortran-cards-spec.md
+- The language and the card format: docs/fortran-cards-spec.md
   (read it all; only what it describes is supported). The tape-card format (for decks that make music the tape
-  player plays): /Users/jesusaa/Desktop/mpcs-51238-assignment-1/docs/tape-spec.md
+  player plays): docs/tape-spec.md
 - Existing decks to learn from (their comment-card style, how they take their data cards, how they use a seed
   and the generator: multiply by 171 and keep the remainder after dividing by 30269, as Moiré explains):
-  /Users/jesusaa/Desktop/mpcs-51238-assignment-1/v25/decks.js (look at the `magazine` and `music` sections).
+  v25/decks.js (look at the `magazine` and `music` sections).
 - Run a deck with the interpreter in JavaScriptCore, for example:
   ```
   JSC=/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc
-  $JSC /Users/jesusaa/Desktop/mpcs-51238-assignment-1/scripts/hollerith.js /Users/jesusaa/Desktop/mpcs-51238-assignment-1/scripts/fortran.js yourtest.js
+  $JSC scripts/hollerith.js scripts/fortran.js yourtest.js
   ```
   where `yourtest.js` builds the deck (an array of strings, one per card) and calls `Fortran.run(deck)`, then
   prints `result.printer`, `result.punched`, `result.log`, `result.ok` (read scripts/fortran.js for the exact

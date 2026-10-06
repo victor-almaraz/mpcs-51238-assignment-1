@@ -10,7 +10,7 @@
    stacker, and played on the tape player. Needs Desk (desk.js), Out (out.js), Tape
    (scripts/tape.js) and WavePad (wavepad.js). */
 
-var Upic = (function () {
+(function () {
   'use strict';
   var doc = document, $ = Desk.$, plural = Desk.plural;
   var W = 360, H = 200, LOW = 36, OCT = 4;               // the page in pixels; C2 (MIDI 36) and four octaves up
@@ -252,5 +252,4 @@ var Upic = (function () {
   Desk.onShow('desk', function () { stop(true); });
   strokes = PAGES.arborescence();
   draw();
-  return { stop: stop };
 })();

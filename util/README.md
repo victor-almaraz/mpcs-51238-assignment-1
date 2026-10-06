@@ -32,12 +32,12 @@ The current pipeline. Run from `v25/`:
 | `build4.py` | `v25/assets/<time>/` (deletes and rewrites them) | The whole room at three times of day (morning, evening, night) and in each light of the lamp (task, angle, dome, ceramic, off): the backdrop for every wallpaper, every sprite, the loops in `anim/`, the second wall (`part2.py`), all lit and cut to one palette of 96 colours (`palette-v24.json`). About four minutes. Also writes `grounds.json`. |
 | `sync_grounds.py` | `v25/decor.js`, `v25/style.css` | After `build4.py`: copies each paper's ground colour (`grounds.json`) into the room's script and stylesheet. |
 | `part2.py` | (a proof, `part2-proof.png`) | The reading corner, round the corner from the desk: wall, bookcase and books, cabinet, tank and fish, chairs, cat clock, metronome, camera, album, pocket game, side table and record player, the turn tabs and their cursors, and its light. Imported by `build4.py`; run alone, it draws a proof. |
-| `seeds25.py` | `seeds25/`, `v25/assets/st/rec-deck.png`, `rec-deck-playing.png`, `pomo-body.png` | The record player and the tomato timer, drawn as SVG in their own pixels, rendered large through headless Chrome (`../v19r/render.py`) and cut cell by cell to each drawing's own hue-shifted ramps: the two room sprites (unlit; `part2.py` and `build4.py` read them from `seeds25/`, with the record's turning frames) the record player's two pictures from above (at rest and playing), and the tomato's body, over which `timer.js` draws its band of minutes. Run it before `build4.py`. |
+| `seeds25.py` | `seeds25/`, `v25/assets/st/rec-deck.png`, `rec-deck-playing.png`, `pomo-body.png` | The record player and the tomato timer, cut cell by cell to each drawing's own hue-shifted ramps: the player drawn as SVG in its own pixels and rendered large through headless Chrome (`../v19r/render.py`); the tomato painted from a solid (a lobed sphere with a well at the top), its stem in SVG. It writes the two room sprites (unlit; `part2.py` and `build4.py` read them from `seeds25/`, with the record's turning frames), the record player's two pictures from above (at rest and playing), and the tomato's body, over which `timer.js` draws its band of minutes round the same solid. Run it before `build4.py`. |
 | `art.py`, `sheet.py` | | The swappable things (prints, plants, lamps, mugs, papers, the switch), the reader and printer, the UPIC, the magazines' covers on the shelf. Imported by the builds. |
 | `build.py`, `build2.py`, `build3.py`, `light24.py` | | v24's backdrop, the lamp's light for each state, the loops (reels, screen, steam, sway), the light of each time of day. Imported by `build4.py`. |
 | `build_mags.py` | `v25/index.html` (the magazine station) | Sets every magazine from its text in `text/<issue>.md` (cover, contents and editors, three or four articles, catalogue), with its rack. Reads `text/magazine.md`, `event.md`, `gesso.md`, `cons.md`, `silver.md`. |
 | `mag_plates.py`, `mag_plates2.py`, `mag_plates3.py` | `v25/assets/st/` | The magazines' plates and cover fields, drawn in pixels: Moiré; Event and Gesso; Cons and Silver. |
-| `album_pics.py` | `v25/assets/st/album-*.png` | The photo album's black-and-white prints and Polaroids, one to a page. |
+| `album_pics.py` | `v25/assets/st/album-*.png` | The photo album's eight black-and-white prints and four Polaroids, one to a page, cut into pixels from reference photographs (read from `Archive/` at the repository's root by default, or the folder given; they are not kept in the repository). |
 | `build_folio.py` | `v25/index.html` (the folio of influences) | Sets the folio's sheets from `text/folio.md`. |
 | `desktop_pic.py`, `karawane_pic.py`, `tzara_pic.py`, `pixart.py` | `v25/assets/pics/` | The computer's desk picture (Persepolis), Ball's *Karawane* and Tzara's hat, drawn in pixels and graded for the screen. |
 | `gesso/build.py` | (a JavaScript array) | Builds the Gesso decks and writes them as a JavaScript array. |
@@ -47,7 +47,7 @@ The current pipeline. Run from `v25/`:
 `build_mags.py` reads (`# COVER`, `# EDITORS`, `# CONTENTS`, `# ARTICLE 01` …, `# CATALOGUE`;
 `[deck: id | name]` puts a deck's button in the text). The `decks-*.js` files are each issue's
 decks as written and checked; they are copied by hand into `v25/decks.js`. `BRIEF.md` and
-`BRIEF-MAG.md` are the briefs the texts were written to (voice, spelling, sourcing, the deck rules).
+`BRIEF-MAG.md` are the briefs the texts were written to (voice, spelling, sourcing, the deck rules); `silver-plates.md` is the brief Silver's plates were drawn to.
 
 A typical change to the room: edit `part2.py` or `art.py`, run `python3.11 part2.py` to proof
 it, then `python3.11 build4.py && python3.11 sync_grounds.py`, and look at the page.

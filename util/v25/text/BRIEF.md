@@ -1,7 +1,7 @@
 # Brief: cleaning up and elaborating the in-universe text of the workspace (v25)
 
 ## The project
-`/Users/jesusaa/Desktop/mpcs-51238-assignment-1/v25/` is a web page: a pixel-art composer's workroom at a
+`v25/` is a web page: a pixel-art composer's workroom at a
 computing centre, around the 1960s–70s, built on FORTRAN punched cards and Iannis Xenakis's sieves. Its
 audience is people interested in computer history and algorithmic music. Everything in the room is an
 in-universe document or object:

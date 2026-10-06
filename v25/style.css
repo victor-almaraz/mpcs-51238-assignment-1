@@ -350,11 +350,9 @@ td code { white-space: nowrap; }
 .scene .cat-moves { inset: 0; background: var(--cat) 0 0 / 400% 100%; animation: reel 1s steps(4) infinite; }
 /* the chair under it, one of four (decor.js), standing on the floor in its own hard shadow */
 .sw-chair { left: calc(262em * 92 / 640); top: calc(200em * 92 / 640); width: calc(111em * 92 / 640); height: calc(109em * 92 / 640); filter: drop-shadow(calc(2em * 92 / 640) calc(2em * 92 / 640) 0 rgba(16, 12, 36, 0.3)); }
-/* the camera on the bookcase's top; pressed, it takes a photograph, and the flash goes off */
-.scene .camera { left: calc(110em * 92 / 640); top: calc(13em * 92 / 640); width: calc(40em * 92 / 640); height: calc(27em * 92 / 640); }
-.part2 .flash { position: absolute; inset: 0; z-index: 25; background: #fffdf6; opacity: 0; pointer-events: none; }
-.scene.flashing .flash { animation: flash 0.5s steps(5) forwards; }
-@keyframes flash { 0% { opacity: 0.85; } 100% { opacity: 0; } }
+/* the camera on the bookcase's top, only to be seen */
+.scene .camera { position: absolute; left: calc(110em * 92 / 640); top: calc(13em * 92 / 640); width: calc(40em * 92 / 640); height: calc(27em * 92 / 640); pointer-events: none !important; }
+.scene .camera img { display: block; width: 100%; height: 100%; }
 /* the record player on its side table; while a record plays, it turns in the room too */
 .scene .o-records { position: absolute; left: calc(375em * 92 / 640); top: calc(232em * 92 / 640); width: calc(30em * 92 / 640); height: calc(30em * 92 / 640); }
 .o-records .record-player, .o-records .record-player img { display: block; width: 100%; height: 100%; }
@@ -458,7 +456,7 @@ td code { white-space: nowrap; }
 
 /* ================================================================ the photo album
    An album open on the desk: two black pages to an opening in a black cloth binding, one
-   photograph to a page at twice its pixels, held by black corners, its caption under it in
+   photograph to a page at twice its pixels, held by black corners, its date under it in
    white pencil. Its pages turn as the manual's do. */
 .st-album { display: grid; place-items: start center; }
 .album { --as: 2; display: grid; gap: 0.8rem; width: fit-content; max-width: 100%; }

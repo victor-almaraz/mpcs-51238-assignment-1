@@ -1,8 +1,6 @@
 /* The reading corner's things (index.html, #corner). A book is taken down from the shelf and
    the narrator says what it is, offering a deck it calls to mind (look.js); the metronome is
-   set going, and runs down after a while; the fish are fed, and come up to the flakes; the camera takes
-   photographs, a flash and a frame of its roll at a time; the cat
-   clock's hands keep the visitor's time, drawn in pixels on its belly. What happens is told as
+   set going, and runs down after a while; the fish are fed, and come up to the flakes; the cat clock's hands keep the visitor's time, drawn in pixels on its belly. What happens is told as
    events on the scene, for the sounds (sounds.js). Needs Look (look.js). */
 
 (function () {
@@ -50,22 +48,6 @@
     say('A pinch of flakes on the water. The tetras and the angelfish come up for them; the corydoras waits on the gravel for what sinks.');
   });
 
-  /* ---------------- the camera: thirty-six frames of black-and-white film ---------------- */
-  var cam = corner.querySelector('.camera'), frames = 0, FRAMES = 36;
-  cam.addEventListener('click', function () {
-    if (frames >= FRAMES) {
-      frames = 0; tell('rewind');
-      say('The roll is finished; the camera rewinds it into its cassette and a new roll is loaded. Thirty-six frames.');
-      return;
-    }
-    frames++;
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      scene.classList.remove('flashing'); void scene.offsetWidth; scene.classList.add('flashing');
-    }
-    tell('shutter');
-    say('Click: frame ' + frames + ' of ' + FRAMES + '.' + (frames === FRAMES ? ' That was the last frame on the roll.' : ''));
-  });
-
   /* ---------------- the clock ---------------- */
   // its hands in the ink of its marks, read from the face as it is drawn for the light (the
   // twelve o'clock mark); a page opened from disk may not be read, and keeps a dark ink
@@ -105,5 +87,5 @@
   face.addEventListener('load', readInk);
   if (face.complete) readInk();
   setInterval(draw, 20000);
-  window.Corner = { time: told, frames: function () { return frames; } };
+  window.Corner = { time: told };
 })();

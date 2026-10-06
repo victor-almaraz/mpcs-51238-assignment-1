@@ -627,14 +627,14 @@ html:not(.js) .win .titlebar::before {
 /* ================================================================ the tones */
 /* The seven steps of difficulty, sand to walnut, each a flat colour (pixels.js). They code difficulty
    and fill swatches, bands and the sorter's stacks, and never sit behind text. */
-.sw, .ix-sw, .sheet-band, .pk-bar { image-rendering: pixelated; background-size: 16px 16px; }
-[data-tone="0"] .sw, [data-tone="0"] .ix-sw, [data-tone="0"] .sheet-band { background-image: var(--tone-0); }
-[data-tone="1"] .sw, [data-tone="1"] .ix-sw, [data-tone="1"] .sheet-band { background-image: var(--tone-1); }
-[data-tone="2"] .sw, [data-tone="2"] .ix-sw, [data-tone="2"] .sheet-band { background-image: var(--tone-2); }
-[data-tone="3"] .sw, [data-tone="3"] .ix-sw, [data-tone="3"] .sheet-band { background-image: var(--tone-3); }
-[data-tone="4"] .sw, [data-tone="4"] .ix-sw, [data-tone="4"] .sheet-band { background-image: var(--tone-4); }
-[data-tone="5"] .sw, [data-tone="5"] .ix-sw, [data-tone="5"] .sheet-band { background-image: var(--tone-5); }
-[data-tone="6"] .sw, [data-tone="6"] .ix-sw, [data-tone="6"] .sheet-band { background: var(--ink); }
+.sw, .ix-sw, .pk-bar { image-rendering: pixelated; background-size: 16px 16px; }
+[data-tone="0"] .sw, [data-tone="0"] .ix-sw { background-image: var(--tone-0); }
+[data-tone="1"] .sw, [data-tone="1"] .ix-sw { background-image: var(--tone-1); }
+[data-tone="2"] .sw, [data-tone="2"] .ix-sw { background-image: var(--tone-2); }
+[data-tone="3"] .sw, [data-tone="3"] .ix-sw { background-image: var(--tone-3); }
+[data-tone="4"] .sw, [data-tone="4"] .ix-sw { background-image: var(--tone-4); }
+[data-tone="5"] .sw, [data-tone="5"] .ix-sw { background-image: var(--tone-5); }
+[data-tone="6"] .sw, [data-tone="6"] .ix-sw { background: var(--ink); }
 .sw { display: inline-block; flex: none; width: 48px; height: 20px; border: 2px solid var(--ink); vertical-align: -4px; }
 
 /* ================================================================ Eighty Columns */

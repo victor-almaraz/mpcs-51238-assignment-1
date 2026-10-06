@@ -63,7 +63,6 @@
     'book-mccracken': ['Daniel D. McCracken, A Guide to FORTRAN Programming, 1961: one of the first books to teach the language, statement by statement.', 'squares-and-roots', 'Squares and roots'],
     'book-knuth': ['Donald Knuth, The Art of Computer Programming, volume 2: Seminumerical Algorithms, 1969. Its first chapter is on random numbers: how a machine that only follows rules makes numbers that pass for chance, and how to test them.', 'stochastic-cloud', 'Stochastic cloud'],
     'book-reichardt': ['Cybernetic Serendipity: the computer and the arts, 1968, edited by Jasia Reichardt: Studio International’s special issue for her show at the ICA in London, Knowlton and Harmon’s pictures among its pages.', 'studies-in-perception', 'Studies in perception'],
-    camera: [null],
     'o-influences': ['A folio in marbled boards, tied with a ribbon: a sheet for every kind of thing this room was made from, and every name it owes.'],
     'o-rooms': ['A folio in oxblood cloth: a print of every room this one grew from, pinned to a board, each a way back into it.'],
     'o-tree': ['A folio in sage cloth: the rooms’ family tree on graph paper, each under the rooms it was made from.'],
@@ -94,7 +93,6 @@
   }
   function lineOf(k) {
     if (k === 'wall') return [PAPER[Decor.paper()] + ' Press the bare wall to hang another.'];
-    if (k === 'camera') return ['A 35 mm single-lens reflex, its film the full frame of 24 by 36 millimetres that Barnack’s Leica set in 1925, loaded with black-and-white film, ' + Corner.frames() + ' of its 36 frames taken.'];
     if (k === 'clock') return ['A black cat clock, its eyes and tail swinging to the seconds, keeping the visitor’s own time. ' + Corner.time()];
     if (k === 'lamp-switch') return [Decor.lampOn() ? 'A toggle switch, up. The lamp is on.' : 'A toggle switch, down. The lamp is off, and the room is lit by the screen and ' + { morning: 'the morning', evening: 'the dusk', night: 'the moon' }[Decor.time()] + '.'];
     return LOOK[k];

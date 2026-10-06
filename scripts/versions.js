@@ -55,6 +55,6 @@ var VERSIONS = [
     note: 'v21 in one style: the room as pixel art, the computer in full-colour pixels.' },
   { id: 'v24', title: 'Pixel art with variations', parents: ['v23', 'v22'], borrows: [], status: 'complete',
     note: 'v23’s pixel room with v22’s variations, lit for every lamp and every time of day.' },
-  { id: 'v25', title: 'The room, perfected and expanded', parents: ['v24'], borrows: [], status: 'in progress',
+  { id: 'v25', title: 'The room, perfected and expanded', parents: ['v24'], borrows: [], status: 'complete',
     note: 'v24 perfected and expanded into a space to wander: a reading corner round the corner, machines under the desk, and nooks to get lost in.' }
 ];

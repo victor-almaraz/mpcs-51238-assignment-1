@@ -6,7 +6,7 @@
 
 var Form = (function () {
   'use strict';
-  var doc = document, $ = Desk.$, $$ = Desk.$$, plural = Desk.plural;
+  var doc = document, $ = Desk.$, plural = Desk.plural;
   var ROWS = [12, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   var SVG_NS = 'http://www.w3.org/2000/svg';
   var CARD_INK = '#2b2118', CARD_HOLE = '#241a12', CARD_PRINT = '#8a7558';

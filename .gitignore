@@ -1,2 +1,5 @@
 *.DS_Store
 .claude/
+
+# reference photographs for the album, kept out of the repository
+Archive/

@@ -69,9 +69,6 @@
     tick: function (t) { burst(t, 0.008, 'bandpass', 3200, 4, 0.2); tone(t, 1400, 0.025, 0.06, 'triangle', 900); },
     feed: function (t) { for (var k = 0; k < 6; k++) burst(t + k * 0.03 + Math.random() * 0.02, 0.012, 'highpass', 4500, 0.7, 0.05); tone(t + 0.25, 520, 0.08, 0.05, 'sine', 900); },
     book: function (t) { burst(t, 0.12, 'bandpass', 1500, 0.6, 0.06); burst(t + 0.1, 0.02, 'lowpass', 600, 1, 0.1); },
-    // the camera: its mirror up and the shutter, then the lever's wind; rewound, a long whirr
-    shutter: function (t) { burst(t, 0.015, 'bandpass', 2200, 1.5, 0.3); burst(t + 0.06, 0.02, 'bandpass', 1500, 1.2, 0.22); for (var k = 0; k < 6; k++) burst(t + 0.35 + k * 0.03, 0.012, 'highpass', 3500, 1, 0.06); },
-    rewind: function (t) { for (var k = 0; k < 40; k++) burst(t + k * 0.03, 0.015, 'bandpass', 2800 + (k % 3) * 300, 2, 0.05); },
     bubble: function (t) { tone(t, 380 + Math.random() * 260, 0.05, 0.018, 'sine', 700 + Math.random() * 300); }
   };
   function play(name) { if (!ctx()) return; SOUND[name](ac.currentTime + 0.01); }
@@ -125,8 +122,6 @@
   scene.addEventListener('room:tick', function () { play('tick'); });
   scene.addEventListener('room:feed', function () { play('feed'); });
   scene.addEventListener('room:book', function () { play('book'); });
-  scene.addEventListener('room:shutter', function () { play('shutter'); });
-  scene.addEventListener('room:rewind', function () { play('rewind'); });
   // the airstone's bubbles, heard while the room is turned to the tank
   setInterval(function () {
     if (!ac || !on || room.getAttribute('data-at') !== 'desk' || scene.getAttribute('data-view') !== '1') return;

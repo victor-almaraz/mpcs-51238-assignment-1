@@ -72,7 +72,7 @@ def genealogy():
       </ul>
     </header>
     <div class="tree-wrap"><div class="tree" id="tree" aria-hidden="true"></div></div>
-    <ul class="legend" aria-hidden="true"><li><i></i>builds on</li><li><i class="b"></i>takes a part from</li><li>a dashed card: still in progress</li></ul>
+    <ul class="legend" aria-hidden="true"><li><i></i>builds on</li><li><i class="b"></i>takes a part from</li>%s</ul>
     <h2>The lineage</h2>
     <ol class="lineage">
 %s
@@ -83,7 +83,7 @@ def genealogy():
 <script src="genealogy.js"></script>
 </body>
 </html>
-''' % items
+''' % (('<li>a dashed card: still in progress</li>' if any(v['status'] != 'complete' for v in V) else ''), items)
 if __name__ == '__main__':
     open(os.path.join(REPO, 'index.html'), 'w').write(gallery())
     open(os.path.join(REPO, 'genealogy', 'index.html'), 'w').write(genealogy())
